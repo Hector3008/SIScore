@@ -1,0 +1,39 @@
+1. Definir el proyecto
+- ¿Qué problema resuelve?
+- ¿Para quién es?
+- ¿Qué valor aporta?
+2. Definir el Alcance
+- Que Si va a tener el sistema|
+- que no va a tener el sistema (esto es igual que importante)  No hay que meter IA solo porque se puede a menos que sea parte integra y aporte valor indespensable
+3. Producto Mínimo Viable (MVP)
+- Cuál es la versión más pequeña que logra resolver el problema?
+- Enfocarse solo eso para no sobre-desarrollar, ya mas adelante puedes iterar y agregar mas implementaciones
+
+4. Requerimientos
+- Listar funcionalidades.
+- Separar en “indespensables” y “deseables”.
+
+5. Arquitectura
+- Tipo de sistema (web, móvil, escritorio, microservicios, monolito, etc.).
+- Patrones que se van a usar.
+- Diagramas UML o mapas simples de componentes.
+
+6. Entorno de desarrollo
+- Lenguajes, frameworks, base de datos.
+- Control de versiones (Git).
+- Herramientas de trabajo.
+
+7. Diseño del sistema
+- Modelo de base de datos.
+- Diseño visual en figma o bocetos 
+- Definición de objetos, modelos, classes y entidades principales.
+
+8. Planificación de tareas
+- Dividir en tareas pequeñas.
+- Estimar complejidad.
+- Priorizar según impacto en el MVP.
+
+9. Empezar a construir y adarle
+- Iteraciones cortas.
+- Revisiones frecuentes.
+- Ajustar sobre la marcha.
