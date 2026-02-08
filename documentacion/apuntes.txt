@@ -14,3 +14,36 @@
     });
   ****  y se alimenta de routers de tipo app.use("/products", productRouter);
   ****  también recibe configuraciones como app.use(express.json()) o app.use("/", express.static("./src/public")) y app.use(express.urlencoded({ extended: true }))
+
+*** handlebars es el motor de frontend. Se activa con las lineas
+    const hbs = handlebars.create({
+        helpers: {
+          eq: function (arg1, arg2, options) {
+            // Verificar si options está definido y es una función
+            if (
+              options &&
+              typeof options.fn === "function" &&
+              typeof options.inverse === "function"
+            ) {
+              if (arg1 === arg2) {
+                return options.fn(this); // Ejecuta el bloque de código de {{#eq}}
+              } else {
+                return options.inverse(this); // Ejecuta el bloque de código de {{else}}
+              }
+            } else {
+              return ""; // Devuelve una cadena vacía si las opciones no son válidas
+            }
+          },
+        },
+      });
+      app.engine("handlebars", hbs.engine);
+
+    app.set("views", "./src/views");
+    app.set("view engine", "handlebars");
+    y funciona creando un archivo views/layouts/main.handlebars que establece el html estatico
+    para cargar el html dinamico con las vistas .handlebaras de la carpeta Views
+    Al handlebars se le llama desde el controlador con la funcion .render (
+    (res.render("products.handlebars",{products: result.payload})))
+    se le pasan props en un json y sobre esas props se puede iterar en el archivo .handlebars
+
+    

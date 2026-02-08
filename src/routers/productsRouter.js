@@ -5,7 +5,6 @@ import { productsController
 
 const productRouter = Router();
 
-productRouter.get("/",
-  productsController)
+productRouter.get("/", productsController);
 
 export default productRouter;

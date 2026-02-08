@@ -1,0 +1,26 @@
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <td><strong>_ID</strong></td>
+      <td><strong>nombre</strong></td>
+      <td><strong>description</strong></td>
+      <td><strong>categoria</strong></td>
+      <td><strong>tipo</strong></td>
+      <td><strong>cantidad</strong></td>
+      <td><strong>equivalente</strong></td>
+    </tr>
+  </thead>
+  {{#each products}}
+  <tbody>
+      <tr>
+      <td>{{this._ID}}</td>
+      <td>{{this.nombre}}</td>
+      <td>{{this.description}}</td>
+      <td>{{this.categoria}}</td>
+      <td>{{this.tipo}}</td>
+      <td>{{this.cantidad}}</td>
+      <td>{{this.equivalente}}</td>
+    </tr>
+  </tbody>
+
+  {{/each}}
