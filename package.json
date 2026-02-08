@@ -1,0 +1,26 @@
+{
+  "name": "siscore",
+  "version": "1.0.0",
+  "description": "",
+  "type": "module",
+  "main": "src/app.js",
+  "scripts": {
+    "start": "node .",
+    "dev": "nodemon ."
+  },
+  "descripcion scripts":{
+    ". ": "el punto dspues de la clave script (start, dev, test) indica el main (src/app.js)",
+    "start": "activa node, despliega el codigo una vez",
+    "dev": "inicia nodemon, despliga dinamincamente el codigo. Actualizandose con cada cambio"
+},
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^5.2.1",
+    "handlebars": "^4.7.8",
+    "mongoose": "^9.1.6",
+    "nodemon": "^3.1.11",
+    "socket.io": "^4.8.3"
+  }
+}

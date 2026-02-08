@@ -11,7 +11,6 @@ const Modelo = {
 
 const Product = {
   _ID: INT,
-  Nombre: String,
   Modelo: Object(Modelo),
   Invoice: Object(Invoice) || undefined,
   Comentarios: String
