@@ -1,3 +1,4 @@
+import { ProductService } from "./services/services.js"
 
-
-console.log("app.js running on here");
+const products = await ProductService.getAll();
+console.log(products);

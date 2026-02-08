@@ -1,0 +1,10 @@
+*** npm i : instala el paquete de node (node_modules) segpun el archivo package.Json
+****  el codigo se ejecuta con los script (start o dev). start ejecuta node y dev nodemon
+  **** node ejecuta una sola vez y nodemon según cada actualización
+  **** ejecutan el archivo main (./srt/app.js)
+
+*** .gitignore contiene el nombre de los archivos a ignorar
+  **** siempre debe tener el archivo node_modules y después las claves ssh
+  
+
+*** la clave constructor para crear modelos trabaja con la clave new al momento de crear objetos

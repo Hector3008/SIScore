@@ -1,0 +1,92 @@
+[
+  {
+    "_ID": 1,
+    "nombre": "nombre 1",
+    "description": "descripcion 1",
+    "categoria": "categoria 1",
+    "tipo": "tipo 1",
+    "cantidad": 50,
+    "equivalente": ""
+  },
+  {
+    "_ID": 2,
+    "nombre": "nombre 2",
+    "description": "descripcion 2",
+    "categoria": "categoria 2",
+    "tipo": "tipo 2",
+    "cantidad": 50,
+    "equivalente": ""
+  },
+  {
+    "_ID": 3,
+    "nombre": "nombre 3",
+    "description": "descripcion 3",
+    "categoria": "categoria 3",
+    "tipo": "tipo 3",
+    "cantidad": 50,
+    "equivalente": ""
+  },
+  {
+    "_ID": 4,
+    "nombre": "nombre 4",
+    "description": "descripcion 4",
+    "categoria": "categoria 4",
+    "tipo": "tipo 4",
+    "cantidad": 50,
+    "equivalente": ""
+  },
+  {
+    "_ID": 5,
+    "nombre": "nombre 5",
+    "description": "descripcion 5",
+    "categoria": "categoria 5",
+    "tipo": "tipo 5",
+    "cantidad": 50,
+    "equivalente": ""
+  },
+  {
+    "_ID": 6,
+    "nombre": "nombre 6",
+    "description": "descripcion 6",
+    "categoria": "categoria 6",
+    "tipo": "tipo 6",
+    "cantidad": 50,
+    "equivalente": ""
+  },
+  {
+    "_ID": 7,
+    "nombre": "nombre 7",
+    "description": "descripcion 7",
+    "categoria": "categoria 7",
+    "tipo": "tipo 7",
+    "cantidad": 50,
+    "equivalente": ""
+  },
+  {
+    "_ID": 8,
+    "nombre": "nombre 8",
+    "description": "descripcion 8",
+    "categoria": "categoria 8",
+    "tipo": "tipo 8",
+    "cantidad": 50,
+    "equivalente": ""
+  },
+  {
+    "_ID": 9,
+    "nombre": "nombre 9",
+    "description": "descripcion 9",
+    "categoria": "categoria 9",
+    "tipo": "tipo 9",
+    "cantidad": 50,
+    "equivalente": ""
+  },
+  {
+    "_ID": 10,
+    "nombre": "nombre 10",
+    "description": "descripcion 10",
+    "categoria": "categoria 10",
+    "tipo": "tipo 10",
+    "cantidad": 50,
+    "equivalente": ""
+  }
+]
