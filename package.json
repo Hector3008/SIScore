@@ -8,11 +8,11 @@
     "start": "node .",
     "dev": "nodemon ."
   },
-  "descripcion scripts":{
+  "descripcion scripts": {
     ". ": "el punto dspues de la clave script (start, dev, test) indica el main (src/app.js)",
     "start": "activa node, despliega el codigo una vez",
     "dev": "inicia nodemon, despliga dinamincamente el codigo. Actualizandose con cada cambio"
-},
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",

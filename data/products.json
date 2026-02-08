@@ -1,5 +1,5 @@
 [
-  {
+   {
     "_ID": 1,
     "nombre": "nombre 1",
     "description": "descripcion 1",
@@ -89,4 +89,5 @@
     "cantidad": 50,
     "equivalente": ""
   }
+  
 ]

@@ -8,3 +8,9 @@
   
 
 *** la clave constructor para crear modelos trabaja con la clave new al momento de crear objetos
+
+*** express ayuda a trabajar entre rutas. Se inicia con el codigo const app = express();
+  ****  se inicia con el codigo app.get("/", (req, res) => {
+    });
+  ****  y se alimenta de routers de tipo app.use("/products", productRouter);
+  ****  también recibe configuraciones como app.use(express.json()) o app.use("/", express.static("./src/public")) y app.use(express.urlencoded({ extended: true }))
