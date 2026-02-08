@@ -2,6 +2,7 @@
   <thead>
     <tr>
       <td><strong>_ID</strong></td>
+      <td><strong>status</strong></td>
       <td><strong>nombre</strong></td>
       <td><strong>description</strong></td>
       <td><strong>categoria</strong></td>
@@ -13,13 +14,14 @@
   {{#each products}}
   <tbody>
       <tr>
-      <td>{{this._ID}}</td>
-      <td>{{this.nombre}}</td>
-      <td>{{this.description}}</td>
-      <td>{{this.categoria}}</td>
-      <td>{{this.tipo}}</td>
-      <td>{{this.cantidad}}</td>
-      <td>{{this.equivalente}}</td>
+        <td>{{this.ID}}</td>
+        <td>{{this.status}}</td>
+        <td>{{this.nombre}}</td>
+        <td>{{this.description}}</td>
+        <td>{{this.categoria}}</td>
+        <td>{{this.tipo}}</td>
+        <td>{{this.cantidad}}</td>
+        <td>{{this.equivalente}}</td>
     </tr>
   </tbody>
 

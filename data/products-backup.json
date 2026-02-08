@@ -42,7 +42,6 @@
   },
   {
     "ID": 5,
-    "status": "true",
     "nombre": "nombre 5",
     "description": "descripcion 5",
     "categoria": "categoria 5",
