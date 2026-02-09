@@ -14,6 +14,7 @@
     });
   ****  y se alimenta de routers de tipo app.use("/products", productRouter);
   ****  también recibe configuraciones como app.use(express.json()) o app.use("/", express.static("./src/public")) y app.use(express.urlencoded({ extended: true }))
+  ****  trabaja rutas de tipo .get (read), .put (update), .post (create), y .delete (delete)
 
 *** handlebars es el motor de frontend. Se activa con las lineas
     const hbs = handlebars.create({
@@ -46,4 +47,51 @@
     (res.render("products.handlebars",{products: result.payload})))
     se le pasan props en un json y sobre esas props se puede iterar en el archivo .handlebars
 
-    
+*** SOCKET: permite comunicacion entre el servidor y el cliente. Se agrega al app.js y trabaja con comandos .socket (cliente) y .io (servidor) con un .on (reciben mensaje) y .emit (envian mensaje)
+
+
+  ingeniería en app.js: 
+    const server = http.createServer(app)// se crea el servidor HTTP real
+    const io = new Server(server);// servidor socket.io real
+    socket(io);//le cargo los sockets
+
+    server.listen(8000, () => {   console.log("server up on http://localhost:8000")}) //se levanta el servidor
+      /*explicacion de métodos y objetos: 
+      io = el servidor
+      socket = conexión individual
+      .emit = enviar mensaje
+      .on = recibir mensaje
+
+      explicacion: 
+      io.on("connection", async (socket) => {
+
+      socket.on("productList", (data) => {
+      io.emit("updatedProducts", data);
+      });
+      el servidor recibe el evento "conexion" 
+      el cliente recibe la lista de productos
+      y el servidor envía la lista actualizada
+
+      el cliente (socket) envía mensajes desde el script que se carga en el html
+      el servidor lo hace desde el codigo interno
+
+      el script del html puede importa <script src="/socket.io/socket.io.js"></script> como carpeta dinámica:
+      y se agrega otro script como este:
+      <script>
+            
+        const socket = io();
+
+        socket.on("connect", () => {
+          console.log("✅ Conectado al socket server con id:", socket.id);
+        });
+
+        socket.on("alerta", () => {
+          console.log("📢 Alerta recibida: nuevo usuario conectado");
+        });
+
+        socket.on("updatedProducts", (data) => {
+          console.log("📦 Productos actualizados:", data);
+        });
+      </script>
+
+      */

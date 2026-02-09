@@ -42,14 +42,15 @@ class ProductFSDAO {
         isFound = true;
         return {
           ...i,
-          status: "deleted",
+          status: "deleted",//solamente cambio el valor status por 'deleted' no lo elimino del array
         };
 
         
       } else return i;
     });
     if (!isFound) return "[ERR] Product does not exist";
-    //actualizo la bdd:
+ 
+    //se actualiza el array:
     await fs.promises.writeFile(
       this.#path,
       JSON.stringify(newProducts, null, 2),

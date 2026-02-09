@@ -16,8 +16,7 @@ export const productsViewController = async (req,res)=>{
 export const deleteProductController = async (req, res) => {
   const id = req.params.pid;
   const productToDelete = await ProductService.getByID(id);
-    console.log("id: ",id)
-    console.log("productToDelete: ", productToDelete);
+  
   if (productToDelete === null) {
     return res
       .status(404)
@@ -25,17 +24,6 @@ export const deleteProductController = async (req, res) => {
   }
 
   let products;
-  let body = {
-    intro: "tu producto ha sido eliminado satisfactoriamente",
-    table: {
-      data: [
-        {
-          productToDelete,
-        },
-      ],
-    },
-    outro: "si crees que ha sido un error por favor comunicate con nosotros",
-  };
 
   try {
     products = await ProductService.deleteByID(id);

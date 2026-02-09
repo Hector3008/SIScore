@@ -7,6 +7,5 @@ const productRouter = Router();
 
 productRouter.get("/", productsController);
 productRouter.get("/:pid", productController);
-
-productRouter.get("/delete/:pid", deleteProductController);
+productRouter.get("/delete/:pid", deleteProductController)//.get provisional, se debe cambiar a .delete
 export default productRouter;
