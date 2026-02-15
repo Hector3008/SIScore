@@ -52,3 +52,23 @@ const app = express();
 
 
 server.listen(8000, () => {   console.log("server up on http://localhost:8000")}) //se levanta el servidor
+
+
+/*
+<script>
+  const socket = io();
+
+  socket.on("connect", () => {
+    console.log("✅ Conectado al socket server con id:", socket.id);
+  });
+
+
+  socket.on("alerta", () => {
+    console.log("📢 Alerta recibida: nuevo usuario conectado");
+  });
+
+  socket.on("updatedProducts", (data) => {
+    console.log("📦 Productos actualizados:", data);
+  });
+</script>
+*/

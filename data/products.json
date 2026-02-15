@@ -1,7 +1,7 @@
 [
   {
     "ID": 1,
-    "status": "true",
+    "status": "deleted",
     "nombre": "nombre 1",
     "description": "descripcion 1",
     "categoria": "categoria 1",
@@ -21,7 +21,6 @@
   },
   {
     "ID": 3,
-
     "status": "true",
     "nombre": "nombre 3",
     "description": "descripcion 3",
