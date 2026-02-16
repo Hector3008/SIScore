@@ -1,31 +1,54 @@
 1. Definir el proyecto
 
+  SIScore es un sistema de información que busca optimizar tareas logísticas en una empresa. Se basa en escalabilidad y estructura por capas para crecer de forma orgánica y sostenida con el tiempo.
+
 - ¿Qué problema resuelve?
 
+  El desconocimiento de la realidad en la empresa. El sistema define datos y los relaciona entre sí para extraer información y tomar decisiones. Entre esas decisiones están las ordenes de abastecimiento e importacion entre almacenes como los pedidos de movimiento a tienda y despacho desde los depósitos de mercadería.
 
 - ¿Para quién es?
 
+  En principio, atiende el caso de la importadora de repuestos automotrices MAX. Pero busca ser replicable y escalable a empresas similares en el futuro.
 
 - ¿Qué valor aporta?
 
+  Previene quiebres de stock y desconocimiento del inventario. Calcula importaciones según estadística y proyecciones. Digitaliza la información para mejor comunicación entre áreas como administración, ventas y almacén. SIScore busca que la empresa funcione mejor.
 
 2. Definir el Alcance
 
-- Que Si va a tener el sistema|
+  - Que SÍ va a tener el sistema|
 
-- que no va a tener el sistema (esto es igual que importante)  No hay que meter IA solo porque se puede a menos que sea parte integra y aporte valor indespensable
+  LO ESENCIAL es manejar objetos de clase Producto junto a objetos de clase Almacen para llegar a objetos de clase Proforma que lleven a Ventas y otras operaciones comerciales.
+
+  - que NO va a tener el sistema (esto es igual que importante)
+  el sistema NO es un marketplace
+  el sistema NO es un catalogo para clientes
+  el sistema NO es un sistema de facturación
+  el sistema NO es una red social
+  el sistema NO es una agenda
+  el sistema NO es una IA
+  el sistema NO es un simulador / videojuego
 
 3. Producto Mínimo Viable (MVP)
 
-- Cuál es la versión más pequeña que logra resolver el problema?
+  - Cuál es la versión más pequeña que logra resolver el problema?
 
-- Enfocarse solo eso para no sobre-desarrollar, ya mas adelante puedes iterar y agregar mas implementaciones
+  el sistema de proformas e inventario puede funcionar sin el conocimiento real del stock
+    pero manejar ese nivel de información permite el calculo de movimientos entre almacenes y el de importaciones con proveedores
 
 4. Requerimientos
 
 - Listar funcionalidades.
 
+
 - Separar en “indespensables” y “deseables”.
+    indispensable:
+      CRUD del objeto producto.
+      CRUD del objeto proforma.
+      CRUD del objeto almacen.
+    deseable:
+      integración de tecnología laser para registrar operaciones como ventas y devoluciones.
+      integracion de tecnología escaner para reconocer producto por sus dimensiones materiales.
 
 5. Arquitectura
 
