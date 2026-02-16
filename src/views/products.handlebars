@@ -2,6 +2,7 @@
   actualizar
 </button>
 
+
 <table class="table table-striped">
   <thead>
     <tr>
@@ -15,8 +16,8 @@
       <td><strong>equivalente</strong></td>
     </tr>
   </thead>
-  {{#each products}}
-  <tbody>
+  <tbody id="tbdodyProducts">  {{#each products}}
+  
       <tr>
         <td>{{this.ID}}</td>
         <td>{{this.status}}</td>
@@ -27,9 +28,10 @@
         <td>{{this.cantidad}}</td>
         <td>{{this.equivalente}}</td>
     </tr>
-  </tbody>
 
   {{/each}}
+  </tbody>
+
     
   <script src="/socket.io/socket.io.js"></script>
   <script src="/js/realTimeProducts.js"></script>

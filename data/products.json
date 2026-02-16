@@ -1,7 +1,7 @@
 [
   {
     "ID": 1,
-    "status": "deleted",
+    "status": "true",
     "nombre": "nombre 1",
     "description": "descripcion 1",
     "categoria": "categoria 1",
@@ -11,7 +11,7 @@
   },
   {
     "ID": 2,
-    "status": "deleted",
+    "status": "true",
     "nombre": "nombre 2",
     "description": "descripcion 2",
     "categoria": "categoria 2",
@@ -81,7 +81,7 @@
   },
   {
     "ID": 9,
-    "status": "true",
+    "status": "deleted",
     "nombre": "nombre 9",
     "description": "descripcion 9",
     "categoria": "categoria 9",

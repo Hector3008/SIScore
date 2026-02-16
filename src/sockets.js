@@ -3,7 +3,9 @@ export default (io) => {
 
   io.on("connection", async (socket) => {
     //console.log("new connection / mensaje desde el cliente. Con el script cargado al .handlebars")
-
+    socket.on("productList", (data) => {
+      io.emit("updatedProducts", data);
+    });
     /*prueba de socket:
     //socket.on = el servidor recibe:
     socket.on("testing message", (data) => {

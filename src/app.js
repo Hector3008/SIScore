@@ -3,6 +3,7 @@ import { Server } from "socket.io";
 import handlebars from "express-handlebars";
 import productRouterView from "./routers/productsRouterView.js";
 import productRouter from "./routers/productsRouter.js";
+import proformsViewRouter  from "./routers/proformsViewRouter.js";
 import socket from "./sockets.js";
 import http from "http";
 
@@ -49,7 +50,7 @@ const app = express();
   app.get("/", (req, res) => {})//sintaxis para trabajar la route directamente
   app.use("/products", productRouterView);//sintaxis para conectar routers
   app.use("/api/products", productRouter);
-
+  app.use("/proformsSistem", proformsViewRouter);
 
 server.listen(8000, () => {   console.log("server up on http://localhost:8000")}) //se levanta el servidor
 

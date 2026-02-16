@@ -1,4 +1,5 @@
 socket = io();
+
 socket.on("connect", () => {
   console.log("✅ Conectado al socket server con id:", socket.id);
 
