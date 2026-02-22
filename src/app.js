@@ -21,26 +21,30 @@ const app = express();
   app.use(express.urlencoded({ extended: true }));//y que va a trabajar con formulario
 
   //ingenieria handlebars, motor de frontend
-    const hbs = handlebars.create({
-        helpers: {
-          eq: function (arg1, arg2, options) {
-            // Verificar si options está definido y es una función
-            if (
-              options &&
-              typeof options.fn === "function" &&
-              typeof options.inverse === "function"
-            ) {
-              if (arg1 === arg2) {
-                return options.fn(this); // Ejecuta el bloque de código de {{#eq}}
-              } else {
-                return options.inverse(this); // Ejecuta el bloque de código de {{else}}
-              }
-            } else {
-              return ""; // Devuelve una cadena vacía si las opciones no son válidas
-            }
-          },
-        },
-      });
+const hbs = handlebars.create({
+  helpers: {
+    eq: function (arg1, arg2, options) {
+      if (
+        options &&
+        typeof options.fn === "function" &&
+        typeof options.inverse === "function"
+      ) {
+        if (arg1 === arg2) {
+          return options.fn(this);
+        } else {
+          return options.inverse(this);
+        }
+      } else {
+        return "";
+      }
+    },
+
+    // 👇 helper CRÍTICO para pasar objetos a JS
+    json: function (context) {
+      return JSON.stringify(context);
+    },
+  },
+});
       app.engine("handlebars", hbs.engine);
 
       app.set("views", "./src/views");

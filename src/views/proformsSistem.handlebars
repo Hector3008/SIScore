@@ -11,7 +11,7 @@
 <table class="table table-striped">
   <thead>
     <tr>
-      <td><strong>_ID</strong></td>
+      <td><strong>ID</strong></td>
       <td><strong>status</strong></td>
       <td><strong>nombre</strong></td>
       <td><strong>description</strong></td>
@@ -39,12 +39,73 @@
 
 
   <script src="/socket.io/socket.io.js"></script>
-  <script src="/js/realTimeProducts.js"></script>
-  <script>
-      const researchForm = document.querySelector("#researchForm");
-        const input = document.querySelector("#search");
 
-        input.addEventListener("input", (e) => {
-          console.log("valor actual:", e.target.value);
-        });
+  <script>
+    const products = {{{ json products }}};   // 👈 ahora sí es un array real JS
+/*testing
+  //  console.log("Products:", products);
+*/
   </script>
+
+
+  <script>
+    const researchForm = document.querySelector("#researchForm"); //formulario de filtro
+    const input = document.querySelector("#search");  
+
+    const productList = {{{ json products }}}; // array recibido por props
+
+    input.addEventListener("input", (e) => {
+
+        const search = e.target.value.toLowerCase();
+
+        let list = productList;
+
+        // filtro según el input
+        const filtered = list.filter(p =>
+          p.tipo.toLowerCase().includes(search) |
+          p.description.toLowerCase().includes(search) |
+          p.nombre.toLowerCase().includes(search) |
+          p.tipo.toLowerCase().includes(search)
+        );
+        /*testing
+              //console.log("search:", search);
+              //console.log("products[0]:", list[0]); //testing
+              //console.log("filtrados:", filtered);
+        */
+      console.log("filtered: ", filtered)
+      socket.emit("filterRequest", filtered)
+      });
+  </script>
+
+  <script>
+socket = io()
+
+
+const table = document.querySelector("#tbdodyProducts")
+socket.on("filterList",(data)=>{
+
+  console.log("data: ",data)
+  table.innerHTML = ""
+    for (product of data) {
+
+    let tr = document.createElement("tr");
+    tr.innerHTML = `
+                    
+      <td>${product.ID}</td>
+      <td>${product.status}</td>
+      <td>${product.nombre}</td>
+      <td>${product.description}</td>
+      <td>${product.categoria}</td>
+      <td>${product.tipo}</td>
+      <td>${product.cantidad}</td>
+      <td>${product.equivalente}</td>
+    `;
+    tbdodyProducts.appendChild(tr);
+  }
+  /*testing
+  //console.log("filterList received"):
+  //console.log("data from filterList: ",data)})
+*/
+})
+  </script>
+

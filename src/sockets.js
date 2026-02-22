@@ -6,6 +6,11 @@ export default (io) => {
     socket.on("productList", (data) => {
       io.emit("updatedProducts", data);
     });
+
+    socket.on("filterRequest", (data) => {
+      console.log("filteredList here: ", data);
+      io.emit("filterList", data);
+    });
     /*prueba de socket:
     //socket.on = el servidor recibe:
     socket.on("testing message", (data) => {
