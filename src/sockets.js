@@ -8,7 +8,8 @@ export default (io) => {
     });
 
     socket.on("filterRequest", (data) => {
-      console.log("filteredList here: ", data);
+/*testing: 
+//       console.log("filteredList here: ", data);*/
       io.emit("filterList", data);
     });
     /*prueba de socket:

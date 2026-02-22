@@ -1,7 +1,3 @@
-<button class="actualizarProductsBtn">
-  actualizar
-</button>
-
 
 <form type="onsubmit" id="researchForm">
   <div class="m-2 form-label">tipo: <input type="text" class="form-control" id="search"></div>
@@ -41,46 +37,52 @@
   <script src="/socket.io/socket.io.js"></script>
 
   <script>
-    const products = {{{ json products }}};   // 👈 ahora sí es un array real JS
+    //se convierte el array recibido pro oel .handlebars:
+    const products = {{{ json products }}};   // ahora sí es un array real JS
 /*testing
   //  console.log("Products:", products);
 */
   </script>
 
 
+<script>
+  //script para filtrar la lista de productos recibida por el .handlebars
+  const researchForm = document.querySelector("#researchForm");
+  const input = document.querySelector("#search");
+
+  const productList = {{{ json products }}}; // array recibido por el .handlebars (html)
+
+  input.addEventListener("input", (e) => {
+
+    const search = e.target.value.toLowerCase().trim();
+
+    // se convierte el string en tokens
+    const tokens = search.split(/\s+/).filter(Boolean);
+    // ej: "mitsubishi estator" -> ["mitsubishi","estator"]
+
+    let list = productList;
+
+    const filtered = list.filter(p => {
+      const text = `
+        ${p.tipo}
+        ${p.description}
+        ${p.nombre}
+        ${p.categoria}
+        ${p.equivalente}
+      `.toLowerCase();
+
+      // 👇 TODAS las palabras deben existir
+      return tokens.every(word => text.includes(word));
+    });
+/* testing: 
+    console.log("filtered:", filtered);*/
+    socket.emit("filterRequest", filtered);
+  });
+</script>
+
   <script>
-    const researchForm = document.querySelector("#researchForm"); //formulario de filtro
-    const input = document.querySelector("#search");  
-
-    const productList = {{{ json products }}}; // array recibido por props
-
-    input.addEventListener("input", (e) => {
-
-        const search = e.target.value.toLowerCase();
-
-        let list = productList;
-
-        // filtro según el input
-        const filtered = list.filter(p =>
-          p.tipo.toLowerCase().includes(search) |
-          p.description.toLowerCase().includes(search) |
-          p.nombre.toLowerCase().includes(search) |
-          p.tipo.toLowerCase().includes(search)
-        );
-        /*testing
-              //console.log("search:", search);
-              //console.log("products[0]:", list[0]); //testing
-              //console.log("filtrados:", filtered);
-        */
-      console.log("filtered: ", filtered)
-      socket.emit("filterRequest", filtered)
-      });
-  </script>
-
-  <script>
+    //script para pintar la tabla de productos tras un filter;
 socket = io()
-
-
 const table = document.querySelector("#tbdodyProducts")
 socket.on("filterList",(data)=>{
 
