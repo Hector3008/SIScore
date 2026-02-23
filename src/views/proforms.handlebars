@@ -1,0 +1,22 @@
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <td><strong>ID</strong></td>
+      <td><strong>status</strong></td>
+      <td><strong>contenido</strong></td>
+    </tr>
+  </thead>
+  <tbody id="tbdodyProforms"> {{#each proforms}}
+
+    <tr>
+      <td>{{this.ID}}</td>
+      <td>{{this.status}}</td>
+      <td>{{this.products}}</td>
+    </tr>
+
+    {{/each}}
+  </tbody>
+
+
+  <script src="/socket.io/socket.io.js"></script>

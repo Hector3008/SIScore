@@ -1,0 +1,252 @@
+<div>
+
+  {{!--
+  <h2>panel de comandos</h2>
+  
+  <button class="">consultar proforma</button>
+  <button class="">cargar proforma</button>
+  <button class="">eliminar proforma</button>
+
+  <h3>imprimir</h3>
+  <h4>proforma</h4>
+  <input type="checkbox" name="proforma" id="">
+  <h4>guia de almacen</h4>
+  <input type="checkbox" name="guia de almacen" id="">
+
+  <h3>descargar</h3>
+  <h4>proforma</h4>
+  <input type="checkbox" name="proforma" id="">
+  <h4>guia de almacen</h4>
+  <input type="checkbox" name="guia de almacen" id="">
+
+</div>
+
+<div>
+  <h2>formulario de membrete</h2>
+
+  <form type="onsubmit" id=""> //menú desplegable de opciones restringidas
+    <div class="m-2 form-label">empresa: <input type="text" class="form-control" id=""></div>
+  </form>
+  <form type="onsubmit" id=""> //relleno automatico según valor de 'empresa'
+    <div class="m-2 form-label">RUC <input type="text" class="form-control" id=""></div>
+  </form>
+  <form type="onsubmit" id="">
+    <div class="m-2 form-label">empresa: <input type="text" class="form-control" id=""></div>
+  </form>
+</div>
+
+<div>
+  <h2>formulario / cliente</h2>
+
+  <form type="onsubmit" id="">
+    <div class="m-2 form-label">cliente: <input type="text" class="form-control" id=""></div>
+  </form> //menú desplegable de opciones libres, se puede rellenar con un string que aparezca en el menú
+  <form type="onsubmit" id="">
+    <div class="m-2 form-label">RUC: <input type="text" class="form-control" id=""></div>
+  </form>
+  <form type="onsubmit" id="">
+    <div class="m-2 form-label">direccion: <input type="text" class="form-control" id=""></div>
+  </form>
+  <form type="onsubmit" id="">
+    <div class="m-2 form-label">provincia: <input type="text" class="form-control" id=""></div>
+  </form>
+  </form>
+  <form type="onsubmit" id="">
+    <div class="m-2 form-label">ciudad: <input type="text" class="form-control" id=""></div>
+  </form>
+
+  <form type="onsubmit" id="">
+    <div class="m-2 form-label">telefono: <input type="text" class="form-control" id=""></div>
+  </form>
+  <form type="onsubmit" id="">
+    <div class="m-2 form-label">e-mail: <input type="text" class="form-control" id=""></div>
+  </form>
+  <form type="onsubmit" id="">
+    <div class="m-2 form-label">asesor de venta: <input type="text" class="form-control" id=""></div>
+    <button>cargar cliente</button> //rellena los campos según la selección hecha<button>registrar cliente</button> //registra el cliente según los campos rellenados
+    <button>registrar cliente</button> //registra el cliente según los campos rellenados
+    <button>actualizar cliente</button> //actualiza el cliente según los campos rellenados
+  </form>
+
+  <form type="onsubmit" id="">
+    <div class="m-2 form-label">entrega: <input type="text" class="form-control" id=""></div>
+  </form>
+
+  <form type="onsubmit" id="">
+    <div class="m-2 form-label">destino: <input type="text" class="form-control" id=""></div>
+  </form>
+
+  <form type="onsubmit" id="">
+    <div class="m-2 form-label">agencia: <input type="text" class="form-control" id=""></div>
+  </form> //desplegable de opcion libre
+
+  <form type="onsubmit" id="">
+    <div class="m-2 form-label">atencion: <input type="text" class="form-control" id=""></div>
+  </form>
+
+  <form type="onsubmit" id="">
+    <div class="m-2 form-label">canal de venta: <input type="text" class="form-control" id=""></div>
+  </form>
+
+  <form type="onsubmit" id="">
+    <div class="m-2 form-label">-- <input type="text" class="form-control" id=""></div>
+  </form>
+
+  <form type="onsubmit" id="">
+    <div class="m-2 form-label">forma de pago: <input type="text" class="form-control" id=""></div>
+  </form>//menu desplegable
+
+  <form type="onsubmit" id="">
+    <div class="m-2 form-label">fecha: <input type="text" class="form-control" id=""></div>
+  </form>
+</div>
+
+
+<div>
+  <h2>formulario otros medios de pago</h2>
+
+  <form type="onsubmit" id="">
+    <div class="m-2 form-label">forma de pago: <input type="text" class="form-control" id=""></div>
+  </form>//menu desplegable opcion restringida
+  <form type="onsubmit" id="">
+    <div class="m-2 form-label">monto: <input type="text" class="form-control" id=""></div>
+  </form>
+  <form type="onsubmit" id="">
+    <div class="m-2 form-label">numero de operacion: <input type="text" class="form-control" id=""></div>
+  </form>
+</div>
+--}}
+<div>
+  <h2>formulario productos</h2>
+
+  <form type="onsubmit" id="researchForm">
+    <div class="m-2 form-label">producto: <input type="text" class="form-control" id="search"></div>
+  </form>
+{{!--
+  <form type="onsubmit" id="">
+    <div class="m-2 form-label">comentario: <input type="text" class="form-control"></div>
+  </form>
+  <form action="">
+    <div class="m-2 form-label">cantidad: <input type="number" class="form-control"></div>
+  </form>
+  <button>cargar producto</button>
+
+  <form type="onsubmit" id="">
+    <div class="m-2 form-label">producto: <input type="text" class="form-control"></div>
+  </form>//menu desplegable (productos de la proforma)
+  <button>eliminar producto</button>//elimina el producto seleccionado de la proforma
+  <button>editar producto</button>//edita el producto seleccionado de la proforma
+  <br>
+  <button>borrar productos</button>
+</div>
+--}}
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <td><strong>ID</strong></td>
+      <td><strong>status</strong></td>
+      <td><strong>nombre</strong></td>
+      <td><strong>description</strong></td>
+      <td><strong>categoria</strong></td>
+      <td><strong>tipo</strong></td>
+      <td><strong>cantidad</strong></td>
+      <td><strong>equivalente</strong></td>
+    </tr>
+  </thead>
+  <tbody id="tbdodyProducts"> {{#each products}}
+
+    <tr>
+      <td>{{this.ID}}</td>
+      <td>{{this.status}}</td>
+      <td>{{this.nombre}}</td>
+      <td>{{this.description}}</td>
+      <td>{{this.categoria}}</td>
+      <td>{{this.tipo}}</td>
+      <td>{{this.cantidad}}</td>
+      <td>{{this.equivalente}}</td>
+    </tr>
+
+    {{/each}}
+  </tbody>
+
+</table>
+
+<div>
+  <h2>previsualizacion de proforma</h2>
+</div>
+  <script src="/socket.io/socket.io.js"></script>
+
+  <script>
+    //se convierte el array recibido pro oel .handlebars:
+    const products = {{{ json products }}};   // ahora sí es un array JS
+    /*testing
+      //  console.log("Products:", products);
+    */
+  </script>
+
+
+  <script>
+    //script para filtrar la lista de productos recibida por el .handlebars
+    const researchForm = document.querySelector("#researchForm");
+    const input = document.querySelector("#search");
+
+    const productList = {{{ json products }}}; // array recibido por el .handlebars (html)
+
+    input.addEventListener("input", (e) => {
+
+      const search = e.target.value.toLowerCase().trim();
+
+      // se convierte el string en tokens
+      const tokens = search.split(/\s+/).filter(Boolean);
+      // ej: "mitsubishi estator" -> ["mitsubishi","estator"]
+
+      let list = productList;
+
+      const filtered = list.filter(p => {
+        const text = `
+        ${p.tipo}
+        ${p.description}
+        ${p.nombre}
+        ${p.categoria}
+        ${p.equivalente}
+      `.toLowerCase();
+
+        // 👇 TODAS las palabras deben existir
+        return tokens.every(word => text.includes(word));
+      });
+      /* testing: 
+          console.log("filtered:", filtered);*/
+      socket.emit("filterRequest", filtered);
+    });
+  </script>
+
+  <script>
+    //script para pintar la tabla de productos tras un filter;
+    socket = io()
+    const table = document.querySelector("#tbdodyProducts")
+    socket.on("filterList", (data) => {
+
+      console.log("data: ", data)
+      table.innerHTML = ""
+      for (product of data) {
+
+        let tr = document.createElement("tr");
+        tr.innerHTML = `
+                    
+      <td>${product.ID}</td>
+      <td>${product.status}</td>
+      <td>${product.nombre}</td>
+      <td>${product.description}</td>
+      <td>${product.categoria}</td>
+      <td>${product.tipo}</td>
+      <td>${product.cantidad}</td>
+      <td>${product.equivalente}</td>
+    `;
+        tbdodyProducts.appendChild(tr);
+      }
+      /*testing
+      //console.log("filterList received"):
+      //console.log("data from filterList: ",data)})
+    */
+    })
+  </script>

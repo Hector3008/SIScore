@@ -6,6 +6,8 @@ import productRouter from "./routers/productsRouter.js";
 import proformsViewRouter  from "./routers/proformsViewRouter.js";
 import socket from "./sockets.js";
 import http from "http";
+import proformsRouter from "./routers/proformsRouter.js";
+import proformsSystemViewRouter from "./routers/proformsSystemViewRouter.js";
 
 //se crea el app de express:
 const app = express();
@@ -54,7 +56,10 @@ const hbs = handlebars.create({
   app.get("/", (req, res) => {})//sintaxis para trabajar la route directamente
   app.use("/products", productRouterView);//sintaxis para conectar routers
   app.use("/api/products", productRouter);
-  app.use("/proformsSistem", proformsViewRouter);
+  app.use("/api/proforms",proformsRouter);
+  
+  app.use("/proforms", proformsViewRouter);
+  app.use("/proformsSystem", proformsSystemViewRouter);
 
 server.listen(8000, () => {   console.log("server up on http://localhost:8000")}) //se levanta el servidor
 

@@ -1,10 +1,12 @@
-import { ProductService } from "../services/services.js";
+import {ProformsService } from "../services/services.js";
 
 export const proformsViewController = async (req, res) => {
-  const result = await ProductService.getAll(req, res);
-
-  const products = result.payload.filter(
-    (product) => product.status != "deleted",
+  const result = await ProformsService.getAll(req, res);
+/*testing:
+  //console.log("result: ", result)*/
+  const proforms = result.payload.filter(
+    (proform) => proform.status != "deleted",
   );
-  res.render("proformsSistem.handlebars", { products });
+  res.render("proforms.handlebars", { proforms });
 };
+

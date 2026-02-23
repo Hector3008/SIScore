@@ -1,5 +1,5 @@
 import {
-  productDao
+  productDao, proformsDAO
 } from "./persistenceFactory.js";
 
 import {
@@ -8,3 +8,4 @@ import {
 
 
 export const ProductService = new ProductRepository(new productDao());
+export const ProformsService = new proformsDAO(new proformsDAO());

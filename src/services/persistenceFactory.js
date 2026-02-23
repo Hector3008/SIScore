@@ -4,12 +4,17 @@
 let PERSISTENCE = "FS";
 
 export let productDao;
+export let proformsDAO;
 
 switch (PERSISTENCE) {
   case "FS":
     const { default: ProductFSDAO } =
       await import("../dao/FS/product.fs.dao.js");
     productDao = ProductFSDAO;
+
+        const { default: ProformsFSDAO } =
+          await import("../dao/FS/proforms.fs.dao.js");
+        proformsDAO = ProformsFSDAO;
     break;
 
   case "mongo":
