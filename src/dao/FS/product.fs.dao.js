@@ -3,7 +3,7 @@ import fs from "fs";
 class ProductFSDAO {
   #path;
   constructor() {
-    this.#path = "data/products.json";
+    this.#path = "data/products-newjson.json";
     this.#init();
     }
     async #init() {      if (!fs.existsSync(this.#path)) {        await fs.promises.writeFile(this.#path, JSON.stringify([], null));}

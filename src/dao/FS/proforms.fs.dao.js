@@ -26,9 +26,9 @@ class ProformsFSDAO {
   async getByID(id) {
     let data = await fs.promises.readFile("data/proforms.json", "utf-8");
     let proforms = JSON.parse(data);
-
+    console.log("proforms: ", proforms)
     const found = proforms.find((i) => i.ID == id);
-    if (!found) return "ERROR: producto no encontrado";
+    if (!found) return "ERROR: proforma no encontrada";
     return found;
   }
   async deleteByID(id) {

@@ -10,11 +10,11 @@ switch (PERSISTENCE) {
   case "FS":
     const { default: ProductFSDAO } =
       await import("../dao/FS/product.fs.dao.js");
-    productDao = ProductFSDAO;
+      productDao = ProductFSDAO;
 
-        const { default: ProformsFSDAO } =
-          await import("../dao/FS/proforms.fs.dao.js");
-        proformsDAO = ProformsFSDAO;
+    const { default: ProformsFSDAO } =
+      await import("../dao/FS/proforms.fs.dao.js");
+      proformsDAO = ProformsFSDAO;
     break;
 
   case "mongo":

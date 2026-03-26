@@ -8,12 +8,17 @@
     <tr>
       <td><strong>ID</strong></td>
       <td><strong>status</strong></td>
-      <td><strong>nombre</strong></td>
-      <td><strong>description</strong></td>
-      <td><strong>categoria</strong></td>
-      <td><strong>tipo</strong></td>
-      <td><strong>cantidad</strong></td>
-      <td><strong>equivalente</strong></td>
+      <td><strong>CODIGO_FORMATEADO</strong></td>
+      <td><strong>CODIGO</strong></td>
+      <td><strong>STOCK_LV</strong></td>
+      <td><strong>STOCK_SJL</strong></td>
+      <td><strong>STOCK</strong></td>
+      <td><strong>EQUIVALENTES_STOCK</strong></td>
+      <td><strong>DESCRIPCION</strong></td>
+      <td><strong>FAMILIA</strong></td>
+      <td><strong>SUBFAMILIA</strong></td>
+      <td><strong>PROVEEDOR</strong></td>
+      <td><strong>SUBFAMILIA</strong></td>
     </tr>
   </thead>
   <tbody id="tbdodyProducts">  {{#each products}}
@@ -21,15 +26,21 @@
       <tr>
         <td>{{this.ID}}</td>
         <td>{{this.status}}</td>
-        <td>{{this.nombre}}</td>
-        <td>{{this.description}}</td>
-        <td>{{this.categoria}}</td>
-        <td>{{this.tipo}}</td>
-        <td>{{this.cantidad}}</td>
-        <td>{{this.equivalente}}</td>
+        <td>{{this.CODIGO_FORMATEADO}}</td>
+        <td>{{this.CODIGO}}</td>
+        <td>{{this.STOCK_LV}}</td>
+        <td>{{this.STOCK_SJL}}</td>
+        <td>{{this.STOCK}}</td>
+        <td>{{this.EQUIVALENTES_STOCK}}</td>
+        <td>{{this.DESCRIPCION}}</td>
+        <td>{{this.FAMILIA}}</td>
+        <td>{{this.SUBFAMILIA}}</td>
+        <td>{{this.PROVEEDOR}}</td>
+        <td>{{this.MARCA}}</td>
     </tr>
 
   {{/each}}
+
   </tbody>
 
     
