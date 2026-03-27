@@ -7,10 +7,12 @@ export class ProductRepository {
   deleteByID = async (id) => await this.dao.deleteByID(id);
 }
 
-export class ProformsRepository{
-  constructor(dao){    
-  this.dao = dao
-}
-  getAll = async ()=>await this.dao.getAll();
-  getByID = async (id) => await this.dao.getByID(id)
+export class ProformsRepository {
+  constructor(dao) {
+    this.dao = dao;
+  }
+  getAll = async () => await this.dao.getAll();
+  getByID = async (id) => await this.dao.getByID(id);
+  deleteByID = async (id) => await this.dao.deleteByID(id);
+  create = async() => await this.dao.create()
 }

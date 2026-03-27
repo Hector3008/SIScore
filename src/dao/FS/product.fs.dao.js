@@ -31,12 +31,18 @@ class ProductFSDAO {
     return found;
   }
   async deleteByID(id) {
+    console.log("deleteByID here")
+
     if (!fs.existsSync(this.#path)) return "[ERR] DB file does not exist";
 
     let isFound = false;
     let data = await fs.promises.readFile(this.#path, "utf-8");
+    
     let products = JSON.parse(data);
 
+    console.log("products: ", products)
+    
+    
     let newProducts = products.map((i) => {
       if (i.ID == id) {
         isFound = true;
@@ -44,8 +50,6 @@ class ProductFSDAO {
           ...i,
           status: "deleted",//solamente cambio el valor status por 'deleted' no lo elimino del array
         };
-
-        
       } else return i;
     });
     if (!isFound) return "[ERR] Product does not exist";

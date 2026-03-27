@@ -1,7 +1,9 @@
 [
   {
     "ID": 1,
-    "cliente":{"nombre":"pedro jimenez"},
+    "cliente": {
+      "nombre": "pedro jimenez"
+    },
     "products": [
       {
         "ID": 1,
@@ -14,7 +16,6 @@
         "equivalente": "Valeo 439651, Denso DAN930",
         "precio unitario": 50
       },
-
       {
         "ID": 2,
         "cantidad": 3,
@@ -26,7 +27,6 @@
         "equivalente": "Bosch AL9960, Valeo TG12C",
         "precio unitario": 40
       },
-
       {
         "ID": 3,
         "cantidad": 1,
@@ -39,59 +39,14 @@
         "precio unitario": 30
       }
     ],
-    "status": "true"
+    "status": "deleted"
   },
-    
   {
     "ID": 2,
-    
-    "status":"true",
-    "cliente":{"nombre":"pedro jimenez"},
-    "products": [
-      {
-        "ID": 1,
-        "status": "true",
-        "nombre": "Alternador Bosch 12V 90A",
-        "description": "Alternador 12V 90A para sedanes y camionetas livianas.",
-        "categoria": "Sistema eléctrico",
-        "tipo": "Alternador",
-        "cantidad": 5,
-        "equivalente": "Valeo 439651, Denso DAN930",
-        "precio unitario": 50
-      },
-
-      {
-        "ID": 2,
-        "cantidad": 3,
-        "status": "true",
-        "nombre": "Alternador Denso 12V 120A",
-        "description": "Alternador de alto rendimiento para SUVs y pickups.",
-        "categoria": "Sistema eléctrico",
-        "tipo": "Alternador",
-        "equivalente": "Bosch AL9960, Valeo TG12C",
-        "precio unitario": 40
-      },
-
-      {
-        "ID": 3,
-        "cantidad": 1,
-        "status": "true",
-        "nombre": "Alternador Mitsubishi 12V 110A",
-        "description": "Alternador reforzado para trabajo continuo.",
-        "categoria": "Sistema eléctrico",
-        "tipo": "Alternador",
-        "equivalente": "Denso 210-0630, Bosch 0986083000",
-        "precio unitario": 30
-      }
-    ]
-  },
-  
-  {
-    "ID": 3,
-
     "status": "true",
-
-    "cliente": { "nombre": "pedro jimenez" },
+    "cliente": {
+      "nombre": "pedro jimenez"
+    },
     "products": [
       {
         "ID": 1,
@@ -104,7 +59,6 @@
         "equivalente": "Valeo 439651, Denso DAN930",
         "precio unitario": 50
       },
-
       {
         "ID": 2,
         "cantidad": 3,
@@ -116,7 +70,6 @@
         "equivalente": "Bosch AL9960, Valeo TG12C",
         "precio unitario": 40
       },
-
       {
         "ID": 3,
         "cantidad": 1,
@@ -130,4 +83,4 @@
       }
     ]
   }
-]
+  ]
