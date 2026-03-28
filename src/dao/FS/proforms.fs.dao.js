@@ -27,7 +27,6 @@ class ProformsFSDAO {
     let data = await fs.promises.readFile("data/proforms.json", "utf-8");
     let proforms = JSON.parse(data);
 
-
     const found = proforms.find((i) => i.ID == id);
     if (!found) return "ERROR: proforma no encontrada";
     return found;
@@ -58,33 +57,32 @@ class ProformsFSDAO {
 
     return newProforms.find((i) => i.ID === id);
   }
-  async create(){
-    if (!fs.existsSync(this.#path)) return "[ERR] DB file does not exists";
+  async create(data) {
+    console.log("proforms.fs.dao.create here");
+    if (!fs.existsSync(this.#path)) {
+      throw new Error("DB file does not exist");
+    }
 
+    console.log("data from proforms.fs.dao.create: ", data);
 
-    const proform  = {
+    const proform = {
       id: 4,
       cliente: {
         nombre: "pedro perez",
-        ruc: "206051224566"
+        ruc: "206051224566",
       },
-      products: [
-        {id: 1},
-        {id: 3},
-        {id: 6}
-      ],
-      status: true
-    }
-    let data = await fs.promises.readFile(this.#path, "utf-8");
-    let proforms = JSON.parse(data);
-        proforms.push(proform);
+      products: [{ id: 1 }, { id: 3 }, { id: 6 }],
+      status: true,
+    };
 
-        await fs.promises.writeFile(
-          this.#path,
-          JSON.stringify(proforms, null, 2),
-        );
-        return proform;
+    let result = await fs.promises.readFile(this.#path, "utf-8");
+    let proforms = JSON.parse(result);
 
+    proforms.push(data);
+
+    await fs.promises.writeFile(this.#path, JSON.stringify(proforms, null, 2));
+
+    return proform;
   }
 }
 

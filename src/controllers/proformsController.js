@@ -41,7 +41,8 @@ export const proformDeleteController = async (req, res) => {
 
 export const proformCreateController = async (req,res)=>
 {
-  const result = await ProformsService.create(req, res);
-  res.status(200).json(result);
+  const data = req.body;
 
+  const result = await ProformsService.create(data);
+  res.status(200).json(result);
 }

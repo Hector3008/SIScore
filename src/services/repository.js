@@ -14,5 +14,7 @@ export class ProformsRepository {
   getAll = async () => await this.dao.getAll();
   getByID = async (id) => await this.dao.getByID(id);
   deleteByID = async (id) => await this.dao.deleteByID(id);
-  create = async() => await this.dao.create()
+  create = async (data) => {
+    console.log("proformsRepository.create here")
+    await this.dao.create(data)}
 }
