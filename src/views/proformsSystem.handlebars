@@ -270,7 +270,7 @@
         <label><input type="checkbox"> Guía almacén</label>
       </div>
 
-      <button class="side-btn orange">CARGAR PROFORMA</button>
+      <button class="side-btn orange" id="postProformBtn">CARGAR PROFORMA</button>
       <button class="side-btn red">REINICIAR</button>
     </aside>
 
@@ -325,6 +325,8 @@
 <div>
   <h2>previsualizacion de proforma</h2>
 </div>
+
+
   <style>.proforma-app{
   font-family: Arial, sans-serif;
   background:#f2f2f2;
@@ -431,14 +433,6 @@
 
   <script src="/socket.io/socket.io.js"></script>
   
-  <script>
-    //se convierte el array recibido por el .handlebars:
-    const products = {{{ json products }}};   // ahora sí es un array JS
-    /*testing
-      //  console.log("Products:", products);
-    */
-  </script>
-  
   
   <script>
     //script para filtrar la lista de productos recibida por el .handlebars
@@ -446,7 +440,8 @@
     const input = document.querySelector("#search");
 
     const productList = {{{ json products }}}; // array recibido por el .handlebars (html)
-  console.log("productList: ", productList)
+
+//  console.log("productList: ", productList)
     input.addEventListener("input", (e) => {
 
       const search = e.target.value.toLowerCase().trim();
@@ -518,3 +513,5 @@
     */
     })
   </script>
+
+    <script src="js/btns/postProformBtn.js"></script>
