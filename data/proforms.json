@@ -95,26 +95,30 @@
     },
     "entrega": "8",
     "destino": "9",
-    "agencia": "10",
-    "atencion": "11",
-    "fecha": "",
-    "vendedor": "David"
+    "agencia": "11",
+    "atencion": "12",
+    "fecha": "13",
+    "vendedor": "David",
+    "canal": "Tienda",
+    "pago": "Credito"
   },
   {
     "cliente": {
       "nombre": "1",
-      "ruc": "2",
-      "telefono": "3",
-      "email": "4",
-      "direccion": "5",
-      "provincia": "6",
-      "ciudad": "7"
+      "ruc": "",
+      "telefono": "",
+      "email": "",
+      "direccion": "23",
+      "provincia": "",
+      "ciudad": ""
     },
-    "entrega": "8",
-    "destino": "9",
-    "agencia": "10",
-    "atencion": "11",
-    "fecha": "12",
-    "vendedor": ""
+    "entrega": "3",
+    "destino": "",
+    "agencia": "",
+    "atencion": "",
+    "fecha": "",
+    "vendedor": "",
+    "canal": "Tienda",
+    "pago": ""
   }
 ]
