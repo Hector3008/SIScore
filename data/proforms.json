@@ -82,5 +82,39 @@
         "precio unitario": 30
       }
     ]
+  },
+  {
+    "cliente": {
+      "nombre": "1",
+      "ruc": "2",
+      "telefono": "3",
+      "email": "4",
+      "direccion": "5",
+      "provincia": "6",
+      "ciudad": "7"
+    },
+    "entrega": "8",
+    "destino": "9",
+    "agencia": "10",
+    "atencion": "11",
+    "fecha": "",
+    "vendedor": "David"
+  },
+  {
+    "cliente": {
+      "nombre": "1",
+      "ruc": "2",
+      "telefono": "3",
+      "email": "4",
+      "direccion": "5",
+      "provincia": "6",
+      "ciudad": "7"
+    },
+    "entrega": "8",
+    "destino": "9",
+    "agencia": "10",
+    "atencion": "11",
+    "fecha": "12",
+    "vendedor": ""
   }
 ]
