@@ -93,7 +93,7 @@
         <div class="block-title">OTROS MEDIOS DE PAGO</div>
 
         <div class="grid-3">
-          <select id="form-forma-de-pago-(otros-medios-de-pago)-field">
+          <select id="form-pagos-medio-field">
               <option value="" disabled selected hidden>Cuenta destino</option>
               <option>BCP Max Imp</option>
               <option>BCP Importadora</option>
@@ -108,14 +108,27 @@
 
           </select>
           
-          <input id="form-monto-(otros-medios-de-pago)-field" placeholder="Monto">
-          <input id="form-operacion-(otros-medios-de-pago)-field" placeholder="N° operación">
+          <input id="form-pagos-montos-field" placeholder="Monto">
+          <input id="form-pagos-operacion-field" placeholder="N° operación">
         </div>
       {{!-- OTROS MEDIOS DE PAGO / BUTTONS --}}
         <div class="btn-row">
-          <button class="btn red">Borrar medio</button>
-          <button class="btn green">Cargar medio</button>
+          <button class="btn red">Borrar pagos</button>
+          <button id="cargarPagoBtn" class="btn green">Cargar pago</button>
         </div>
+<table class="table table-striped">
+        <thead>
+          <tr>
+            <th></th>
+            <th>edit</th>
+            <th>medio</th>
+            <th>monto</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody id="tbbodyPagos">
+                  </tbody>
+        </table>
       </section>
 
       {{!-- PRODUCTOS --}}
@@ -127,9 +140,8 @@
             <tr>
               <th>Cantidad</th>
               <th>Producto</th>
-
               <th>Comentario</th>
-              <th>Importe Unit.</th>
+              <th>Importe Unit</th>
               <th>Total</th>
             </tr>
           </thead>
@@ -190,7 +202,7 @@
       <td><strong>MARCA</strong></td>
     </tr>
   </thead>
-  <tbody id="tbdodyProducts"> {{#each products}}
+  <tbody id="tbbodyProducts"> {{#each products}}
 
     <tr>
       <td>{{this.status}}</td>
@@ -222,26 +234,18 @@
 
 <script src="/socket.io/socket.io.js"></script>
 
-
-{{!-- //script para filtrar la lista de productos recibida por el .handlebars
- --}}
-<script>
-    const researchForm = document.querySelector("#researchForm");
+<script>//filter de la lista productos
+  const researchForm = document.querySelector("#researchForm");
   const input = document.querySelector("#search");
-
+  socket = io()
   const productList = {{{ json products }}}; // array recibido por el .handlebars (html)
 
-  //  console.log("productList: ", productList)
   input.addEventListener("input", (e) => {
-
     const search = e.target.value.toLowerCase().trim();
-    console.log("search: ", search)
     // se convierte el string en tokens
     const tokens = search.split(/\s+/).filter(Boolean);
     // ej: "mitsubishi estator" -> ["mitsubishi","estator"]
-
     let list = productList;
-
     const filtered = list.filter(p => {
       const text = `
           ${p.CODIGO_FORMATEADO}
@@ -251,23 +255,19 @@
           ${p.MARCA}
           ${p.SUBFAMILIA}
           ${p.FAMILIA}
-          
         `.toLowerCase();
-
       // 👇 TODAS las palabras deben existir
       return tokens.every(word => text.includes(word));
     });
-    /* testing: 
-        console.log("filtered:", filtered);*/
     socket.emit("filterRequest", filtered);
   });
 </script>
-{{!-- script para pintar la tabla de productos tras un filter;  --}}
-<script>
-  const table = document.querySelector("#tbdodyProducts")
+
+<script>//print de la tabla productos
+  const table = document.querySelector("#tbbodyProducts")
+
   socket.on("filterList", (data) => {
 
-    console.log("data: ", data)
     table.innerHTML = ""
     for (product of data) {
 
@@ -293,16 +293,78 @@
         
         <td>${product.MARCA}</td>
       `;
-      tbdodyProducts.appendChild(tr);
+      tbbodyProducts.appendChild(tr);
     }
-    /*testing
-    //console.log("filterList received"):
-    //console.log("data from filterList: ",data)})
-  */
+
   })
 </script>
 
+<script>//post de la lista pagos
+  const cargarPagoBtn = document.querySelector("#cargarPagoBtn")
+  cargarPagoBtn.addEventListener("click",(e)=>{
+    
+    const monto = document.querySelector("#form-pagos-montos-field").value
+    const operacion = document.querySelector("#form-pagos-operacion-field").value
+    const medio = document.querySelector("#form-pagos-medio-field").value
+
+  const pago = {monto, operacion, medio}
+    socket.emit("cargarPagoBtn", pago)
+  })
+</script>
+
+<script>//print de la tabla pagos
+  const tablePagos = document.querySelector("#tbbodyPagos")
+  socket.on("pagos",(data)=>{
+    
+    const pagos = document.querySelectorAll(".pagoTr")//devuelve un objeto nodeList
+       
+    const pagosArray = Array.from(pagos)//lo convertimos en array y lo formateamos
+    .map((tr,index) => {
+      const tds = tr.querySelectorAll("td");
+      return {
+        index: index + 1,
+        medio: tds[1].textContent.trim(),
+        monto: tds[2].textContent.replace(" /S", "").trim(),
+        operacion: tds[3].textContent.trim()
+      };
+    });
+    pagosArray.push({index: pagosArray.length +1 ,medio: data.medio, monto: data.monto, operacion: data.operacion})
+    console.log("pagosArray 2: ", pagosArray)
+    
+    tablePagos.innerHTML = ""
+
+    for (pago of pagosArray) {
+    const tr = document.createElement("tr");
+    tr.classList.add("pagoTr");
+    tr.id = `pago-${pago.index}-tr`
+        tr.innerHTML = `
+              <td>
+                <button id="delete-btn-pago-${pago.index}">eliminar</button>
+              </td>
+              <td>${pago.medio}</td>
+              <td>${pago.monto} /S</td>
+              <td>${pago.operacion}</td>
+              <td><button>editar</button></td>
+        `
+  tablePagos.appendChild(tr);  }
+  })
+
+// ✅ listener global (solo una vez)
+tablePagos.addEventListener("click", (e) => {
+  if (e.target.id.startsWith("delete-btn-pago-")) {
+    const tr = e.target.closest("tr");
+    tr.remove();
+  }
+});
+
+</script>
+
+<script>
+
+</script>
+
 <script src="js/btns/postProformBtn.js"></script>
+
 {{!-- CSS --}}
 <style>
   .proforma-app {

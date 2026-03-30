@@ -1,7 +1,17 @@
 const postProformBtn = document.querySelector("#postProformBtn");
+/*
+  el boton postProform ejecuta el metodo post para crear una nueva proforma. Recibiendo informacion del frontend y conectandola al backend
 
+  captura informacion del formulario cliente ✅
+  la lista del medios de pago
+  y la lista de productos
+  
+  con eso crea una proforma
+  y se despide con una notificacion
+*/
 postProformBtn.addEventListener("click", (e) => {
   //captura de datos, formulario cliente
+
   const canal = document.querySelector("#form-canal-de-venta-field").value;
   const vendedor = document.querySelector("#form-vendedor-field").value;
   const pago = document.querySelector("#form-forma-de-pago-field").value;
@@ -49,7 +59,7 @@ postProformBtn.addEventListener("click", (e) => {
     console.log("res.status here: ", res.status);
     return res.text();
   })
-  
+
   const reset_values= ()=>{
     document.querySelector("#form-canal-de-venta-field").value = "";
     document.querySelector("#form-vendedor-field").value = "";

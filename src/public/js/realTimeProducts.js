@@ -25,8 +25,8 @@ socket.on("updatedProducts", (data) => {
   console.log("data from socket: ", data);
 
   data = data.filter(i=> i.status != "deleted")
-    const tbdodyProducts = document.getElementById("tbdodyProducts");
-    tbdodyProducts.innerHTML = `  `;
+    const tbbodyProducts = document.getElementById("tbbodyProducts");
+    tbbodyProducts.innerHTML = `  `;
     
     for (product of data) {
       
@@ -42,7 +42,7 @@ socket.on("updatedProducts", (data) => {
       <td>${product.cantidad}</td>
       <td>${product.equivalente}</td>
     `;
-      tbdodyProducts.appendChild(tr);
+      tbbodyProducts.appendChild(tr);
     }
 });
 

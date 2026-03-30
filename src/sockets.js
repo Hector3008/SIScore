@@ -8,10 +8,14 @@ export default (io) => {
     });
 
     socket.on("filterRequest", (data) => {
-/*testing: 
-//       console.log("filteredList here: ", data);*/
+
       io.emit("filterList", data);
     });
+
+    socket.on("cargarPagoBtn", data =>{
+      io.emit("pagos", data)
+    });
+
     /*prueba de socket:
     //socket.on = el servidor recibe:
     socket.on("testing message", (data) => {
