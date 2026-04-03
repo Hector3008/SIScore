@@ -12,24 +12,46 @@ const postProformBtn = document.querySelector("#postProformBtn");
 postProformBtn.addEventListener("click", (e) => {
   //captura de datos, formulario cliente
 
-  const canal = document.querySelector("#form-canal-de-venta-field").value;
-  const vendedor = document.querySelector("#form-vendedor-field").value;
-  const pago = document.querySelector("#form-forma-de-pago-field").value;
-  const nombre = document.querySelector("#form-client-field").value;
-  const ruc = document.querySelector("#form-ruc-field").value;
-  const telefono = document.querySelector("#form-telefono-field").value;
-  const email = document.querySelector("#form-email-field").value;
-  const direccion = document.querySelector("#form-direccion-field").value;
-  const provincia = document.querySelector("#form-provincia-field").value;
-  const ciudad = document.querySelector("#form-ciudad-field").value;
-  const entrega = document.querySelector("#form-Entrega-field").value;
-  const destino = document.querySelector("#form-destino-field").value;
-  const agencia = document.querySelector("#form-agencia-field").value;
-  const atencion = document.querySelector("#form-atencion-field").value;
-  const fecha = document.querySelector("#form-fecha-field").value;
+  const empresa = document.querySelector("#empresa-nombre").innerHTML
+  const empresa_telefono = document.querySelector("#empresa-telefono").innerHTML
+  const empresa_ruc = document.querySelector("#empresa-ruc").innerHTML;
+  const empresa_email = document.querySelector("#empresa-email").innerHTML;
 
+  const proform = document.querySelector("#proform-number").innerHTML;
+
+  const canal = document.querySelector("#form-cliente-canal-de-venta-field").value;
+  const vendedor = document.querySelector("#form-client-vendedor-field").value;
+  const pago = document.querySelector("#form-client-pago-field").value;
+  const ruc = document.querySelector("#form-client-ruc-field").value;
+  const telefono = document.querySelector("#form-client-telefono-field").value;
+  const email = document.querySelector("#form-client-email-field").value;
+  const direccion = document.querySelector("#form-client-direccion-field").value;
+  const provincia = document.querySelector("#form-client-provincia-field").value;
+  const ciudad = document.querySelector("#form-client-ciudad-field").value;
+  const entrega = document.querySelector("#form-client-entrega-field").value;
+  const destino = document.querySelector("#form-client-destino-field").value;
+  const agencia = document.querySelector("#form-client-agencia-field").value;
+  const atencion = document.querySelector("#form-client-atencion-field").value;
+  const fecha = document.querySelector("#form-client-fecha-field").value;
+  const comprobante = document.querySelector("#form-client-comprobante-field").value;
+  const pagos = document.querySelectorAll(".pagoTr"); //devuelve un objeto nodeList
+
+  const pagosArray = Array.from(pagos) //lo convertimos en array y lo formateamos
+    .map((tr, index) => {
+      const tds = tr.querySelectorAll("td");
+      return {
+        index: index + 1,
+        medio: tds[1].textContent.trim(),
+        monto: tds[2].textContent.replace(" /S", "").trim(),
+        operacion: tds[3].textContent.trim(),
+      };
+    });
   e.preventDefault();
   const body = {
+    "numero de proforma": proform,
+    membrete: {
+      empresa, email: empresa_email, ruc: empresa_ruc, telefono: empresa_telefono
+    },
     cliente: {
       nombre,
       ruc,
@@ -47,6 +69,8 @@ postProformBtn.addEventListener("click", (e) => {
     vendedor,
     canal,
     pago,
+    comprobante,
+    pagos: pagosArray,
   };
 
   fetch("/api/proforms/", {
@@ -61,21 +85,21 @@ postProformBtn.addEventListener("click", (e) => {
   })
 
   const reset_values= ()=>{
-    document.querySelector("#form-canal-de-venta-field").value = "";
-    document.querySelector("#form-vendedor-field").value = "";
-    document.querySelector("#form-forma-de-pago-field").value = "";
-    document.querySelector("#form-client-field").value = "";
-    document.querySelector("#form-ruc-field").value = "";
-    document.querySelector("#form-telefono-field").value = "";
-    document.querySelector("#form-email-field").value = "";
-    document.querySelector("#form-direccion-field").value = "";
-    document.querySelector("#form-provincia-field").value = "";
-    document.querySelector("#form-ciudad-field").value = "";
-    document.querySelector("#form-Entrega-field").value = "";
-    document.querySelector("#form-destino-field").value = "";
-    document.querySelector("#form-agencia-field").value = "";
-    document.querySelector("#form-atencion-field").value = "";
-    document.querySelector("#form-fecha-field").value = "";
+    document.querySelector("#form-cliente-canal-de-venta-field").value = "";
+    document.querySelector("#form-client-vendedor-field").value = "";
+    document.querySelector("#form-client-pago-field").value = "";
+    document.querySelector("#form-client-name-field").value = "";
+    document.querySelector("#form-client-ruc-field").value = "";
+    document.querySelector("#form-client-telefono-field").value = "";
+    document.querySelector("#form-client-email-field").value = "";
+    document.querySelector("#form-client-direccion-field").value = "";
+    document.querySelector("#form-client-provincia-field").value = "";
+    document.querySelector("#form-client-ciudad-field").value = "";
+    document.querySelector("#form-client-entrega-field").value = "";
+    document.querySelector("#form-client-destino-field").value = "";
+    document.querySelector("#form-client-agencia-field").value = "";
+    document.querySelector("#form-client-atencion-field").value = "";
+    document.querySelector("#form-client-fecha-field").value = "";
 
 
   }

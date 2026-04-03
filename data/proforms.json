@@ -82,5 +82,111 @@
         "precio unitario": 30
       }
     ]
+  },
+  {
+    "membrete": {
+      "empresa": "Max Importaciones y Servicios Generales SAC",
+      "email": "ventas@maximportaciones.com.pe",
+      "ruc": "RUC: 20503534194",
+      "telefono": "Cel: 999 999 999"
+    },
+    "cliente": {
+      "nombre": "",
+      "ruc": "",
+      "telefono": "",
+      "email": "",
+      "direccion": "",
+      "provincia": "",
+      "ciudad": ""
+    },
+    "entrega": "",
+    "destino": "",
+    "agencia": "",
+    "atencion": "",
+    "fecha": "",
+    "vendedor": "",
+    "canal": "",
+    "pago": "",
+    "pagos": [
+      {
+        "index": 1,
+        "medio": "BCP Junior",
+        "monto": "5",
+        "operacion": "4223"
+      },
+      {
+        "index": 2,
+        "medio": "",
+        "monto": "",
+        "operacion": ""
+      }
+    ]
+  },
+  {
+    "numero de proforma": "DP-000009",
+    "membrete": {
+      "empresa": "Max Importaciones y Servicios Generales SAC",
+      "email": "ventas@maximportaciones.com.pe",
+      "ruc": "RUC: 20503534194",
+      "telefono": "Cel: 999 999 999"
+    },
+    "cliente": {
+      "nombre": "",
+      "ruc": "",
+      "telefono": "",
+      "email": "",
+      "direccion": "",
+      "provincia": "",
+      "ciudad": ""
+    },
+    "entrega": "",
+    "destino": "",
+    "agencia": "",
+    "atencion": "",
+    "fecha": "",
+    "vendedor": "",
+    "canal": "",
+    "pago": "",
+    "pagos": []
+  },
+  {
+    "numero de proforma": "DP-000009",
+    "membrete": {
+      "empresa": "Max Importaciones y Servicios Generales SAC",
+      "email": "ventas@maximportaciones.com.pe",
+      "ruc": "RUC: 20503534194",
+      "telefono": "Cel: 999 999 999"
+    },
+    "cliente": {
+      "nombre": "1",
+      "ruc": "2",
+      "telefono": "3",
+      "email": "4",
+      "direccion": "5",
+      "provincia": "6",
+      "ciudad": "7"
+    },
+    "entrega": "8",
+    "destino": "9",
+    "agencia": "10",
+    "atencion": "11",
+    "fecha": "12",
+    "vendedor": "Lazaro",
+    "canal": "Tienda",
+    "pago": "Credito",
+    "pagos": [
+      {
+        "index": 1,
+        "medio": "BCP Max Imp",
+        "monto": "400",
+        "operacion": "2653"
+      },
+      {
+        "index": 2,
+        "medio": "BCP Importadora",
+        "monto": "450",
+        "operacion": "481215"
+      }
+    ]
   }
 ]
