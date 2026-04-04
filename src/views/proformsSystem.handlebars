@@ -10,11 +10,12 @@
 
           <select id="empresa-nombre">
             <option value="" disabled selected hidden>Max Importaciones y Servicios Generales SAC</option>
-            <option>Max Importaciones y Servicios Generales SAC</option>
+            <option>Max Importaciones y Servicios Generales S.A.C.</option>
             <option>Importadora de Repuestos Max Import S.A.C.</option>
             <option>M & X Importaciones E.I.R.L.</option>
             <option>Junior Alexander Castillo Arrue</option>
           </select>
+
           <p id="empresa-address">Av. García Naranjo Nro. 114b - La Victoria - Lima</p>
           <p id="empresa-ruc">RUC: 20503534194</p>
           <p id="empresa-telf">Cel: 999 999 999</p>
@@ -22,6 +23,8 @@
           <p id="web">https://maximportaciones.com.pe</p>
         </div>
       </div>
+
+
 
       <div class="header-right">
         <div class="proforma-box">
@@ -415,9 +418,9 @@
         </div>
 
         <div class="proforma-box">
-          <div id="preview-proform-number">PROFORMA N°: 001</div>
+          <div  class="proforma-number" id="preview-proform-number">DP-000009</div>
           <div id="preview-proform-date">02/04/2026</div>
-          <div class="proforma-number">DP-000009</div>
+          
         </div>
       </div>
 
@@ -761,9 +764,61 @@
 
 </script>
 
-<script>//post de la lista productos:
+<script>//preview membrete linking:
+  const empresas = {
+    "Max Importaciones y Servicios Generales S.A.C.": {
+      address: "Cal. Garcia Naranjo Nro. 114b - La Victoria - Lima",
+      ruc: "20503534194",
+      telf: "999 999 999",
+      email: "ventas@maximportaciones.com.pe",
+      web: "ventas@maximportaciones.com.pe"
+    },
+    "Importadora de Repuestos Max Import S.A.C.": {
+      address: "Av. Canto Grande Nro. 3418 - San Juan de Lurigancho - Lima",
+      ruc: "20550445892",
+      telf: "999 999 999",
 
+      email: "ventas@maximportaciones.com.pe",
+      web: "ventas@maximportaciones.com.pe"
+    },
+    "M & X Importaciones E.I.R.L.": {
+      address: "Cal. Ollantaytambo Nro. 641 - San Juan de Lurigancho - Lima",
+      ruc: "20602308279",
+      telf: "999 999 999",
+      email: "ventas@maximportaciones.com.pe",
+      web: "ventas@maximportaciones.com.pe"
+    },
+    "Junior Alexander Castillo Arrue": {
+      address: "",
+      ruc: "",
+      telf: "",
 
+      email: "ventas@maximportaciones.com.pe",
+      web: "ventas@maximportaciones.com.pe"
+    }
+  };
+
+  const selectEmpresa = document.getElementById("empresa-nombre");
+
+  selectEmpresa.addEventListener("change", () => {
+    const nombre = selectEmpresa.value;
+    const data = empresas[nombre];
+
+    if (data) {
+      document.getElementById("empresa-address").textContent = data.address;
+      document.getElementById("empresa-ruc").textContent = "RUC: " + data.ruc;
+      document.getElementById("empresa-telf").textContent = "Cel: " + data.telf;
+      document.getElementById("empresa-email").textContent = data.email;
+      document.getElementById("web").textContent = data.web;
+
+      document.getElementById("preview-empresa-name").textContent = nombre
+      document.getElementById("preview-empresa-ruc").textContent= data.ruc
+      document.getElementById("preview-empresa-address").textContent=data.address
+      document.getElementById("preview-empresa-telf").textContent = data.telf
+      document.getElementById("preview-empresa-email").textContent = data.email
+      document.getElementById("preview-empresa-web").textContent = data.web
+    }
+  });
 </script>
 
 <script src="js/btns/postProformBtn.js"></script>
