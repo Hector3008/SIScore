@@ -5,7 +5,7 @@
     {{!-- HEADER --}}
     <header class="proforma-header">
       <div class="header-left">
-        <img src="/img/logo.png" class="logo" />
+        {{!-- OTROS MEDIOS DE PAGO / BUTTONS <img src="/img/logo.png" class="logo" />--}}
         <div id="membrete" class="empresa-info">
 
           <select id="empresa-nombre">
@@ -167,30 +167,55 @@
 
             <div class="form-group">
               <label>Cantidad</label>
-              <input type="text" class="form-control">
+              <input id="form-product-cantidad-field" type="text" class="form-control">
             </div>
 
             <div class="form-group">
               <label>Comentario</label>
-              <input type="text" class="form-control">
+              <input id="form-product-comentario-field" type="text" class="form-control">
             </div>
 
             <div class="form-group">
               <label>Importe Unitario</label>
-              <input type="text" class="form-control">
+              <input id="form-product-importe-unitario-field" type="text" class="form-control">
             </div>
 
 
             <div class="form-group">
               <label>Total</label>
-              <input type="text" class="form-control">
+              <span id="form-producto-total-field" type="text" class="form-control"> /S</span>
             </div>
             <div>
               <label></label>
-              <button id="cargarProductoBtn" class="btn green">Cargar producto</button>
+              <button id="cargarProductoBtn" type="button" class="btn green">Cargar producto</button>
 
             </div>
           </form>
+
+          <table>
+            <thead>
+              <tr>
+                <th>index</th>
+                <th>status</th>
+                <th>nombre</th>
+                <th>cantidad</th>
+                <th>comentario</th>
+                <th>importe unitario</th>
+                <th>total</th>
+              </tr>
+            </thead>
+            <tbody id="productList">
+              <tr class="productListItem">
+                <td>1</td>
+                <td>false</td>
+                <td>nombre del producto</td>
+                <td>4</td>
+                <td>comentario del producto</td>
+                <td>5</td>
+                <td>total del producto</td>
+              </tr>
+            </tbody>
+          </table>
         </section>
 
       </main>
@@ -285,10 +310,7 @@
   </table>
 </div>
 
-<div class="form-group">
-  <label>Empresa</label>
-  <input type="text" class="form-control">
-</div>
+
 <div>
   {{!-- PROFORMA - VISUALIZACION --}}
   <h2>previsualizacion de proforma</h2>
@@ -418,9 +440,9 @@
         </div>
 
         <div class="proforma-box">
-          <div  class="proforma-number" id="preview-proform-number">DP-000009</div>
+          <div class="proforma-number" id="preview-proform-number">DP-000009</div>
           <div id="preview-proform-date">02/04/2026</div>
-          
+
         </div>
       </div>
 
@@ -476,7 +498,7 @@
             <th>IMPORTE</th>
           </tr>
         </thead>
-        <tbody>
+        <tbody id="tbody-products-proform-preview">
           <tr>
             <td>1</td>
             <td>2</td>
@@ -812,15 +834,188 @@
       document.getElementById("web").textContent = data.web;
 
       document.getElementById("preview-empresa-name").textContent = nombre
-      document.getElementById("preview-empresa-ruc").textContent= data.ruc
-      document.getElementById("preview-empresa-address").textContent=data.address
+      document.getElementById("preview-empresa-ruc").textContent = data.ruc
+      document.getElementById("preview-empresa-address").textContent = data.address
       document.getElementById("preview-empresa-telf").textContent = data.telf
       document.getElementById("preview-empresa-email").textContent = data.email
       document.getElementById("preview-empresa-web").textContent = data.web
     }
   });
 </script>
+        <script>//cargarProductoBtn
+let productListArray = []
+let  productListPreview = []
+          const cargarProductoBtn = document.querySelector("#cargarProductoBtn")
+          const productTablePreview = document.querySelector("#tbody-products-proform-preview")
+          const productTable = document.querySelector("#productList")
 
+          cargarProductoBtn.addEventListener("click", (e) => {
+            e.preventDefault();
+
+            const productList = document.querySelectorAll(".productListItem")
+
+            const nombre = document.querySelector("#search").value
+            const cantidad = document.querySelector("#form-product-cantidad-field").value
+            const importe = document.querySelector("#form-product-importe-unitario-field").value
+            const comentario = document.querySelector("#form-product-comentario-field").value
+
+            const product = {
+              status: true,
+              nombre,
+              cantidad,
+              importe,
+              comentario,
+              total: cantidad * importe
+            }
+
+            
+            productListArray = Array.from(productList).map((tr, index) => {
+              const tds = tr.querySelectorAll("td");
+              // console.log("tds: ", tds)
+              return {
+                index: tds[0].textContent,
+                status: tds[1].textContent.trim(),
+                nombre: tds[2].textContent.trim(),
+                cantidad: tds[3].textContent.trim(),
+                comentario: tds[4].textContent.trim(),
+                importe: tds[5].textContent.trim(),
+                total: tds[3].textContent.trim() * tds[5].textContent.trim()
+              };
+            }
+            );
+            product.index = productListArray.length + 1
+            productListArray.push(product)
+
+            productTable.innerHTML = ""
+            productTablePreview.innerHTML = ""
+            for (prod of productListArray) {
+
+              const tr = document.createElement("tr");
+
+              tr.classList.add("productListItem");
+              tr.id = `product-${prod.index}-tr`
+
+              tr.innerHTML = `
+                      <td>${prod.index}</td>      
+                      <td>${prod.status}</td>
+                      <td>${prod.nombre}</td>
+                      <td>${prod.cantidad}</td>
+                      <td>${prod.comentario}</td>
+                                    <td>${prod.importe}</td>
+                      <td>${prod.total}</td>
+                `
+              productTable.appendChild(tr);
+            }
+
+            //console.log("productListArray: ", productListArray)
+            productListPreview = productListArray.filter(
+              prod => prod.status === true || prod.status === "true"
+            );
+            //console.log("productListPreview: ", productListPreview)
+            productListPreview.map((prod, index) => {
+              const tr = document.createElement("tr");
+
+              tr.classList.add("previewProductListItem")
+              tr.id = `preview-product-${prod.index}-tr`
+
+              tr.innerHTML = `
+                      <td>
+                      <button id="delete-btn-product-${prod.index}">
+                      eliminar
+                      </button>${index + 1}</td>
+                                    <td>${prod.cantidad}</td>
+                                    <td>${prod.nombre}</td>
+                                    <td>${prod.importe}</td>
+                                    <td>${prod.total}</td>
+                      `
+              productTablePreview.appendChild(tr)
+
+            })
+
+
+            document.querySelector("#search").value =""
+            document.querySelector("#form-product-cantidad-field").value=""
+            document.querySelector("#form-product-importe-unitario-field").value=""
+            document.querySelector("#form-product-comentario-field").value=""
+          }
+
+          )
+
+          const tbodyPreviewProducts = document.querySelector("#tbody-products-proform-preview");
+          console.log("tbody:", tbodyPreviewProducts);
+
+          document.querySelector("#tbody-products-proform-preview").addEventListener("click", (e) => {
+            console.log("productListArray here: ", productListArray)
+
+            
+            if (e.target.id.startsWith("delete-btn-product-")) {
+              console.log("e.target.id: ", e.target.id)
+              
+              const tr = e.target.closest("tr");
+              const id = tr.id.split("-")[2]
+              console.log("productListArray 1: ", productListArray)
+
+              productListArray = productListArray.map(prod => {
+                if (prod.index == id) {
+                  return {
+                    ...prod,
+                    status: false
+                  };
+                }
+                return prod;
+              })
+              console.log("productListArray 2",productListArray)
+
+              productTable.innerHTML =""
+              //tr.remove()
+
+              for(prod of productListArray){
+                const tr = document.createElement("tr");
+
+                tr.classList.add("productListItem");
+                tr.id = `product-${prod.index}-tr`
+
+                tr.innerHTML = `
+                      <td>${prod.index}</td>      
+                      <td>${prod.status}</td>
+                      <td>${prod.nombre}</td>
+                      <td>${prod.cantidad}</td>
+                      <td>${prod.comentario}</td>
+                                    <td>${prod.importe}</td>
+                      <td>${prod.total}</td>
+                `
+                productTable.appendChild(tr);
+              }
+            }
+            productTablePreview.innerHTML =""
+            productListPreview = productListArray.filter(
+              prod => prod.status === true || prod.status === "true"
+            );
+            //console.log("productListPreview: ", productListPreview)
+            productListPreview.map((prod, index) => {
+              const tr = document.createElement("tr");
+
+              tr.classList.add("previewProductListItem")
+              tr.id = `preview-product-${prod.index}-tr`
+
+              tr.innerHTML = `
+                      <td>
+                      <button id="delete-btn-product-${prod.index}">
+                      eliminar
+                      </button>${index + 1}</td>
+                                    <td>${prod.cantidad}</td>
+                                    <td>${prod.nombre}</td>
+                                    <td>${prod.importe}</td>
+                                    <td>${prod.total}</td>
+                      `
+              productTablePreview.appendChild(tr)
+
+            })
+
+          })
+
+
+        </script>
 <script src="js/btns/postProformBtn.js"></script>
 
 {{!-- CSS --}}
