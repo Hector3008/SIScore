@@ -61,24 +61,8 @@ const hbs = handlebars.create({
   app.use("/proforms", proformsViewRouter);
   app.use("/proformsSystem", proformsSystemViewRouter);
 
-server.listen(8000, () => {   console.log("server up on http://localhost:8000")}) //se levanta el servidor
+const PORT = process.env.PORT || 8000;
 
-
-/*
-<script>
-  const socket = io();
-
-  socket.on("connect", () => {
-    console.log("✅ Conectado al socket server con id:", socket.id);
-  });
-
-
-  socket.on("alerta", () => {
-    console.log("📢 Alerta recibida: nuevo usuario conectado");
-  });
-
-  socket.on("updatedProducts", (data) => {
-    console.log("📦 Productos actualizados:", data);
-  });
-</script>
-*/
+server.listen(PORT, () => {
+  console.log(`server up on port ${PORT}`);
+});
