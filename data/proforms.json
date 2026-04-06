@@ -84,75 +84,9 @@
     ]
   },
   {
-    "membrete": {
-      "empresa": "Max Importaciones y Servicios Generales SAC",
-      "email": "ventas@maximportaciones.com.pe",
-      "ruc": "RUC: 20503534194",
-      "telefono": "Cel: 999 999 999"
-    },
-    "cliente": {
-      "nombre": "",
-      "ruc": "",
-      "telefono": "",
-      "email": "",
-      "direccion": "",
-      "provincia": "",
-      "ciudad": ""
-    },
-    "entrega": "",
-    "destino": "",
-    "agencia": "",
-    "atencion": "",
-    "fecha": "",
-    "vendedor": "",
-    "canal": "",
-    "pago": "",
-    "pagos": [
-      {
-        "index": 1,
-        "medio": "BCP Junior",
-        "monto": "5",
-        "operacion": "4223"
-      },
-      {
-        "index": 2,
-        "medio": "",
-        "monto": "",
-        "operacion": ""
-      }
-    ]
-  },
-  {
     "numero de proforma": "DP-000009",
     "membrete": {
-      "empresa": "Max Importaciones y Servicios Generales SAC",
-      "email": "ventas@maximportaciones.com.pe",
-      "ruc": "RUC: 20503534194",
-      "telefono": "Cel: 999 999 999"
-    },
-    "cliente": {
-      "nombre": "",
-      "ruc": "",
-      "telefono": "",
-      "email": "",
-      "direccion": "",
-      "provincia": "",
-      "ciudad": ""
-    },
-    "entrega": "",
-    "destino": "",
-    "agencia": "",
-    "atencion": "",
-    "fecha": "",
-    "vendedor": "",
-    "canal": "",
-    "pago": "",
-    "pagos": []
-  },
-  {
-    "numero de proforma": "DP-000009",
-    "membrete": {
-      "empresa": "Max Importaciones y Servicios Generales SAC",
+      "empresa": "\n            <option value=\"\" disabled=\"\" selected=\"\" hidden=\"\">Max Importaciones y Servicios Generales SAC</option>\n            <option>Max Importaciones y Servicios Generales S.A.C.</option>\n            <option>Importadora de Repuestos Max Import S.A.C.</option>\n            <option>M &amp; X Importaciones E.I.R.L.</option>\n            <option>Junior Alexander Castillo Arrue</option>\n          ",
       "email": "ventas@maximportaciones.com.pe",
       "ruc": "RUC: 20503534194",
       "telefono": "Cel: 999 999 999"
@@ -174,18 +108,209 @@
     "vendedor": "Lazaro",
     "canal": "Tienda",
     "pago": "Credito",
+    "comprobante": "factura",
     "pagos": [
       {
         "index": 1,
-        "medio": "BCP Max Imp",
-        "monto": "400",
-        "operacion": "2653"
+        "medio": "BBVA Max Imp",
+        "monto": "431",
+        "operacion": "124"
       },
       {
         "index": 2,
-        "medio": "BCP Importadora",
-        "monto": "450",
-        "operacion": "481215"
+        "medio": "BCP Max Imp",
+        "monto": "1222",
+        "operacion": "4314455"
+      }
+    ],
+    "products": [
+      {
+        "index": "2",
+        "status": "true",
+        "nombre": "455",
+        "cantidad": "12",
+        "comentario": "1",
+        "importe": "32",
+        "total": 384
+      }
+    ],
+    "productsHistorial": [
+      {
+        "index": "1",
+        "status": "false",
+        "nombre": "p1000",
+        "cantidad": "12",
+        "comentario": "23123",
+        "importe": "4",
+        "total": 48
+      },
+      {
+        "index": "2",
+        "status": "true",
+        "nombre": "455",
+        "cantidad": "12",
+        "comentario": "1",
+        "importe": "32",
+        "total": 384
+      },
+      {
+        "index": "3",
+        "status": "false",
+        "nombre": "40",
+        "cantidad": "40",
+        "comentario": "1",
+        "importe": "40",
+        "total": 1600
+      }
+    ]
+  },
+  {
+    "numero de proforma": "DP-000009",
+    "membrete": {
+      "empresa": "\n            <option value=\"\" disabled=\"\" selected=\"\" hidden=\"\">Max Importaciones y Servicios Generales SAC</option>\n            <option>Max Importaciones y Servicios Generales S.A.C.</option>\n            <option>Importadora de Repuestos Max Import S.A.C.</option>\n            <option>M &amp; X Importaciones E.I.R.L.</option>\n            <option>Junior Alexander Castillo Arrue</option>\n          ",
+      "email": "ventas@maximportaciones.com.pe",
+      "ruc": "RUC: 20503534194",
+      "telefono": "Cel: 999 999 999"
+    },
+    "cliente": {
+      "nombre": "",
+      "ruc": "",
+      "telefono": "",
+      "email": "",
+      "direccion": "",
+      "provincia": "",
+      "ciudad": ""
+    },
+    "entrega": "",
+    "destino": "",
+    "agencia": "",
+    "atencion": "",
+    "fecha": "",
+    "vendedor": "",
+    "canal": "",
+    "pago": "",
+    "comprobante": "factura",
+    "pagos": [],
+    "products": [],
+    "productsHistorial": []
+  },
+  {
+    "numero de proforma": "DP-000009",
+    "membrete": {
+      "empresa": "",
+      "email": "ventas@maximportaciones.com.pe",
+      "ruc": "RUC: 20503534194",
+      "telefono": "Cel: 999 999 999"
+    },
+    "cliente": {
+      "nombre": "",
+      "ruc": "",
+      "telefono": "",
+      "email": "",
+      "direccion": "",
+      "provincia": "",
+      "ciudad": ""
+    },
+    "entrega": "",
+    "destino": "",
+    "agencia": "",
+    "atencion": "",
+    "fecha": "",
+    "vendedor": "",
+    "canal": "",
+    "pago": "",
+    "comprobante": "",
+    "pagos": [],
+    "products": [],
+    "productsHistorial": [
+      {
+        "index": "1",
+        "status": "false",
+        "nombre": "nombre del producto",
+        "cantidad": "4",
+        "comentario": "comentario del producto",
+        "importe": "5",
+        "total": 20
+      }
+    ]
+  },
+  {
+    "numero de proforma": "DP-000009",
+    "membrete": {
+      "empresa": "Importadora de Repuestos Max Import S.A.C.",
+      "email": "ventas@maximportaciones.com.pe",
+      "ruc": "RUC: 20550445892",
+      "telefono": "Cel: 999 999 999"
+    },
+    "cliente": {
+      "nombre": "",
+      "ruc": "",
+      "telefono": "",
+      "email": "",
+      "direccion": "",
+      "provincia": "",
+      "ciudad": ""
+    },
+    "entrega": "",
+    "destino": "",
+    "agencia": "",
+    "atencion": "",
+    "fecha": "",
+    "vendedor": "",
+    "canal": "",
+    "pago": "",
+    "comprobante": "",
+    "pagos": [],
+    "products": [],
+    "productsHistorial": [
+      {
+        "index": "1",
+        "status": "false",
+        "nombre": "nombre del producto",
+        "cantidad": "4",
+        "comentario": "comentario del producto",
+        "importe": "5",
+        "total": 20
+      }
+    ]
+  },
+  {
+    "numero de proforma": "DP-000009",
+    "membrete": {
+      "empresa": "M & X Importaciones E.I.R.L.",
+      "email": "ventas@maximportaciones.com.pe",
+      "ruc": "RUC: 20602308279",
+      "telefono": "Cel: 999 999 999"
+    },
+    "cliente": {
+      "nombre": "",
+      "ruc": "",
+      "telefono": "",
+      "email": "",
+      "direccion": "",
+      "provincia": "",
+      "ciudad": ""
+    },
+    "entrega": "",
+    "destino": "",
+    "agencia": "",
+    "atencion": "",
+    "fecha": "",
+    "vendedor": "",
+    "canal": "",
+    "pago": "",
+    "comprobante": "",
+    "pagos": [],
+    "products": [],
+    "productsHistorial": [
+      {
+        "index": "1",
+        "status": "false",
+        "nombre": "nombre del producto",
+        "cantidad": "4",
+        "comentario": "comentario del producto",
+        "importe": "5",
+        "total": 20
       }
     ]
   }

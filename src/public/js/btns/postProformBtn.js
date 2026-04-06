@@ -3,7 +3,7 @@ const postProformBtn = document.querySelector("#postProformBtn");
   el boton postProform ejecuta el metodo post para crear una nueva proforma. Recibiendo informacion del frontend y conectandola al backend
 
   captura informacion del formulario cliente ✅
-  la lista del medios de pago
+  la lista del medios de pago ✅
   y la lista de productos
   
   con eso crea una proforma
@@ -11,14 +11,18 @@ const postProformBtn = document.querySelector("#postProformBtn");
 */
 postProformBtn.addEventListener("click", (e) => {
   //captura de datos, formulario cliente
+  
+  e.preventDefault();
 
-  const empresa = document.querySelector("#empresa-nombre").innerHTML
-  const empresa_telefono = document.querySelector("#empresa-telefono").innerHTML
+  const empresa = document.querySelector("#empresa-nombre").value
+  const empresa_telefono = document.querySelector("#empresa-telf").innerHTML;
   const empresa_ruc = document.querySelector("#empresa-ruc").innerHTML;
   const empresa_email = document.querySelector("#empresa-email").innerHTML;
 
   const proform = document.querySelector("#proform-number").innerHTML;
 
+  
+  const nombre = document.querySelector("#form-client-name-field").value;
   const canal = document.querySelector("#form-cliente-canal-de-venta-field").value;
   const vendedor = document.querySelector("#form-client-vendedor-field").value;
   const pago = document.querySelector("#form-client-pago-field").value;
@@ -46,7 +50,28 @@ postProformBtn.addEventListener("click", (e) => {
         operacion: tds[3].textContent.trim(),
       };
     });
-  e.preventDefault();
+
+    let productsHistorial = []
+    let products = []
+          //const productTable = document.querySelector("#productList");
+const productList = document.querySelectorAll(".productListItem");
+          productsHistorial = Array.from(productList).map((tr) => {
+            const tds = tr.querySelectorAll("td");
+            // console.log("tds: ", tds)
+            return {
+              index: tds[0].textContent,
+              status: tds[1].textContent.trim(),
+              nombre: tds[2].textContent.trim(),
+              cantidad: tds[3].textContent.trim(),
+              comentario: tds[4].textContent.trim(),
+              importe: tds[5].textContent.trim(),
+              total: tds[3].textContent.trim() * tds[5].textContent.trim(),
+            };
+          });
+          
+products = productsHistorial.filter(e=>e.status=="true")
+//console.log("productsHistorial: ", productsHistorial);
+//console.log("products: ", products);
   const body = {
     "numero de proforma": proform,
     membrete: {
@@ -71,6 +96,8 @@ postProformBtn.addEventListener("click", (e) => {
     pago,
     comprobante,
     pagos: pagosArray,
+    products,
+    productsHistorial
   };
 
   fetch("/api/proforms/", {
@@ -85,6 +112,11 @@ postProformBtn.addEventListener("click", (e) => {
   })
 
   const reset_values= ()=>{
+
+        document.querySelector("#tbody-products-proform-preview").innerHTML = "";
+           document.querySelector("#productList").innerHTML="";
+           document.querySelector("#preview-pagos").innerHTML="";
+document.querySelector("#tbbodyPagos").innerHTML="";
     document.querySelector("#form-cliente-canal-de-venta-field").value = "";
     document.querySelector("#form-client-vendedor-field").value = "";
     document.querySelector("#form-client-pago-field").value = "";
