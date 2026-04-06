@@ -13,7 +13,12 @@ import proformsSystemViewRouter from "./routers/proformsSystemViewRouter.js";
 const app = express();
 
   const server = http.createServer(app)// se crea el servidor HTTP real
-  const io = new Server(server);// servidor socket.io real
+  const io = new Server(server, {
+    cors: {
+      origin: "*", // o tu dominio de Render
+      methods: ["GET", "POST"],
+    },
+  });// servidor socket.io real
   socket(io);//se le cargan los sockets
   console.log("io created:", !!io);
 
