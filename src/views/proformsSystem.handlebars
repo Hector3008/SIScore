@@ -192,7 +192,7 @@
             </div>
           </form>
 
-          <table>
+          <table style="display: none">
             <thead>
               <tr>
                 <th>index</th>
@@ -205,15 +205,7 @@
               </tr>
             </thead>
             <tbody id="productList">
-              <tr class="productListItem">
-                <td>1</td>
-                <td>false</td>
-                <td>nombre del producto</td>
-                <td>4</td>
-                <td>comentario del producto</td>
-                <td>5</td>
-                <td>total del producto</td>
-              </tr>
+              
             </tbody>
           </table>
         </section>
@@ -499,20 +491,7 @@
           </tr>
         </thead>
         <tbody id="tbody-products-proform-preview">
-          <tr>
-            <td>1</td>
-            <td>2</td>
-            <td>Producto A</td>
-            <td>S/ 10.00</td>
-            <td>S/ 20.00</td>
-          </tr>
-          <tr>
-            <td>2</td>
-            <td>1</td>
-            <td>Producto B</td>
-            <td>S/ 15.00</td>
-            <td>S/ 15.00</td>
-          </tr>
+
         </tbody>
       </table>
 
@@ -536,6 +515,28 @@
   //NOMBRE ✅
   const inputClientName = document.getElementById("form-client-name-field");
   const previewClientName = document.getElementById("preview-client-name");
+
+  const inputProductCantidad = document.getElementById("form-product-cantidad-field")
+  const inputProductImporte = document.getElementById("form-product-importe-unitario-field")
+const inputProductTotal=document.getElementById("form-producto-total-field")
+  
+  
+  inputProductImporte.addEventListener("input",(e)=>
+  {
+    const importe = document.getElementById("form-product-importe-unitario-field").value
+    const cantidad = document.getElementById("form-product-cantidad-field").value
+const total = cantidad * importe
+  
+    inputProductTotal.textContent = `${total} /S`
+  })
+
+  inputProductCantidad.addEventListener("input", (e) => {
+      const importe = document.getElementById("form-product-importe-unitario-field").value
+      const cantidad = document.getElementById("form-product-cantidad-field").value
+      const total = cantidad * importe
+
+      inputProductTotal.textContent = `${total} /S`
+    })
 
   inputClientName.addEventListener("input", (e) => {
     previewClientName.textContent = e.target.value || "";
@@ -844,59 +845,59 @@
 </script>
 
 <script>//cargarProductoBtn
-let productListArray = []
-let  productListPreview = []
-          const cargarProductoBtn = document.querySelector("#cargarProductoBtn")
-          const productTablePreview = document.querySelector("#tbody-products-proform-preview")
-          const productTable = document.querySelector("#productList")
+  let productListArray = []
+  let productListPreview = []
+  const cargarProductoBtn = document.querySelector("#cargarProductoBtn")
+  const productTablePreview = document.querySelector("#tbody-products-proform-preview")
+  const productTable = document.querySelector("#productList")
 
-          cargarProductoBtn.addEventListener("click", (e) => {
-            e.preventDefault();
+  cargarProductoBtn.addEventListener("click", (e) => {
+    e.preventDefault();
 
-            const productList = document.querySelectorAll(".productListItem")
+    const productList = document.querySelectorAll(".productListItem")
 
-            const nombre = document.querySelector("#search").value
-            const cantidad = document.querySelector("#form-product-cantidad-field").value
-            const importe = document.querySelector("#form-product-importe-unitario-field").value
-            const comentario = document.querySelector("#form-product-comentario-field").value
+    const nombre = document.querySelector("#search").value
+    const cantidad = document.querySelector("#form-product-cantidad-field").value
+    const importe = document.querySelector("#form-product-importe-unitario-field").value
+    const comentario = document.querySelector("#form-product-comentario-field").value
 
-            const product = {
-              status: true,
-              nombre,
-              cantidad,
-              importe,
-              comentario,
-              total: cantidad * importe
-            }
+    const product = {
+      status: true,
+      nombre,
+      cantidad,
+      importe,
+      comentario,
+      total: cantidad * importe
+    }
 
-            
-            productListArray = Array.from(productList).map((tr, index) => {
-              const tds = tr.querySelectorAll("td");
-              // console.log("tds: ", tds)
-              return {
-                index: tds[0].textContent,
-                status: tds[1].textContent.trim(),
-                nombre: tds[2].textContent.trim(),
-                cantidad: tds[3].textContent.trim(),
-                comentario: tds[4].textContent.trim(),
-                importe: tds[5].textContent.trim(),
-                total: tds[3].textContent.trim() * tds[5].textContent.trim()
-              };
-            }
-            );
-            product.index = productListArray.length + 1
-            productListArray.push(product)
 
-            productTable.innerHTML = ""
-            productTablePreview.innerHTML = ""
-            for (prod of productListArray) {
+    productListArray = Array.from(productList).map((tr, index) => {
+      const tds = tr.querySelectorAll("td");
+      // console.log("tds: ", tds)
+      return {
+        index: tds[0].textContent,
+        status: tds[1].textContent.trim(),
+        nombre: tds[2].textContent.trim(),
+        cantidad: tds[3].textContent.trim(),
+        comentario: tds[4].textContent.trim(),
+        importe: tds[5].textContent.trim(),
+        total: tds[3].textContent.trim() * tds[5].textContent.trim()
+      };
+    }
+    );
+    product.index = productListArray.length + 1
+    productListArray.push(product)
 
-              const tr = document.createElement("tr");
+    productTable.innerHTML = ""
+    productTablePreview.innerHTML = ""
+    for (prod of productListArray) {
 
-              tr.classList.add("productListItem");
-              tr.id = `product-${prod.index}-tr`
+      const tr = document.createElement("tr");
 
-              tr.innerHTML = `
+      tr.classList.add("productListItem");
+      tr.id = `product-${prod.index}-tr`
+
+      tr.innerHTML = `
                       <td>${prod.index}</td>      
                       <td>${prod.status}</td>
                       <td>${prod.nombre}</td>
@@ -905,21 +906,21 @@ let  productListPreview = []
                                     <td>${prod.importe}</td>
                       <td>${prod.total}</td>
                 `
-              productTable.appendChild(tr);
-            }
+      productTable.appendChild(tr);
+    }
 
-            //console.log("productListArray: ", productListArray)
-            productListPreview = productListArray.filter(
-              prod => prod.status === true || prod.status === "true"
-            );
-            //console.log("productListPreview: ", productListPreview)
-            productListPreview.map((prod, index) => {
-              const tr = document.createElement("tr");
+    //console.log("productListArray: ", productListArray)
+    productListPreview = productListArray.filter(
+      prod => prod.status === true || prod.status === "true"
+    );
+    //console.log("productListPreview: ", productListPreview)
+    productListPreview.map((prod, index) => {
+      const tr = document.createElement("tr");
 
-              tr.classList.add("previewProductListItem")
-              tr.id = `preview-product-${prod.index}-tr`
+      tr.classList.add("previewProductListItem")
+      tr.id = `preview-product-${prod.index}-tr`
 
-              tr.innerHTML = `
+      tr.innerHTML = `
                       <td>
                       <button id="delete-btn-product-${prod.index}">
                       eliminar
@@ -929,54 +930,54 @@ let  productListPreview = []
                                     <td>${prod.importe}</td>
                                     <td>${prod.total}</td>
                       `
-              productTablePreview.appendChild(tr)
+      productTablePreview.appendChild(tr)
 
-            })
+    })
 
 
-            document.querySelector("#search").value =""
-            document.querySelector("#form-product-cantidad-field").value=""
-            document.querySelector("#form-product-importe-unitario-field").value=""
-            document.querySelector("#form-product-comentario-field").value=""
-          }
+    document.querySelector("#search").value = ""
+    document.querySelector("#form-product-cantidad-field").value = ""
+    document.querySelector("#form-product-importe-unitario-field").value = ""
+    document.querySelector("#form-product-comentario-field").value = ""
+  }
 
-          )
+  )
 
-          const tbodyPreviewProducts = document.querySelector("#tbody-products-proform-preview");
-          console.log("tbody:", tbodyPreviewProducts);
+  const tbodyPreviewProducts = document.querySelector("#tbody-products-proform-preview");
+  console.log("tbody:", tbodyPreviewProducts);
 
-          document.querySelector("#tbody-products-proform-preview").addEventListener("click", (e) => {
-            console.log("productListArray here: ", productListArray)
+  document.querySelector("#tbody-products-proform-preview").addEventListener("click", (e) => {
+    console.log("productListArray here: ", productListArray)
 
-            
-            if (e.target.id.startsWith("delete-btn-product-")) {
-              console.log("e.target.id: ", e.target.id)
-              
-              const tr = e.target.closest("tr");
-              const id = tr.id.split("-")[2]
-              console.log("productListArray 1: ", productListArray)
 
-              productListArray = productListArray.map(prod => {
-                if (prod.index == id) {
-                  return {
-                    ...prod,
-                    status: false
-                  };
-                }
-                return prod;
-              })
-              console.log("productListArray 2",productListArray)
+    if (e.target.id.startsWith("delete-btn-product-")) {
+      console.log("e.target.id: ", e.target.id)
 
-              productTable.innerHTML =""
-              //tr.remove()
+      const tr = e.target.closest("tr");
+      const id = tr.id.split("-")[2]
+      console.log("productListArray 1: ", productListArray)
 
-              for(prod of productListArray){
-                const tr = document.createElement("tr");
+      productListArray = productListArray.map(prod => {
+        if (prod.index == id) {
+          return {
+            ...prod,
+            status: false
+          };
+        }
+        return prod;
+      })
+      console.log("productListArray 2", productListArray)
 
-                tr.classList.add("productListItem");
-                tr.id = `product-${prod.index}-tr`
+      productTable.innerHTML = ""
+      //tr.remove()
 
-                tr.innerHTML = `
+      for (prod of productListArray) {
+        const tr = document.createElement("tr");
+
+        tr.classList.add("productListItem");
+        tr.id = `product-${prod.index}-tr`
+
+        tr.innerHTML = `
                       <td>${prod.index}</td>      
                       <td>${prod.status}</td>
                       <td>${prod.nombre}</td>
@@ -985,21 +986,21 @@ let  productListPreview = []
                                     <td>${prod.importe}</td>
                       <td>${prod.total}</td>
                 `
-                productTable.appendChild(tr);
-              }
-            }
-            productTablePreview.innerHTML =""
-            productListPreview = productListArray.filter(
-              prod => prod.status === true || prod.status === "true"
-            );
-            //console.log("productListPreview: ", productListPreview)
-            productListPreview.map((prod, index) => {
-              const tr = document.createElement("tr");
+        productTable.appendChild(tr);
+      }
+    }
+    productTablePreview.innerHTML = ""
+    productListPreview = productListArray.filter(
+      prod => prod.status === true || prod.status === "true"
+    );
+    //console.log("productListPreview: ", productListPreview)
+    productListPreview.map((prod, index) => {
+      const tr = document.createElement("tr");
 
-              tr.classList.add("previewProductListItem")
-              tr.id = `preview-product-${prod.index}-tr`
+      tr.classList.add("previewProductListItem")
+      tr.id = `preview-product-${prod.index}-tr`
 
-              tr.innerHTML = `
+      tr.innerHTML = `
                       <td>
                       <button id="delete-btn-product-${prod.index}">
                       eliminar
@@ -1009,15 +1010,15 @@ let  productListPreview = []
                                     <td>${prod.importe}</td>
                                     <td>${prod.total}</td>
                       `
-              productTablePreview.appendChild(tr)
+      productTablePreview.appendChild(tr)
 
-            })
+    })
 
-          })
+  })
 
 
-        </script>
-        
+</script>
+
 <script src="js/btns/postProformBtn.js"></script>
 
 {{!-- CSS --}}
