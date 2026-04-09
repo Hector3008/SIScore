@@ -1,420 +1,419 @@
-<div>
+<body>
+  <div>
 
-  <div class="proforma-app">
+    <div class="proforma-app">
 
-    {{!-- HEADER --}}
-    <header class="proforma-header">
-      <div class="header-left">
-        {{!-- OTROS MEDIOS DE PAGO / BUTTONS <img src="/img/logo.png" class="logo" />--}}
-        <div id="membrete" class="empresa-info">
+      {{!-- HEADER --}}
+      <header class="proforma-header">
+        <div class="header-left">
+          {{!-- OTROS MEDIOS DE PAGO / BUTTONS <img src="/img/logo.png" class="logo" />--}}
+          <div id="membrete" class="empresa-info">
 
-          <select id="empresa-nombre">
-            <option value="" disabled selected hidden>Max Importaciones y Servicios Generales SAC</option>
-            <option>Max Importaciones y Servicios Generales S.A.C.</option>
-            <option>Importadora de Repuestos Max Import S.A.C.</option>
-            <option>M & X Importaciones E.I.R.L.</option>
-            <option>Junior Alexander Castillo Arrue</option>
-          </select>
+            <select id="empresa-nombre">
+              <option value="" disabled selected hidden>Max Importaciones y Servicios Generales SAC</option>
+              <option>Max Importaciones y Servicios Generales S.A.C.</option>
+              <option>Importadora de Repuestos Max Import S.A.C.</option>
+              <option>M & X Importaciones E.I.R.L.</option>
+              <option>Junior Alexander Castillo Arrue</option>
+            </select>
 
-          <p id="empresa-address">Av. García Naranjo Nro. 114b - La Victoria - Lima</p>
-          <p id="empresa-ruc">RUC: 20503534194</p>
-          <p id="empresa-telf">Cel: 999 999 999</p>
-          <p id="empresa-email">ventas@maximportaciones.com.pe</p>
-          <p id="web">https://maximportaciones.com.pe</p>
+            <p id="empresa-address">Av. García Naranjo Nro. 114b - La Victoria - Lima</p>
+            <p id="empresa-ruc">RUC: 20503534194</p>
+            <p id="empresa-telf">Cel: 999 999 999</p>
+            <p id="empresa-email">ventas@maximportaciones.com.pe</p>
+            <p id="web">https://maximportaciones.com.pe</p>
+          </div>
         </div>
+
+
+
+        <div class="header-right">
+          <div class="proforma-box">
+            <span>PROFORMA N°</span>
+            <h1 id="proform-number">DP-00NUEVA</h1>
+            <span id="date">FECHA: 23/02/2026</span>
+          </div>
+        </div>
+      </header>
+
+      {{!-- BODY --}}
+      <div class="proforma-body">
+
+        {{!-- <!-- MAIN --> --}}
+        <main class="main-panel">
+
+          {{!-- <!-- CLIENTE --> --}}
+          <section class="block">
+            <div class="block-title">CLIENTE / FORMULARIO</div>
+
+            <div class="grid-4">
+
+              <input id="form-client-name-field" placeholder="Cliente">
+
+              <input id="form-client-ruc-field" placeholder="RUC">
+
+              <input id="form-client-telefono-field" placeholder="Teléfono">
+
+              <input id="form-client-email-field" placeholder="E-mail">
+
+              <input id="form-client-direccion-field" placeholder="Dirección">
+
+              <input id="form-client-provincia-field" placeholder="Provincia">
+
+              <input id="form-client-ciudad-field" placeholder="Ciudad">
+
+              <select id="form-client-vendedor-field">
+                <option value="" disabled selected hidden>Vendedor</option>
+                <option>Lazaro</option>
+                <option>David</option>
+                <option>Jhon</option>
+                <option>Bryan</option>
+              </select>
+
+              <input id="form-client-entrega-field" placeholder="Entrega">
+              <input id="form-client-destino-field" placeholder="Destino">
+              <input id="form-client-agencia-field" placeholder="Agencia">
+              <input id="form-client-atencion-field" placeholder="Atención">
+
+              <select id="form-cliente-canal-de-venta-field">
+                <option value="" disabled selected hidden>Canal de venta</option>
+                <option>Tienda</option>
+                <option>Online</option>
+                <option>Cartera</option>
+              </select>
+
+              <select id="form-client-pago-field">
+                <option value="" disabled selected hidden>Forma de pago</option>
+                <option>Credito</option>
+                <option>Caja</option>
+                <option>Transferencia</option>
+                <option>Transferencia y caja</option>
+                <option>Tarjeta de Credito</option>
+              </select>
+
+              <input id="form-client-fecha-field" placeholder="Fecha">
+
+              <select id="form-client-comprobante-field">
+                <option value="" disabled selected hidden>Comprobante</option>
+                <option>boleta</option>
+                <option>factura</option>
+                <option>proforma</option>
+              </select>
+            </div>
+            {{!-- <!-- CLIENTE / BUTTONS --> --}}
+            <div class="btn-row">
+              <button class="btn green">Cargar cliente</button>
+              <button class="btn blue">Registrar cliente</button>
+              <button class="btn orange">Actualizar cliente</button>
+            </div>
+          </section>
+
+          {{!-- OTROS MEDIOS DE PAGO --}}
+          <section class="block">
+            <div class="block-title">OTROS MEDIOS DE PAGO</div>
+
+            <div class="grid-3">
+              <select id="form-pagos-medio-field">
+                <option value="" disabled selected hidden>Cuenta destino</option>
+                <option>BCP Max Imp</option>
+                <option>BCP Importadora</option>
+                <option>BCP M&X</option>
+                <option>BBVA Max Imp</option>
+                <option>BBVA Importadora</option>
+                <option>BBVA M&X</option>
+                <option>BCP Junior</option>
+                <option>BBVA Junior</option>
+                <option>Yape Junior</option>
+                <option>Plin Junior</option>
+
+              </select>
+
+              <input id="form-pagos-montos-field" placeholder="Monto">
+              <input id="form-pagos-operacion-field" placeholder="N° operación">
+            </div>
+            {{!-- OTROS MEDIOS DE PAGO / BUTTONS --}}
+            <div class="btn-row">
+              <button class="btn red">Borrar pagos</button>
+              <button id="cargarPagoBtn" class="btn green">Cargar pago</button>
+            </div>
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th></th>
+                  <th>destino</th>
+                  <th>monto</th>
+                  <th>operacion</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody id="tbbodyPagos">
+              </tbody>
+            </table>
+          </section>
+
+          {{!-- PRODUCTOS --}}
+          <section class="block">
+            <div class="block-title">PRODUCTOS / FORMULARIO</div>
+
+            <table class="table">
+              <tbody id="productosTable"></tbody>
+            </table>
+
+            <form id="researchForm" class="form-grid">
+
+              <div class="form-group">
+                <label>Producto</label>
+                <input type="text" class="form-control" id="search">
+              </div>
+
+              <div class="form-group">
+                <label>Cantidad</label>
+                <input id="form-product-cantidad-field" type="text" class="form-control">
+              </div>
+
+              <div class="form-group">
+                <label>Comentario</label>
+                <input id="form-product-comentario-field" type="text" class="form-control">
+              </div>
+
+              <div class="form-group">
+                <label>Importe Unitario</label>
+                <input id="form-product-importe-unitario-field" type="text" class="form-control">
+              </div>
+
+
+              <div class="form-group">
+                <label>Total</label>
+                <span id="form-producto-total-field" type="text" class="form-control"> /S</span>
+              </div>
+              <div>
+                <label></label>
+                <button id="cargarProductoBtn" type="button" class="btn green">Cargar producto</button>
+
+              </div>
+            </form>
+
+            <table style="display: none">
+              <thead>
+                <tr>
+                  <th>index</th>
+                  <th>status</th>
+                  <th>nombre</th>
+                  <th>cantidad</th>
+                  <th>comentario</th>
+                  <th>importe unitario</th>
+                  <th>total</th>
+                </tr>
+              </thead>
+              <tbody id="productList">
+
+              </tbody>
+            </table>
+          </section>
+
+        </main>
+
+        {{!-- PANEL DERECHO / COMANDOS --}}
+        <aside class="side-panel">
+
+          <button class="side-btn green">CONSULTAR PROFORMA</button>
+          <button class="side-btn lime">ACTUALIZAR PROFORMA</button>
+
+          <button class="side-btn dark">IMPRIMIR</button>
+
+          <div class="check-group">
+            <label><input type="checkbox"> Proforma</label>
+            <label><input type="checkbox"> Guía almacén</label>
+          </div>
+
+          <button class="side-btn green">DESCARGAR</button>
+
+          <div class="check-group">
+            <label><input type="checkbox"> Proforma</label>
+            <label><input type="checkbox"> Guía almacén</label>
+          </div>
+
+          <button class="side-btn orange" id="postProformBtn">CARGAR PROFORMA</button>
+
+          <button class="side-btn red">REINICIAR</button>
+        </aside>
+
       </div>
-
-
-
-      <div class="header-right">
-        <div class="proforma-box">
-          <span>PROFORMA N°</span>
-          <h1 id="proform-number">DP-000009</h1>
-          <span id="date">FECHA: 23/02/2026</span>
-        </div>
-      </div>
-    </header>
-
-    {{!-- BODY --}}
-    <div class="proforma-body">
-
-      {{!-- <!-- MAIN --> --}}
-      <main class="main-panel">
-
-        {{!-- <!-- CLIENTE --> --}}
-        <section class="block">
-          <div class="block-title">CLIENTE / FORMULARIO</div>
-
-          <div class="grid-4">
-
-            <input id="form-client-name-field" placeholder="Cliente">
-
-            <input id="form-client-ruc-field" placeholder="RUC">
-
-            <input id="form-client-telefono-field" placeholder="Teléfono">
-
-            <input id="form-client-email-field" placeholder="E-mail">
-
-            <input id="form-client-direccion-field" placeholder="Dirección">
-
-            <input id="form-client-provincia-field" placeholder="Provincia">
-
-            <input id="form-client-ciudad-field" placeholder="Ciudad">
-
-            <select id="form-client-vendedor-field">
-              <option value="" disabled selected hidden>Vendedor</option>
-              <option>Lazaro</option>
-              <option>David</option>
-              <option>Jhon</option>
-              <option>Bryan</option>
-            </select>
-
-            <input id="form-client-entrega-field" placeholder="Entrega">
-            <input id="form-client-destino-field" placeholder="Destino">
-            <input id="form-client-agencia-field" placeholder="Agencia">
-            <input id="form-client-atencion-field" placeholder="Atención">
-
-            <select id="form-cliente-canal-de-venta-field">
-              <option value="" disabled selected hidden>Canal de venta</option>
-              <option>Tienda</option>
-              <option>Online</option>
-              <option>Cartera</option>
-            </select>
-
-            <select id="form-client-pago-field">
-              <option value="" disabled selected hidden>Forma de pago</option>
-              <option>Credito</option>
-              <option>Caja</option>
-              <option>Transferencia</option>
-              <option>Transferencia y caja</option>
-              <option>Tarjeta de Credito</option>
-            </select>
-
-            <input id="form-client-fecha-field" placeholder="Fecha">
-
-            <select id="form-client-comprobante-field">
-              <option value="" disabled selected hidden>Comprobante</option>
-              <option>boleta</option>
-              <option>factura</option>
-              <option>proforma</option>
-            </select>
-          </div>
-          {{!-- <!-- CLIENTE / BUTTONS --> --}}
-          <div class="btn-row">
-            <button class="btn green">Cargar cliente</button>
-            <button class="btn blue">Registrar cliente</button>
-            <button class="btn orange">Actualizar cliente</button>
-          </div>
-        </section>
-
-        {{!-- OTROS MEDIOS DE PAGO --}}
-        <section class="block">
-          <div class="block-title">OTROS MEDIOS DE PAGO</div>
-
-          <div class="grid-3">
-            <select id="form-pagos-medio-field">
-              <option value="" disabled selected hidden>Cuenta destino</option>
-              <option>BCP Max Imp</option>
-              <option>BCP Importadora</option>
-              <option>BCP M&X</option>
-              <option>BBVA Max Imp</option>
-              <option>BBVA Importadora</option>
-              <option>BBVA M&X</option>
-              <option>BCP Junior</option>
-              <option>BBVA Junior</option>
-              <option>Yape Junior</option>
-              <option>Plin Junior</option>
-
-            </select>
-
-            <input id="form-pagos-montos-field" placeholder="Monto">
-            <input id="form-pagos-operacion-field" placeholder="N° operación">
-          </div>
-          {{!-- OTROS MEDIOS DE PAGO / BUTTONS --}}
-          <div class="btn-row">
-            <button class="btn red">Borrar pagos</button>
-            <button id="cargarPagoBtn" class="btn green">Cargar pago</button>
-          </div>
-          <table class="table table-striped">
-            <thead>
-              <tr>
-                <th></th>
-                <th>destino</th>
-                <th>monto</th>
-                <th>operacion</th>
-                <th></th>
-              </tr>
-            </thead>
-            <tbody id="tbbodyPagos">
-            </tbody>
-          </table>
-        </section>
-
-        {{!-- PRODUCTOS --}}
-        <section class="block">
-          <div class="block-title">PRODUCTOS / FORMULARIO</div>
-
-          <table class="table">
-            <tbody id="productosTable"></tbody>
-          </table>
-
-          <form id="researchForm" class="form-grid">
-
-            <div class="form-group">
-              <label>Producto</label>
-              <input type="text" class="form-control" id="search">
-            </div>
-
-            <div class="form-group">
-              <label>Cantidad</label>
-              <input id="form-product-cantidad-field" type="text" class="form-control">
-            </div>
-
-            <div class="form-group">
-              <label>Comentario</label>
-              <input id="form-product-comentario-field" type="text" class="form-control">
-            </div>
-
-            <div class="form-group">
-              <label>Importe Unitario</label>
-              <input id="form-product-importe-unitario-field" type="text" class="form-control">
-            </div>
-
-
-            <div class="form-group">
-              <label>Total</label>
-              <span id="form-producto-total-field" type="text" class="form-control"> /S</span>
-            </div>
-            <div>
-              <label></label>
-              <button id="cargarProductoBtn" type="button" class="btn green">Cargar producto</button>
-
-            </div>
-          </form>
-
-          <table style="display: none">
-            <thead>
-              <tr>
-                <th>index</th>
-                <th>status</th>
-                <th>nombre</th>
-                <th>cantidad</th>
-                <th>comentario</th>
-                <th>importe unitario</th>
-                <th>total</th>
-              </tr>
-            </thead>
-            <tbody id="productList">
-              
-            </tbody>
-          </table>
-        </section>
-
-      </main>
-
-      {{!-- PANEL DERECHO / COMANDOS --}}
-      <aside class="side-panel">
-        <button class="side-btn orange">REFRESCAR DDBB</button>
-        <button class="side-btn green">CONSULTAR PROFORMA</button>
-        <button class="side-btn lime">ACTUALIZAR PROFORMA</button>
-        <button class="side-btn dark">IMPRIMIR</button>
-
-        <div class="check-group">
-          <label><input type="checkbox"> Proforma</label>
-          <label><input type="checkbox"> Guía almacén</label>
-        </div>
-
-        <button class="side-btn green">DESCARGAR</button>
-
-        <div class="check-group">
-          <label><input type="checkbox"> Proforma</label>
-          <label><input type="checkbox"> Guía almacén</label>
-        </div>
-
-        <button class="side-btn orange" id="postProformBtn">CARGAR PROFORMA</button>
-        <button class="side-btn red">REINICIAR</button>
-      </aside>
-
     </div>
+
+    <style>
+      .form-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 10px;
+      }
+
+      .form-group {
+        display: flex;
+        flex-direction: column;
+      }
+
+      .form-control {
+        width: 100%;
+      }
+    </style>
+
+  </div>
+  {{!-- PRODUCTOS TABLA --}}
+  <div
+    style="margin: auto; padding: 1rem; max-height: 400px; max-width: 100%; overflow-y: auto; border: 1px solid #ccc;">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <td><strong>status</strong></td>
+          <td><strong>ID</strong></td>
+          <td><strong>CODIGO_FORMATEADO</strong></td>
+          <td><strong>CODIGO</strong></td>
+          <td><strong>STOCK_LV</strong></td>
+          <td><strong>STOCK_SJL</strong></td>
+          <td><strong>STOCK</strong></td>
+          <td><strong>EQUIVALENTES_STOCK</strong></td>
+          <td><strong>DESCRIPCION</strong></td>
+          <td><strong>FAMILIA</strong></td>
+          <td><strong>SUBFAMILIA</strong></td>
+          <td><strong>PROVEEDOR</strong></td>
+          <td><strong>MARCA</strong></td>
+        </tr>
+      </thead>
+      <tbody id="tbbodyProducts"> {{#each products}}
+
+        <tr>
+          <td>{{this.status}}</td>
+          <td>{{this.ID}}</td>
+          <td>{{this.CODIGO_FORMATEADO}}</td>
+          <td>{{this.CODIGO}}</td>
+          <td>{{this.STOCK_LV}}</td>
+          <td>{{this.STOCK_SJL}}</td>
+          <td>{{this.STOCK}}</td>
+          <td>{{this.EQUIVALENTES_STOCK}}</td>
+          <td>{{this.DESCRIPCION}}</td>
+          <td>{{this.FAMILIA}}</td>
+          <td>{{this.SUBFAMILIA}}</td>
+          <td>{{this.PROVEEDOR}}</td>
+          <td>{{this.MARCA}}</td>
+
+
+        </tr>
+
+        {{/each}}
+      </tbody>
+
+    </table>
+
   </div>
 
-  <style>
-    .form-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 10px;
-    }
 
-    .form-group {
-      display: flex;
-      flex-direction: column;
-    }
+  <div style="padding: 2rem;">
+    {{!-- PROFORMA - VISUALIZACION --}}
+    <h4>previsualizacion / proforma</h4>
 
-    .form-control {
-      width: 100%;
-    }
-  </style>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        background: #f5f5f5;
+      }
 
-</div>
-{{!-- PRODUCTOS TABLA --}}
-<div style="padding: 1rem; max-height: 400px; max-width: 90%; overflow-y: auto; border: 1px solid #ccc;">
-  <table class="table table-striped">
-    <thead>
-      <tr>
-        <td><strong>status</strong></td>
-        <td><strong>ID</strong></td>
-        <td><strong>CODIGO_FORMATEADO</strong></td>
-        <td><strong>CODIGO</strong></td>
-        <td><strong>STOCK_LV</strong></td>
-        <td><strong>STOCK_SJL</strong></td>
-        <td><strong>STOCK</strong></td>
-        <td><strong>EQUIVALENTES_STOCK</strong></td>
-        <td><strong>DESCRIPCION</strong></td>
-        <td><strong>FAMILIA</strong></td>
-        <td><strong>SUBFAMILIA</strong></td>
-        <td><strong>PROVEEDOR</strong></td>
-        <td><strong>MARCA</strong></td>
-      </tr>
-    </thead>
-    <tbody id="tbbodyProducts"> {{#each products}}
+      .container {
+        max-width: 900px;
+        width: 100%;
+      }
 
-      <tr>
-        <td>{{this.status}}</td>
-        <td>{{this.ID}}</td>
-        <td>{{this.CODIGO_FORMATEADO}}</td>
-        <td>{{this.CODIGO}}</td>
-        <td>{{this.STOCK_LV}}</td>
-        <td>{{this.STOCK_SJL}}</td>
-        <td>{{this.STOCK}}</td>
-        <td>{{this.EQUIVALENTES_STOCK}}</td>
-        <td>{{this.DESCRIPCION}}</td>
-        <td>{{this.FAMILIA}}</td>
-        <td>{{this.SUBFAMILIA}}</td>
-        <td>{{this.PROVEEDOR}}</td>
-        <td>{{this.MARCA}}</td>
+      .header {
+        background: #ff6a00;
+        color: white;
+        font-weight: bold;
+        padding: 5px;
+        font-size: 14px;
+      }
 
+      .top-section {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 10px;
+      }
 
-      </tr>
+      .logo {
+        width: 200px;
+      }
 
-      {{/each}}
-    </tbody>
+      .company-info {
+        font-size: 12px;
+      }
 
-  </table>
-</div>
+      .proforma-box {
+        text-align: right;
+      }
 
+      .proforma-number {
+        font-size: 32px;
+        font-weight: bold;
+      }
 
-<div>
-  {{!-- PROFORMA - VISUALIZACION --}}
-  <h2>previsualizacion de proforma</h2>
+      .grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+        margin-top: 15px;
+        font-size: 12px;
+      }
 
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      background: #f5f5f5;
-    }
+      .label {
+        color: #666;
+      }
 
-    .container {
-      width: 900px;
-      margin: auto;
-      background: white;
-      padding: 10px;
-      border: 1px solid #ccc;
-    }
+      .value {
+        font-weight: bold;
+      }
 
-    .header {
-      background: #ff6a00;
-      color: white;
-      font-weight: bold;
-      padding: 5px;
-      font-size: 14px;
-    }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 15px;
+        font-size: 12px;
+      }
 
-    .top-section {
-      display: flex;
-      justify-content: space-between;
-      margin-top: 10px;
-    }
+      thead {
+        background: #ff6a00;
+        color: white;
+      }
 
-    .logo {
-      width: 200px;
-    }
+      th,
+      td {
+        padding: 5px;
+        border: 1px solid #ddd;
+        text-align: left;
+      }
 
-    .company-info {
-      font-size: 12px;
-    }
+      .totals {
+        margin-top: 10px;
+        width: 300px;
+        margin-left: auto;
+        /* reemplaza float */
+        font-size: 12px;
+      }
 
-    .proforma-box {
-      text-align: right;
-    }
+      .totals div {
+        display: flex;
+        justify-content: space-between;
+        padding: 3px 0;
+      }
 
-    .proforma-number {
-      font-size: 32px;
-      font-weight: bold;
-    }
-
-    .grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 10px;
-      margin-top: 15px;
-      font-size: 12px;
-    }
-
-    .label {
-      color: #666;
-    }
-
-    .value {
-      font-weight: bold;
-    }
-
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 15px;
-      font-size: 12px;
-    }
-
-    thead {
-      background: #ff6a00;
-      color: white;
-    }
-
-    th,
-    td {
-      padding: 5px;
-      border: 1px solid #ddd;
-      text-align: left;
-    }
-
-    .totals {
-      margin-top: 10px;
-      width: 300px;
-      float: right;
-      font-size: 12px;
-    }
-
-    .totals div {
-      display: flex;
-      justify-content: space-between;
-      padding: 3px 0;
-    }
-
-    .total-highlight {
-      background: #ff6a00;
-      color: white;
-      font-weight: bold;
-      padding: 5px;
-    }
-  </style>
-  </head>
-
-  <body>
+      .total-highlight {
+        background: #ff6a00;
+        color: white;
+        font-weight: bold;
+        padding: 5px;
+      }
+    </style>
+    </head>
 
     <div class="container">
-
-      <div class="header">PROFORMA / PREVISUALIZACIÓN</div>
 
       <div class="top-section">
         <div>
@@ -432,7 +431,7 @@
         </div>
 
         <div class="proforma-box">
-          <div class="proforma-number" id="preview-proform-number">DP-000009</div>
+          <div class="proforma-number" id="preview-proform-number">DP-00NUEVA</div>
           <div id="preview-proform-date">02/04/2026</div>
 
         </div>
@@ -505,9 +504,193 @@
       </div>
 
     </div>
-</div>
+
+    <section class="proforma-detalle guia-de-almacen">
+      <div style="margin:auto; padding: 2rem">
+        <h4>previsualizacion / guia de almacen</h4>
+
+        <div class="detalle-header">
+          <div>CLIENTE: A & J COLLATUPA S.A.C.</div>
+          <div>VENDEDOR: LAZARO</div>
+          <div>fecha</div>
+          <div>DP-000004 v1</div>
+
+        </div>
+
+        <table class="detalle-table">
+          <thead>
+            <tr>
+              <th>ITEM</th>
+              <th>CANTIDAD</th>
+              <th>PRECIO</th>
+              <th>PEDIDO</th>
+              <th>OPCIONES</th>
+              <th>LV</th>
+              <th>SJL</th>
+              <th>DESCRIPCIÓN</th>
+              <th>EQUIVALENTES + STOCK</th>
+              <th>UBICACION</th>
+            </tr>
+          </thead>
+
+          <tbody>
+
+            <!-- ITEM 001 -->
+            <tr>
+              <td>001</td>
+              <td>5</td>
+              <td>40 /S</td>
+              <td>ZM 710</td>
+              <td>ZM-710</td>
+              <td>81</td>
+              <td>252</td>
+              <td>NISSAN SENTRA 1.6, NISSAN SUNNY 1.3 / ARRANCADOR / SOLENOIDE</td>
+
+              <td>EQUIVALENTES_STOCK</td>
+              <td>ubicacion</td>
+
+            </tr>
+
+            <!-- ITEM 002 -->
+            <tr>
+              <td>002</td>
+              <td>8</td>
+              <td>50 /S</td>
+              <td>UF 1205</td>
+              <td>UF-1205-4</td>
+              <td>141</td>
+              <td>660</td>
+              <td>NISSAN GA15 12V / ARRANCADOR / PORTA CARBON</td>
+              <td>EQUIVALENTES_STOCK</td>
+              <td>ubicacion</td>
+            </tr>
+            <!-- ITEM 003 -->
+            <tr>
+              <td>003</td>
+              <td>5</td>
+              <td>40 /S</td>
+              <td>zm solenoide excel 4h</td>
+              <td>ZM-791</td>
+              <td>141</td>
+              <td>660</td>
+              <td>HYUNDAI EXCEL 4H 12V / ARRANCADOR /
+                SOLENOIDE</td>
+              <td>EQUIVALENTES_STOCK</td>
+              <td>ubicacion</td>
+            </tr>
+            <tr>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td>ZM-2699</td>
+              <td>0</td>
+              <td>0</td>
+              <td>HYUNDAI ACCENT 4H TIPO EXCEL 12V /
+                ARRANCADOR / SOLENOIDE</td>
+              <td>EQUIVALENTES_STOCK</td>
+              <td>ubicacion</td>
+            </tr>
+
+            <tr>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td>ZM-4995</td>
+              <td>25</td>
+              <td>28</td>
+              <td>DODGE DURANGO JEEP GRAND CHEROKEE
+                TIPO EXCEL CH 4H 12V / ARRANCADOR /
+                SOLENOIDE</td>
+              <td>EQUIVALENTES_STOCK</td>
+              <td>ubicacion</td>
+            </tr>
+
+            <tr>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td>ZM-6996</td>
+              <td>15</td>
+              <td>84</td>
+              <td></td>
+              <td>NISSAN ALTIMA 4H EXCEL CH CON ENCHUFE /
+                ARRANCADOR / SOLENOIDE</td>
+              <td>ubicacion</td>
+            </tr>
+
+            <!-- ITEM 004 -->
+            <tr>
+              <td>004</td>
+              <td>50</td>
+              <td>40 /S</td>
+              <td>bendix excel 11t valeo</td>
+              <td>BZM-9918720</td>
+              <td>6</td>
+              <td>0</td>
+              <td>HYUNDAI VALEO TIPO EXCEL 11T /
+                ARRANCADOR / BENDIX</td>
+              <td>19659 = 24;
+                ZM-8559039 = 0
+                TOTAL = 24</td>
+              <td>ubicacion</td>
+            </tr>
+
+            <tr>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td>ZNP-19659</td>
+              <td>24</td>
+              <td>0</td>
+              <td>HYUNDAI VALEO TIPO EXCEL 11T /
+                ARRANCADOR / BENDIX</td>
+              <td>BZM-9918720 = 6;
+              BZM-9918720 = 6
+              TOTAL = 12</td>
+              <td>ubicacion</td>
+            </tr>
+          </tbody>
+        </table>
+
+      </div>
+    </section>
 
 
+    <footer class="proforma-footer">
+      <div class="footer-content">
+
+        <div class="footer-left">
+          <p><strong>Condiciones:</strong></p>
+          <p>• Precios sujetos a cambio sin previo aviso.</p>
+          <p>• La mercadería viaja por cuenta y riesgo del cliente.</p>
+          <p>• No se aceptan devoluciones después de 24 horas.</p>
+        </div>
+
+        <div class="footer-center">
+          <p><strong>Observaciones:</strong></p>
+          <p id="preview-observaciones">-</p>
+        </div>
+
+        <div class="footer-right">
+          <p><strong>Contacto:</strong></p>
+          <p id="footer-empresa-telf">Cel: 999 999 999</p>
+          <p id="footer-empresa-email">ventas@maximportaciones.com.pe</p>
+          <p id="footer-empresa-web">www.maximportaciones.com.pe</p>
+        </div>
+
+      </div>
+
+      <div class="footer-bottom">
+        <p>Gracias por su preferencia</p>
+      </div>
+    </footer>
+  </div>
+
+</body>
 <script src="/socket.io/socket.io.js"></script>
 
 <script>//conexion del formulario clientes con el preview: 
@@ -518,25 +701,24 @@
 
   const inputProductCantidad = document.getElementById("form-product-cantidad-field")
   const inputProductImporte = document.getElementById("form-product-importe-unitario-field")
-const inputProductTotal=document.getElementById("form-producto-total-field")
-  
-  
-  inputProductImporte.addEventListener("input",(e)=>
-  {
+  const inputProductTotal = document.getElementById("form-producto-total-field")
+
+
+  inputProductImporte.addEventListener("input", (e) => {
     const importe = document.getElementById("form-product-importe-unitario-field").value
     const cantidad = document.getElementById("form-product-cantidad-field").value
-const total = cantidad * importe
-  
+    const total = cantidad * importe
+
     inputProductTotal.textContent = `${total} /S`
   })
 
   inputProductCantidad.addEventListener("input", (e) => {
-      const importe = document.getElementById("form-product-importe-unitario-field").value
-      const cantidad = document.getElementById("form-product-cantidad-field").value
-      const total = cantidad * importe
+    const importe = document.getElementById("form-product-importe-unitario-field").value
+    const cantidad = document.getElementById("form-product-cantidad-field").value
+    const total = cantidad * importe
 
-      inputProductTotal.textContent = `${total} /S`
-    })
+    inputProductTotal.textContent = `${total} /S`
+  })
 
   inputClientName.addEventListener("input", (e) => {
     previewClientName.textContent = e.target.value || "";
@@ -1023,6 +1205,32 @@ const total = cantidad * importe
 
 {{!-- CSS --}}
 <style>
+  .proforma-footer {
+    margin-top: 40px;
+    border-top: 2px solid #ff6a00;
+    padding-top: 10px;
+    font-size: 12px;
+  }
+
+  .footer-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 10px;
+  }
+
+  .footer-left,
+  .footer-center,
+  .footer-right {
+    padding: 5px;
+  }
+
+  .footer-bottom {
+    text-align: center;
+    margin-top: 10px;
+    font-weight: bold;
+    color: #555;
+  }
+
   .proforma-app {
     font-family: Arial, sans-serif;
     background: #f2f2f2;
@@ -1151,5 +1359,59 @@ const total = cantidad * importe
     border: 1px solid #ccc;
     padding: 6px;
     text-align: left;
+  }
+
+  .proforma-detalle {
+    margin-top: 40px;
+    font-size: 12px;
+    background: #fff;
+    border: 1px solid #ccc;
+  }
+
+  .detalle-header {
+    display: flex;
+    justify-content: space-between;
+    background: #0b2b45;
+    color: #fff;
+    padding: 6px 10px;
+    font-weight: bold;
+  }
+
+  .detalle-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  .detalle-table thead {
+    background: #1f4e5f;
+    color: white;
+  }
+
+  .detalle-table th,
+  .detalle-table td {
+    border: 1px solid #ccc;
+    padding: 5px;
+    text-align: left;
+  }
+
+  .sub-row {
+    background: #eaeaea;
+    font-weight: bold;
+  }
+
+  .equivalentes {
+    margin-top: 6px;
+    font-size: 11px;
+    color: #333;
+    line-height: 1.3;
+  }
+
+  .equivalentes strong {
+    color: #000;
+  }
+
+  .sub-row {
+    background: #eaeaea;
+    font-weight: bold;
   }
 </style>
