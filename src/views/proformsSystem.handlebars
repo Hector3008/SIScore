@@ -265,8 +265,6 @@
     <table class="table table-striped">
       <thead>
         <tr>
-          <td><strong>status</strong></td>
-          <td><strong>ID</strong></td>
           <td><strong>CODIGO_FORMATEADO</strong></td>
           <td><strong>CODIGO</strong></td>
           <td><strong>STOCK_LV</strong></td>
@@ -276,15 +274,12 @@
           <td><strong>DESCRIPCION</strong></td>
           <td><strong>FAMILIA</strong></td>
           <td><strong>SUBFAMILIA</strong></td>
-          <td><strong>PROVEEDOR</strong></td>
           <td><strong>MARCA</strong></td>
         </tr>
       </thead>
       <tbody id="tbbodyProducts"> {{#each products}}
 
         <tr>
-          <td>{{this.status}}</td>
-          <td>{{this.ID}}</td>
           <td>{{this.CODIGO_FORMATEADO}}</td>
           <td>{{this.CODIGO}}</td>
           <td>{{this.STOCK_LV}}</td>
@@ -294,7 +289,6 @@
           <td>{{this.DESCRIPCION}}</td>
           <td>{{this.FAMILIA}}</td>
           <td>{{this.SUBFAMILIA}}</td>
-          <td>{{this.PROVEEDOR}}</td>
           <td>{{this.MARCA}}</td>
 
 
@@ -504,7 +498,7 @@
       </div>
 
     </div>
-
+    <!-- PREVIEW: picking guide / guia de almacenero. Estructura hardcodeada. Debo conectarla al productList para que se genere según los productos de la currentProform -->
     <section class="proforma-detalle guia-de-almacen">
       <div style="margin:auto; padding: 2rem">
         <h4>previsualizacion / guia de almacen</h4>
@@ -524,6 +518,7 @@
               <th>CANTIDAD</th>
               <th>PRECIO</th>
               <th>PEDIDO</th>
+              <th>COMENTARIO</th>
               <th>OPCIONES</th>
               <th>LV</th>
               <th>SJL</th>
@@ -541,6 +536,7 @@
               <td>5</td>
               <td>40 /S</td>
               <td>ZM 710</td>
+              <td>comentario</td>
               <td>ZM-710</td>
               <td>81</td>
               <td>252</td>
@@ -557,6 +553,7 @@
               <td>8</td>
               <td>50 /S</td>
               <td>UF 1205</td>
+              <td>comentario</td>
               <td>UF-1205-4</td>
               <td>141</td>
               <td>660</td>
@@ -570,6 +567,7 @@
               <td>5</td>
               <td>40 /S</td>
               <td>zm solenoide excel 4h</td>
+              <td>comentario</td>
               <td>ZM-791</td>
               <td>141</td>
               <td>660</td>
@@ -579,6 +577,7 @@
               <td>ubicacion</td>
             </tr>
             <tr>
+              <td></td>
               <td></td>
               <td></td>
               <td></td>
@@ -593,6 +592,7 @@
             </tr>
 
             <tr>
+              <td></td>
               <td></td>
               <td></td>
               <td></td>
@@ -612,6 +612,7 @@
               <td></td>
               <td></td>
               <td></td>
+              <td></td>
               <td>ZM-6996</td>
               <td>15</td>
               <td>84</td>
@@ -627,6 +628,7 @@
               <td>50</td>
               <td>40 /S</td>
               <td>bendix excel 11t valeo</td>
+              <td>comentario</td>
               <td>BZM-9918720</td>
               <td>6</td>
               <td>0</td>
@@ -643,14 +645,15 @@
               <td></td>
               <td></td>
               <td></td>
+              <td></td>
               <td>ZNP-19659</td>
               <td>24</td>
               <td>0</td>
               <td>HYUNDAI VALEO TIPO EXCEL 11T /
                 ARRANCADOR / BENDIX</td>
               <td>BZM-9918720 = 6;
-              BZM-9918720 = 6
-              TOTAL = 12</td>
+                BZM-9918720 = 6
+                TOTAL = 12</td>
               <td>ubicacion</td>
             </tr>
           </tbody>
@@ -851,7 +854,7 @@
   });
 </script>
 
-<script>//print de la tabla productos
+<script>//print de la tabla productos (from filter)
   const table = document.querySelector("#tbbodyProducts")
 
   socket.on("filterList", (data) => {
@@ -870,15 +873,10 @@
         <td>${product.STOCK_SJL}</td>
         <td>${product.STOCK}</td>
         <td>${product.EQUIVALENTES_STOCK}</td>
-        
-        <td>${product.DESCRIPCION}</td>
-        
-        <td>${product.FAMILIA}</td>
-        
+        <td>${product.DESCRIPCION}</td>        
+        <td>${product.FAMILIA}</td>        
         <td>${product.SUBFAMILIA}</td>
-        
         <td>${product.PROVEEDOR}</td>
-        
         <td>${product.MARCA}</td>
       `;
       tbbodyProducts.appendChild(tr);
@@ -969,7 +967,7 @@
 
 </script>
 
-<script>//preview membrete linking:
+<script>//preview proform linking:
   const empresas = {
     "Max Importaciones y Servicios Generales S.A.C.": {
       address: "Cal. Garcia Naranjo Nro. 114b - La Victoria - Lima",
@@ -1015,7 +1013,6 @@
       document.getElementById("empresa-telf").textContent = "Cel: " + data.telf;
       document.getElementById("empresa-email").textContent = data.email;
       document.getElementById("web").textContent = data.web;
-
       document.getElementById("preview-empresa-name").textContent = nombre
       document.getElementById("preview-empresa-ruc").textContent = data.ruc
       document.getElementById("preview-empresa-address").textContent = data.address
@@ -1027,8 +1024,12 @@
 </script>
 
 <script>//cargarProductoBtn
+  const productList2 = {{{ json products }}}; // array recibido por el .handlebars (html)
+
   let productListArray = []
   let productListPreview = []
+  let productListPickingGuide = []
+
   const cargarProductoBtn = document.querySelector("#cargarProductoBtn")
   const productTablePreview = document.querySelector("#tbody-products-proform-preview")
   const productTable = document.querySelector("#productList")
@@ -1055,11 +1056,13 @@
 
     productListArray = Array.from(productList).map((tr, index) => {
       const tds = tr.querySelectorAll("td");
+      const nombre = tds[2].textContent.trim();
+
       // console.log("tds: ", tds)
       return {
         index: tds[0].textContent,
         status: tds[1].textContent.trim(),
-        nombre: tds[2].textContent.trim(),
+        nombre,
         cantidad: tds[3].textContent.trim(),
         comentario: tds[4].textContent.trim(),
         importe: tds[5].textContent.trim(),
@@ -1069,6 +1072,30 @@
     );
     product.index = productListArray.length + 1
     productListArray.push(product)
+
+    productListPickingGuide = productListArray.map(product => {
+       const tokens = product.nombre.split(/\s+/).filter(Boolean)
+           let list = productList2;
+
+let options = list.filter(p=>{
+  const text = `
+          ${p.CODIGO_FORMATEADO}
+          ${p.CODIGO}
+          ${p.DESCRIPCION}
+          ${p.PROVEEDOR}
+          ${p.MARCA}
+          ${p.SUBFAMILIA}
+          ${p.FAMILIA}
+        `.toLowerCase();
+        return tokens.every(word=>
+       text.includes(word) )
+})
+           
+      return {...product,      options
+    }
+    });
+
+console.log("productListPickingGuide: ", productListPickingGuide)
 
     productTable.innerHTML = ""
     productTablePreview.innerHTML = ""
@@ -1091,11 +1118,10 @@
       productTable.appendChild(tr);
     }
 
-    //console.log("productListArray: ", productListArray)
     productListPreview = productListArray.filter(
       prod => prod.status === true || prod.status === "true"
     );
-    //console.log("productListPreview: ", productListPreview)
+
     productListPreview.map((prod, index) => {
       const tr = document.createElement("tr");
 
@@ -1117,6 +1143,7 @@
     })
 
 
+    //clean to fields
     document.querySelector("#search").value = ""
     document.querySelector("#form-product-cantidad-field").value = ""
     document.querySelector("#form-product-importe-unitario-field").value = ""
@@ -1148,7 +1175,6 @@
         }
         return prod;
       })
-      console.log("productListArray 2", productListArray)
 
       productTable.innerHTML = ""
       //tr.remove()
