@@ -528,134 +528,8 @@
             </tr>
           </thead>
 
-          <tbody>
+          <tbody id="pickingGuideTable">
 
-            <!-- ITEM 001 -->
-            <tr>
-              <td>001</td>
-              <td>5</td>
-              <td>40 /S</td>
-              <td>ZM 710</td>
-              <td>comentario</td>
-              <td>ZM-710</td>
-              <td>81</td>
-              <td>252</td>
-              <td>NISSAN SENTRA 1.6, NISSAN SUNNY 1.3 / ARRANCADOR / SOLENOIDE</td>
-
-              <td>EQUIVALENTES_STOCK</td>
-              <td>ubicacion</td>
-
-            </tr>
-
-            <!-- ITEM 002 -->
-            <tr>
-              <td>002</td>
-              <td>8</td>
-              <td>50 /S</td>
-              <td>UF 1205</td>
-              <td>comentario</td>
-              <td>UF-1205-4</td>
-              <td>141</td>
-              <td>660</td>
-              <td>NISSAN GA15 12V / ARRANCADOR / PORTA CARBON</td>
-              <td>EQUIVALENTES_STOCK</td>
-              <td>ubicacion</td>
-            </tr>
-            <!-- ITEM 003 -->
-            <tr>
-              <td>003</td>
-              <td>5</td>
-              <td>40 /S</td>
-              <td>zm solenoide excel 4h</td>
-              <td>comentario</td>
-              <td>ZM-791</td>
-              <td>141</td>
-              <td>660</td>
-              <td>HYUNDAI EXCEL 4H 12V / ARRANCADOR /
-                SOLENOIDE</td>
-              <td>EQUIVALENTES_STOCK</td>
-              <td>ubicacion</td>
-            </tr>
-            <tr>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td>ZM-2699</td>
-              <td>0</td>
-              <td>0</td>
-              <td>HYUNDAI ACCENT 4H TIPO EXCEL 12V /
-                ARRANCADOR / SOLENOIDE</td>
-              <td>EQUIVALENTES_STOCK</td>
-              <td>ubicacion</td>
-            </tr>
-
-            <tr>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td>ZM-4995</td>
-              <td>25</td>
-              <td>28</td>
-              <td>DODGE DURANGO JEEP GRAND CHEROKEE
-                TIPO EXCEL CH 4H 12V / ARRANCADOR /
-                SOLENOIDE</td>
-              <td>EQUIVALENTES_STOCK</td>
-              <td>ubicacion</td>
-            </tr>
-
-            <tr>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td>ZM-6996</td>
-              <td>15</td>
-              <td>84</td>
-              <td></td>
-              <td>NISSAN ALTIMA 4H EXCEL CH CON ENCHUFE /
-                ARRANCADOR / SOLENOIDE</td>
-              <td>ubicacion</td>
-            </tr>
-
-            <!-- ITEM 004 -->
-            <tr>
-              <td>004</td>
-              <td>50</td>
-              <td>40 /S</td>
-              <td>bendix excel 11t valeo</td>
-              <td>comentario</td>
-              <td>BZM-9918720</td>
-              <td>6</td>
-              <td>0</td>
-              <td>HYUNDAI VALEO TIPO EXCEL 11T /
-                ARRANCADOR / BENDIX</td>
-              <td>19659 = 24;
-                ZM-8559039 = 0
-                TOTAL = 24</td>
-              <td>ubicacion</td>
-            </tr>
-
-            <tr>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td>ZNP-19659</td>
-              <td>24</td>
-              <td>0</td>
-              <td>HYUNDAI VALEO TIPO EXCEL 11T /
-                ARRANCADOR / BENDIX</td>
-              <td>BZM-9918720 = 6;
-                BZM-9918720 = 6
-                TOTAL = 12</td>
-              <td>ubicacion</td>
-            </tr>
           </tbody>
         </table>
 
@@ -1025,7 +899,6 @@
 
 <script>//cargarProductoBtn
   const productList2 = {{{ json products }}}; // array recibido por el .handlebars (html)
-
   let productListArray = []
   let productListPreview = []
   let productListPickingGuide = []
@@ -1034,6 +907,7 @@
   const productTablePreview = document.querySelector("#tbody-products-proform-preview")
   const productTable = document.querySelector("#productList")
 
+  const pickingGuideTable = document.querySelector("#pickingGuideTable")
   cargarProductoBtn.addEventListener("click", (e) => {
     e.preventDefault();
 
@@ -1074,11 +948,11 @@
     productListArray.push(product)
 
     productListPickingGuide = productListArray.map(product => {
-       const tokens = product.nombre.split(/\s+/).filter(Boolean)
-           let list = productList2;
+      const tokens = product.nombre.split(/\s+/).filter(Boolean)
+      let list = productList2;
 
-let options = list.filter(p=>{
-  const text = `
+      let options = list.filter(p => {
+        const text = `
           ${p.CODIGO_FORMATEADO}
           ${p.CODIGO}
           ${p.DESCRIPCION}
@@ -1086,16 +960,16 @@ let options = list.filter(p=>{
           ${p.MARCA}
           ${p.SUBFAMILIA}
           ${p.FAMILIA}
+          ${p.UBICACION}
         `.toLowerCase();
-        return tokens.every(word=>
-       text.includes(word) )
-})
-           
-      return {...product,      options
-    }
-    });
+        return tokens.every(word =>
+          text.includes(word))
+      })
 
-console.log("productListPickingGuide: ", productListPickingGuide)
+      return {
+        ...product, options
+      }
+    });
 
     productTable.innerHTML = ""
     productTablePreview.innerHTML = ""
@@ -1142,7 +1016,38 @@ console.log("productListPickingGuide: ", productListPickingGuide)
 
     })
 
+    pickingGuideTable.innerHTML = ""
+    for (const [i, prod] of productListPickingGuide.entries()) {
 
+      for (const [j, option] of prod.options.entries()) {
+
+        const esPar = (i+1) % 2 === 0;
+
+        const tr = document.createElement("tr");
+        tr.classList.add(`pickingGuide-tr-${esPar}`);
+        tr.innerHTML = `
+      <td>${j==0?i + 1:""}</td>
+      <td>${j == 0 ?prod.cantidad:""}</td>
+      <td>${j == 0 ?prod.importe:""}</td>
+      <td>${j == 0 ? prod.comentario : ""}</td>
+      <td>${j == 0 ?prod.nombre:""}</td>
+      <td>${option.CODIGO_FORMATEADO}</td>
+      
+      <td>${option.STOCK_LV}</td>
+      
+      <td>${option.STOCK_SJL}</td>
+      
+      <td>${option.DESCRIPCION}</td>
+      
+      <td>${option.EQUIVALENTES_STOCK}</td>
+      
+      <td>${option.UBICACION}</td>
+      
+    `;
+
+        pickingGuideTable.appendChild(tr);
+      }
+    }
     //clean to fields
     document.querySelector("#search").value = ""
     document.querySelector("#form-product-cantidad-field").value = ""
@@ -1231,6 +1136,7 @@ console.log("productListPickingGuide: ", productListPickingGuide)
 
 {{!-- CSS --}}
 <style>
+  .pickingGuide-tr-true{background-color: #ceddf1}
   .proforma-footer {
     margin-top: 40px;
     border-top: 2px solid #ff6a00;
