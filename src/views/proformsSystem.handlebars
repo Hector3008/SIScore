@@ -739,8 +739,6 @@
       let tr = document.createElement("tr");
       tr.innerHTML = `
                       
-        <td>${product.status}</td>
-        <td>${product.ID}</td>
         <td>${product.CODIGO_FORMATEADO}</td>
         <td>${product.CODIGO}</td>
         <td>${product.STOCK_LV}</td>
@@ -750,7 +748,6 @@
         <td>${product.DESCRIPCION}</td>        
         <td>${product.FAMILIA}</td>        
         <td>${product.SUBFAMILIA}</td>
-        <td>${product.PROVEEDOR}</td>
         <td>${product.MARCA}</td>
       `;
       tbbodyProducts.appendChild(tr);
@@ -914,8 +911,17 @@
     const productList = document.querySelectorAll(".productListItem")
 
     const nombre = document.querySelector("#search").value
+    if (!nombre) {
+      return new Error("El campo nombre está vacío")
+    }
     const cantidad = document.querySelector("#form-product-cantidad-field").value
+        if (!cantidad) {
+      return new Error("El campo nombre está vacío")
+    }
     const importe = document.querySelector("#form-product-importe-unitario-field").value
+            if (!importe) {
+      return new Error("El campo nombre está vacío")
+    }
     const comentario = document.querySelector("#form-product-comentario-field").value
 
     const product = {
@@ -947,7 +953,32 @@
     product.index = productListArray.length + 1
     productListArray.push(product)
 
-    productListPickingGuide = productListArray.map(product => {
+
+    productTable.innerHTML = ""
+    productTablePreview.innerHTML = ""
+    for (prod of productListArray) {
+
+      const tr = document.createElement("tr");
+
+      tr.classList.add("productListItem");
+      tr.id = `product-${prod.index}-tr`
+
+      tr.innerHTML = `
+                      <td>${prod.index}</td>      
+                      <td>${prod.status}</td>
+                      <td>${prod.nombre}</td>
+                      <td>${prod.cantidad}</td>
+                      <td>${prod.comentario}</td>
+                      <td>${prod.importe}</td>
+                      <td>${prod.total}</td>
+                `
+      productTable.appendChild(tr);
+    }
+
+    productListPreview = productListArray.filter(
+      prod => prod.status === true || prod.status === "true"
+    );
+    productListPickingGuide = productListPreview.map(product => {
       const tokens = product.nombre.split(/\s+/).filter(Boolean)
       let list = productList2;
 
@@ -965,36 +996,17 @@
         return tokens.every(word =>
           text.includes(word))
       })
-
+      console.log("options: ", options)
+      const empty = [{
+        status: "true", CODIGO:
+          "", CODIGO_FORMATEADO: "", DESCRIPCION: "", EQUIVALENTES_STOCK: "", FAMILIA: "", ID: "", MARCA: "", PROVEEDOR: "", STOCK: "", STOCK_LV: "", STOCK_SJL: "", SUBFAMILIA: "", UBICACION: ""
+      }]
+      options = (!options || options.length === 0) ? empty : options
+      console.log("options2: ", options)
       return {
         ...product, options
       }
     });
-
-    productTable.innerHTML = ""
-    productTablePreview.innerHTML = ""
-    for (prod of productListArray) {
-
-      const tr = document.createElement("tr");
-
-      tr.classList.add("productListItem");
-      tr.id = `product-${prod.index}-tr`
-
-      tr.innerHTML = `
-                      <td>${prod.index}</td>      
-                      <td>${prod.status}</td>
-                      <td>${prod.nombre}</td>
-                      <td>${prod.cantidad}</td>
-                      <td>${prod.comentario}</td>
-                                    <td>${prod.importe}</td>
-                      <td>${prod.total}</td>
-                `
-      productTable.appendChild(tr);
-    }
-
-    productListPreview = productListArray.filter(
-      prod => prod.status === true || prod.status === "true"
-    );
 
     productListPreview.map((prod, index) => {
       const tr = document.createElement("tr");
@@ -1021,30 +1033,23 @@
 
       for (const [j, option] of prod.options.entries()) {
 
-        const esPar = (i+1) % 2 === 0;
+        const esPar = (i + 1) % 2 === 0;
 
         const tr = document.createElement("tr");
         tr.classList.add(`pickingGuide-tr-${esPar}`);
         tr.innerHTML = `
-      <td>${j==0?i + 1:""}</td>
-      <td>${j == 0 ?prod.cantidad:""}</td>
-      <td>${j == 0 ?prod.importe:""}</td>
+      <td>${j == 0 ? i + 1 : ""}</td>
+      <td>${j == 0 ? prod.cantidad : ""}</td>
+      <td>${j == 0 ? prod.importe : ""}</td>
+      <td>${j == 0 ? prod.nombre : ""}</td>
       <td>${j == 0 ? prod.comentario : ""}</td>
-      <td>${j == 0 ?prod.nombre:""}</td>
       <td>${option.CODIGO_FORMATEADO}</td>
-      
-      <td>${option.STOCK_LV}</td>
-      
-      <td>${option.STOCK_SJL}</td>
-      
+      <td>${option.STOCK_LV}</td>  
+      <td>${option.STOCK_SJL}</td> 
       <td>${option.DESCRIPCION}</td>
-      
       <td>${option.EQUIVALENTES_STOCK}</td>
-      
       <td>${option.UBICACION}</td>
-      
     `;
-
         pickingGuideTable.appendChild(tr);
       }
     }
@@ -1136,7 +1141,10 @@
 
 {{!-- CSS --}}
 <style>
-  .pickingGuide-tr-true{background-color: #ceddf1}
+  .pickingGuide-tr-true {
+    background-color: #f0f0f0
+  }
+
   .proforma-footer {
     margin-top: 40px;
     border-top: 2px solid #ff6a00;

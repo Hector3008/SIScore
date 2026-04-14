@@ -1,0 +1,1178 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Proforma DP-00NUEVA</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html,
+    body {
+      height: 100%;
+      font-family: sans-serif;
+    }
+
+    /* ══════════════════════════════════════
+       DESKTOP (≥900px) — layout fijo en pantalla
+    ══════════════════════════════════════ */
+    @media (min-width: 900px) {
+      body {
+        overflow: hidden;
+      }
+  .topbar-row1 {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex: 0 1 auto;   /* ← importante */
+    min-width: 0;
+  }
+      .page {
+        display: flex;
+        flex-direction: column;
+        height: 100vh;
+      }
+
+      /* Topbar una sola fila */
+      .topbar {
+        height: 40px;
+        flex-wrap: nowrap;
+
+      }
+
+      .topbar-row2 {
+        display: none;
+      }
+
+      .topbar-actions {
+        display: contents;
+      }
+
+      /* Subheader en grid 2 col */
+      .subheader {
+        flex-shrink: 0;
+        display: grid;
+        grid-template-columns: 300px 1fr;
+        border-bottom: 1px solid #ddd;
+        background: #fff;
+      }
+
+      .sidebar-label {
+        display: flex;
+      }
+
+      /* Body en grid 2 col con scroll independiente */
+      .body-area {
+        flex: 1;
+        min-height: 0;
+        display: grid;
+        grid-template-columns: 300px 1fr;
+      }
+
+      .sidebar {
+        overflow-y: auto;
+        overflow-x: hidden;
+      }
+
+      .main {
+        overflow-y: auto;
+        overflow-x: hidden;
+      }
+    }
+
+    /* ══════════════════════════════════════
+       MOBILE/TABLET (<900px) — columna única, scroll global
+    ══════════════════════════════════════ */
+    @media (max-width: 899px) {
+      body {
+        overflow-y: auto;
+      }
+
+      .page {
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+      }
+
+      /* Topbar en 2 filas */
+      .topbar {
+        height: auto;
+        flex-wrap: wrap;
+        padding: 8px 12px;
+        gap: 6px;
+      }
+
+.topbar-row1 {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  min-width: 0;  /* ← permite que los hijos se encojan */
+}
+
+
+@media (min-width: 900px) {
+  .topbar-actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-left: auto; /* ← empuja acciones a la derecha */
+  }
+}
+      .topbar-row2 {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        width: 100%;
+        padding-top: 6px;
+        border-top: 1px solid #333a4d;
+        flex-wrap: wrap;
+      }
+
+      .topbar-actions {
+        display: contents;
+      }
+
+      /* Subheader: ocultar label, tabs full width */
+      .subheader {
+        display: block;
+        border-bottom: 1px solid #ddd;
+        background: #fff;
+      }
+
+      .sidebar-label {
+        display: none;
+      }
+
+      .tab-bar {
+        height: 40px;
+      }
+
+      /* Body: columna única */
+      .body-area {
+        display: flex;
+        flex-direction: column;
+        flex: 1;
+      }
+
+      .sidebar {
+        overflow: visible;
+        border-right: none;
+        border-bottom: 1px solid #ddd;
+      }
+
+      .main {
+        overflow: visible;
+        padding: 12px;
+      }
+    }
+
+    /* ══════════════════════════════════════
+       ESTILOS COMPARTIDOS
+    ══════════════════════════════════════ */
+
+    /* Topbar */
+    .topbar {
+      flex-shrink: 0;
+      background: #1a1f2e;
+      border-bottom: 1px solid #333a4d;
+      padding: 0 14px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .logo-pill {
+      background: #0f4c81;
+      color: #fff;
+      font-size: 11px;
+      font-weight: 500;
+      padding: 5px 10px;
+      border-radius: 4px;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .doc-block {
+      flex-shrink: 0;
+    }
+
+    .doc-id {
+      font-size: 16px;
+      font-weight: 500;
+      color: #e8eaf0;
+      line-height: 1.1;
+    }
+
+    .doc-date {
+      font-size: 10px;
+      color: #8892a4;
+    }
+
+    .divider-v {
+      width: 1px;
+      height: 20px;
+      background: #3a4155;
+      flex-shrink: 0;
+      margin: 0 2px;
+    }
+
+    .topbar .btn {
+      font-size: 11px;
+      padding: 5px 11px;
+      border-radius: 5px;
+      cursor: pointer;
+      border: 1px solid #5a6070;
+      background: transparent;
+      color: #d0d5e0;
+      flex-shrink: 0;
+      white-space: nowrap;
+    }
+
+    .group {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-shrink: 0;
+    }
+
+    .group-label {
+      font-size: 11px;
+      color: #d0d5e0;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .checks-col {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+
+    .check-opt {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 10px;
+      color: #8892a4;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+
+    .check-opt input[type="checkbox"] {
+      width: 11px;
+      height: 11px;
+      accent-color: #0f4c81;
+      flex-shrink: 0;
+    }
+
+    /* Subheader */
+    .sidebar-label {
+      padding: 8px 14px;
+      font-size: 10px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: .6px;
+      color: #888;
+      border-right: 1px solid #ddd;
+      align-items: center;
+    }
+
+    .tab-bar {
+      display: flex;
+    }
+
+    .tab {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      font-weight: 500;
+      cursor: pointer;
+      color: #666;
+      border-right: 1px solid #ddd;
+      height: 36px;
+    }
+
+    .tab:last-child {
+      border-right: none;
+    }
+
+    .tab.active {
+      background: #0f4c81;
+      color: #fff;
+    }
+
+    /* Sidebar */
+    .sidebar {
+      background: #fff;
+    }
+
+    .section {
+      border-bottom: 1px solid #eee;
+    }
+
+    .section-header {
+      padding: 10px 14px;
+      font-size: 10px;
+      font-weight: 600;
+      color: #666;
+      text-transform: uppercase;
+      letter-spacing: .6px;
+      background: #f7f7f7;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .section-body {
+      padding: 10px 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 7px;
+    }
+
+    .field-group {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5px;
+    }
+
+    .field-full {
+      grid-column: 1 / -1;
+    }
+
+    .sidebar input[type="text"],
+    .sidebar input[type="number"],
+    .sidebar input[type="date"],
+    .sidebar select {
+      height: 30px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      background: #f9f9f9;
+      padding: 0 8px;
+      font-size: 11px;
+      color: #333;
+      width: 100%;
+      outline: none;
+      -webkit-appearance: none;
+      appearance: none;
+    }
+
+    .sidebar input:focus,
+    .sidebar select:focus {
+      border-color: #0f4c81;
+      background: #fff;
+    }
+
+    .btn-row {
+      display: flex;
+      gap: 5px;
+      flex-wrap: wrap;
+    }
+
+    .btn-sm {
+      font-size: 11px;
+      padding: 6px 12px;
+      border-radius: 5px;
+      cursor: pointer;
+      border: none;
+      color: #fff;
+      font-weight: 500;
+    }
+
+    .btn-sm-green {
+      background: #2e7d32;
+    }
+
+    .btn-sm-blue {
+      background: #1565c0;
+    }
+
+    .btn-sm-orange {
+      background: #e85d14;
+    }
+
+    .btn-sm-red {
+      background: #c62828;
+    }
+
+    .total-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 2px 0;
+    }
+
+    .total-item span:first-child {
+      font-size: 11px;
+      color: #888;
+    }
+
+    .total-item span:last-child {
+      font-size: 13px;
+      font-weight: 600;
+      color: #222;
+    }
+
+    .stock-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 2px;
+    }
+
+    .stock-table td {
+      font-size: 10px;
+      padding: 4px 0;
+      border-bottom: 1px solid #f0f0f0;
+      color: #555;
+    }
+
+    .stock-table tr:last-child td {
+      border-bottom: none;
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 2px 7px;
+      border-radius: 10px;
+      font-size: 9px;
+      font-weight: 500;
+    }
+
+    .badge-ok {
+      background: #e8f5e9;
+      color: #2e7d32;
+    }
+
+    .badge-warn {
+      background: #fff8e1;
+      color: #f57f17;
+    }
+
+    /* Main / Preview */
+    .main {
+      background: #f0f2f5;
+      padding: 16px;
+    }
+
+    .tab-content {
+      display: none;
+    }
+
+    .tab-content.active {
+      display: block;
+    }
+
+    .preview-card {
+      background: #fff;
+      border-radius: 10px;
+      border: 1px solid #e0e0e0;
+      padding: 20px;
+    }
+
+    .preview-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 16px;
+      padding-bottom: 14px;
+      border-bottom: 1px solid #eee;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .ph-left {
+      display: flex;
+      gap: 12px;
+      flex: 1;
+      min-width: 200px;
+    }
+
+    .logo-box {
+      width: 56px;
+      height: 56px;
+      background: #f5f5f5;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 9px;
+      color: #aaa;
+      flex-shrink: 0;
+    }
+
+    .ph-info strong {
+      font-size: 12px;
+      font-weight: 600;
+      color: #222;
+      display: block;
+      margin-bottom: 2px;
+    }
+
+    .ph-info p {
+      font-size: 11px;
+      color: #666;
+      line-height: 1.7;
+    }
+
+    .ph-right {
+      text-align: right;
+    }
+
+    .doc-num {
+      font-size: 22px;
+      font-weight: 600;
+      color: #0f4c81;
+    }
+
+    .doc-meta {
+      font-size: 11px;
+      color: #888;
+      margin-top: 2px;
+    }
+
+    .client-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3px 24px;
+      margin-bottom: 16px;
+    }
+
+    @media (max-width: 520px) {
+      .client-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .cl {
+      font-size: 11px;
+      color: #555;
+      display: flex;
+      gap: 4px;
+    }
+
+    .cl span:first-child {
+      font-weight: 600;
+      color: #333;
+      min-width: 72px;
+      flex-shrink: 0;
+    }
+
+    /* Tabla items — scroll horizontal en mobile */
+    .table-wrap {
+      width: 100%;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .items-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 11px;
+      margin-bottom: 14px;
+      min-width: 480px;
+    }
+
+    .items-table th {
+      background: #0f4c81;
+      color: #fff;
+      padding: 7px 8px;
+      text-align: left;
+      font-weight: 500;
+      white-space: nowrap;
+    }
+
+    .items-table td {
+      padding: 6px 8px;
+      border-bottom: 1px solid #eee;
+      color: #333;
+    }
+
+    .items-table tr:nth-child(even) td {
+      background: #f9f9f9;
+    }
+
+    .btn-eliminar {
+      font-size: 10px;
+      padding: 2px 6px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      background: #fff;
+      cursor: pointer;
+      color: #c62828;
+    }
+
+    .totals {
+      display: flex;
+      justify-content: flex-end;
+      margin-top: 4px;
+    }
+
+    .totals-box {
+      width: 220px;
+    }
+
+    @media (max-width: 520px) {
+      .totals-box {
+        width: 100%;
+      }
+    }
+
+    .total-row {
+      display: flex;
+      justify-content: space-between;
+      font-size: 11px;
+      padding: 3px 0;
+      color: #666;
+    }
+
+    .total-final {
+      display: flex;
+      justify-content: space-between;
+      font-size: 13px;
+      font-weight: 600;
+      padding: 7px 10px;
+      background: #e85d14;
+      color: #fff;
+      border-radius: 6px;
+      margin-top: 5px;
+    }
+
+    .preview-footer {
+      margin-top: 20px;
+      padding-top: 12px;
+      border-top: 1px solid #eee;
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 10px;
+    }
+
+    @media (max-width: 600px) {
+      .preview-footer {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .preview-footer strong {
+      font-size: 10px;
+      color: #555;
+      font-weight: 600;
+      display: block;
+      margin-bottom: 2px;
+    }
+
+    .preview-footer p {
+      font-size: 10px;
+      color: #888;
+    }
+
+    .guia-header {
+      background: #1a3a5c;
+      color: #fff;
+      padding: 8px 12px;
+      border-radius: 6px;
+      display: flex;
+      justify-content: space-between;
+      font-size: 11px;
+      margin-bottom: 14px;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+#empresa-nombre {
+  background: #0f4c81;
+  color: #fff;
+  font-size: 10px;
+  font-weight: 500;
+  padding: 4px 10px;
+  border-radius: 4px;
+  letter-spacing: .4px;
+  border: none;
+  outline: none;
+  appearance: none;
+  max-width: 160px;        /* ← limita el ancho */
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  cursor: pointer;
+}
+  </style>
+</head>
+
+<body>
+  <div class="page">
+
+    <!-- ── TOPBAR ── -->
+    <div class="topbar">
+
+      <!-- Fila 1: siempre visible -->
+      <div class="topbar-row1">
+       <!-- col1--> 
+            <div class="logo-pill"><select id="empresa-nombre">
+                <option value="max">Max Importaciones y Servicios Generales S.A.C.</option>
+                <option value="importadora">Importadora de Repuestos Max Import S.A.C.</option>
+                <option value="mx">M & X Importaciones E.I.R.L.</option>
+                <option value="junior">Junior Alexander Castillo Arrue</option>
+              </select>
+            </div>
+      <!-- col2-->
+        <div class="doc-block">
+          <div class="doc-id">DP-00NUEVA</div>
+          <div class="doc-date">23/02/2026</div>
+        </div>
+      </div>
+
+      <!-- Fila 2 (mobile): acciones -->
+      <div class="topbar-row2">
+        <div class="topbar-actions">
+          <button class="btn" onclick="consultarProforma()">Consultar</button>
+          <button class="btn" onclick="actualizarProforma()">Actualizar</button>
+          <button class="btn" onclick="cargarProforma()">Cargar</button>
+          <button class="btn" onclick="reiniciarFormulario()">Reiniciar</button>
+          <div class="divider-v"></div>
+          <div class="group">
+            <span class="group-label">Imprimir</span>
+            <div class="checks-col">
+              <label class="check-opt"><input type="checkbox" id="printProforma"> Proforma</label>
+              <label class="check-opt"><input type="checkbox" id="printGuia"> Guía</label>
+            </div>
+          </div>
+          <div class="divider-v"></div>
+          <div class="group">
+            <span class="group-label">Descargar</span>
+            <div class="checks-col">
+              <label class="check-opt"><input type="checkbox" id="dlProforma"> Proforma</label>
+              <label class="check-opt"><input type="checkbox" id="dlGuia"> Guía</label>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Desktop: acciones inline en fila 1 -->
+      <div class="topbar-actions" id="desktopActions">
+        <div class="divider-v"></div>
+        <button class="btn" onclick="consultarProforma()">Consultar</button>
+        <button class="btn" onclick="actualizarProforma()">Actualizar</button>
+        <button class="btn" onclick="cargarProforma()">Cargar</button>
+        <button class="btn" onclick="reiniciarFormulario()">Reiniciar</button>
+        <div class="divider-v"></div>
+        <div class="group">
+          <span class="group-label">Imprimir</span>
+          <div class="checks-col">
+            <label class="check-opt"><input type="checkbox"> Proforma</label>
+            <label class="check-opt"><input type="checkbox"> Guía</label>
+          </div>
+        </div>
+        <div class="divider-v"></div>
+        <div class="group">
+          <span class="group-label">Descargar</span>
+          <div class="checks-col">
+            <label class="check-opt"><input type="checkbox"> Proforma</label>
+            <label class="check-opt"><input type="checkbox"> Guía</label>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ── SUBHEADER ── -->
+    <div class="subheader">
+      <div class="sidebar-label">Formularios</div>
+      <div class="tab-bar">
+        <div class="tab active" onclick="switchTab('proforma', this)">Vista proforma</div>
+        <div class="tab" onclick="switchTab('guia', this)">Guía almacén</div>
+      </div>
+    </div>
+
+    <!-- ── BODY ── -->
+    <div class="body-area">
+
+      <!-- SIDEBAR -->
+      <div class="sidebar">
+
+
+        <div class="section">
+          <div class="section-header" onclick="toggleSection(this)">Cliente <span>▾</span></div>
+          <div class="section-body">
+            <div class="field-group">
+              <input type="text" placeholder="Cliente">
+              <input type="text" placeholder="RUC">
+              <input type="text" placeholder="Teléfono">
+              <input type="text" placeholder="E-mail">
+              <input type="text" placeholder="Dirección" class="field-full">
+              <input type="text" placeholder="Provincia">
+              <input type="text" placeholder="Ciudad">
+              <select>
+                <option value="">Vendedor</option>
+                <option>Lázaro</option>
+                <option>María</option>
+              </select>
+              <input type="text" placeholder="Entrega">
+              <input type="text" placeholder="Destino">
+              <input type="text" placeholder="Agencia">
+              <input type="text" placeholder="Atención" class="field-full">
+              <select class="field-full">
+                <option value="">Canal de venta</option>
+                <option>Directo</option>
+                <option>Distribuidor</option>
+              </select>
+              <select>
+                <option value="">Forma de pago</option>
+                <option>Contado</option>
+                <option>Crédito 30d</option>
+              </select>
+              <input type="date">
+              <select>
+                <option value="">Comprobante</option>
+                <option>Factura</option>
+                <option>Boleta</option>
+              </select>
+            </div>
+            <div class="btn-row">
+              <button class="btn-sm btn-sm-green">Cargar cliente</button>
+              <button class="btn-sm btn-sm-blue">Registrar</button>
+              <button class="btn-sm btn-sm-orange">Actualizar</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="section">
+          <div class="section-header" onclick="toggleSection(this)">Medios de pago <span>▾</span></div>
+          <div class="section-body">
+            <div class="field-group">
+              <select class="field-full">
+                <option value="">Cuenta destino</option>
+                <option>BCP 191-123456</option>
+                <option>Interbank 200-987654</option>
+              </select>
+              <input type="number" placeholder="Monto">
+              <input type="text" placeholder="N° operación">
+            </div>
+            <div class="btn-row">
+              <button class="btn-sm btn-sm-green">Cargar pago</button>
+              <button class="btn-sm btn-sm-red">Borrar pagos</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="section">
+          <div class="section-header" onclick="toggleSection(this)">Producto <span>▾</span></div>
+          <div class="section-body">
+            <div class="field-group">
+              <input type="text" placeholder="Buscar producto…" class="field-full" id="inputProducto">
+              <input type="number" placeholder="Cantidad" id="inputCantidad">
+              <input type="number" placeholder="Importe unit." id="inputPrecio">
+              <input type="text" placeholder="Comentario" class="field-full">
+            </div>
+            <div class="total-item">
+              <span>Total ítem:</span>
+              <span id="totalItem">S/ 0.00</span>
+            </div>
+            <button class="btn-sm btn-sm-green" style="width:100%;padding:7px;text-align:center">+ Cargar
+              producto</button>
+            <table class="stock-table">
+              <tbody>
+                <tr>
+                  <td>BZM-7710010</td>
+                  <td style="text-align:right"><span class="badge badge-warn">Stock: 7</span></td>
+                </tr>
+                <tr>
+                  <td>UF-R0060</td>
+                  <td style="text-align:right"><span class="badge badge-ok">Stock: 783</span></td>
+                </tr>
+                <tr>
+                  <td>18034</td>
+                  <td style="text-align:right"><span class="badge badge-ok">Stock: 115</span></td>
+                </tr>
+                <tr>
+                  <td>18048</td>
+                  <td style="text-align:right"><span class="badge badge-ok">Stock: 108</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+      </div><!-- /sidebar -->
+
+      <!-- MAIN -->
+      <div class="main">
+
+        <!-- Vista proforma -->
+        <div id="tab-proforma" class="tab-content active">
+          <div class="preview-card">
+
+            <div class="preview-header">
+              <div class="ph-left">
+                <div class="logo-box">LOGO</div>
+                <div class="ph-info">
+                  <strong>Max Importaciones y Servicios Generales SAC</strong>
+                  <p>RUC: 20503534194</p>
+                  <p>Av. García Naranjo Nro. 114b - La Victoria - Lima</p>
+                  <p>Tel: 999 999 999</p>
+                  <p>ventas@maximportaciones.com.pe</p>
+                  <p>https://maximportaciones.com.pe</p>
+                </div>
+              </div>
+              <div class="ph-right">
+                <div class="doc-num">DP-00NUEVA</div>
+                <div class="doc-meta">Fecha: 23/02/2026</div>
+              </div>
+            </div>
+
+            <div class="client-grid">
+              <div class="cl"><span>Cliente:</span><span>A &amp; J Collatupa S.A.C.</span></div>
+              <div class="cl"><span>Teléfono:</span><span>987 654 321</span></div>
+              <div class="cl"><span>RUC/DNI:</span><span>20601234567</span></div>
+              <div class="cl"><span>Mail:</span><span>compras@collatupa.com</span></div>
+              <div class="cl"><span>Dirección:</span><span>Av. Los Olivos 234</span></div>
+              <div class="cl"><span>Entrega:</span><span>Inmediata</span></div>
+              <div class="cl"><span>Provincia:</span><span>Lima</span></div>
+              <div class="cl"><span>Destino:</span><span>Lima</span></div>
+              <div class="cl"><span>Forma pago:</span><span>Contado</span></div>
+              <div class="cl"><span>Comprobante:</span><span>Factura</span></div>
+            </div>
+
+            <div class="table-wrap">
+              <table class="items-table">
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>Descripción</th>
+                    <th>Cantidad</th>
+                    <th>Precio unit.</th>
+                    <th>Importe</th>
+                    <th></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>1</td>
+                    <td>Hino 500 1999</td>
+                    <td>5</td>
+                    <td>S/ 50.00</td>
+                    <td>S/ 250.00</td>
+                    <td><button class="btn-eliminar">✕</button></td>
+                  </tr>
+                  <tr>
+                    <td>2</td>
+                    <td>Toyota 1GD Bosch Ford Land Rover 7PK</td>
+                    <td>3</td>
+                    <td>S/ 30.00</td>
+                    <td>S/ 90.00</td>
+                    <td><button class="btn-eliminar">✕</button></td>
+                  </tr>
+                  <tr>
+                    <td>3</td>
+                    <td>Nissan-Datsun E16 - 9T</td>
+                    <td>3</td>
+                    <td>S/ 40.00</td>
+                    <td>S/ 120.00</td>
+                    <td><button class="btn-eliminar">✕</button></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="totals">
+              <div class="totals-box">
+                <div class="total-row"><span>Subtotal</span><span>S/ 389.83</span></div>
+                <div class="total-row"><span>IGV (18%)</span><span>S/ 70.17</span></div>
+                <div class="total-final"><span>Importe total</span><span>S/ 460.00</span></div>
+              </div>
+            </div>
+
+            <div class="preview-footer">
+              <div><strong>Condiciones</strong>
+                <p>Precios sujetos a cambio sin previo aviso.</p>
+              </div>
+              <div><strong>Observaciones</strong>
+                <p>—</p>
+              </div>
+              <div><strong>Contacto</strong>
+                <p>999 999 999</p>
+                <p>ventas@maximportaciones.com.pe</p>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Vista guía almacén -->
+        <div id="tab-guia" class="tab-content">
+          <div class="preview-card">
+
+            <div class="guia-header">
+              <span>CLIENTE: A &amp; J Collatupa S.A.C.</span>
+              <span>VENDEDOR: LAZARO</span>
+              <span>Fecha: 23/02/2026</span>
+              <span>DP-000004 v1</span>
+            </div>
+
+            <div class="table-wrap">
+              <table class="items-table" style="min-width:700px">
+                <thead>
+                  <tr>
+                    <th>ITEM</th>
+                    <th>CANT.</th>
+                    <th>PRECIO</th>
+                    <th>PEDIDO</th>
+                    <th>COMENTARIO</th>
+                    <th>OPCIONES</th>
+                    <th>LV</th>
+                    <th>SJL</th>
+                    <th>DESCRIPCIÓN</th>
+                    <th>EQUIVALENTES</th>
+                    <th>UBICACIÓN</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>1</td>
+                    <td>5</td>
+                    <td>50</td>
+                    <td></td>
+                    <td>hino</td>
+                    <td>BZM-Eje01</td>
+                    <td>41</td>
+                    <td>120</td>
+                    <td>HINO 500 1999</td>
+                    <td></td>
+                    <td><span class="badge badge-warn">pending</span></td>
+                  </tr>
+                  <tr>
+                    <td>2</td>
+                    <td>3</td>
+                    <td>30</td>
+                    <td></td>
+                    <td>toyota</td>
+                    <td>BZM-7710040</td>
+                    <td>9</td>
+                    <td>0</td>
+                    <td>TOYOTA 1GD BOSCH FORD 7PK</td>
+                    <td style="font-size:10px">28702=331 TOTAL=355</td>
+                    <td><span class="badge badge-warn">pending</span></td>
+                  </tr>
+                  <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td>BZM-7710070</td>
+                    <td>31</td>
+                    <td>0</td>
+                    <td>TOYOTA HILUX 2KD DENSO 15MM 7PK</td>
+                    <td style="font-size:10px">28625=960 TOTAL=961</td>
+                    <td><span class="badge badge-warn">pending</span></td>
+                  </tr>
+                  <tr>
+                    <td>3</td>
+                    <td>3</td>
+                    <td>40</td>
+                    <td></td>
+                    <td>nissan</td>
+                    <td>BZM-7710010</td>
+                    <td>7</td>
+                    <td>0</td>
+                    <td>VOLKSWAGEN FOX / NISSAN FRONTIER</td>
+                    <td style="font-size:10px">28593=69 TOTAL=177</td>
+                    <td><span class="badge badge-warn">pending</span></td>
+                  </tr>
+                  <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td>UF-R0060</td>
+                    <td>83</td>
+                    <td>700</td>
+                    <td>BOSCH 36T NISSAN E15</td>
+                    <td></td>
+                    <td><span class="badge badge-warn">pending</span></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="preview-footer">
+              <div><strong>Condiciones</strong>
+                <p>Precios sujetos a cambio sin previo aviso.</p>
+              </div>
+              <div><strong>Observaciones</strong>
+                <p>—</p>
+              </div>
+              <div><strong>Contacto</strong>
+                <p>999 999 999</p>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </div><!-- /main -->
+    </div><!-- /body-area -->
+  </div><!-- /page -->
+
+  <script>
+    /* Ocultar el bloque desktop en mobile y viceversa */
+    const desktopActions = document.getElementById('desktopActions');
+    function applyLayout() {
+      if (window.innerWidth < 900) {
+        desktopActions.style.display = 'none';
+      } else {
+        desktopActions.style.display = 'contents';
+      }
+    }
+    applyLayout();
+    window.addEventListener('resize', applyLayout);
+
+    function toggleSection(header) {
+      const body = header.nextElementSibling;
+      const arrow = header.querySelector('span');
+      if (body.style.display === 'none') {
+        body.style.display = 'flex';
+        arrow.textContent = '▾';
+      } else {
+        body.style.display = 'none';
+        arrow.textContent = '▸';
+      }
+    }
+
+    function switchTab(name, el) {
+      document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+      document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+      document.getElementById('tab-' + name).classList.add('active');
+      el.classList.add('active');
+    }
+
+    const cant = document.getElementById('inputCantidad');
+    const precio = document.getElementById('inputPrecio');
+    const totalItem = document.getElementById('totalItem');
+    function calcTotal() {
+      const c = parseFloat(cant.value) || 0;
+      const p = parseFloat(precio.value) || 0;
+      totalItem.textContent = 'S/ ' + (c * p).toFixed(2);
+    }
+    cant.addEventListener('input', calcTotal);
+    precio.addEventListener('input', calcTotal);
+
+    function consultarProforma() { }
+    function actualizarProforma() { }
+    function cargarProforma() { }
+    function reiniciarFormulario() { }
+  </script>
+</body>
+
+</html>

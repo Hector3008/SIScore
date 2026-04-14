@@ -8,3 +8,14 @@ export const proformsSystemViewController = async (req, res) => {
   );
   res.render("proformsSystem.handlebars", { products });
 };
+
+export const proformsSystemViewControllerClaude = async (req, res) => {
+  const result = await ProductService.getAll(req, res);
+
+  const products = result.payload.filter(
+    (product) => product.status != "deleted",
+  );
+  res.render("proformSystemByClaude.handlebars", { products });
+};
+
+
