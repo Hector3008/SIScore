@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Proforma DP-00NUEVA</title>
+  <title>Proformas</title>
   <style>
     * {
       box-sizing: border-box;
@@ -25,13 +25,16 @@
       body {
         overflow: hidden;
       }
-  .topbar-row1 {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    flex: 0 1 auto;   /* ← importante */
-    min-width: 0;
-  }
+
+      .topbar-row1 {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        flex: 0 1 auto;
+        /* ← importante */
+        min-width: 0;
+      }
+
       .page {
         display: flex;
         flex-direction: column;
@@ -107,23 +110,26 @@
         gap: 6px;
       }
 
-.topbar-row1 {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  width: 100%;
-  min-width: 0;  /* ← permite que los hijos se encojan */
-}
+      .topbar-row1 {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        width: 100%;
+        min-width: 0;
+        /* ← permite que los hijos se encojan */
+      }
 
 
-@media (min-width: 900px) {
-  .topbar-actions {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    margin-left: auto; /* ← empuja acciones a la derecha */
-  }
-}
+      @media (min-width: 900px) {
+        .topbar-actions {
+          display: flex;
+          align-items: center;
+          gap: 8px;
+          margin-left: auto;
+          /* ← empuja acciones a la derecha */
+        }
+      }
+
       .topbar-row2 {
         display: flex;
         align-items: center;
@@ -689,23 +695,24 @@
       gap: 6px;
     }
 
-#empresa-nombre {
-  background: #0f4c81;
-  color: #fff;
-  font-size: 10px;
-  font-weight: 500;
-  padding: 4px 10px;
-  border-radius: 4px;
-  letter-spacing: .4px;
-  border: none;
-  outline: none;
-  appearance: none;
-  max-width: 160px;        /* ← limita el ancho */
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  cursor: pointer;
-}
+    #empresa_nombre {
+      background: #0f4c81;
+      color: #fff;
+      font-size: 10px;
+      font-weight: 500;
+      padding: 4px 10px;
+      border-radius: 4px;
+      letter-spacing: .4px;
+      border: none;
+      outline: none;
+      appearance: none;
+      max-width: 160px;
+      /* ← limita el ancho */
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      cursor: pointer;
+    }
   </style>
 </head>
 
@@ -717,15 +724,15 @@
 
       <!-- Fila 1: siempre visible -->
       <div class="topbar-row1">
-       <!-- col1--> 
-            <div class="logo-pill"><select id="empresa-nombre">
-                <option value="max">Max Importaciones y Servicios Generales S.A.C.</option>
-                <option value="importadora">Importadora de Repuestos Max Import S.A.C.</option>
-                <option value="mx">M & X Importaciones E.I.R.L.</option>
-                <option value="junior">Junior Alexander Castillo Arrue</option>
-              </select>
-            </div>
-      <!-- col2-->
+        <!-- col1-->
+        <div class="logo-pill"><select id="empresa_nombre">
+            <option value="max">Max Importaciones y Servicios Generales S.A.C.</option>
+            <option value="importadora">Importadora de Repuestos Max Import S.A.C.</option>
+            <option value="mx">M & X Importaciones E.I.R.L.</option>
+            <option value="junior">Junior Alexander Castillo Arrue</option>
+          </select>
+        </div>
+        <!-- col2-->
         <div class="doc-block">
           <div class="doc-id">DP-00NUEVA</div>
           <div class="doc-date">23/02/2026</div>
@@ -789,8 +796,8 @@
     <div class="subheader">
       <div class="sidebar-label">Formularios</div>
       <div class="tab-bar">
-        <div class="tab active" onclick="switchTab('proforma', this)">Vista proforma</div>
-        <div class="tab" onclick="switchTab('guia', this)">Guía almacén</div>
+        <div class="tab active" onclick="switchTab('proforma', this)">Proforma</div>
+        <div class="tab" onclick="switchTab('guia', this)">Guía</div>
       </div>
     </div>
 
@@ -805,37 +812,46 @@
           <div class="section-header" onclick="toggleSection(this)">Cliente <span>▾</span></div>
           <div class="section-body">
             <div class="field-group">
-              <input type="text" placeholder="Cliente">
-              <input type="text" placeholder="RUC">
-              <input type="text" placeholder="Teléfono">
-              <input type="text" placeholder="E-mail">
-              <input type="text" placeholder="Dirección" class="field-full">
-              <input type="text" placeholder="Provincia">
-              <input type="text" placeholder="Ciudad">
-              <select>
+              <input id="cliente_nombre" type="text" placeholder="Cliente">
+              <input id="cliente_ruc" type="text" placeholder="RUC">
+              <input id="cliente_telefono" type="text" placeholder="Teléfono">
+              <input id="cliente_email" type="text" placeholder="E-mail">
+              <input id="cliente_direccion" type="text" placeholder="Dirección" class="field-full">
+              <input id="cliente_provincia" type="text" placeholder="Provincia">
+              <input id="cliente_ciudad" type="text" placeholder="Ciudad">
+              <select id="vendedor">
                 <option value="">Vendedor</option>
                 <option>Lázaro</option>
                 <option>María</option>
               </select>
-              <input type="text" placeholder="Entrega">
-              <input type="text" placeholder="Destino">
-              <input type="text" placeholder="Agencia">
-              <input type="text" placeholder="Atención" class="field-full">
-              <select class="field-full">
+              <select id="entrega">
+                <option value="Tienda">Tienda</option>
+                <option>Agencia</option>
+                <option>Local</option>
+              </select>
+              <input id="destino" type="text" placeholder="Destino">
+              <input id="agencia" type="text" placeholder="Agencia">
+              <input id="atencion" type="text" placeholder="Atención" class="field-full">
+              <select id="canal_de_venta" class="field-full">
                 <option value="">Canal de venta</option>
-                <option>Directo</option>
-                <option>Distribuidor</option>
+                <option>Tienda</option>
+                <option>Online</option>
+                <option>Cartera</option>
               </select>
-              <select>
+              <select id="forma_de_pago">
                 <option value="">Forma de pago</option>
-                <option>Contado</option>
-                <option>Crédito 30d</option>
+                <option>Credito</option>
+                <option>Caja</option>
+                <option>Transferencia</option>
+                <option>Transferencia y caja</option>
+                <option>Tarjeta de Credito</option>
               </select>
-              <input type="date">
-              <select>
+              <input id="fecha" type="date">
+              <select id="comprobante">
                 <option value="">Comprobante</option>
                 <option>Factura</option>
                 <option>Boleta</option>
+                <option>Proforma</option>
               </select>
             </div>
             <div class="btn-row">
@@ -916,32 +932,37 @@
               <div class="ph-left">
                 <div class="logo-box">LOGO</div>
                 <div class="ph-info">
-                  <strong>Max Importaciones y Servicios Generales SAC</strong>
-                  <p>RUC: 20503534194</p>
-                  <p>Av. García Naranjo Nro. 114b - La Victoria - Lima</p>
-                  <p>Tel: 999 999 999</p>
-                  <p>ventas@maximportaciones.com.pe</p>
-                  <p>https://maximportaciones.com.pe</p>
+                  <strong id="proforma_empresa_nombre">Max Importaciones y Servicios Generales SAC</strong>
+                  <p>RUC: <span id="proforma_empresa_ruc">20503534194</span> </p>
+                  <p id="proforma_empresa_direccion">Av. García Naranjo Nro. 114b - La Victoria - Lima</p>
+                  <p id="proforma_empresa_telefono">Tel: 999 999 999</p>
+                  <p id="proforma_empresa_email">ventas@maximportaciones.com.pe</p>
+                  <p id="proforma_empresa_web">https://maximportaciones.com.pe</p>
                 </div>
               </div>
               <div class="ph-right">
                 <div class="doc-num">DP-00NUEVA</div>
-                <div class="doc-meta">Fecha: 23/02/2026</div>
+                <div id="proforma_fecha" class="doc-meta">Fecha: 23/02/2026</div>
               </div>
             </div>
 
             <div class="client-grid">
-              <div class="cl"><span>Cliente:</span><span>A &amp; J Collatupa S.A.C.</span></div>
-              <div class="cl"><span>Teléfono:</span><span>987 654 321</span></div>
-              <div class="cl"><span>RUC/DNI:</span><span>20601234567</span></div>
-              <div class="cl"><span>Mail:</span><span>compras@collatupa.com</span></div>
-              <div class="cl"><span>Dirección:</span><span>Av. Los Olivos 234</span></div>
-              <div class="cl"><span>Entrega:</span><span>Inmediata</span></div>
-              <div class="cl"><span>Provincia:</span><span>Lima</span></div>
-              <div class="cl"><span>Destino:</span><span>Lima</span></div>
-              <div class="cl"><span>Forma pago:</span><span>Contado</span></div>
-              <div class="cl"><span>Comprobante:</span><span>Factura</span></div>
+              <div class="cl"><span>Cliente:</span><span id="proforma_cliente_nombre"></span></div>
+              <div class="cl"><span>Teléfono:</span><span id="proforma_cliente_telefono"></span></div>
+              <div class="cl"><span>RUC/DNI:</span><span id="proforma_cliente_ruc"></span></div>
+              <div class="cl"><span>Mail:</span><span id="proforma_cliente_email"></span></div>
+              <div class="cl"><span>Dirección:</span><span id="proforma_cliente_direccion"></span></div>
+              <div class="cl"><span>Entrega:</span><span id="proforma_entrega"></span></div>
+              <div class="cl"><span>Provincia:</span><span id="proforma_cliente_provincia"></span></div>
+              <div class="cl"><span>Ciudad:</span><span id="proforma_cliente_ciudad"></span></div>
+              <div class="cl"><span>Destino:</span><span id="proforma_destino"></span></div>
+              <div class="cl"><span>Canal de venta:</span><span id="proforma_canal_de_venta"></span></div>
+              <div class="cl"><span>Forma pago:</span><span id="proforma_forma_de_pago"></span></div>
+              <div class="cl"><span>Comprobante:</span><span id="proforma_comprobante"></span></div>
+              <div class="cl"><span>Agencia:</span><span id="proforma_agencia"></span></div>
+              <div class="cl"><span>Atencion:</span><span id="proforma_atencion"></span></div>
             </div>
+
 
             <div class="table-wrap">
               <table class="items-table">
@@ -1013,10 +1034,10 @@
           <div class="preview-card">
 
             <div class="guia-header">
-              <span>CLIENTE: A &amp; J Collatupa S.A.C.</span>
-              <span>VENDEDOR: LAZARO</span>
-              <span>Fecha: 23/02/2026</span>
-              <span>DP-000004 v1</span>
+              <span>CLIENTE: <span id="guia_cliente"></span></span>
+              <span>VENDEDOR: <span id="guia_vendedor"></span></span>
+              <span>Fecha: <span id="guia_fecha"></span></span>
+              <span> <span id="guia_codigo">DP-000004</span> v1</span>
             </div>
 
             <div class="table-wrap">
@@ -1125,7 +1146,7 @@
     </div><!-- /body-area -->
   </div><!-- /page -->
 
-  <script>
+  <script>//responsive:
     /* Ocultar el bloque desktop en mobile y viceversa */
     const desktopActions = document.getElementById('desktopActions');
     function applyLayout() {
@@ -1176,3 +1197,244 @@
 </body>
 
 </html>
+
+<script>
+
+  const currentProform = {
+    cliente: {},
+    pagos: [],
+    productos: []
+  }
+  const proformPreview = {
+    empresa: {
+      nombre: document.querySelector("#proforma_empresa_nombre"),
+      ruc: document.querySelector("#proforma_empresa_ruc"),
+      direccion: document.querySelector("#proforma_empresa_direccion"),
+      telefono: document.querySelector("#proforma_empresa_telefono"),
+      email: document.querySelector("#proforma_empresa_email"),
+      web: document.querySelector("#proforma_empresa_web")
+    },
+    cliente: {
+      nombre: document.querySelector("#proforma_cliente_nombre"),
+      ruc: document.querySelector("#proforma_cliente_ruc"),
+      telefono: document.querySelector("#proforma_cliente_telefono"),
+      email: document.querySelector("#proforma_cliente_email"),
+      direccion: document.querySelector("#proforma_cliente_direccion"),
+      provincia: document.querySelector("#proforma_cliente_provincia"), ciudad: document.querySelector("#proforma_cliente_ciudad")
+    },
+    vendedor: document.querySelector("#proforma_vendedor"),
+    entrega: document.querySelector("#proforma_entrega"),
+    destino: document.querySelector("#proforma_destino"),
+    agencia: document.querySelector("#proforma_agencia"),
+    atencion: document.querySelector("#proforma_atencion"),
+    canal_de_venta: document.querySelector("#proforma_canal_de_venta"),
+    forma_de_pago: document.querySelector("#proforma_forma_de_pago"),
+    fecha: document.querySelector("#proforma_fecha"),
+    comprobante: document.querySelector("#proforma_comprobante"),
+  }
+  const guiaPreview = {
+
+    cliente: document.querySelector("#guia_cliente"),
+    vendedor: document.querySelector("#guia_vendedor"),
+    fecha: document.querySelector("#guia_fecha"),
+    codigo: document.querySelector("#guia_codigo")
+  }
+  const fields = {
+    empresa: document.querySelector("#empresa_nombre"),
+    cliente: {
+      nombre: document.querySelector("#cliente_nombre"),
+      ruc: document.querySelector("#cliente_ruc"),
+      telefono: document.querySelector("#cliente_telefono"),
+      email: document.querySelector("#cliente_email"),
+      direccion: document.querySelector("#cliente_direccion"),
+      provincia: document.querySelector("#cliente_provincia"), 
+      ciudad: document.querySelector("#cliente_ciudad")
+    },
+    vendedor: document.querySelector("#vendedor"),
+    entrega: document.querySelector("#entrega"),
+    destino: document.querySelector("#destino"),
+    agencia: document.querySelector("#agencia"),
+    atencion: document.querySelector("#atencion"),
+    canal_de_venta: document.querySelector("#canal_de_venta"),
+    forma_de_pago: document.querySelector("#forma_de_pago"),
+    fecha: document.querySelector("#fecha"),
+    comprobante: document.querySelector("#comprobante"),
+  }
+  const tables = {}
+  const desplegables = {
+    empresas: {
+      max: {
+        nombre: "Max Importaciones y Servicios Generales S.A.C.",
+        direccion: "Cal. Garcia Naranjo Nro. 114b - La Victoria - Lima",
+        ruc: "20503534194",
+        telefono: "999 999 999",
+        email: "ventas@maximportaciones.com.pe",
+        web: "ventas@maximportaciones.com.pe"
+      },
+      importadora: {
+        nombre: "Importadora de Repuestos Max Import S.A.C.",
+        direccion: "Av. Canto Grande Nro. 3418 - San Juan de Lurigancho - Lima",
+        ruc: "20550445892",
+        telefono: "999 999 999",
+        email: "ventas@maximportaciones.com.pe",
+        web: "ventas@maximportaciones.com.pe"
+      },
+      mx: {
+        nombre: "M & X Importaciones E.I.R.L.",
+        direccion: "Cal. Ollantaytambo Nro. 641 - San Juan de Lurigancho - Lima",
+        ruc: "20602308279",
+        telefono: "999 999 999",
+        email: "ventas@maximportaciones.com.pe",
+        web: "ventas@maximportaciones.com.pe"
+      },
+      junior: {
+        nombre: "Junior Alexander Castillo Arrue",
+        direccion: "",
+        ruc: "",
+        telefono: "",
+        email: "ventas@maximportaciones.com.pe",
+        web: "ventas@maximportaciones.com.pe"
+      }
+    }
+  }
+
+  function conexiones() {
+    //cliente.nombre ✅
+    fields.cliente.nombre.addEventListener("input", (e) => {
+      currentProform.cliente.nombre = e.target.value
+      proformPreview.cliente.nombre.innerHTML = e.target.value
+      guiaPreview.cliente.innerHTML = e.target.value
+    })
+    //cliente.ruc ✅
+    fields.cliente.ruc.addEventListener("input", (e) => {
+      currentProform.cliente.ruc = e.target.value
+      proformPreview.cliente.ruc.innerHTML = e.target.value
+
+    })
+    //cliente.direccion ✅
+    fields.cliente.direccion.addEventListener("input", (e) => {
+      currentProform.cliente.direccion = e.target.value
+      proformPreview.cliente.direccion.innerHTML = e.target.value
+    })
+    //cliente.provincia ✅
+    fields.cliente.provincia.addEventListener("input", (e) => {
+      currentProform.cliente.provincia = e.target.value
+      proformPreview.cliente.provincia.innerHTML = e.target.value
+    })
+    //cliente.ciudad ✅
+    fields.cliente.ciudad.addEventListener("input", (e) => {
+      currentProform.cliente.ciudad = e.target.value
+      proformPreview.cliente.ciudad.innerHTML = e.target.value
+    })
+    //telefono ✅
+    fields.cliente.telefono.addEventListener("input", (e) => {
+      currentProform.cliente.telefono = e.target.value
+      proformPreview.cliente.telefono.innerHTML = e.target.value
+    })
+    //email ✅
+    fields.cliente.email.addEventListener("input", (e) => {
+      currentProform.cliente.email = e.target.value
+      proformPreview.cliente.email.innerHTML = e.target.value
+    })
+    //entrega ✅
+    fields.entrega.addEventListener("change", (e) => {
+      currentProform.entrega = e.target.value
+      proformPreview.entrega.textContent = e.target.value
+    })
+    //destino✅
+    fields.destino.addEventListener("input", (e) => {
+      currentProform.destino = e.target.value
+      proformPreview.destino.innerHTML = e.target.value
+    })
+    //atencion ✅
+    fields.atencion.addEventListener("input", (e) => {
+      currentProform.atencion = e.target.value
+      proformPreview.atencion.innerHTML = e.target.value
+    })
+    //agencia ✅
+    fields.agencia.addEventListener("input", (e) => {
+      currentProform.agencia = e.target.value
+      proformPreview.agencia.innerHTML = e.target.value
+    })
+    //fecha ✅
+    fields.fecha.addEventListener("input", (e) => {
+      currentProform.fecha = e.target.value
+      proformPreview.fecha.innerHTML = e.target.value
+      guiaPreview.fecha.innerHTML = e.target.value
+    })
+    //empresa ✅
+    fields.empresa.addEventListener("change", (e) => {
+      let nombre
+      let ruc
+      let direccion
+      let telefono
+      let web
+      let email
+      switch (e.target.value) {
+        case "mx":
+          nombre = desplegables.empresas.mx.nombre
+          ruc = desplegables.empresas.mx.ruc
+          direccion = desplegables.empresas.mx.direccion
+          telefono = desplegables.empresas.mx.telefono
+          web = desplegables.empresas.mx.web
+          email = desplegables.empresas.mx.email
+
+          break;
+
+        case "junior":
+
+          nombre = desplegables.empresas.junior.nombre
+          ruc = desplegables.empresas.junior.ruc
+          direccion = desplegables.empresas.junior.direccion
+          telefono = desplegables.empresas.junior.telefono
+          web = desplegables.empresas.junior.web
+          email = desplegables.empresas.junior.email
+          break;
+
+        case "max":
+
+          nombre = desplegables.empresas.max.nombre
+          ruc = desplegables.empresas.max.ruc
+          direccion = desplegables.empresas.max.direccion
+          telefono = desplegables.empresas.max.telefono
+          web = desplegables.empresas.max.web
+          email = desplegables.empresas.max.email
+          break;
+
+        case "importadora":
+          nombre = desplegables.empresas.importadora.nombre
+          ruc = desplegables.empresas.importadora.ruc
+          direccion = desplegables.empresas.importadora.direccion
+          telefono = desplegables.empresas.importadora.telefono
+          web = desplegables.empresas.importadora.web
+          email = desplegables.empresas.importadora.email
+          break;
+
+        default:
+          console.log("valor no reconocido:", e.target.value);
+      }
+      proformPreview.empresa.nombre.textContent = nombre
+      proformPreview.empresa.ruc.textContent = ruc
+      proformPreview.empresa.email.textContent = email
+      proformPreview.empresa.telefono.textContent = telefono
+      proformPreview.empresa.direccion.textContent = direccion
+      proformPreview.empresa.web.textContent = web
+    })
+    //canal de venta✅
+    fields.canal_de_venta.addEventListener("change", (e) => {
+      currentProform.canal_de_venta = e.target.value
+      proformPreview.canal_de_venta.textContent = e.target.value
+    })
+    //forma de pago✅
+    fields.forma_de_pago.addEventListener("change", (e) => {
+      currentProform.forma_de_pago = e.target.value
+      proformPreview.forma_de_pago.textContent = e.target.value
+    })
+    //comprobante
+    fields.comprobante.addEventListener("change", (e) => {
+      currentProform.comprobante = e.target.value
+      proformPreview.comprobante.textContent = e.target.value
+    })
+      }
+  conexiones()
+</script>
