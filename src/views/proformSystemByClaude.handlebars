@@ -429,23 +429,50 @@
       color: #222;
     }
 
-    .stock-table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 2px;
-    }
+.stock-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 2px;
+  table-layout: fixed; /* ← clave: fuerza que las columnas respeten el ancho */
+}
 
     .stock-table td {
-      font-size: 10px;
-      padding: 4px 0;
-      border-bottom: 1px solid #f0f0f0;
-      color: #555;
-    }
+      position: relative;
+  font-size: 10px;
+  padding: 4px 4px;
+  border-bottom: 1px solid #f0f0f0;
+  color: #555;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap; /* ← corta el texto largo con ... */
+  vertical-align: top;
+}
+.stock-table tr:last-child td { border-bottom: none; }
+.stock-table td[title]:hover::after {
+  content: attr(title);
+  position: absolute;
+  left: 0;
+  top: 100%;
+  z-index: 99;
+  background: #1a1f2e;
+  color: #fff;
+  font-size: 10px;
+  padding: 5px 8px;
+  border-radius: 4px;
+  white-space: normal;
+  width: 220px;
+  line-height: 1.4;
+  pointer-events: none;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.25);
+}
+/* Columna 1: código + descripción — ocupa la mayor parte */
+.stock-table td:nth-child(1) { width: 55%; }
 
-    .stock-table tr:last-child td {
-      border-bottom: none;
-    }
+/* Columna 2: stock LV/SJL */
+.stock-table td:nth-child(2) { width: 20%; text-align: right; }
 
+/* Columna 3: equivalentes */
+.stock-table td:nth-child(3) { width: 25%; text-align: right; }
     .badge {
       display: inline-block;
       padding: 2px 7px;
@@ -453,6 +480,55 @@
       font-size: 9px;
       font-weight: 500;
     }
+.btn-agregar-row {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  border: 1px solid #1565c0;
+  background: transparent;
+  color: #1565c0;
+  font-size: 14px;
+  line-height: 1;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  flex-shrink: 0;
+}
+
+.btn-agregar-row:hover {
+  background: #1565c0;
+  color: #fff;
+}
+
+.btn-ver-row {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  border: 1px solid #888;
+  background: transparent;
+  color: #888;
+  font-size: 12px;
+  line-height: 1;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  flex-shrink: 0;
+}
+
+.btn-ver-row:hover {
+  border-color: #1a1f2e;
+  color: #1a1f2e;
+}
+
+.stock-table td:nth-child(1) { 
+  width: 55%; 
+  white-space: normal; 
+  line-height: 1.4;
+}
 
     .badge-ok {
       background: #e8f5e9;
@@ -913,7 +989,9 @@
             <button class="btn-sm btn-sm-green" style="width:100%;padding:7px;text-align:center">+ Cargar
               producto</button>
             <table class="stock-table">
-              <tbody>
+              <tbody id="tbody_productos">
+
+
                 <tr>
                   <td>BZM-7710010</td>
                   <td style="text-align:right"><span class="badge badge-warn">Stock: 7</span></td>
@@ -930,7 +1008,25 @@
                   <td>18048</td>
                   <td style="text-align:right"><span class="badge badge-ok">Stock: 108</span></td>
                 </tr>
-              </tbody>
+{{#each products}}
+<tr>
+  <td
+    title="{{this.CODIGO_FORMATEADO}} — {{this.CODIGO}} — {{this.DESCRIPCION}} — {{this.FAMILIA}} — {{this.SUBFAMILIA}} — {{this.MARCA}}">
+    <strong>{{this.CODIGO_FORMATEADO}}</strong><br>
+    <span style="font-weight:400; color:#888">{{this.DESCRIPCION}}</span>
+  </td>
+  <td title="LV: {{this.STOCK_LV}} / SJL: {{this.STOCK_SJL}}">
+    <span class="badge badge-ok">{{this.STOCK_LV}} / {{this.STOCK_SJL}}</span>
+  </td>
+  <td title="{{this.EQUIVALENTES_STOCK}}">{{this.EQUIVALENTES_STOCK}}</td>
+  <td>
+    <button class="btn-agregar-row" data-codigo="{{this.CODIGO_FORMATEADO}}">+</button>
+  </td>
+  <td>
+    <button class="btn-ver-row" data-codigo="{{this.CODIGO_FORMATEADO}}">👁</button>
+  </td>
+</tr>
+{{/each}}              </tbody>
             </table>
           </div>
         </div>
@@ -1217,6 +1313,7 @@
 </html>
 
 <script>
+  const catalog = {{{ json products }}}
 
   const currentProform = {
     cliente: {},
@@ -1506,8 +1603,8 @@
 
     })
     //boton borrar pago ✅
-    tables.pagos.addEventListener("click", (e)=>{
-      if(e.target.id.startsWith("btn_eliminar_pago_")){
+    tables.pagos.addEventListener("click", (e) => {
+      if (e.target.id.startsWith("btn_eliminar_pago_")) {
         console.log("here!!")
         const tr = e.target.closest("tr");
         const id = tr.id.split("_")[1]
