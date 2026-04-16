@@ -429,50 +429,66 @@
       color: #222;
     }
 
-.stock-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 2px;
-  table-layout: fixed; /* ← clave: fuerza que las columnas respeten el ancho */
-}
+    .stock-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 2px;
+      table-layout: fixed;
+      /* ← clave: fuerza que las columnas respeten el ancho */
+    }
 
     .stock-table td {
       position: relative;
-  font-size: 10px;
-  padding: 4px 4px;
-  border-bottom: 1px solid #f0f0f0;
-  color: #555;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap; /* ← corta el texto largo con ... */
-  vertical-align: top;
-}
-.stock-table tr:last-child td { border-bottom: none; }
-.stock-table td[title]:hover::after {
-  content: attr(title);
-  position: absolute;
-  left: 0;
-  top: 100%;
-  z-index: 99;
-  background: #1a1f2e;
-  color: #fff;
-  font-size: 10px;
-  padding: 5px 8px;
-  border-radius: 4px;
-  white-space: normal;
-  width: 220px;
-  line-height: 1.4;
-  pointer-events: none;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.25);
-}
-/* Columna 1: código + descripción — ocupa la mayor parte */
-.stock-table td:nth-child(1) { width: 55%; }
+      font-size: 10px;
+      padding: 4px 4px;
+      border-bottom: 1px solid #f0f0f0;
+      color: #555;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      /* ← corta el texto largo con ... */
+      vertical-align: top;
+    }
 
-/* Columna 2: stock LV/SJL */
-.stock-table td:nth-child(2) { width: 20%; text-align: right; }
+    .stock-table tr:last-child td {
+      border-bottom: none;
+    }
 
-/* Columna 3: equivalentes */
-.stock-table td:nth-child(3) { width: 25%; text-align: right; }
+    .stock-table td[title]:hover::after {
+      content: attr(title);
+      position: absolute;
+      left: 0;
+      top: 100%;
+      z-index: 99;
+      background: #1a1f2e;
+      color: #fff;
+      font-size: 10px;
+      padding: 5px 8px;
+      border-radius: 4px;
+      white-space: normal;
+      width: 220px;
+      line-height: 1.4;
+      pointer-events: none;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
+    }
+
+    /* Columna 1: código + descripción — ocupa la mayor parte */
+    .stock-table td:nth-child(1) {
+      width: 55%;
+    }
+
+    /* Columna 2: stock LV/SJL */
+    .stock-table td:nth-child(2) {
+      width: 20%;
+      text-align: right;
+    }
+
+    /* Columna 3: equivalentes */
+    .stock-table td:nth-child(3) {
+      width: 25%;
+      text-align: right;
+    }
+
     .badge {
       display: inline-block;
       padding: 2px 7px;
@@ -480,55 +496,56 @@
       font-size: 9px;
       font-weight: 500;
     }
-.btn-agregar-row {
-  width: 22px;
-  height: 22px;
-  border-radius: 50%;
-  border: 1px solid #1565c0;
-  background: transparent;
-  color: #1565c0;
-  font-size: 14px;
-  line-height: 1;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0;
-  flex-shrink: 0;
-}
 
-.btn-agregar-row:hover {
-  background: #1565c0;
-  color: #fff;
-}
+    .btn-agregar-row {
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      border: 1px solid #1565c0;
+      background: transparent;
+      color: #1565c0;
+      font-size: 14px;
+      line-height: 1;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0;
+      flex-shrink: 0;
+    }
 
-.btn-ver-row {
-  width: 22px;
-  height: 22px;
-  border-radius: 50%;
-  border: 1px solid #888;
-  background: transparent;
-  color: #888;
-  font-size: 12px;
-  line-height: 1;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0;
-  flex-shrink: 0;
-}
+    .btn-agregar-row:hover {
+      background: #1565c0;
+      color: #fff;
+    }
 
-.btn-ver-row:hover {
-  border-color: #1a1f2e;
-  color: #1a1f2e;
-}
+    .btn-ver-row {
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      border: 1px solid #888;
+      background: transparent;
+      color: #888;
+      font-size: 12px;
+      line-height: 1;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0;
+      flex-shrink: 0;
+    }
 
-.stock-table td:nth-child(1) { 
-  width: 55%; 
-  white-space: normal; 
-  line-height: 1.4;
-}
+    .btn-ver-row:hover {
+      border-color: #1a1f2e;
+      color: #1a1f2e;
+    }
+
+    .stock-table td:nth-child(1) {
+      width: 55%;
+      white-space: normal;
+      line-height: 1.4;
+    }
 
     .badge-ok {
       background: #e8f5e9;
@@ -980,7 +997,7 @@
               <input type="text" placeholder="Buscar producto…" class="field-full" id="inputProducto">
               <input type="number" placeholder="Cantidad" id="inputCantidad">
               <input type="number" placeholder="Importe unit." id="inputPrecio">
-              <input type="text" placeholder="Comentario" class="field-full">
+              <input id="inputComentario" type="text" placeholder="Comentario" class="field-full">
             </div>
             <div class="total-item">
               <span>Total ítem:</span>
@@ -991,42 +1008,7 @@
             <table class="stock-table">
               <tbody id="tbody_productos">
 
-
-                <tr>
-                  <td>BZM-7710010</td>
-                  <td style="text-align:right"><span class="badge badge-warn">Stock: 7</span></td>
-                </tr>
-                <tr>
-                  <td>UF-R0060</td>
-                  <td style="text-align:right"><span class="badge badge-ok">Stock: 783</span></td>
-                </tr>
-                <tr>
-                  <td>18034</td>
-                  <td style="text-align:right"><span class="badge badge-ok">Stock: 115</span></td>
-                </tr>
-                <tr>
-                  <td>18048</td>
-                  <td style="text-align:right"><span class="badge badge-ok">Stock: 108</span></td>
-                </tr>
-{{#each products}}
-<tr>
-  <td
-    title="{{this.CODIGO_FORMATEADO}} — {{this.CODIGO}} — {{this.DESCRIPCION}} — {{this.FAMILIA}} — {{this.SUBFAMILIA}} — {{this.MARCA}}">
-    <strong>{{this.CODIGO_FORMATEADO}}</strong><br>
-    <span style="font-weight:400; color:#888">{{this.DESCRIPCION}}</span>
-  </td>
-  <td title="LV: {{this.STOCK_LV}} / SJL: {{this.STOCK_SJL}}">
-    <span class="badge badge-ok">{{this.STOCK_LV}} / {{this.STOCK_SJL}}</span>
-  </td>
-  <td title="{{this.EQUIVALENTES_STOCK}}">{{this.EQUIVALENTES_STOCK}}</td>
-  <td>
-    <button class="btn-agregar-row" data-codigo="{{this.CODIGO_FORMATEADO}}">+</button>
-  </td>
-  <td>
-    <button class="btn-ver-row" data-codigo="{{this.CODIGO_FORMATEADO}}">👁</button>
-  </td>
-</tr>
-{{/each}}              </tbody>
+              </tbody>
             </table>
           </div>
         </div>
@@ -1380,10 +1362,17 @@
       monto: document.querySelector("#pago_monto"),
       operacion: document.querySelector("#pago_operacion"),
       cuenta: document.querySelector("#pago_cuenta")
+    },
+    products: {
+      product: document.querySelector("#inputProducto"),
+      monto: document.querySelector("#inputPrecio"),
+      cantidad: document.querySelector("#inputCantidad"),
+      comentario: document.querySelector("#inputComentario")
     }
   }
   const tables = {
-    pagos: document.querySelector("#tbody_pagos")
+    pagos: document.querySelector("#tbody_pagos"),
+    products: document.querySelector("#tbody_productos")
   }
   const desplegables = {
     empresas: {
@@ -1421,9 +1410,61 @@
       }
     }
   }
+
   const botones = {
     cargarPago: document.querySelector("#cargar_pago")
   }
+
+  function printProductSearch(products) {
+    tables.products.innerHTML = ""
+    for (let product of products) {
+      let tr = document.createElement("tr")
+      tr.innerHTML = `
+                  <td
+                    title="${product.CODIGO_FORMATEADO} — ${product.CODIGO} — ${product.DESCRIPCION} — ${product.FAMILIA} — ${product.SUBFAMILIA} — ${product.MARCA}">
+                    <strong>${product.CODIGO_FORMATEADO}</strong><br>
+                    <span style="font-weight:400; color:#888">${product.DESCRIPCION}</span>
+                  </td>
+                  <td title="LV: ${product.STOCK_LV} / SJL: ${product.STOCK_SJL}">
+                    <span class="badge badge-ok">${product.STOCK_LV} / ${product.STOCK_SJL}</span>
+                  </td>
+                  <td title="${product.EQUIVALENTES_STOCK}">${product.EQUIVALENTES_STOCK}
+                  
+<button class="btn-agregar-row" data-codigo="${product.CODIGO_FORMATEADO}">+</button>
+<button class="btn-ver-row" data-codigo="${product.CODIGO_FORMATEADO}">👁</button>
+
+                  </td>
+                  
+          
+                  `
+                  tables.products.appendChild(tr)
+    }
+
+  }
+
+  printProductSearch(catalog)
+
+  function printPagos(pagos){
+    tables.pagos.innerHTML = ""
+    proformPreview.pago.innerHTML = ""
+    for (let pago of pagos) {
+      let tr = document.createElement("tr")
+      tr.id = `pago_${pago.index}_tr`
+      tr.innerHTML = `
+                    <td><span>${pago.cuenta}</span> | <span>op: ${pago.operacion}</span></td>
+                  <td style="text-align:right"><span class="badge badge-warn">${pago.monto} /S</span> </td>                     <td><button id="btn_eliminar_pago_${pago.index}" class="btn-eliminar">✕</button></td>
+  `
+      tables.pagos.appendChild(tr)
+
+      let cursive = document.createElement("cursive")
+      cursive.id = `proforma_pago_${pago.index}`
+      cursive.innerHTML = `${pago.cuenta} | op: ${pago.operacion} | ${pago.monto} /S —`
+
+      proformPreview.pago.appendChild(cursive)
+    }
+  }
+printPagos(currentProform.pagos)
+
   function conexiones() {
     //cliente.nombre ✅
     fields.cliente.nombre.addEventListener("input", (e) => {
@@ -1556,7 +1597,7 @@
       currentProform.forma_de_pago = e.target.value
       proformPreview.forma_de_pago.textContent = e.target.value
     })
-    //comprobante
+    //comprobante ✅
     fields.comprobante.addEventListener("change", (e) => {
       currentProform.comprobante = e.target.value
       proformPreview.comprobante.textContent = e.target.value
@@ -1581,29 +1622,12 @@
         fields.pago.cuenta.value = ""
       }
       resetFields()
-
-      tables.pagos.innerHTML = ""
-      proformPreview.pago.innerHTML = ""
-
-      for (let pago of pagos) {
-        let tr = document.createElement("tr")
-        tr.id = `pago_${pago.index}_tr`
-        tr.innerHTML = `
-                    <td><span>${pago.cuenta}</span> | <span>op: ${pago.operacion}</span></td>
-                  <td style="text-align:right"><span class="badge badge-warn">${pago.monto} /S</span> </td>                     <td><button id="btn_eliminar_pago_${pago.index}" class="btn-eliminar">✕</button></td>
-  `
-        tables.pagos.appendChild(tr)
-
-        let cursive = document.createElement("cursive")
-        cursive.id = `proforma_pago_${pago.index}`
-        cursive.innerHTML = `${pago.cuenta} | op: ${pago.operacion} | ${pago.monto} /S —`
-
-        proformPreview.pago.appendChild(cursive)
-      }
+      printPagos(pagos)
 
     })
     //boton borrar pago ✅
     tables.pagos.addEventListener("click", (e) => {
+
       if (e.target.id.startsWith("btn_eliminar_pago_")) {
         console.log("here!!")
         const tr = e.target.closest("tr");
@@ -1618,6 +1642,32 @@
       }
     })
 
+//product search
+  fields.products.product.addEventListener("input",(e)=>{
+  //console.log("hello from here")
+  
+    const search = e.target.value.toLowerCase().trim();
+    const tokens = search.split(/\s+/).filter(Boolean);
+
+    const filter = catalog.filter(p=>{
+      {
+        const text = `
+          ${p.CODIGO_FORMATEADO}
+          ${p.CODIGO}
+          ${p.DESCRIPCION}
+          ${p.PROVEEDOR}
+          ${p.MARCA}
+          ${p.SUBFAMILIA}
+          ${p.FAMILIA}
+        `.toLowerCase();
+        // 👇 TODAS las palabras deben existir
+
+        return tokens.every(word => text.includes(word))
+      }
+    })
+    
+    printProductSearch(filter)
+  })
   }
 
   conexiones()
