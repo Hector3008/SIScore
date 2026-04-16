@@ -863,21 +863,37 @@
         </div>
 
         <div class="section">
-          <div class="section-header" onclick="toggleSection(this)">Medios de pago <span>▾</span></div>
+          <div class="section-header" onclick="toggleSection(this)">Pago <span>▾</span></div>
           <div class="section-body">
             <div class="field-group">
-              <select class="field-full">
-                <option value="">Cuenta destino</option>
-                <option>BCP 191-123456</option>
-                <option>Interbank 200-987654</option>
+              <select id="pago_cuenta" class="field-full">
+                <option value="" disabled selected hidden>Cuenta destino</option>
+                <option>BCP Max Imp</option>
+                <option>BCP Importadora</option>
+                <option>BCP M&X</option>
+                <option>BBVA Max Imp</option>
+                <option>BBVA Importadora</option>
+                <option>BBVA M&X</option>
+                <option>BCP Junior</option>
+                <option>BBVA Junior</option>
+                <option>Yape Junior</option>
+                <option>Plin Junior</option>
               </select>
-              <input type="number" placeholder="Monto">
-              <input type="text" placeholder="N° operación">
+              <input id="pago_monto" type="number" placeholder="Monto">
+              <input id="pago_operacion" type="text" placeholder="N° operación">
+
             </div>
             <div class="btn-row">
-              <button class="btn-sm btn-sm-green">Cargar pago</button>
+              <button id="cargar_pago" class="btn-sm btn-sm-green">Cargar pago</button>
               <button class="btn-sm btn-sm-red">Borrar pagos</button>
             </div>
+            <table class="stock-table">
+              <tbody id="tbody_pagos">
+
+              </tbody>
+            </table>
+
+
           </div>
         </div>
 
@@ -961,6 +977,8 @@
               <div class="cl"><span>Comprobante:</span><span id="proforma_comprobante"></span></div>
               <div class="cl"><span>Agencia:</span><span id="proforma_agencia"></span></div>
               <div class="cl"><span>Atencion:</span><span id="proforma_atencion"></span></div>
+
+              <div class="cl"><span>Pagos:</span><span id="proforma_pagos"></span></div>
             </div>
 
 
@@ -1231,6 +1249,7 @@
     forma_de_pago: document.querySelector("#proforma_forma_de_pago"),
     fecha: document.querySelector("#proforma_fecha"),
     comprobante: document.querySelector("#proforma_comprobante"),
+    pago: document.querySelector("#proforma_pagos")
   }
   const guiaPreview = {
 
@@ -1247,7 +1266,7 @@
       telefono: document.querySelector("#cliente_telefono"),
       email: document.querySelector("#cliente_email"),
       direccion: document.querySelector("#cliente_direccion"),
-      provincia: document.querySelector("#cliente_provincia"), 
+      provincia: document.querySelector("#cliente_provincia"),
       ciudad: document.querySelector("#cliente_ciudad")
     },
     vendedor: document.querySelector("#vendedor"),
@@ -1259,8 +1278,16 @@
     forma_de_pago: document.querySelector("#forma_de_pago"),
     fecha: document.querySelector("#fecha"),
     comprobante: document.querySelector("#comprobante"),
+
+    pago: {
+      monto: document.querySelector("#pago_monto"),
+      operacion: document.querySelector("#pago_operacion"),
+      cuenta: document.querySelector("#pago_cuenta")
+    }
   }
-  const tables = {}
+  const tables = {
+    pagos: document.querySelector("#tbody_pagos")
+  }
   const desplegables = {
     empresas: {
       max: {
@@ -1297,7 +1324,9 @@
       }
     }
   }
-
+  const botones = {
+    cargarPago: document.querySelector("#cargar_pago")
+  }
   function conexiones() {
     //cliente.nombre ✅
     fields.cliente.nombre.addEventListener("input", (e) => {
@@ -1435,6 +1464,65 @@
       currentProform.comprobante = e.target.value
       proformPreview.comprobante.textContent = e.target.value
     })
+    //boton cargar pago✅
+    botones.cargarPago.addEventListener("click", (e) => {
+      e.preventDefault()
+      const pago = {
+        index: currentProform.pagos.length + 1,
+        status: true,
+        monto: fields.pago.monto.value,
+        operacion: fields.pago.operacion.value,
+        cuenta: fields.pago.cuenta.value
       }
+      currentProform.pagos.push(pago)
+      //pagos para cargar en la tabla:
+      const pagos = currentProform.pagos.filter(e => e.status === true)
+
+      function resetFields() {
+        fields.pago.monto.value = ""
+        fields.pago.operacion.value = ""
+        fields.pago.cuenta.value = ""
+      }
+      resetFields()
+
+      tables.pagos.innerHTML = ""
+      proformPreview.pago.innerHTML = ""
+
+      for (let pago of pagos) {
+        let tr = document.createElement("tr")
+        tr.id = `pago_${pago.index}_tr`
+        tr.innerHTML = `
+                    <td><span>${pago.cuenta}</span> | <span>op: ${pago.operacion}</span></td>
+                  <td style="text-align:right"><span class="badge badge-warn">${pago.monto} /S</span> </td>                     <td><button id="btn_eliminar_pago_${pago.index}" class="btn-eliminar">✕</button></td>
+  `
+        tables.pagos.appendChild(tr)
+
+        let cursive = document.createElement("cursive")
+        cursive.id = `proforma_pago_${pago.index}`
+        cursive.innerHTML = `${pago.cuenta} | op: ${pago.operacion} | ${pago.monto} /S —`
+
+        proformPreview.pago.appendChild(cursive)
+      }
+
+    })
+    //boton borrar pago ✅
+    tables.pagos.addEventListener("click", (e)=>{
+      if(e.target.id.startsWith("btn_eliminar_pago_")){
+        console.log("here!!")
+        const tr = e.target.closest("tr");
+        const id = tr.id.split("_")[1]
+        tr.remove()
+        const proforma_pago = document.querySelector(`#proforma_pago_${id}`)
+        proforma_pago.remove()
+        const pago = currentProform.pagos.find(p => p.index == id)
+        if (pago) {
+          pago.status = false
+        }
+      }
+    })
+
+  }
+
   conexiones()
+
 </script>
