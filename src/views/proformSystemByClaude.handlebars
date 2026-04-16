@@ -1003,7 +1003,8 @@
               <span>Total ítem:</span>
               <span id="totalItem">S/ 0.00</span>
             </div>
-            <button class="btn-sm btn-sm-green" style="width:100%;padding:7px;text-align:center">+ Cargar
+            <button id="cargar_producto" class="btn-sm btn-sm-green" style="width:100%;padding:7px;text-align:center">+
+              Cargar
               producto</button>
             <table class="stock-table">
               <tbody id="tbody_productos">
@@ -1072,31 +1073,8 @@
                     <th></th>
                   </tr>
                 </thead>
-                <tbody>
-                  <tr>
-                    <td>1</td>
-                    <td>Hino 500 1999</td>
-                    <td>5</td>
-                    <td>S/ 50.00</td>
-                    <td>S/ 250.00</td>
-                    <td><button class="btn-eliminar">✕</button></td>
-                  </tr>
-                  <tr>
-                    <td>2</td>
-                    <td>Toyota 1GD Bosch Ford Land Rover 7PK</td>
-                    <td>3</td>
-                    <td>S/ 30.00</td>
-                    <td>S/ 90.00</td>
-                    <td><button class="btn-eliminar">✕</button></td>
-                  </tr>
-                  <tr>
-                    <td>3</td>
-                    <td>Nissan-Datsun E16 - 9T</td>
-                    <td>3</td>
-                    <td>S/ 40.00</td>
-                    <td>S/ 120.00</td>
-                    <td><button class="btn-eliminar">✕</button></td>
-                  </tr>
+                <tbody id="tbody_proforma">
+                
                 </tbody>
               </table>
             </div>
@@ -1153,7 +1131,7 @@
                     <th>UBICACIÓN</th>
                   </tr>
                 </thead>
-                <tbody>
+                <tbody id="tbody-guia">
                   <tr>
                     <td>1</td>
                     <td>5</td>
@@ -1367,12 +1345,15 @@
       product: document.querySelector("#inputProducto"),
       monto: document.querySelector("#inputPrecio"),
       cantidad: document.querySelector("#inputCantidad"),
-      comentario: document.querySelector("#inputComentario")
+      comentario: document.querySelector("#inputComentario"),
+      total: document.querySelector("#totalItem")
     }
   }
   const tables = {
     pagos: document.querySelector("#tbody_pagos"),
-    products: document.querySelector("#tbody_productos")
+    products: document.querySelector("#tbody_productos"),
+    proforma: document.querySelector("#tbody_proforma"),
+    guia: document.querySelector("#tbody-guia")
   }
   const desplegables = {
     empresas: {
@@ -1412,7 +1393,8 @@
   }
 
   const botones = {
-    cargarPago: document.querySelector("#cargar_pago")
+    cargarPago: document.querySelector("#cargar_pago"),
+    cargarProducto: document.querySelector("#cargar_producto")
   }
 
   function printProductSearch(products) {
@@ -1437,14 +1419,14 @@
                   
           
                   `
-                  tables.products.appendChild(tr)
+      tables.products.appendChild(tr)
     }
 
   }
 
   printProductSearch(catalog)
 
-  function printPagos(pagos){
+  function printPagos(pagos) {
     tables.pagos.innerHTML = ""
     proformPreview.pago.innerHTML = ""
     for (let pago of pagos) {
@@ -1452,7 +1434,7 @@
       tr.id = `pago_${pago.index}_tr`
       tr.innerHTML = `
                     <td><span>${pago.cuenta}</span> | <span>op: ${pago.operacion}</span></td>
-                  <td style="text-align:right"><span class="badge badge-warn">${pago.monto} /S</span> </td>                     <td><button id="btn_eliminar_pago_${pago.index}" class="btn-eliminar">✕</button></td>
+                  <td style="text-align:right"><span class="badge badge-warn"> S/ ${pago.monto}</span> </td>                     <td><button id="btn_eliminar_pago_${pago.index}" class="btn-eliminar">✕</button></td>
   `
       tables.pagos.appendChild(tr)
 
@@ -1463,8 +1445,77 @@
       proformPreview.pago.appendChild(cursive)
     }
   }
-printPagos(currentProform.pagos)
+  printPagos(currentProform.pagos)
 
+  function printProforma(products) {
+    tables.proforma.innerHTML = ""
+    for (let [i, product] of products.entries()) {
+      let tr = document.createElement("tr")
+
+      tr.innerHTML = `
+    <td>${i + 1}</td>
+    <td>${product.nombre}</td>
+    <td>${product.cantidad}</td>
+    <td>S/ ${product.monto}</td>
+    <td>S/ ${product.total}</td>
+    <td>
+      <button id="eliminar_proforma_producto_${product.index}" class="btn-eliminar">✕</button>
+    </td>
+  `
+
+      tables.proforma.appendChild(tr)
+
+    }
+  }
+  printProforma(currentProform.productos)
+  function printGuia(products) {
+    tables.guia.innerHTML = ""
+    for (let [i, product] of products.entries()) {
+
+      for (let [j, option] of product.options.entries()) {
+
+        const tr = document.createElement("tr")
+        tr.classList.add(`guia_opcion_${product.index}`)
+        tr.innerHTML = `
+          <td>${j == 0 ? i + 1 : ""}</td>
+          <td>${j == 0 ? product.cantidad : ""}</td>
+          <td>${j == 0 ? product.monto : ""}</td>
+      <td>${j == 0 ? product.nombre : ""}</td>
+      <td>${j == 0 ? product.comentario : ""}</td>
+            <td>${option.CODIGO_FORMATEADO}</td>
+            
+      <td>${option.STOCK_LV}</td>  
+      <td>${option.STOCK_SJL}</td> 
+
+      <td> ${option.DESCRIPCION}</td >
+      <td>${option.EQUIVALENTES_STOCK}</td>
+      <td>${option.UBICACION}</td>
+    `
+        tables.guia.appendChild(tr)
+      }
+    }
+  }
+
+printGuia(currentProform.productos)
+        function options(value) {
+          const tokens = value.split(/\s+/).filter(Boolean);
+          const filter = catalog.filter(p => {
+            {
+              const text = `
+          ${p.CODIGO_FORMATEADO}
+          ${p.CODIGO}
+          ${p.DESCRIPCION}
+          ${p.PROVEEDOR}
+          ${p.MARCA}
+          ${p.SUBFAMILIA}
+          ${p.FAMILIA}
+        `.toLowerCase();
+
+              return tokens.every(word => text.includes(word))
+            }
+          })
+          return filter
+        }
   function conexiones() {
     //cliente.nombre ✅
     fields.cliente.nombre.addEventListener("input", (e) => {
@@ -1587,6 +1638,7 @@ printPagos(currentProform.pagos)
       proformPreview.empresa.direccion.textContent = direccion
       proformPreview.empresa.web.textContent = web
     })
+
     //canal de venta✅
     fields.canal_de_venta.addEventListener("change", (e) => {
       currentProform.canal_de_venta = e.target.value
@@ -1642,32 +1694,42 @@ printPagos(currentProform.pagos)
       }
     })
 
-//product search
-  fields.products.product.addEventListener("input",(e)=>{
-  //console.log("hello from here")
-  
-    const search = e.target.value.toLowerCase().trim();
-    const tokens = search.split(/\s+/).filter(Boolean);
-
-    const filter = catalog.filter(p=>{
-      {
-        const text = `
-          ${p.CODIGO_FORMATEADO}
-          ${p.CODIGO}
-          ${p.DESCRIPCION}
-          ${p.PROVEEDOR}
-          ${p.MARCA}
-          ${p.SUBFAMILIA}
-          ${p.FAMILIA}
-        `.toLowerCase();
-        // 👇 TODAS las palabras deben existir
-
-        return tokens.every(word => text.includes(word))
-      }
+    //product search ✅
+    fields.products.product.addEventListener("input", (e) => {
+      const search = e.target.value.toLowerCase().trim();
+          printProductSearch(options(search))
     })
-    
-    printProductSearch(filter)
-  })
+    //cargar producto ✅
+    botones.cargarProducto.addEventListener("click", (e) => {
+      currentProform.productos.push({
+        status: true,
+        index: currentProform.productos.length + 1,
+        nombre: fields.products.product.value,
+        monto: fields.products.monto.value,
+        cantidad: fields.products.cantidad.value,
+        comentario: fields.products.comentario.value,
+        total: fields.products.cantidad.value * fields.products.monto.value,
+        options: options(fields.products.product.value)
+      })
+    function cleanFields() {
+        fields.products.product.value = ""
+        fields.products.cantidad.value = ""
+        fields.products.comentario.value = ""
+        fields.products.monto.value = ""
+        fields.products.total.textContent = 'S/ 0.00'
+        printProductSearch(catalog)
+      }
+
+      const products = currentProform.productos.filter(e => e.status === true)
+
+      printProforma(products)
+
+
+printGuia(products)
+      cleanFields()
+    })
+  
+  //eliminar producto (pending)
   }
 
   conexiones()
