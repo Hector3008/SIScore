@@ -978,7 +978,6 @@
             </div>
             <div class="btn-row">
               <button id="cargar_pago" class="btn-sm btn-sm-green">Cargar pago</button>
-              <button class="btn-sm btn-sm-red">Borrar pagos</button>
             </div>
             <table class="stock-table">
               <tbody id="tbody_pagos">
@@ -1056,6 +1055,7 @@
               <div class="cl"><span>Comprobante:</span><span id="proforma_comprobante"></span></div>
               <div class="cl"><span>Agencia:</span><span id="proforma_agencia"></span></div>
               <div class="cl"><span>Atencion:</span><span id="proforma_atencion"></span></div>
+              <div class="cl"><span>Vendedor:</span><span id="proforma_vendedor"></span></div>
 
               <div class="cl"><span>Pagos:</span><span id="proforma_pagos"></span></div>
             </div>
@@ -1074,7 +1074,7 @@
                   </tr>
                 </thead>
                 <tbody id="tbody_proforma">
-                
+
                 </tbody>
               </table>
             </div>
@@ -1118,17 +1118,17 @@
               <table class="items-table" style="min-width:700px">
                 <thead>
                   <tr>
-                    <th>ITEM</th>
-                    <th>CANT.</th>
-                    <th>PRECIO</th>
-                    <th>PEDIDO</th>
-                    <th>COMENTARIO</th>
-                    <th>OPCIONES</th>
+                    <th>Item</th>
+                    <th>Cant.</th>
+                    <th>Precio uni</th>
+                    <th>Pedid</th>
+                    <th>Comentario</th>
+                    <th>Opciones</th>
                     <th>LV</th>
                     <th>SJL</th>
-                    <th>DESCRIPCIÓN</th>
-                    <th>EQUIVALENTES</th>
-                    <th>UBICACIÓN</th>
+                    <th>Descripción</th>
+                    <th>Equivalente</th>
+                    <th>Ubicacion</th>
                   </tr>
                 </thead>
                 <tbody id="tbody-guia">
@@ -1265,473 +1265,592 @@
 
     function consultarProforma() { }
     function actualizarProforma() { }
-    function cargarProforma() { }
     function reiniciarFormulario() { }
+  </script>
+  <script>
+    const catalog = {{{ json products }}}
+
+    const currentProform = {
+      cliente: {},
+      pagos: [],
+      productos: []
+    }
+    const proformPreview = {
+      empresa: {
+        nombre: document.querySelector("#proforma_empresa_nombre"),
+        ruc: document.querySelector("#proforma_empresa_ruc"),
+        direccion: document.querySelector("#proforma_empresa_direccion"),
+        telefono: document.querySelector("#proforma_empresa_telefono"),
+        email: document.querySelector("#proforma_empresa_email"),
+        web: document.querySelector("#proforma_empresa_web")
+      },
+      cliente: {
+        nombre: document.querySelector("#proforma_cliente_nombre"),
+        ruc: document.querySelector("#proforma_cliente_ruc"),
+        telefono: document.querySelector("#proforma_cliente_telefono"),
+        email: document.querySelector("#proforma_cliente_email"),
+        direccion: document.querySelector("#proforma_cliente_direccion"),
+        provincia: document.querySelector("#proforma_cliente_provincia"), ciudad: document.querySelector("#proforma_cliente_ciudad")
+      },
+      vendedor: document.querySelector("#proforma_vendedor"),
+      entrega: document.querySelector("#proforma_entrega"),
+      destino: document.querySelector("#proforma_destino"),
+      agencia: document.querySelector("#proforma_agencia"),
+      atencion: document.querySelector("#proforma_atencion"),
+      canal_de_venta: document.querySelector("#proforma_canal_de_venta"),
+      forma_de_pago: document.querySelector("#proforma_forma_de_pago"),
+      fecha: document.querySelector("#proforma_fecha"),
+      comprobante: document.querySelector("#proforma_comprobante"),
+      pago: document.querySelector("#proforma_pagos")
+    }
+    const guiaPreview = {
+
+      cliente: document.querySelector("#guia_cliente"),
+      vendedor: document.querySelector("#guia_vendedor"),
+      fecha: document.querySelector("#guia_fecha"),
+      codigo: document.querySelector("#guia_codigo")
+    }
+    const fields = {
+      empresa: document.querySelector("#empresa_nombre"),
+      cliente: {
+        nombre: document.querySelector("#cliente_nombre"),
+        ruc: document.querySelector("#cliente_ruc"),
+        telefono: document.querySelector("#cliente_telefono"),
+        email: document.querySelector("#cliente_email"),
+        direccion: document.querySelector("#cliente_direccion"),
+        provincia: document.querySelector("#cliente_provincia"),
+        ciudad: document.querySelector("#cliente_ciudad")
+      },
+      vendedor: document.querySelector("#vendedor"),
+      entrega: document.querySelector("#entrega"),
+      destino: document.querySelector("#destino"),
+      agencia: document.querySelector("#agencia"),
+      atencion: document.querySelector("#atencion"),
+      canal_de_venta: document.querySelector("#canal_de_venta"),
+      forma_de_pago: document.querySelector("#forma_de_pago"),
+      fecha: document.querySelector("#fecha"),
+      comprobante: document.querySelector("#comprobante"),
+
+      pago: {
+        monto: document.querySelector("#pago_monto"),
+        operacion: document.querySelector("#pago_operacion"),
+        cuenta: document.querySelector("#pago_cuenta")
+      },
+      products: {
+        product: document.querySelector("#inputProducto"),
+        monto: document.querySelector("#inputPrecio"),
+        cantidad: document.querySelector("#inputCantidad"),
+        comentario: document.querySelector("#inputComentario"),
+        total: document.querySelector("#totalItem")
+      }
+    }
+    const tables = {
+      pagos: document.querySelector("#tbody_pagos"),
+      products: document.querySelector("#tbody_productos"),
+      proforma: document.querySelector("#tbody_proforma"),
+      guia: document.querySelector("#tbody-guia")
+    }
+    const desplegables = {
+      empresas: {
+        max: {
+          nombre: "Max Importaciones y Servicios Generales S.A.C.",
+          direccion: "Cal. Garcia Naranjo Nro. 114b - La Victoria - Lima",
+          ruc: "20503534194",
+          telefono: "999 999 999",
+          email: "ventas@maximportaciones.com.pe",
+          web: "ventas@maximportaciones.com.pe"
+        },
+        importadora: {
+          nombre: "Importadora de Repuestos Max Import S.A.C.",
+          direccion: "Av. Canto Grande Nro. 3418 - San Juan de Lurigancho - Lima",
+          ruc: "20550445892",
+          telefono: "999 999 999",
+          email: "ventas@maximportaciones.com.pe",
+          web: "ventas@maximportaciones.com.pe"
+        },
+        mx: {
+          nombre: "M & X Importaciones E.I.R.L.",
+          direccion: "Cal. Ollantaytambo Nro. 641 - San Juan de Lurigancho - Lima",
+          ruc: "20602308279",
+          telefono: "999 999 999",
+          email: "ventas@maximportaciones.com.pe",
+          web: "ventas@maximportaciones.com.pe"
+        },
+        junior: {
+          nombre: "Junior Alexander Castillo Arrue",
+          direccion: "",
+          ruc: "",
+          telefono: "",
+          email: "ventas@maximportaciones.com.pe",
+          web: "ventas@maximportaciones.com.pe"
+        }
+      }
+    }
+
+    const botones = {
+      cargarPago: document.querySelector("#cargar_pago"),
+      cargarProducto: document.querySelector("#cargar_producto")
+    }
+
+    function printProductSearch(products) {
+      tables.products.innerHTML = ""
+      for (let product of products) {
+        let tr = document.createElement("tr")
+        tr.innerHTML = `
+                    <td
+                      title="${product.CODIGO_FORMATEADO} — ${product.CODIGO} — ${product.DESCRIPCION} — ${product.FAMILIA} — ${product.SUBFAMILIA} — ${product.MARCA}">
+                      <strong>${product.CODIGO_FORMATEADO}</strong><br>
+                      <span style="font-weight:400; color:#888">${product.DESCRIPCION}</span>
+                    </td>
+                    <td title="LV: ${product.STOCK_LV} / SJL: ${product.STOCK_SJL}">
+                      <span class="badge badge-ok">${product.STOCK_LV} / ${product.STOCK_SJL}</span>
+                    </td>
+                    <td title="${product.EQUIVALENTES_STOCK}">${product.EQUIVALENTES_STOCK}
+                    
+  <button class="btn-agregar-row" data-codigo="${product.CODIGO_FORMATEADO}">+</button>
+  <button class="btn-ver-row" data-codigo="${product.CODIGO_FORMATEADO}">👁</button>
+  
+                    </td>
+                    
+            
+                    `
+        tables.products.appendChild(tr)
+      }
+
+    }
+
+    printProductSearch(catalog)
+
+    function printPagos(pagos) {
+      tables.pagos.innerHTML = ""
+      proformPreview.pago.innerHTML = ""
+      for (let pago of pagos) {
+        let tr = document.createElement("tr")
+        tr.id = `pago_${pago.index}_tr`
+        tr.innerHTML = `
+                      <td><span>${pago.cuenta}</span> | <span>op: ${pago.operacion}</span></td>
+                    <td style="text-align:right"><span class="badge badge-warn"> S/ ${pago.monto}</span> </td>                     <td><button id="btn_eliminar_pago_${pago.index}" class="btn-eliminar">✕</button></td>
+    `
+        tables.pagos.appendChild(tr)
+
+        let cursive = document.createElement("cursive")
+        cursive.id = `proforma_pago_${pago.index}`
+        cursive.innerHTML = `${pago.cuenta} | op: ${pago.operacion} | ${pago.monto} /S —`
+
+        proformPreview.pago.appendChild(cursive)
+      }
+    }
+    printPagos(currentProform.pagos)
+
+    function printProforma(products) {
+      tables.proforma.innerHTML = ""
+      for (let [i, product] of products.entries()) {
+        let tr = document.createElement("tr")
+        tr.id = `proforma_product_${product.index}_tr`
+        tr.innerHTML = `
+      <td>${i + 1}</td>
+      <td>${product.nombre}</td>
+      <td>${product.cantidad}</td>
+      <td>S/ ${product.monto}</td>
+      <td>S/ ${product.total}</td>
+      <td>
+        <button id="eliminar_proforma_producto_${product.index}" class="btn-eliminar">✕</button>
+      </td>
+    `
+
+        tables.proforma.appendChild(tr)
+
+      }
+    }
+    printProforma(currentProform.productos)
+
+    function printGuia(products) {
+      tables.guia.innerHTML = ""
+      for (let [i, product] of products.entries()) {
+
+        for (let [j, option] of product.options.entries()) {
+
+          const tr = document.createElement("tr")
+          tr.classList.add(`guia_opcion_${product.index}`)
+          tr.innerHTML = `
+            <td>${j == 0 ? i + 1 : ""}</td>
+            <td>${j == 0 ? product.cantidad : ""}</td>
+            <td>S/ ${j == 0 ? product.monto : ""}</td>
+        <td>${j == 0 ? product.nombre : ""}</td>
+        <td>${j == 0 ? product.comentario : ""}</td>
+              <td>${option.CODIGO_FORMATEADO}</td>
+              
+        <td>${option.STOCK_LV}</td>  
+        <td>${option.STOCK_SJL}</td> 
+  
+        <td> ${option.DESCRIPCION} / ${option.FAMILIA} / ${option.SUBFAMILIA}</td >
+        <td>${option.EQUIVALENTES_STOCK}</td>
+        <td>${option.UBICACION}</td>
+      `
+          tables.guia.appendChild(tr)
+        }
+      }
+    }
+
+    printGuia(currentProform.productos)
+
+
+    function options(value) {
+      const tokens = value.split(/\s+/).filter(Boolean);
+      const filter = catalog.filter(p => {
+        {
+          const text = `
+            ${p.CODIGO_FORMATEADO}
+            ${p.CODIGO}
+            ${p.DESCRIPCION}
+            ${p.PROVEEDOR}
+            ${p.MARCA}
+            ${p.SUBFAMILIA}
+            ${p.FAMILIA}
+          `.toLowerCase();
+
+          return tokens.every(word => text.includes(word))
+        }
+      })
+
+      if (filter.length == 0) {
+        filter.push({
+          CODIGO_FORMATEADO: value,
+          CODIGO: "",
+          DESCRIPCION: "no encontrado",
+          PROVEEDOR: "",
+          MARCA: "",
+          SUBFAMILIA: "",
+          FAMILIA: "",
+          STOCK_LV: "",
+          STOCK_SJL: "",
+          UBICACION: "",
+          EQUIVALENTES_STOCK: ""
+        })
+      }
+      return filter
+    }
+
+    function cleanAll() {
+      currentProform.cliente = {}//✅
+      currentProform.pagos = []//✅
+      currentProform.productos = []//✅
+      tables.guia.innerHTML = ""//✅
+      tables.pagos.innerHTML = ""//✅
+      tables.proforma.innerHTML = ""//✅
+      printProductSearch(catalog)//✅
+      fields.empresa.value = "max"
+      fields.cliente.nombre.value = ""
+      fields.cliente.nombre.value = ""
+      fields.cliente.ruc.value = ""
+      fields.cliente.telefono.value = ""
+      fields.cliente.email.value = ""
+      fields.cliente.direccion.value = ""
+      fields.cliente.provincia.value = ""
+      fields.cliente.ciudad.value = ""
+      fields.vendedor.value = ""
+      fields.entrega.value = ""
+      fields.destino.value = ""
+      fields.agencia.value = ""
+      fields.atencion.value = ""
+      fields.canal_de_venta.value = ""
+      fields.forma_de_pago.value = ""
+      fields.fecha.value = ""
+      fields.pago.monto.value = ""
+      fields.pago.operacion.value = ""
+      fields.pago.cuenta.value = ""
+      fields.products.product.value = ""
+      fields.products.monto.value = ""
+      fields.products.cantidad.value = ""
+      fields.products.comentario.value = ""
+      fields.products.total.textContent = "S/ 0.00"
+
+      proformPreview.cliente.nombre.textContent = ""
+      proformPreview.cliente.ruc.textContent = ""
+      proformPreview.cliente.telefono.textContent = ""
+      proformPreview.cliente.email.textContent = ""
+      proformPreview.cliente.direccion.textContent = ""
+      proformPreview.cliente.provincia.textContent = ""
+      proformPreview.cliente.ciudad.textContent = ""
+      proformPreview.vendedor.textContent = ""
+      proformPreview.entrega.innerHTML = ""
+      proformPreview.destino.textContent = ""
+      proformPreview.agencia.textContent = ""
+      proformPreview.canal_de_venta.textContent = ""
+      proformPreview.forma_de_pago.textContent = ""
+      proformPreview.fecha.textContent = ""
+      proformPreview.comprobante.textContent = ""
+      proformPreview.pago.innerHTML = ""
+
+      proformPreview.atencion.textContent = ""
+
+      guiaPreview.cliente.textContent = ""
+      guiaPreview.vendedor.textContent = ""
+      guiaPreview.fecha.textContent = ""
+    }
+
+    function cargarProforma() {
+
+      const body = {
+        payload: { currentProform }
+      }
+
+      fetch("/api/proforms/", {
+        method: "post",
+        body: JSON.stringify(body),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }).then((res) => {
+        return res.text()
+      })
+
+      cleanAll()
+    }
+
+    function conexiones() {
+      //cliente.nombre ✅
+      fields.cliente.nombre.addEventListener("input", (e) => {
+        currentProform.cliente.nombre = e.target.value
+        proformPreview.cliente.nombre.innerHTML = e.target.value
+        guiaPreview.cliente.innerHTML = e.target.value
+      })
+      //cliente.ruc ✅
+      fields.cliente.ruc.addEventListener("input", (e) => {
+        currentProform.cliente.ruc = e.target.value
+        proformPreview.cliente.ruc.innerHTML = e.target.value
+
+      })
+      //cliente.direccion ✅
+      fields.cliente.direccion.addEventListener("input", (e) => {
+        currentProform.cliente.direccion = e.target.value
+        proformPreview.cliente.direccion.innerHTML = e.target.value
+      })
+      //cliente.provincia ✅
+      fields.cliente.provincia.addEventListener("input", (e) => {
+        currentProform.cliente.provincia = e.target.value
+        proformPreview.cliente.provincia.innerHTML = e.target.value
+      })
+      //cliente.ciudad ✅
+      fields.cliente.ciudad.addEventListener("input", (e) => {
+        currentProform.cliente.ciudad = e.target.value
+        proformPreview.cliente.ciudad.innerHTML = e.target.value
+      })
+      //telefono ✅
+      fields.cliente.telefono.addEventListener("input", (e) => {
+        currentProform.cliente.telefono = e.target.value
+        proformPreview.cliente.telefono.innerHTML = e.target.value
+      })
+      //email ✅
+      fields.cliente.email.addEventListener("input", (e) => {
+        currentProform.cliente.email = e.target.value
+        proformPreview.cliente.email.innerHTML = e.target.value
+      })
+      //entrega ✅
+      fields.entrega.addEventListener("change", (e) => {
+        currentProform.entrega = e.target.value
+        proformPreview.entrega.textContent = e.target.value
+      })
+
+      //vendedor ✅
+      fields.vendedor.addEventListener("change", (e) => {
+        currentProform.vendedor = e.target.value
+        proformPreview.vendedor.textContent = e.target.value
+        guiaPreview.vendedor.textContent = e.target.value
+      })
+      //destino✅
+      fields.destino.addEventListener("input", (e) => {
+        currentProform.destino = e.target.value
+        proformPreview.destino.innerHTML = e.target.value
+      })
+      //atencion ✅
+      fields.atencion.addEventListener("input", (e) => {
+        currentProform.atencion = e.target.value
+        proformPreview.atencion.innerHTML = e.target.value
+      })
+      //agencia ✅
+      fields.agencia.addEventListener("input", (e) => {
+        currentProform.agencia = e.target.value
+        proformPreview.agencia.innerHTML = e.target.value
+      })
+      //fecha ✅
+      fields.fecha.addEventListener("input", (e) => {
+        currentProform.fecha = e.target.value
+        proformPreview.fecha.innerHTML = e.target.value
+        guiaPreview.fecha.innerHTML = e.target.value
+      })
+      //empresa ✅
+      fields.empresa.addEventListener("change", (e) => {
+        let nombre
+        let ruc
+        let direccion
+        let telefono
+        let web
+        let email
+        switch (e.target.value) {
+          case "mx":
+            nombre = desplegables.empresas.mx.nombre
+            ruc = desplegables.empresas.mx.ruc
+            direccion = desplegables.empresas.mx.direccion
+            telefono = desplegables.empresas.mx.telefono
+            web = desplegables.empresas.mx.web
+            email = desplegables.empresas.mx.email
+
+            break;
+
+          case "junior":
+
+            nombre = desplegables.empresas.junior.nombre
+            ruc = desplegables.empresas.junior.ruc
+            direccion = desplegables.empresas.junior.direccion
+            telefono = desplegables.empresas.junior.telefono
+            web = desplegables.empresas.junior.web
+            email = desplegables.empresas.junior.email
+            break;
+
+          case "max":
+
+            nombre = desplegables.empresas.max.nombre
+            ruc = desplegables.empresas.max.ruc
+            direccion = desplegables.empresas.max.direccion
+            telefono = desplegables.empresas.max.telefono
+            web = desplegables.empresas.max.web
+            email = desplegables.empresas.max.email
+            break;
+
+          case "importadora":
+            nombre = desplegables.empresas.importadora.nombre
+            ruc = desplegables.empresas.importadora.ruc
+            direccion = desplegables.empresas.importadora.direccion
+            telefono = desplegables.empresas.importadora.telefono
+            web = desplegables.empresas.importadora.web
+            email = desplegables.empresas.importadora.email
+            break;
+
+          default:
+            console.log("valor no reconocido:", e.target.value);
+        }
+        proformPreview.empresa.nombre.textContent = nombre
+        proformPreview.empresa.ruc.textContent = ruc
+        proformPreview.empresa.email.textContent = email
+        proformPreview.empresa.telefono.textContent = telefono
+        proformPreview.empresa.direccion.textContent = direccion
+        proformPreview.empresa.web.textContent = web
+      })
+
+      //canal de venta✅
+      fields.canal_de_venta.addEventListener("change", (e) => {
+        currentProform.canal_de_venta = e.target.value
+        proformPreview.canal_de_venta.textContent = e.target.value
+      })
+      //forma de pago✅
+      fields.forma_de_pago.addEventListener("change", (e) => {
+        currentProform.forma_de_pago = e.target.value
+        proformPreview.forma_de_pago.textContent = e.target.value
+      })
+      //comprobante ✅
+      fields.comprobante.addEventListener("change", (e) => {
+        currentProform.comprobante = e.target.value
+        proformPreview.comprobante.textContent = e.target.value
+      })
+      //boton cargar pago✅
+      botones.cargarPago.addEventListener("click", (e) => {
+        e.preventDefault()
+        if (!fields.pago.monto.value || !fields.pago.operacion.value || !fields.pago.cuenta.value) return console.log("error")
+        const pago = {
+          index: currentProform.pagos.length + 1,
+          status: true,
+          monto: fields.pago.monto.value,
+          operacion: fields.pago.operacion.value,
+          cuenta: fields.pago.cuenta.value
+        }
+        currentProform.pagos.push(pago)
+        //pagos para cargar en la tabla:
+        const pagos = currentProform.pagos.filter(e => e.status === true)
+
+        function resetFields() {
+          fields.pago.monto.value = ""
+          fields.pago.operacion.value = ""
+          fields.pago.cuenta.value = ""
+        }
+        resetFields()
+        printPagos(pagos)
+
+      })
+      //boton borrar pago ✅
+      tables.pagos.addEventListener("click", (e) => {
+
+        if (e.target.id.startsWith("btn_eliminar_pago_")) {
+
+          const tr = e.target.closest("tr");
+          const id = tr.id.split("_")[1]
+          tr.remove()
+          const proforma_pago = document.querySelector(`#proforma_pago_${id}`)
+          proforma_pago.remove()
+          const pago = currentProform.pagos.find(p => p.index == id)
+          if (pago) {
+            pago.status = false
+          }
+        }
+      })
+
+      //product search ✅
+      fields.products.product.addEventListener("input", (e) => {
+        const search = e.target.value.toLowerCase().trim();
+        printProductSearch(options(search))
+      })
+      //cargar producto ✅
+      botones.cargarProducto.addEventListener("click", (e) => {
+        currentProform.productos.push({
+          status: true,
+          index: currentProform.productos.length + 1,
+          nombre: fields.products.product.value,
+          monto: fields.products.monto.value,
+          cantidad: fields.products.cantidad.value,
+          comentario: fields.products.comentario.value,
+          total: fields.products.cantidad.value * fields.products.monto.value,
+          options: options(fields.products.product.value)
+        })
+        function cleanFields() {
+          fields.products.product.value = ""
+          fields.products.cantidad.value = ""
+          fields.products.comentario.value = ""
+          fields.products.monto.value = ""
+          fields.products.total.textContent = 'S/ 0.00'
+          printProductSearch(catalog)
+        }
+
+        const products = currentProform.productos.filter(e => e.status === true)
+
+        printProforma(products)
+
+        printGuia(products)
+        cleanFields()
+      })
+
+      //eliminar producto ✅
+      tables.proforma.addEventListener("click", (e) => {
+
+        if (e.target.id.startsWith("eliminar_proforma_producto_")) {
+          const tr = e.target.closest("tr");
+          const id = tr.id.split("_")[2]
+          tr.remove()
+          const product = currentProform.productos.find(p => p.index == id)
+          if (product) {
+            product.status = false
+          }
+          const optionsGuia = Array.from(document.querySelectorAll(`.guia_opcion_${id}`))
+
+          for (let option of optionsGuia) {
+            option.remove()
+          }
+        }
+      })
+    }
+
+    conexiones()
+
   </script>
 </body>
 
 </html>
-
-<script>
-  const catalog = {{{ json products }}}
-
-  const currentProform = {
-    cliente: {},
-    pagos: [],
-    productos: []
-  }
-  const proformPreview = {
-    empresa: {
-      nombre: document.querySelector("#proforma_empresa_nombre"),
-      ruc: document.querySelector("#proforma_empresa_ruc"),
-      direccion: document.querySelector("#proforma_empresa_direccion"),
-      telefono: document.querySelector("#proforma_empresa_telefono"),
-      email: document.querySelector("#proforma_empresa_email"),
-      web: document.querySelector("#proforma_empresa_web")
-    },
-    cliente: {
-      nombre: document.querySelector("#proforma_cliente_nombre"),
-      ruc: document.querySelector("#proforma_cliente_ruc"),
-      telefono: document.querySelector("#proforma_cliente_telefono"),
-      email: document.querySelector("#proforma_cliente_email"),
-      direccion: document.querySelector("#proforma_cliente_direccion"),
-      provincia: document.querySelector("#proforma_cliente_provincia"), ciudad: document.querySelector("#proforma_cliente_ciudad")
-    },
-    vendedor: document.querySelector("#proforma_vendedor"),
-    entrega: document.querySelector("#proforma_entrega"),
-    destino: document.querySelector("#proforma_destino"),
-    agencia: document.querySelector("#proforma_agencia"),
-    atencion: document.querySelector("#proforma_atencion"),
-    canal_de_venta: document.querySelector("#proforma_canal_de_venta"),
-    forma_de_pago: document.querySelector("#proforma_forma_de_pago"),
-    fecha: document.querySelector("#proforma_fecha"),
-    comprobante: document.querySelector("#proforma_comprobante"),
-    pago: document.querySelector("#proforma_pagos")
-  }
-  const guiaPreview = {
-
-    cliente: document.querySelector("#guia_cliente"),
-    vendedor: document.querySelector("#guia_vendedor"),
-    fecha: document.querySelector("#guia_fecha"),
-    codigo: document.querySelector("#guia_codigo")
-  }
-  const fields = {
-    empresa: document.querySelector("#empresa_nombre"),
-    cliente: {
-      nombre: document.querySelector("#cliente_nombre"),
-      ruc: document.querySelector("#cliente_ruc"),
-      telefono: document.querySelector("#cliente_telefono"),
-      email: document.querySelector("#cliente_email"),
-      direccion: document.querySelector("#cliente_direccion"),
-      provincia: document.querySelector("#cliente_provincia"),
-      ciudad: document.querySelector("#cliente_ciudad")
-    },
-    vendedor: document.querySelector("#vendedor"),
-    entrega: document.querySelector("#entrega"),
-    destino: document.querySelector("#destino"),
-    agencia: document.querySelector("#agencia"),
-    atencion: document.querySelector("#atencion"),
-    canal_de_venta: document.querySelector("#canal_de_venta"),
-    forma_de_pago: document.querySelector("#forma_de_pago"),
-    fecha: document.querySelector("#fecha"),
-    comprobante: document.querySelector("#comprobante"),
-
-    pago: {
-      monto: document.querySelector("#pago_monto"),
-      operacion: document.querySelector("#pago_operacion"),
-      cuenta: document.querySelector("#pago_cuenta")
-    },
-    products: {
-      product: document.querySelector("#inputProducto"),
-      monto: document.querySelector("#inputPrecio"),
-      cantidad: document.querySelector("#inputCantidad"),
-      comentario: document.querySelector("#inputComentario"),
-      total: document.querySelector("#totalItem")
-    }
-  }
-  const tables = {
-    pagos: document.querySelector("#tbody_pagos"),
-    products: document.querySelector("#tbody_productos"),
-    proforma: document.querySelector("#tbody_proforma"),
-    guia: document.querySelector("#tbody-guia")
-  }
-  const desplegables = {
-    empresas: {
-      max: {
-        nombre: "Max Importaciones y Servicios Generales S.A.C.",
-        direccion: "Cal. Garcia Naranjo Nro. 114b - La Victoria - Lima",
-        ruc: "20503534194",
-        telefono: "999 999 999",
-        email: "ventas@maximportaciones.com.pe",
-        web: "ventas@maximportaciones.com.pe"
-      },
-      importadora: {
-        nombre: "Importadora de Repuestos Max Import S.A.C.",
-        direccion: "Av. Canto Grande Nro. 3418 - San Juan de Lurigancho - Lima",
-        ruc: "20550445892",
-        telefono: "999 999 999",
-        email: "ventas@maximportaciones.com.pe",
-        web: "ventas@maximportaciones.com.pe"
-      },
-      mx: {
-        nombre: "M & X Importaciones E.I.R.L.",
-        direccion: "Cal. Ollantaytambo Nro. 641 - San Juan de Lurigancho - Lima",
-        ruc: "20602308279",
-        telefono: "999 999 999",
-        email: "ventas@maximportaciones.com.pe",
-        web: "ventas@maximportaciones.com.pe"
-      },
-      junior: {
-        nombre: "Junior Alexander Castillo Arrue",
-        direccion: "",
-        ruc: "",
-        telefono: "",
-        email: "ventas@maximportaciones.com.pe",
-        web: "ventas@maximportaciones.com.pe"
-      }
-    }
-  }
-
-  const botones = {
-    cargarPago: document.querySelector("#cargar_pago"),
-    cargarProducto: document.querySelector("#cargar_producto")
-  }
-
-  function printProductSearch(products) {
-    tables.products.innerHTML = ""
-    for (let product of products) {
-      let tr = document.createElement("tr")
-      tr.innerHTML = `
-                  <td
-                    title="${product.CODIGO_FORMATEADO} — ${product.CODIGO} — ${product.DESCRIPCION} — ${product.FAMILIA} — ${product.SUBFAMILIA} — ${product.MARCA}">
-                    <strong>${product.CODIGO_FORMATEADO}</strong><br>
-                    <span style="font-weight:400; color:#888">${product.DESCRIPCION}</span>
-                  </td>
-                  <td title="LV: ${product.STOCK_LV} / SJL: ${product.STOCK_SJL}">
-                    <span class="badge badge-ok">${product.STOCK_LV} / ${product.STOCK_SJL}</span>
-                  </td>
-                  <td title="${product.EQUIVALENTES_STOCK}">${product.EQUIVALENTES_STOCK}
-                  
-<button class="btn-agregar-row" data-codigo="${product.CODIGO_FORMATEADO}">+</button>
-<button class="btn-ver-row" data-codigo="${product.CODIGO_FORMATEADO}">👁</button>
-
-                  </td>
-                  
-          
-                  `
-      tables.products.appendChild(tr)
-    }
-
-  }
-
-  printProductSearch(catalog)
-
-  function printPagos(pagos) {
-    tables.pagos.innerHTML = ""
-    proformPreview.pago.innerHTML = ""
-    for (let pago of pagos) {
-      let tr = document.createElement("tr")
-      tr.id = `pago_${pago.index}_tr`
-      tr.innerHTML = `
-                    <td><span>${pago.cuenta}</span> | <span>op: ${pago.operacion}</span></td>
-                  <td style="text-align:right"><span class="badge badge-warn"> S/ ${pago.monto}</span> </td>                     <td><button id="btn_eliminar_pago_${pago.index}" class="btn-eliminar">✕</button></td>
-  `
-      tables.pagos.appendChild(tr)
-
-      let cursive = document.createElement("cursive")
-      cursive.id = `proforma_pago_${pago.index}`
-      cursive.innerHTML = `${pago.cuenta} | op: ${pago.operacion} | ${pago.monto} /S —`
-
-      proformPreview.pago.appendChild(cursive)
-    }
-  }
-  printPagos(currentProform.pagos)
-
-  function printProforma(products) {
-    tables.proforma.innerHTML = ""
-    for (let [i, product] of products.entries()) {
-      let tr = document.createElement("tr")
-
-      tr.innerHTML = `
-    <td>${i + 1}</td>
-    <td>${product.nombre}</td>
-    <td>${product.cantidad}</td>
-    <td>S/ ${product.monto}</td>
-    <td>S/ ${product.total}</td>
-    <td>
-      <button id="eliminar_proforma_producto_${product.index}" class="btn-eliminar">✕</button>
-    </td>
-  `
-
-      tables.proforma.appendChild(tr)
-
-    }
-  }
-  printProforma(currentProform.productos)
-  function printGuia(products) {
-    tables.guia.innerHTML = ""
-    for (let [i, product] of products.entries()) {
-
-      for (let [j, option] of product.options.entries()) {
-
-        const tr = document.createElement("tr")
-        tr.classList.add(`guia_opcion_${product.index}`)
-        tr.innerHTML = `
-          <td>${j == 0 ? i + 1 : ""}</td>
-          <td>${j == 0 ? product.cantidad : ""}</td>
-          <td>${j == 0 ? product.monto : ""}</td>
-      <td>${j == 0 ? product.nombre : ""}</td>
-      <td>${j == 0 ? product.comentario : ""}</td>
-            <td>${option.CODIGO_FORMATEADO}</td>
-            
-      <td>${option.STOCK_LV}</td>  
-      <td>${option.STOCK_SJL}</td> 
-
-      <td> ${option.DESCRIPCION}</td >
-      <td>${option.EQUIVALENTES_STOCK}</td>
-      <td>${option.UBICACION}</td>
-    `
-        tables.guia.appendChild(tr)
-      }
-    }
-  }
-
-printGuia(currentProform.productos)
-        function options(value) {
-          const tokens = value.split(/\s+/).filter(Boolean);
-          const filter = catalog.filter(p => {
-            {
-              const text = `
-          ${p.CODIGO_FORMATEADO}
-          ${p.CODIGO}
-          ${p.DESCRIPCION}
-          ${p.PROVEEDOR}
-          ${p.MARCA}
-          ${p.SUBFAMILIA}
-          ${p.FAMILIA}
-        `.toLowerCase();
-
-              return tokens.every(word => text.includes(word))
-            }
-          })
-          return filter
-        }
-  function conexiones() {
-    //cliente.nombre ✅
-    fields.cliente.nombre.addEventListener("input", (e) => {
-      currentProform.cliente.nombre = e.target.value
-      proformPreview.cliente.nombre.innerHTML = e.target.value
-      guiaPreview.cliente.innerHTML = e.target.value
-    })
-    //cliente.ruc ✅
-    fields.cliente.ruc.addEventListener("input", (e) => {
-      currentProform.cliente.ruc = e.target.value
-      proformPreview.cliente.ruc.innerHTML = e.target.value
-
-    })
-    //cliente.direccion ✅
-    fields.cliente.direccion.addEventListener("input", (e) => {
-      currentProform.cliente.direccion = e.target.value
-      proformPreview.cliente.direccion.innerHTML = e.target.value
-    })
-    //cliente.provincia ✅
-    fields.cliente.provincia.addEventListener("input", (e) => {
-      currentProform.cliente.provincia = e.target.value
-      proformPreview.cliente.provincia.innerHTML = e.target.value
-    })
-    //cliente.ciudad ✅
-    fields.cliente.ciudad.addEventListener("input", (e) => {
-      currentProform.cliente.ciudad = e.target.value
-      proformPreview.cliente.ciudad.innerHTML = e.target.value
-    })
-    //telefono ✅
-    fields.cliente.telefono.addEventListener("input", (e) => {
-      currentProform.cliente.telefono = e.target.value
-      proformPreview.cliente.telefono.innerHTML = e.target.value
-    })
-    //email ✅
-    fields.cliente.email.addEventListener("input", (e) => {
-      currentProform.cliente.email = e.target.value
-      proformPreview.cliente.email.innerHTML = e.target.value
-    })
-    //entrega ✅
-    fields.entrega.addEventListener("change", (e) => {
-      currentProform.entrega = e.target.value
-      proformPreview.entrega.textContent = e.target.value
-    })
-    //destino✅
-    fields.destino.addEventListener("input", (e) => {
-      currentProform.destino = e.target.value
-      proformPreview.destino.innerHTML = e.target.value
-    })
-    //atencion ✅
-    fields.atencion.addEventListener("input", (e) => {
-      currentProform.atencion = e.target.value
-      proformPreview.atencion.innerHTML = e.target.value
-    })
-    //agencia ✅
-    fields.agencia.addEventListener("input", (e) => {
-      currentProform.agencia = e.target.value
-      proformPreview.agencia.innerHTML = e.target.value
-    })
-    //fecha ✅
-    fields.fecha.addEventListener("input", (e) => {
-      currentProform.fecha = e.target.value
-      proformPreview.fecha.innerHTML = e.target.value
-      guiaPreview.fecha.innerHTML = e.target.value
-    })
-    //empresa ✅
-    fields.empresa.addEventListener("change", (e) => {
-      let nombre
-      let ruc
-      let direccion
-      let telefono
-      let web
-      let email
-      switch (e.target.value) {
-        case "mx":
-          nombre = desplegables.empresas.mx.nombre
-          ruc = desplegables.empresas.mx.ruc
-          direccion = desplegables.empresas.mx.direccion
-          telefono = desplegables.empresas.mx.telefono
-          web = desplegables.empresas.mx.web
-          email = desplegables.empresas.mx.email
-
-          break;
-
-        case "junior":
-
-          nombre = desplegables.empresas.junior.nombre
-          ruc = desplegables.empresas.junior.ruc
-          direccion = desplegables.empresas.junior.direccion
-          telefono = desplegables.empresas.junior.telefono
-          web = desplegables.empresas.junior.web
-          email = desplegables.empresas.junior.email
-          break;
-
-        case "max":
-
-          nombre = desplegables.empresas.max.nombre
-          ruc = desplegables.empresas.max.ruc
-          direccion = desplegables.empresas.max.direccion
-          telefono = desplegables.empresas.max.telefono
-          web = desplegables.empresas.max.web
-          email = desplegables.empresas.max.email
-          break;
-
-        case "importadora":
-          nombre = desplegables.empresas.importadora.nombre
-          ruc = desplegables.empresas.importadora.ruc
-          direccion = desplegables.empresas.importadora.direccion
-          telefono = desplegables.empresas.importadora.telefono
-          web = desplegables.empresas.importadora.web
-          email = desplegables.empresas.importadora.email
-          break;
-
-        default:
-          console.log("valor no reconocido:", e.target.value);
-      }
-      proformPreview.empresa.nombre.textContent = nombre
-      proformPreview.empresa.ruc.textContent = ruc
-      proformPreview.empresa.email.textContent = email
-      proformPreview.empresa.telefono.textContent = telefono
-      proformPreview.empresa.direccion.textContent = direccion
-      proformPreview.empresa.web.textContent = web
-    })
-
-    //canal de venta✅
-    fields.canal_de_venta.addEventListener("change", (e) => {
-      currentProform.canal_de_venta = e.target.value
-      proformPreview.canal_de_venta.textContent = e.target.value
-    })
-    //forma de pago✅
-    fields.forma_de_pago.addEventListener("change", (e) => {
-      currentProform.forma_de_pago = e.target.value
-      proformPreview.forma_de_pago.textContent = e.target.value
-    })
-    //comprobante ✅
-    fields.comprobante.addEventListener("change", (e) => {
-      currentProform.comprobante = e.target.value
-      proformPreview.comprobante.textContent = e.target.value
-    })
-    //boton cargar pago✅
-    botones.cargarPago.addEventListener("click", (e) => {
-      e.preventDefault()
-      const pago = {
-        index: currentProform.pagos.length + 1,
-        status: true,
-        monto: fields.pago.monto.value,
-        operacion: fields.pago.operacion.value,
-        cuenta: fields.pago.cuenta.value
-      }
-      currentProform.pagos.push(pago)
-      //pagos para cargar en la tabla:
-      const pagos = currentProform.pagos.filter(e => e.status === true)
-
-      function resetFields() {
-        fields.pago.monto.value = ""
-        fields.pago.operacion.value = ""
-        fields.pago.cuenta.value = ""
-      }
-      resetFields()
-      printPagos(pagos)
-
-    })
-    //boton borrar pago ✅
-    tables.pagos.addEventListener("click", (e) => {
-
-      if (e.target.id.startsWith("btn_eliminar_pago_")) {
-        console.log("here!!")
-        const tr = e.target.closest("tr");
-        const id = tr.id.split("_")[1]
-        tr.remove()
-        const proforma_pago = document.querySelector(`#proforma_pago_${id}`)
-        proforma_pago.remove()
-        const pago = currentProform.pagos.find(p => p.index == id)
-        if (pago) {
-          pago.status = false
-        }
-      }
-    })
-
-    //product search ✅
-    fields.products.product.addEventListener("input", (e) => {
-      const search = e.target.value.toLowerCase().trim();
-          printProductSearch(options(search))
-    })
-    //cargar producto ✅
-    botones.cargarProducto.addEventListener("click", (e) => {
-      currentProform.productos.push({
-        status: true,
-        index: currentProform.productos.length + 1,
-        nombre: fields.products.product.value,
-        monto: fields.products.monto.value,
-        cantidad: fields.products.cantidad.value,
-        comentario: fields.products.comentario.value,
-        total: fields.products.cantidad.value * fields.products.monto.value,
-        options: options(fields.products.product.value)
-      })
-    function cleanFields() {
-        fields.products.product.value = ""
-        fields.products.cantidad.value = ""
-        fields.products.comentario.value = ""
-        fields.products.monto.value = ""
-        fields.products.total.textContent = 'S/ 0.00'
-        printProductSearch(catalog)
-      }
-
-      const products = currentProform.productos.filter(e => e.status === true)
-
-      printProforma(products)
-
-
-printGuia(products)
-      cleanFields()
-    })
-  
-  //eliminar producto (pending)
-  }
-
-  conexiones()
-
-</script>
