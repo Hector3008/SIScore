@@ -1496,7 +1496,7 @@
 
 
     function options(value) {
-      const tokens = value.split(/\s+/).filter(Boolean);
+      const tokens = value.toLowerCase().split(/\s+/).filter(Boolean);
       const filter = catalog.filter(p => {
         {
           const text = `
