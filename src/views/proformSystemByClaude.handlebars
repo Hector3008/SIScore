@@ -18,6 +18,29 @@
       font-family: sans-serif;
     }
 
+    #tipo {
+      background: transparent;
+      color: #d0d5e0;
+      font-size: 11px;
+      font-weight: 500;
+      padding: 4px 8px;
+      border-radius: 4px;
+      border: 1px solid #5a6070;
+      outline: none;
+      appearance: none;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+
+    #tipo option {
+      background: #1a1f2e;
+      color: #d0d5e0;
+    }
+
+    #tipo:focus {
+      border-color: #8892a4;
+    }
+
     /* ══════════════════════════════════════
        DESKTOP (≥900px) — layout fijo en pantalla
     ══════════════════════════════════════ */
@@ -806,6 +829,353 @@
       white-space: nowrap;
       cursor: pointer;
     }
+
+    .toast-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 999;
+      background: rgba(0, 0, 0, 0.3);
+      align-items: flex-start;
+      justify-content: flex-end;
+      padding: 60px 16px 0 0;
+    }
+
+    .toast-overlay.open {
+      display: flex;
+    }
+
+    .toast-box {
+      background: #1a1f2e;
+      border: 1px solid #3a4155;
+      border-radius: 8px;
+      width: 260px;
+      overflow: hidden;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+      animation: slideDown 0.18s ease;
+    }
+
+    @keyframes slideDown {
+      from {
+        opacity: 0;
+        transform: translateY(-10px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .toast-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 14px;
+      border-bottom: 1px solid #3a4155;
+      font-size: 12px;
+      font-weight: 500;
+      color: #e8eaf0;
+    }
+
+    .toast-close {
+      background: transparent;
+      border: none;
+      color: #8892a4;
+      cursor: pointer;
+      font-size: 13px;
+      padding: 0;
+      line-height: 1;
+    }
+
+    .toast-close:hover {
+      color: #fff;
+    }
+
+    .toast-body {
+      padding: 12px 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .toast-label {
+      font-size: 10px;
+      color: #8892a4;
+      text-transform: uppercase;
+      letter-spacing: .4px;
+    }
+
+    .toast-input {
+      height: 30px;
+      border: 1px solid #3a4155;
+      border-radius: 5px;
+      background: #0f1520;
+      padding: 0 10px;
+      font-size: 12px;
+      color: #e8eaf0;
+      outline: none;
+      width: 100%;
+    }
+
+    .toast-input:focus {
+      border-color: #0f4c81;
+    }
+
+    .toast-footer {
+      display: flex;
+      gap: 6px;
+      padding: 0 14px 12px;
+    }
+
+    .toast-box-wide {
+      width: 460px;
+    }
+
+    @media (max-width: 520px) {
+      .toast-box-wide {
+        width: calc(100vw - 24px);
+      }
+    }
+
+    .toast-table-wrap {
+      overflow-y: auto;
+      max-height: 220px;
+      margin: 0 14px;
+      border: 1px solid #2a3040;
+      border-radius: 6px;
+    }
+
+    .toast-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 11px;
+    }
+
+    .toast-table thead th {
+      background: #0f1520;
+      color: #8892a4;
+      padding: 7px 10px;
+      text-align: left;
+      font-weight: 500;
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: .4px;
+      position: sticky;
+      top: 0;
+      z-index: 1;
+    }
+
+    .toast-table tbody tr {
+      border-bottom: 1px solid #2a3040;
+      transition: background 0.1s;
+    }
+
+    .toast-table tbody tr:last-child {
+      border-bottom: none;
+    }
+
+    .toast-table tbody tr:hover {
+      background: #1e2535;
+    }
+
+    .toast-table td {
+      padding: 7px 10px;
+      color: #c8cdd8;
+      vertical-align: middle;
+    }
+
+    .doc-tag {
+      font-family: monospace;
+      font-size: 11px;
+      color: #7eb3f5;
+      font-weight: 600;
+    }
+
+    .tipo-tag {
+      display: inline-block;
+      padding: 2px 7px;
+      border-radius: 10px;
+      font-size: 9px;
+      font-weight: 500;
+    }
+
+    .tipo-borrador {
+      background: #2a3040;
+      color: #8892a4;
+    }
+
+    .tipo-cotizacion {
+      background: #0d3060;
+      color: #7eb3f5;
+    }
+
+    .tipo-orden-salida {
+      background: #1a3a20;
+      color: #6dbb7a;
+    }
+
+    .activo-tag {
+      display: inline-block;
+      padding: 2px 7px;
+      border-radius: 10px;
+      font-size: 9px;
+      font-weight: 500;
+    }
+
+    .activo-si {
+      background: #1a3a20;
+      color: #6dbb7a;
+    }
+
+    .activo-no {
+      background: #3a1a1a;
+      color: #e07070;
+    }
+
+    .btn-cargar-proforma {
+      font-size: 10px;
+      padding: 3px 9px;
+      border-radius: 4px;
+      border: 1px solid #3a4155;
+      background: transparent;
+      color: #7eb3f5;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+
+    .btn-cargar-proforma:hover {
+      background: #0f4c81;
+      border-color: #0f4c81;
+      color: #fff;
+    }
+
+    .preview-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 999;
+      background: rgba(0, 0, 0, 0.35);
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+    }
+
+    .preview-overlay.open {
+      display: flex;
+    }
+
+    .preview-product-card {
+      background: #1a1f2e;
+      border: 1px solid #3a4155;
+      border-radius: 10px;
+      width: 380px;
+      max-width: 100%;
+      max-height: 90vh;
+      overflow-y: auto;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+      animation: slideDown 0.18s ease;
+    }
+
+    .ppc-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 16px;
+      border-bottom: 1px solid #2a3040;
+    }
+
+    .ppc-codigo {
+      font-family: monospace;
+      font-size: 13px;
+      font-weight: 600;
+      color: #7eb3f5;
+    }
+
+    .ppc-close {
+      background: transparent;
+      border: none;
+      color: #8892a4;
+      font-size: 14px;
+      cursor: pointer;
+      padding: 0;
+      line-height: 1;
+    }
+
+    .ppc-close:hover {
+      color: #fff;
+    }
+
+    .ppc-body {
+      padding: 14px 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .ppc-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 8px;
+      font-size: 11px;
+      border-bottom: 1px solid #2a3040;
+      padding-bottom: 8px;
+    }
+
+    .ppc-row:last-child {
+      border-bottom: none;
+      padding-bottom: 0;
+    }
+
+    .ppc-label {
+      color: #8892a4;
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: .4px;
+      flex-shrink: 0;
+      min-width: 90px;
+    }
+
+    .ppc-value {
+      color: #e8eaf0;
+      font-size: 11px;
+      text-align: right;
+    }
+
+    .ppc-stock-row {
+      display: flex;
+      gap: 8px;
+      justify-content: flex-end;
+    }
+
+    .ppc-badge {
+      display: inline-block;
+      padding: 3px 9px;
+      border-radius: 10px;
+      font-size: 10px;
+      font-weight: 500;
+    }
+
+    .ppc-badge-lv {
+      background: #0d3060;
+      color: #7eb3f5;
+    }
+
+    .ppc-badge-sjl {
+      background: #1a3a20;
+      color: #6dbb7a;
+    }
+
+    .ppc-footer {
+      padding: 0 16px 14px;
+    }
+
+    .ppc-footer .btn-sm-green {
+      width: 100%;
+      text-align: center;
+      padding: 7px;
+    }
   </style>
 </head>
 
@@ -817,6 +1187,7 @@
 
       <!-- Fila 1: siempre visible -->
       <div class="topbar-row1">
+
         <!-- col1-->
         <div class="logo-pill"><select id="empresa_nombre">
             <option value="max">Max Importaciones y Servicios Generales S.A.C.</option>
@@ -825,20 +1196,25 @@
             <option value="junior">Junior Alexander Castillo Arrue</option>
           </select>
         </div>
+
         <!-- col2-->
         <div class="doc-block">
-          <div class="doc-id">DP-00NUEVA</div>
-          <div class="doc-date">23/02/2026</div>
+          <div class="doc-id">DP-0000001</div>
+          <div class="doc-date">23/02/2026 <strong id="es_nueva"></strong></div>
         </div>
+        <select id="tipo" onchange="currentProform.tipo = this.value">
+          <option value="borrador">Borrador</option>
+          <option value="cotizacion">Cotización</option>
+          <option value="orden_salida">Orden de salida</option>
+        </select>
       </div>
 
       <!-- Fila 2 (mobile): acciones -->
       <div class="topbar-row2">
         <div class="topbar-actions">
-          <button class="btn" onclick="consultarProforma()">Consultar</button>
+          <button class="btn" onclick="abrirToastConsultar()">Consultar</button>
           <button class="btn" onclick="actualizarProforma()">Actualizar</button>
           <button class="btn" onclick="cargarProforma()">Cargar</button>
-          <button class="btn" onclick="reiniciarFormulario()">Reiniciar</button>
           <div class="divider-v"></div>
           <div class="group">
             <span class="group-label">Imprimir</span>
@@ -860,11 +1236,11 @@
 
       <!-- Desktop: acciones inline en fila 1 -->
       <div class="topbar-actions" id="desktopActions">
+
         <div class="divider-v"></div>
         <button class="btn" onclick="consultarProforma()">Consultar</button>
         <button class="btn" onclick="actualizarProforma()">Actualizar</button>
         <button class="btn" onclick="cargarProforma()">Cargar</button>
-        <button class="btn" onclick="reiniciarFormulario()">Reiniciar</button>
         <div class="divider-v"></div>
         <div class="group">
           <span class="group-label">Imprimir</span>
@@ -1035,7 +1411,7 @@
                 </div>
               </div>
               <div class="ph-right">
-                <div class="doc-num">DP-00NUEVA</div>
+                <div class="doc-num">DP-0000001</div>
                 <div id="proforma_fecha" class="doc-meta">Fecha: 23/02/2026</div>
               </div>
             </div>
@@ -1081,9 +1457,9 @@
 
             <div class="totals">
               <div class="totals-box">
-                <div class="total-row"><span>Subtotal</span><span>S/ 389.83</span></div>
-                <div class="total-row"><span>IGV (18%)</span><span>S/ 70.17</span></div>
-                <div class="total-final"><span>Importe total</span><span>S/ 460.00</span></div>
+                <div class="total-row"><span>Subtotal</span><span id="subtotal">S/ 0.00</span></div>
+                <div class="total-row"><span>IGV (18%)</span><span id="igv">S/ 0.00</span></div>
+                <div class="total-final"><span>Importe total</span><span id="total">S/ 0.00</span></div>
               </div>
             </div>
 
@@ -1111,7 +1487,7 @@
               <span>CLIENTE: <span id="guia_cliente"></span></span>
               <span>VENDEDOR: <span id="guia_vendedor"></span></span>
               <span>Fecha: <span id="guia_fecha"></span></span>
-              <span> <span id="guia_codigo">DP-000004</span> v1</span>
+              <span> <span class="doc-id" id="guia_codigo">DP-0000001</span> v1</span>
             </div>
 
             <div class="table-wrap">
@@ -1219,7 +1595,116 @@
       </div><!-- /main -->
     </div><!-- /body-area -->
   </div><!-- /page -->
+  <!-- Toast: consultar proforma -->
+  <div id="toast-consultar" class="toast-overlay" onclick="cerrarToastConsultar()">
+    <div class="toast-box toast-box-wide" onclick="event.stopPropagation()">
+      <div class="toast-header">
+        <span>Consultar proforma</span>
+        <button class="toast-close" onclick="cerrarToastConsultar()">✕</button>
+      </div>
+      <div class="toast-body">
+        <label class="toast-label">N° de proforma</label>
+        <input type="text" id="input-proform" class="toast-input" placeholder="Ej: DP-000123" />
+      </div>
+      <div class="toast-table-wrap">
+        <table class="toast-table">
+          <thead>
+            <tr>
+              <th>N° Proforma</th>
+              <th>Vendedor</th>
+              <th>Tipo</th>
+              <th>Activo</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody id="tbody-proforms">
+            <tr>
+              <td><span class="doc-tag">DP-0000001</span></td>
+              <td>Lázaro</td>
+              <td><span class="tipo-tag tipo-borrador">Borrador</span></td>
+              <td><span class="activo-tag activo-si">Sí</span></td>
+              <td><button class="btn-cargar-proforma">Cargar</button></td>
+            </tr>
+            <tr>
+              <td><span class="doc-tag">DP-0000002</span></td>
+              <td>María</td>
+              <td><span class="tipo-tag tipo-cotizacion">Cotización</span></td>
+              <td><span class="activo-tag activo-si">Sí</span></td>
+              <td><button class="btn-cargar-proforma">Cargar</button></td>
+            </tr>
+            <tr>
+              <td><span class="doc-tag">DP-0000003</span></td>
+              <td>Lázaro</td>
+              <td><span class="tipo-tag tipo-orden-salida">Orden salida</span></td>
+              <td><span class="activo-tag activo-no">No</span></td>
+              <td><button class="btn-cargar-proforma">Cargar</button></td>
+            </tr>
+            <tr>
+              <td><span class="doc-tag">DP-0000004</span></td>
+              <td>Carlos</td>
+              <td><span class="tipo-tag tipo-cotizacion">Cotización</span></td>
+              <td><span class="activo-tag activo-si">Sí</span></td>
+              <td><button class="btn-cargar-proforma">Cargar</button></td>
+            </tr>
+            <tr>
+              <td><span class="doc-tag">DP-0000005</span></td>
+              <td>María</td>
+              <td><span class="tipo-tag tipo-borrador">Borrador</span></td>
+              <td><span class="activo-tag activo-no">No</span></td>
+              <td><button class="btn-cargar-proforma">Cargar</button></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="toast-footer">
+      </div>
+    </div>
+  </div>
 
+
+  <!-- Toast: preview producto -->
+  <div id="preview-producto" class="preview-overlay" onclick="cerrarPreviewProducto()">
+    <div class="preview-product-card" onclick="event.stopPropagation()">
+      <div class="ppc-header">
+        <span class="ppc-codigo" id="ppc-codigo"></span>
+        <button class="ppc-close" onclick="cerrarPreviewProducto()">✕</button>
+      </div>
+      <div class="ppc-body">
+        <div class="ppc-row">
+          <span class="ppc-label">Código</span>
+          <span class="ppc-value" id="ppc-codigo-raw"></span>
+        </div>
+        <div class="ppc-row">
+          <span class="ppc-label">Descripción</span>
+          <span class="ppc-value" id="ppc-descripcion"></span>
+        </div>
+        <div class="ppc-row">
+          <span class="ppc-label">Familia</span>
+          <span class="ppc-value" id="ppc-familia"></span>
+        </div>
+        <div class="ppc-row">
+          <span class="ppc-label">Subfamilia</span>
+          <span class="ppc-value" id="ppc-subfamilia"></span>
+        </div>
+        <div class="ppc-row">
+          <span class="ppc-label">Marca</span>
+          <span class="ppc-value" id="ppc-marca"></span>
+        </div>
+        <div class="ppc-row">
+          <span class="ppc-label">Stock</span>
+          <div class="ppc-stock-row">
+            <span class="ppc-badge ppc-badge-lv">LV: <strong id="ppc-lv"></strong></span>
+            <span class="ppc-badge ppc-badge-sjl">SJL: <strong id="ppc-sjl"></strong></span>
+          </div>
+        </div>
+        <div class="ppc-row">
+          <span class="ppc-label">Equivalentes</span>
+          <span class="ppc-value" id="ppc-equiv" style="font-size:10px; color:#8892a4"></span>
+        </div>
+      </div>
+
+    </div>
+  </div>
   <script>//responsive:
     /* Ocultar el bloque desktop en mobile y viceversa */
     const desktopActions = document.getElementById('desktopActions');
@@ -1263,17 +1748,22 @@
     cant.addEventListener('input', calcTotal);
     precio.addEventListener('input', calcTotal);
 
-    function consultarProforma() { }
-    function actualizarProforma() { }
+
     function reiniciarFormulario() { }
   </script>
   <script>
     const catalog = {{{ json products }}}
+    const proforms = {{{ json proforms }}}
 
-    const currentProform = {
+    let currentProform = {
       cliente: {},
       pagos: [],
-      productos: []
+      productos: [],
+      esNueva: true,
+      tipo: "borrador",
+      versiones: [],
+      version: 1
+
     }
     const proformPreview = {
       empresa: {
@@ -1301,7 +1791,12 @@
       forma_de_pago: document.querySelector("#proforma_forma_de_pago"),
       fecha: document.querySelector("#proforma_fecha"),
       comprobante: document.querySelector("#proforma_comprobante"),
-      pago: document.querySelector("#proforma_pagos")
+      pago: document.querySelector("#proforma_pagos"),
+
+      total: document.querySelector("#total"),
+      subtotal: document.querySelector("#subtotal"),
+      igv: document.querySelector("#igv")
+
     }
     const guiaPreview = {
 
@@ -1311,6 +1806,7 @@
       codigo: document.querySelector("#guia_codigo")
     }
     const fields = {
+      tipo: document.querySelector("#tipo"),
       empresa: document.querySelector("#empresa_nombre"),
       cliente: {
         nombre: document.querySelector("#cliente_nombre"),
@@ -1342,13 +1838,18 @@
         cantidad: document.querySelector("#inputCantidad"),
         comentario: document.querySelector("#inputComentario"),
         total: document.querySelector("#totalItem")
+      },
+
+      proforms: {
+        proform: document.querySelector("#input-proform")
       }
     }
     const tables = {
       pagos: document.querySelector("#tbody_pagos"),
       products: document.querySelector("#tbody_productos"),
       proforma: document.querySelector("#tbody_proforma"),
-      guia: document.querySelector("#tbody-guia")
+      guia: document.querySelector("#tbody-guia"),
+      proformas: document.querySelector("#tbody-proforms")
     }
     const desplegables = {
       empresas: {
@@ -1386,10 +1887,11 @@
         }
       }
     }
-
     const botones = {
       cargarPago: document.querySelector("#cargar_pago"),
-      cargarProducto: document.querySelector("#cargar_producto")
+      cargarProducto: document.querySelector("#cargar_producto"),
+      traerProforma: document.querySelector("#traer_proforma_btn")
+
     }
 
     function printProductSearch(products) {
@@ -1407,8 +1909,9 @@
                     </td>
                     <td title="${product.EQUIVALENTES_STOCK}">${product.EQUIVALENTES_STOCK}
                     
-  <button class="btn-agregar-row" data-codigo="${product.CODIGO_FORMATEADO}">+</button>
-  <button class="btn-ver-row" data-codigo="${product.CODIGO_FORMATEADO}">👁</button>
+  <button
+   class="btn-agregar-row" data-codigo="${product.CODIGO_FORMATEADO}" data-descripcion="${product.DESCRIPCION}">+</button>
+  <button class="btn-ver-row"  data-codigo-formateado="${product.CODIGO_FORMATEADO}" data-descripcion="${product.DESCRIPCION}" data-codigo="${product.CODIGO}" data-familia="${product.FAMILIA}" data-subfamilia="${product.SUBFAMILIA}" data-marca="${product.MARCA}" data-sjl="${product.STOCK_LV}" data-lv="${product.STOCK_LV}" data-equivalentes="${product.EQUIVALENTES_STOCK}">👁</button>
   
                     </td>
                     
@@ -1494,7 +1997,6 @@
 
     printGuia(currentProform.productos)
 
-
     function options(value) {
       const tokens = value.toLowerCase().split(/\s+/).filter(Boolean);
       const filter = catalog.filter(p => {
@@ -1530,8 +2032,10 @@
       }
       return filter
     }
-
+    //✅
     function cleanAll() {
+      currentProform.esNueva = true,
+        currentProform.cliente = ""
       currentProform.cliente = {}//✅
       currentProform.pagos = []//✅
       currentProform.productos = []//✅
@@ -1539,8 +2043,8 @@
       tables.pagos.innerHTML = ""//✅
       tables.proforma.innerHTML = ""//✅
       printProductSearch(catalog)//✅
+      fields.tipo.value = "borrador"
       fields.empresa.value = "max"
-      fields.cliente.nombre.value = ""
       fields.cliente.nombre.value = ""
       fields.cliente.ruc.value = ""
       fields.cliente.telefono.value = ""
@@ -1564,7 +2068,6 @@
       fields.products.cantidad.value = ""
       fields.products.comentario.value = ""
       fields.products.total.textContent = "S/ 0.00"
-
       proformPreview.cliente.nombre.textContent = ""
       proformPreview.cliente.ruc.textContent = ""
       proformPreview.cliente.telefono.textContent = ""
@@ -1581,34 +2084,391 @@
       proformPreview.fecha.textContent = ""
       proformPreview.comprobante.textContent = ""
       proformPreview.pago.innerHTML = ""
-
       proformPreview.atencion.textContent = ""
-
+      proformPreview.total.textContent = (0).toFixed(2)
+      proformPreview.subtotal.textContent = (0).toFixed(2)
+      proformPreview.igv.textContent = (0).toFixed(2)
       guiaPreview.cliente.textContent = ""
       guiaPreview.vendedor.textContent = ""
       guiaPreview.fecha.textContent = ""
-    }
 
-    function cargarProforma() {
+    }
+    //✅
+    function printAll() {
+      fields.tipo.value = currentProform.tipo || "Borrador"
+      fields.empresa.value = currentProform.empresa || "max"
+      fields.cliente.nombre.value = currentProform.cliente.nombre || ""
+      fields.cliente.ruc.value = currentProform.cliente.ruc || ""
+      fields.cliente.telefono.value = currentProform.cliente.telefono || ""
+      fields.cliente.email.value = currentProform.cliente.email || ""
+      fields.cliente.direccion.value = currentProform.cliente.direccion || ""
+      fields.cliente.provincia.value = currentProform.cliente.provincia || ""
+      fields.cliente.ciudad.value = currentProform.cliente.ciudad || ""
+      fields.vendedor.value = currentProform.cliente.vendedor || ""
+      fields.entrega.value = currentProform.entrega || ""
+      fields.destino.value = currentProform.destino || ""
+      fields.agencia.value = currentProform.agencia || ""
+      fields.atencion.value = currentProform.atencion || ""
+      fields.canal_de_venta.value = currentProform.canal_de_venta || ""
+      fields.forma_de_pago.value = forma_de_pago || ""
+      fields.fecha.value = currentProform.fecha || ""
+      fields.pago.monto.value = ""
+      fields.pago.operacion.value = ""
+      fields.pago.cuenta.value = ""
+      fields.products.product.value = ""
+      fields.products.monto.value = ""
+      fields.products.cantidad.value = ""
+      fields.products.comentario.value = ""
+      fields.products.total.textContent = "S/ 0.00"
+
+      proformPreview.cliente.nombre.textContent = currentProform.cliente.nombre || ""
+      proformPreview.cliente.ruc.textContent = currentProform.cliente.ruc || ""
+      proformPreview.cliente.telefono.textContent = currentProform.cliente.telefono || ""
+      proformPreview.cliente.email.textContent = currentProform.cliente.email || ""
+      proformPreview.cliente.direccion.textContent = currentProform.cliente.direccion || ""
+      proformPreview.cliente.provincia.textContent = currentProform.cliente.provincia || ""
+      proformPreview.cliente.ciudad.textContent = currentProform.cliente.ciudad || ""
+      proformPreview.vendedor.textContent = currentProform.vendedor || ""
+      proformPreview.entrega.innerHTML = currentProform.entrega || ""
+      proformPreview.destino.textContent = currentProform.destino || ""
+      proformPreview.agencia.textContent = currentProform.agencia || ""
+      proformPreview.canal_de_venta.textContent = currentProform.canal_de_venta || ""
+      proformPreview.forma_de_pago.textContent = currentProform.forma_de_pago || ""
+      proformPreview.fecha.textContent = currentProform.fecha || ""
+      proformPreview.comprobante.textContent = currentProform.comprobante || ""
+      proformPreview.pago.innerHTML = ""
+      proformPreview.atencion.textContent = currentProform.atencion || ""
+      printPagos(currentProform.pagos)
+      guiaPreview.cliente.textContent = currentProform.cliente.nombre || ""
+      guiaPreview.vendedor.textContent = currentProform.vendedor || ""
+      guiaPreview.fecha.textContent = currentProform.fecha || ""
+
+      printEmpresa(currentProform.empresa)
+      printProforma(currentProform.productos)
+      printTotal()
+      printGuia(currentProform.productos)
+      printCode()
+
+    }
+    function printCode() {
+      const doc_num = [
+        ...document.querySelectorAll(".doc-num"),
+        ...document.querySelectorAll(".doc-id")
+      ];
+      async function getProforms() {
+        try {
+          const response = await fetch("/api/proforms");
+          const data = await response.json();
+          return data.payload;
+        } catch (err) {
+          console.error(err);
+          return null;
+        }
+      }
+      async function getProformNumber() {
+        const proforms = await getProforms();
+        return "DP-" + String(proforms.length + 1).padStart(7, "0");
+      }
+      let proformNumber;
+      async function esNueva() {
+        let proformNumber = await getProformNumber();
+        for (let doc of doc_num) {
+          if (!currentProform.esNueva) {
+            document.querySelector("#es_nueva").textContent = ""
+            doc.textContent = currentProform.code
+          } else {
+            doc.textContent = proformNumber;
+            currentProform.code = proformNumber
+            document.querySelector("#es_nueva").textContent = "[Nueva]"
+          }
+        }
+      }
+      esNueva();
+    }
+    printCode()
+    //✅
+    async function cargarProforma() {
+      currentProform.esNueva = false;
+      currentProform.status = true;
 
       const body = {
-        payload: { currentProform }
-      }
+        payload: { doc: { ...currentProform } }
+      };
 
-      fetch("/api/proforms/", {
-        method: "post",
-        body: JSON.stringify(body),
+      try {
+        const res = await fetch("/api/proforms/", {
+          method: "post",
+          body: JSON.stringify(body),
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+
+        await res.text();
+
+        cleanAll();      // 👈 ahora sí después
+        await printCode(); // 👈 espera el nuevo código
+toastSuccess("proforma cargada")
+      } catch (err) {
+        console.error(err);
+      }
+    }
+    //✅
+    function printTotal() {
+      const suma = currentProform.productos.filter(p => p.status === true).reduce((acc, p) => acc + Number(p.total || 0), 0);
+
+      let igv = 0
+
+      proformPreview.total.textContent = "S/ " + suma.toFixed(2);
+      if (currentProform.comprobante === "Boleta" || currentProform.comprobante === "Factura") { igv = suma * 0.18 }
+
+      let subtotal = suma - igv
+      proformPreview.igv.textContent = igv.toFixed(2)
+      proformPreview.subtotal.textContent = subtotal.toFixed(2)
+
+    }
+
+    function consultarProforma() {
+      document.getElementById('toast-consultar').classList.add('open');
+      setTimeout(() => document.getElementById('input-nro-proforma').focus(), 50);
+    }
+
+    function abrirToastConsultar() {
+      document.getElementById('toast-consultar').classList.add('open');
+      setTimeout(() => document.getElementById('input-proform').focus(), 50);
+    }
+
+    function cerrarToastConsultar() {
+      document.getElementById('toast-consultar').classList.remove('open');
+    }
+
+    function toastError(msg) {
+      const toast = document.createElement("div");
+
+      toast.textContent = msg;
+      toast.style.position = "fixed";
+      toast.style.top = "20px";
+      toast.style.left = "20px";
+      toast.style.background = "#e74c3c";
+      toast.style.color = "#fff";
+      toast.style.padding = "10px 15px";
+      toast.style.borderRadius = "6px";
+      toast.style.boxShadow = "0 2px 8px rgba(0,0,0,0.2)";
+      toast.style.zIndex = "9999";
+      toast.style.fontSize = "14px";
+
+      document.body.appendChild(toast);
+
+      setTimeout(() => {
+        toast.remove();
+      }, 3000);
+    }
+
+    let activeToast;
+
+    function toastSuccess(msg) {
+      if (activeToast) activeToast.remove();
+
+      const toast = document.createElement("div");
+      activeToast = toast;
+
+      toast.textContent = msg;
+      toast.style.cssText = `
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    background: #27ae60;
+    color: white;
+    padding: 10px 15px;
+    border-radius: 6px;
+    z-index: 9999;
+    font-size: 14px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    opacity: 0;
+    transform: translateY(10px);
+    transition: all 0.3s ease;
+  `;
+
+      document.body.appendChild(toast);
+
+      // animación entrada
+      setTimeout(() => {
+        toast.style.opacity = "1";
+        toast.style.transform = "translateY(0)";
+      }, 10);
+
+      // salida
+      setTimeout(() => {
+        toast.style.opacity = "0";
+        toast.style.transform = "translateY(10px)";
+
+        setTimeout(() => {
+          toast.remove();
+          activeToast = null;
+        }, 300);
+      }, 2500);
+    }
+    async function traerProforma(code) {
+      try {
+        const res = await fetch(`/api/proforms/${code}`);
+        if (!res.ok) {
+          throw new Error("Proforma no encontrada");
+        }
+        const data = await res.json();
+        currentProform = data.payload.payload.doc;
+        printAll();
+
+        toastSuccess("proforma traida")
+      } catch (err) {
+        console.error(err);
+        toastError("❌ Proforma no encontrada");
+      }
+    }
+
+    function printEmpresa(value) {
+
+      let nombre
+      let ruc
+      let direccion
+      let telefono
+      let web
+      let email
+      switch (value) {
+        case "mx":
+          nombre = desplegables.empresas.mx.nombre
+          ruc = desplegables.empresas.mx.ruc
+          direccion = desplegables.empresas.mx.direccion
+          telefono = desplegables.empresas.mx.telefono
+          web = desplegables.empresas.mx.web
+          email = desplegables.empresas.mx.email
+
+          break;
+
+        case "junior":
+
+          nombre = desplegables.empresas.junior.nombre
+          ruc = desplegables.empresas.junior.ruc
+          direccion = desplegables.empresas.junior.direccion
+          telefono = desplegables.empresas.junior.telefono
+          web = desplegables.empresas.junior.web
+          email = desplegables.empresas.junior.email
+          break;
+
+        case "max":
+
+          nombre = desplegables.empresas.max.nombre
+          ruc = desplegables.empresas.max.ruc
+          direccion = desplegables.empresas.max.direccion
+          telefono = desplegables.empresas.max.telefono
+          web = desplegables.empresas.max.web
+          email = desplegables.empresas.max.email
+          break;
+
+        case "importadora":
+          nombre = desplegables.empresas.importadora.nombre
+          ruc = desplegables.empresas.importadora.ruc
+          direccion = desplegables.empresas.importadora.direccion
+          telefono = desplegables.empresas.importadora.telefono
+          web = desplegables.empresas.importadora.web
+          email = desplegables.empresas.importadora.email
+          break;
+
+        default:
+
+          nombre = desplegables.empresas.mx.nombre
+          ruc = desplegables.empresas.mx.ruc
+          direccion = desplegables.empresas.mx.direccion
+          telefono = desplegables.empresas.mx.telefono
+          web = desplegables.empresas.mx.web
+          email = desplegables.empresas.mx.email
+      }
+      proformPreview.empresa.nombre.textContent = nombre
+      proformPreview.empresa.ruc.textContent = ruc
+      proformPreview.empresa.email.textContent = email
+      proformPreview.empresa.telefono.textContent = telefono
+      proformPreview.empresa.direccion.textContent = direccion
+      proformPreview.empresa.web.textContent = web
+    }
+
+    function printProformas(proformas) {
+      tables.proformas.innerHTML = ""
+      for (let proform of proformas) {
+        let tipo
+
+        switch (proform.payload.doc.tipo) {
+          case "Borrador":
+            tipo = "borrador"
+
+            break;
+          case "cotizacion":
+            tipo = "cotizacion"
+            break;
+          case "orden_salida":
+            tipo = "orden-salida"
+            break;
+          default: "undefined"
+        }
+        let tr = document.createElement("tr")
+        tr.id = `${proform.payload.doc.code}_tr`
+        tr.innerHTML = `
+    <td><span class="doc-tag">${proform.payload.doc.code}</span></td>
+    
+              <td>${proform.payload.doc.vendedor}</td>
+              <td><span class="tipo-tag tipo-${tipo}">${proform.payload.doc.tipo}</span></td>
+              <td><span class="activo-tag activo-${proform.payload.doc.status == true ? "si" : "no"}">${proform.payload.doc.status == true ? "Sí" : "No"}</span></td>
+              <td><button id="traer_proforma_${proform.payload.doc.code}" class="btn-cargar-proforma">Cargar</button></td>
+    `
+        tables.proformas.appendChild(tr)
+      }
+    }
+    printProformas(proforms)
+    
+    function cerrarPreviewProducto() {
+        document.getElementById('preview-producto').classList.remove('open');
+      }
+  async function actualizarProforma() {
+    console.log("hello from here");
+    const body = {
+      code: "dp-0000555"
+    };
+
+  const res = await fetch(`/api/proforms/${currentProform.code}`);
+  if (!res.ok) {throw new Error("Proforma no encontrada");
+  }
+  const lastVersion = await res.json();
+
+  const lastVersionDoc = lastVersion.payload.payload.doc
+
+  const versiones_lastVersion = lastVersionDoc.versiones
+
+    const { versiones, ...lastVersionSinVersiones } = lastVersionDoc;
+
+
+    versiones_lastVersion.push(lastVersionSinVersiones)
+    currentProform.versiones = versiones_lastVersion
+    currentProform.version = currentProform.version+1
+ 
+    try {
+
+      const res = await fetch(`/api/proforms/${currentProform.code}`, {
+        method: "put",
+        body: JSON.stringify(currentProform),
         headers: {
           "Content-Type": "application/json",
         },
-      }).then((res) => {
-        return res.text()
-      })
-
-      cleanAll()
+      });
+      const data = await res.json();
+      console.log(data);
+    } catch (err) {
+      console.error(err);
+      toastError("error al actualizar la proforma");
     }
-
+  }
     function conexiones() {
+      //tipo✅
+      fields.tipo.addEventListener("change", (e) => {
+        currentProform.tipo = e.target.value
+      })
       //cliente.nombre ✅
       fields.cliente.nombre.addEventListener("input", (e) => {
         currentProform.cliente.nombre = e.target.value
@@ -1635,6 +2495,7 @@
       fields.cliente.ciudad.addEventListener("input", (e) => {
         currentProform.cliente.ciudad = e.target.value
         proformPreview.cliente.ciudad.innerHTML = e.target.value
+        console.log("currentProform: ", currentProform)
       })
       //telefono ✅
       fields.cliente.telefono.addEventListener("input", (e) => {
@@ -1681,61 +2542,10 @@
       })
       //empresa ✅
       fields.empresa.addEventListener("change", (e) => {
-        let nombre
-        let ruc
-        let direccion
-        let telefono
-        let web
-        let email
-        switch (e.target.value) {
-          case "mx":
-            nombre = desplegables.empresas.mx.nombre
-            ruc = desplegables.empresas.mx.ruc
-            direccion = desplegables.empresas.mx.direccion
-            telefono = desplegables.empresas.mx.telefono
-            web = desplegables.empresas.mx.web
-            email = desplegables.empresas.mx.email
 
-            break;
-
-          case "junior":
-
-            nombre = desplegables.empresas.junior.nombre
-            ruc = desplegables.empresas.junior.ruc
-            direccion = desplegables.empresas.junior.direccion
-            telefono = desplegables.empresas.junior.telefono
-            web = desplegables.empresas.junior.web
-            email = desplegables.empresas.junior.email
-            break;
-
-          case "max":
-
-            nombre = desplegables.empresas.max.nombre
-            ruc = desplegables.empresas.max.ruc
-            direccion = desplegables.empresas.max.direccion
-            telefono = desplegables.empresas.max.telefono
-            web = desplegables.empresas.max.web
-            email = desplegables.empresas.max.email
-            break;
-
-          case "importadora":
-            nombre = desplegables.empresas.importadora.nombre
-            ruc = desplegables.empresas.importadora.ruc
-            direccion = desplegables.empresas.importadora.direccion
-            telefono = desplegables.empresas.importadora.telefono
-            web = desplegables.empresas.importadora.web
-            email = desplegables.empresas.importadora.email
-            break;
-
-          default:
-            console.log("valor no reconocido:", e.target.value);
-        }
-        proformPreview.empresa.nombre.textContent = nombre
-        proformPreview.empresa.ruc.textContent = ruc
-        proformPreview.empresa.email.textContent = email
-        proformPreview.empresa.telefono.textContent = telefono
-        proformPreview.empresa.direccion.textContent = direccion
-        proformPreview.empresa.web.textContent = web
+        currentProform.empresa = e.target.value
+        console.log("e.target.value", e.target.value)
+        printEmpresa(e.target.value)
       })
 
       //canal de venta✅
@@ -1756,7 +2566,7 @@
       //boton cargar pago✅
       botones.cargarPago.addEventListener("click", (e) => {
         e.preventDefault()
-        if (!fields.pago.monto.value || !fields.pago.operacion.value || !fields.pago.cuenta.value) return console.log("error")
+        if (!fields.pago.monto.value || !fields.pago.operacion.value || !fields.pago.cuenta.value) return toastError("faltan valores en la carga del pago")
         const pago = {
           index: currentProform.pagos.length + 1,
           status: true,
@@ -1775,7 +2585,7 @@
         }
         resetFields()
         printPagos(pagos)
-
+        toastSuccess("pago cargado")
       })
       //boton borrar pago ✅
       tables.pagos.addEventListener("click", (e) => {
@@ -1801,6 +2611,8 @@
       })
       //cargar producto ✅
       botones.cargarProducto.addEventListener("click", (e) => {
+
+        if (!fields.products.product.value || !fields.products.monto.value || !fields.products.cantidad.value) { return toastError("faltan valores en la carga del producto") }
         currentProform.productos.push({
           status: true,
           index: currentProform.productos.length + 1,
@@ -1823,10 +2635,83 @@
         const products = currentProform.productos.filter(e => e.status === true)
 
         printProforma(products)
-
         printGuia(products)
         cleanFields()
+        printTotal()
+        toastSuccess("producto cargado")
       })
+
+      //cargar producto btn✅ ver producto btn
+      tables.products.addEventListener("click", (e) => {
+        const btn_cargar = e.target.closest(".btn-agregar-row");
+
+        if (btn_cargar) {
+          const codigo = btn_cargar.dataset.codigo
+          const descripcion = btn_cargar.dataset.descripcion
+
+          if (!fields.products.monto.value || !fields.products.cantidad.value) { return toastError("faltan valores en la carga del producto") }
+          const texto = codigo + " " + descripcion
+
+          currentProform.productos.push({
+            status: true,
+            index: currentProform.productos.length + 1,
+            nombre: texto,
+            monto: fields.products.monto.value,
+            cantidad: fields.products.cantidad.value,
+            comentario: fields.products.comentario.value,
+            total: fields.products.cantidad.value * fields.products.monto.value,
+            options: options(texto)
+          })
+
+          function cleanFields() {
+            fields.products.product.value = ""
+            fields.products.cantidad.value = ""
+            fields.products.comentario.value = ""
+            fields.products.monto.value = ""
+            fields.products.total.textContent = 'S/ 0.00'
+            printProductSearch(catalog)
+          }
+
+          const products = currentProform.productos.filter(e => e.status === true)
+
+          printProforma(products)
+          printGuia(products)
+          cleanFields()
+          printTotal()
+
+          toastSuccess("producto cargado")
+        }
+      });
+
+
+      tables.products.addEventListener("click", (e) => {
+        const btn_ver = e.target.closest(".btn-ver-row");
+
+        if (btn_ver) {
+
+          document.getElementById('ppc-codigo').textContent = btn_ver.dataset.codigoFormateado;
+
+
+          document.getElementById('ppc-codigo-raw').textContent = btn_ver.dataset.codigo
+
+          document.getElementById('ppc-descripcion').textContent = btn_ver.dataset.descripcion
+
+          document.getElementById('ppc-familia').textContent = btn_ver.dataset.familia
+
+
+          document.getElementById('ppc-subfamilia').textContent = btn_ver.dataset.subfamilia
+
+          document.getElementById('ppc-marca').textContent = btn_ver.dataset.marca
+
+          document.getElementById('ppc-lv').textContent = btn_ver.dataset.lv
+          
+          document.getElementById('ppc-sjl').textContent = btn_ver.dataset.sjl
+          
+          document.getElementById('ppc-equiv').textContent = btn_ver.dataset.equivalentes||""
+          
+          document.getElementById('preview-producto').classList.add('open');
+        }
+      });
 
       //eliminar producto ✅
       tables.proforma.addEventListener("click", (e) => {
@@ -1846,6 +2731,25 @@
           }
         }
       })
+
+      //filter proforms✅
+      fields.proforms.proform.addEventListener("input", (e) => {
+        const value = e.target.value.trim();
+        const result = proforms.filter(p =>
+          p.payload.doc.code.includes(value)
+        );
+        printProformas(result)
+      });
+
+      //traer proforma botones ✅
+      tables.proformas.addEventListener("click", (e) => {
+        if (e.target.id.startsWith("traer_proforma_")) {
+          const code = e.target.id.split("_")[2]
+          traerProforma(code)
+        }
+      })
+
+
     }
 
     conexiones()

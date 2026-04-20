@@ -23,11 +23,11 @@ class ProformsFSDAO {
 
     return proforms;
   }
-  async getByID(id) {
+  async getByCode(code) {
     let data = await fs.promises.readFile("data/proforms.json", "utf-8");
     let proforms = JSON.parse(data);
 
-    const found = proforms.find((i) => i.ID == id);
+    const found = proforms.find((proform) => proform.payload.doc.code == code);
     if (!found) return "ERROR: proforma no encontrada";
     return found;
   }
@@ -83,6 +83,39 @@ class ProformsFSDAO {
     await fs.promises.writeFile(this.#path, JSON.stringify(proforms, null, 2));
 
     return proform;
+  }
+  async updateByCode(code, updateProform) {
+updateProform = {payload:{doc: updateProform}}
+
+    console.log("code from updateProform: ", updateProform);
+    let data = await fs.promises.readFile(this.#path, "utf-8");
+    let proforms = JSON.parse(data);
+    //console.log("proforms: ", proforms)
+
+    const isFound = proforms.find(
+      (proform) => proform.payload.doc.code == code.toUpperCase(),
+    );
+    //console.log("isfound: ", isFound)
+
+    console.log("proforms: ", proforms)
+
+
+    let newProforms = proforms.map((proform) => {
+      if (proform.payload.doc.code == code) {
+        return {
+          ...proform,
+          ...updateProform,
+        };
+      } else return proform;
+    });
+for(let proform of newProforms){console.log("proform.payload: ",proform.payload)}
+    
+console.log( "find: ",   newProforms.find((i) => i.payload.doc.code === code))
+    await fs.promises.writeFile(
+      this.#path,
+      JSON.stringify(newProforms, null, 2),
+    );
+    return newProforms.find((i) => i.payload.doc.code === code);
   }
 }
 

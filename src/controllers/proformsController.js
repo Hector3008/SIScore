@@ -6,8 +6,8 @@ export const proformsController = async (req, res) => {
 };
 export const proformController = async (req, res) => {
   try {
-    const id = req.params.pid;
-    const result = await ProformsService.getByID(id);
+    const code = req.params.code;
+    const result = await ProformsService.getByCode(code);
     if (result === null) {
       return res.status(404).json({ status: "error", error: "Not found" });
     }
@@ -46,3 +46,18 @@ export const proformCreateController = async (req,res)=>
   const result = await ProformsService.create(data);
   res.status(200).json(result);
 }
+
+export const proformUpdateController = async (req, res) => {
+
+try{
+  const code = req.params.pcode;
+  const data = req.body;
+  const result = await ProformsService.update(code, data);
+  if (result === null) {
+    return res.status(404).json({ status: "error", error: "Not found" });
+  }
+    res.status(200).json({ status: "success", payload: result });
+  } catch (err) {
+    res.status(500).json({ status: "error", error: err.message });
+  }
+};
