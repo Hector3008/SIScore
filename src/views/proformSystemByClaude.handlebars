@@ -2035,7 +2035,7 @@
     //✅
     function cleanAll() {
       currentProform.esNueva = true,
-        currentProform.cliente = ""
+      currentProform.cliente = ""
       currentProform.cliente = {}//✅
       currentProform.pagos = []//✅
       currentProform.productos = []//✅
@@ -2091,7 +2091,7 @@
       guiaPreview.cliente.textContent = ""
       guiaPreview.vendedor.textContent = ""
       guiaPreview.fecha.textContent = ""
-
+      printCode()
     }
     //✅
     function printAll() {
@@ -2458,7 +2458,7 @@ toastSuccess("proforma cargada")
         },
       });
       const data = await res.json();
-      console.log(data);
+      cleanAll()
     } catch (err) {
       console.error(err);
       toastError("error al actualizar la proforma");
