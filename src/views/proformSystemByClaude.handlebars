@@ -2562,6 +2562,7 @@ toastSuccess("proforma cargada")
       fields.comprobante.addEventListener("change", (e) => {
         currentProform.comprobante = e.target.value
         proformPreview.comprobante.textContent = e.target.value
+        printTotal()
       })
       //boton cargar pago✅
       botones.cargarPago.addEventListener("click", (e) => {
