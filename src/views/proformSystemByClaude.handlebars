@@ -2,6 +2,8 @@
 <html lang="es">
 
 <head>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Proformas</title>
@@ -1227,7 +1229,7 @@
           <div class="group">
             <span class="group-label">Descargar</span>
             <div class="checks-col">
-              <label class="check-opt"><input type="checkbox" id="dlProforma"> Proforma</label>
+              <label id="dl_proforma-check" class="check-opt"><input type="checkbox" id="dl_proforma_mobile"> Proforma</label>
               <label class="check-opt"><input type="checkbox" id="dlGuia"> Guía</label>
             </div>
           </div>
@@ -1253,7 +1255,7 @@
         <div class="group">
           <span class="group-label">Descargar</span>
           <div class="checks-col">
-            <label class="check-opt"><input type="checkbox"> Proforma</label>
+            <label class="check-opt"><input type="checkbox" id="dl_proforma_desktop" > Proforma</label>
             <label class="check-opt"><input type="checkbox"> Guía</label>
           </div>
         </div>
@@ -2316,8 +2318,8 @@ toastSuccess("proforma cargada")
         }
         const data = await res.json();
         currentProform = data.payload.payload.doc;
-        printAll();
-
+        await printAll();
+        descargarProforma()
         toastSuccess("proforma traida")
       } catch (err) {
         console.error(err);
@@ -2427,7 +2429,6 @@ toastSuccess("proforma cargada")
         document.getElementById('preview-producto').classList.remove('open');
       }
   async function actualizarProforma() {
-    console.log("hello from here");
     const body = {
       code: "dp-0000555"
     };
@@ -2463,6 +2464,42 @@ toastSuccess("proforma cargada")
       console.error(err);
       toastError("error al actualizar la proforma");
     }
+  }
+//✅
+  function descargarProforma() {
+    printAll();
+
+    const mobile = document.querySelector("#dl_proforma_mobile").checked;
+    const desktop = document.querySelector("#dl_proforma_desktop").checked;
+
+    if (mobile || desktop) {
+      const elemento = document.getElementById('tab-proforma');
+      requestAnimationFrame(() => {
+        setTimeout(() => {
+          const numeroDoc = document.querySelector('.doc-num').textContent.trim(); // ← acá
+
+          const opciones = {
+            margin: [8, 8, 8, 8],
+            filename: `${numeroDoc}.pdf`,
+            image: { type: 'jpeg', quality: 0.98 },
+            html2canvas: { scale: 2, useCORS: true, scrollY: 0 },
+            jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+          };
+
+          const btns = elemento.querySelectorAll('.btn-eliminar');
+          btns.forEach(b => b.style.display = 'none');
+
+          html2pdf()
+            .set(opciones)
+            .from(elemento)
+            .save()
+            .then(() => {
+              btns.forEach(b => b.style.display = '');
+            });
+        }, 100);
+      });
+
+      }
   }
     function conexiones() {
       //tipo✅
