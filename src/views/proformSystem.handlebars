@@ -1759,7 +1759,12 @@
 
     function reiniciarFormulario() { }
   </script>
+
+  <script src="/socket.io/socket.io.js"></script>
+
   <script>
+    const socket = io();
+
     const catalog = {{{ json products }}}
     const proforms = {{{ json proforms }}}
 
@@ -2504,7 +2509,7 @@
     }
 
     async function actualizarProforma() {
-
+if(currentProform.esNueva)return toastError("estás queriendo actualizar una proforma nueva")
       const res = await fetch(`/api/proforms/${currentProform.code}`);
       if (!res.ok) {
         throw new Error("Proforma no encontrada");
@@ -3096,13 +3101,28 @@
         const res = await fetch("/api/proforms");
         const data = await res.json();
         let proformsToPrint = data.payload;
-        await printProformas(proformsToPrint)
+        
+        
+        ioToEmit(proformsToPrint)
+
+        //await printProformas(proformsToPrint)
       } catch (err) {
         console.error(err);
         toastError("error al cargar las proformas");
       }
     }
     fetchToProforms() 
+
+  function ioToEmit(data) {
+  socket.emit("updatedProforms", data);
+  }
+  
+  ioToEmit("hello from here");
+
+
+socket.on("updatedProforms", (data) => {
+printProformas(data)
+})
   </script>
 </body>
 

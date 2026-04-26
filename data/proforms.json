@@ -2223,5 +2223,66 @@
         "comprobante": "Proforma"
       }
     }
+  },
+  {
+    "payload": {
+      "doc": {
+        "cliente": {
+          "nombre": "padelco",
+          "ruc": "",
+          "direccion": "",
+          "provincia": "",
+          "ciudad": "",
+          "telefono": "",
+          "email": ""
+        },
+        "pagos": [],
+        "productos": [
+          {
+            "status": true,
+            "index": 1,
+            "nombre": "BZM-7710010 VOLKSWAGEN FOX, MERCEDES-BENZ / NISSAN FRONTIER (ZNP-28593)",
+            "monto": "40",
+            "cantidad": "4",
+            "comentario": "",
+            "total": 160,
+            "options": [
+              {
+                "status": "true",
+                "ID": "pending",
+                "CODIGO_FORMATEADO": "BZM-7710010",
+                "CODIGO": "77.1001.0 (77.1002.9)",
+                "STOCK_LV": 7,
+                "STOCK_SJL": 0,
+                "STOCK": 7,
+                "EQUIVALENTES_STOCK": "28593 = 69; ZM-9601204 = 108; LUCAS-LRAPO23 = sin llegada TOTAL = 177",
+                "DESCRIPCION": "VOLKSWAGEN FOX, MERCEDES-BENZ / NISSAN FRONTIER (ZNP-28593)",
+                "FAMILIA": "ALTERNADOR",
+                "SUBFAMILIA": "POLEA",
+                "PROVEEDOR": "BZM",
+                "MARCA": "BZM",
+                "UBICACION": "pending"
+              }
+            ]
+          }
+        ],
+        "esNueva": false,
+        "tipo": "borrador",
+        "versiones": [],
+        "version": 1,
+        "fecha": "26/4/2026",
+        "code": "DP-0000007",
+        "vendedor": "Lázaro",
+        "forma_de_pago": "Credito",
+        "status": true,
+        "empresa": "max",
+        "entrega": "",
+        "destino": "",
+        "atencion": "",
+        "agencia": "",
+        "canal_de_venta": "Tienda",
+        "comprobante": "Proforma"
+      }
+    }
   }
 ]
