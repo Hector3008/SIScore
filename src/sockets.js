@@ -16,7 +16,6 @@ export default (io) => {
     });*/
 
   socket.on("updatedProforms", (data) => {
-    console.log("Servidor recibió:", data);
     io.emit("updatedProforms", data); // a todos los clientes
   });
 

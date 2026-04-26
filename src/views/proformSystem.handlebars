@@ -2551,6 +2551,7 @@ if(currentProform.esNueva)return toastError("estás queriendo actualizar una pro
         generarPDFProforma(currentProform)
         generarPDFGuia(currentProform)
 
+        fetchToProforms() 
         cleanAll()
         toastSuccess("proforma actualizada")
       } catch (err) {
@@ -3116,9 +3117,6 @@ if(currentProform.esNueva)return toastError("estás queriendo actualizar una pro
   function ioToEmit(data) {
   socket.emit("updatedProforms", data);
   }
-  
-  ioToEmit("hello from here");
-
 
 socket.on("updatedProforms", (data) => {
 printProformas(data)

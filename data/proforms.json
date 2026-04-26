@@ -1631,7 +1631,7 @@
           }
         ],
         "esNueva": false,
-        "tipo": "borrador",
+        "tipo": "orden_salida",
         "versiones": [
           {
             "doc": {
@@ -1775,9 +1775,179 @@
               "fecha": "25/4/2026",
               "comprobante": "Proforma"
             }
+          },
+          {
+            "doc": {
+              "cliente": {
+                "nombre": "sara",
+                "ruc": "",
+                "direccion": "",
+                "provincia": "",
+                "ciudad": "",
+                "telefono": "",
+                "email": ""
+              },
+              "pagos": [],
+              "productos": [
+                {
+                  "status": true,
+                  "index": 1,
+                  "nombre": "BZM-P1000 LLAVE EXTRACTOR DE POLEA",
+                  "monto": "40",
+                  "cantidad": "5",
+                  "comentario": "",
+                  "total": 200,
+                  "options": [
+                    {
+                      "status": "true",
+                      "ID": "pending",
+                      "CODIGO_FORMATEADO": "BZM-P1000",
+                      "CODIGO": "P1000",
+                      "STOCK_LV": 14,
+                      "STOCK_SJL": 30,
+                      "STOCK": 44,
+                      "EQUIVALENTES_STOCK": "",
+                      "DESCRIPCION": "LLAVE EXTRACTOR DE POLEA",
+                      "FAMILIA": "ALTERNADOR",
+                      "SUBFAMILIA": "POLEA",
+                      "PROVEEDOR": "BZM",
+                      "MARCA": "BZM",
+                      "UBICACION": "pending"
+                    }
+                  ]
+                },
+                {
+                  "status": true,
+                  "index": 2,
+                  "nombre": "BZM-P1000 LLAVE EXTRACTOR DE POLEA",
+                  "monto": "40",
+                  "cantidad": "3",
+                  "comentario": "",
+                  "total": 120,
+                  "options": [
+                    {
+                      "status": "true",
+                      "ID": "pending",
+                      "CODIGO_FORMATEADO": "BZM-P1000",
+                      "CODIGO": "P1000",
+                      "STOCK_LV": 14,
+                      "STOCK_SJL": 30,
+                      "STOCK": 44,
+                      "EQUIVALENTES_STOCK": "",
+                      "DESCRIPCION": "LLAVE EXTRACTOR DE POLEA",
+                      "FAMILIA": "ALTERNADOR",
+                      "SUBFAMILIA": "POLEA",
+                      "PROVEEDOR": "BZM",
+                      "MARCA": "BZM",
+                      "UBICACION": "pending"
+                    }
+                  ]
+                }
+              ],
+              "esNueva": false,
+              "tipo": "borrador",
+              "version": 3,
+              "code": "DP-0000002",
+              "vendedor": "Lázaro",
+              "canal_de_venta": "Tienda",
+              "forma_de_pago": "Credito",
+              "status": true,
+              "empresa": "max",
+              "entrega": "",
+              "destino": "",
+              "atencion": "",
+              "agencia": "",
+              "fecha": "25/4/2026",
+              "comprobante": "Proforma"
+            }
+          },
+          {
+            "doc": {
+              "cliente": {
+                "nombre": "sara",
+                "ruc": "",
+                "direccion": "",
+                "provincia": "",
+                "ciudad": "",
+                "telefono": "",
+                "email": ""
+              },
+              "pagos": [],
+              "productos": [
+                {
+                  "status": true,
+                  "index": 1,
+                  "nombre": "BZM-P1000 LLAVE EXTRACTOR DE POLEA",
+                  "monto": "40",
+                  "cantidad": "5",
+                  "comentario": "",
+                  "total": 200,
+                  "options": [
+                    {
+                      "status": "true",
+                      "ID": "pending",
+                      "CODIGO_FORMATEADO": "BZM-P1000",
+                      "CODIGO": "P1000",
+                      "STOCK_LV": 14,
+                      "STOCK_SJL": 30,
+                      "STOCK": 44,
+                      "EQUIVALENTES_STOCK": "",
+                      "DESCRIPCION": "LLAVE EXTRACTOR DE POLEA",
+                      "FAMILIA": "ALTERNADOR",
+                      "SUBFAMILIA": "POLEA",
+                      "PROVEEDOR": "BZM",
+                      "MARCA": "BZM",
+                      "UBICACION": "pending"
+                    }
+                  ]
+                },
+                {
+                  "status": true,
+                  "index": 2,
+                  "nombre": "BZM-P1000 LLAVE EXTRACTOR DE POLEA",
+                  "monto": "40",
+                  "cantidad": "3",
+                  "comentario": "",
+                  "total": 120,
+                  "options": [
+                    {
+                      "status": "true",
+                      "ID": "pending",
+                      "CODIGO_FORMATEADO": "BZM-P1000",
+                      "CODIGO": "P1000",
+                      "STOCK_LV": 14,
+                      "STOCK_SJL": 30,
+                      "STOCK": 44,
+                      "EQUIVALENTES_STOCK": "",
+                      "DESCRIPCION": "LLAVE EXTRACTOR DE POLEA",
+                      "FAMILIA": "ALTERNADOR",
+                      "SUBFAMILIA": "POLEA",
+                      "PROVEEDOR": "BZM",
+                      "MARCA": "BZM",
+                      "UBICACION": "pending"
+                    }
+                  ]
+                }
+              ],
+              "esNueva": false,
+              "tipo": "cotizacion",
+              "version": 4,
+              "code": "DP-0000002",
+              "vendedor": "Lázaro",
+              "canal_de_venta": "Tienda",
+              "forma_de_pago": "Credito",
+              "status": true,
+              "empresa": "max",
+              "entrega": "",
+              "destino": "",
+              "atencion": "",
+              "agencia": "",
+              "fecha": "25/4/2026",
+              "comprobante": "Proforma"
+            }
           }
         ],
-        "version": 3,
+        "version": 5,
         "code": "DP-0000002",
         "vendedor": "Lázaro",
         "canal_de_venta": "Tienda",
