@@ -48,6 +48,8 @@
       border-color: #8892a4;
     }
 
+
+
     /* ══════════════════════════════════════
        DESKTOP (≥900px) — layout fijo en pantalla
     ══════════════════════════════════════ */
@@ -116,6 +118,7 @@
         overflow-y: auto;
         overflow-x: hidden;
       }
+
     }
 
     /* ══════════════════════════════════════
@@ -1183,6 +1186,34 @@
       text-align: center;
       padding: 7px;
     }
+    
+          .btn-reiniciar {
+      border-color: #c62828;
+      color: #e07070;
+    }
+
+    .btn-reiniciar:hover {
+      background: #c62828;
+      color: #fff;
+      border-color: #c62828;
+    }
+  
+
+  .btn-editar-producto {
+  font-size: 11px;
+  padding: 2px 6px;
+  border: 1px solid #1565c0;
+  border-radius: 4px;
+  background: #fff;
+  cursor: pointer;
+  color: #1565c0;
+  margin-left: 4px;
+}
+
+.btn-editar-producto:hover {
+  background: #1565c0;
+  color: #fff;
+}
   </style>
 </head>
 
@@ -1239,7 +1270,11 @@
               <label class="check-opt"><input type="checkbox" id="dl_guia_mobile"> Guía</label>
             </div>
           </div>
+
+          <button class="btn btn-reiniciar" onclick="reiniciarFormulario()">↺ Reiniciar</button>
+
         </div>
+        
       </div>
 
       <!-- Desktop: acciones inline en fila 1 -->
@@ -1265,6 +1300,9 @@
             <label class="check-opt"><input type="checkbox" id="dl_guia_desktop"> Guía</label>
           </div>
         </div>
+
+        <div class="divider-v"></div>
+        <button class="btn btn-reiniciar" onclick="reiniciarFormulario()">↺ Reiniciar</button>
       </div>
 
     </div>
@@ -1983,9 +2021,10 @@
       <td>${product.cantidad}</td>
       <td>S/ ${product.monto}</td>
       <td>S/ ${product.total}</td>
-      <td>
-        <button id="eliminar_proforma_producto_${product.index}" class="btn-eliminar">✕</button>
-      </td>
+<td>
+  <button id="eliminar_proforma_producto_${product.index}" class="btn-eliminar">✕</button>
+  <button id="editar_proforma_producto_${product.index}" class="btn-editar-producto">✎</button>
+</td>
     `
 
         tables.proforma.appendChild(tr)
@@ -2509,7 +2548,7 @@
     }
 
     async function actualizarProforma() {
-if(currentProform.esNueva)return toastError("estás queriendo actualizar una proforma nueva")
+      if (currentProform.esNueva) return toastError("estás queriendo actualizar una proforma nueva")
       const res = await fetch(`/api/proforms/${currentProform.code}`);
       if (!res.ok) {
         throw new Error("Proforma no encontrada");
@@ -2551,7 +2590,7 @@ if(currentProform.esNueva)return toastError("estás queriendo actualizar una pro
         generarPDFProforma(currentProform)
         generarPDFGuia(currentProform)
 
-        fetchToProforms() 
+        fetchToProforms()
         cleanAll()
         toastSuccess("proforma actualizada")
       } catch (err) {
@@ -2559,8 +2598,10 @@ if(currentProform.esNueva)return toastError("estás queriendo actualizar una pro
         toastError("error al actualizar la proforma");
       }
     }
-
-
+    //✅
+    function reiniciarFormulario() {
+      cleanAll()
+    }
     function conexiones() {
 
       //tipo✅
@@ -3102,8 +3143,8 @@ if(currentProform.esNueva)return toastError("estás queriendo actualizar una pro
         const res = await fetch("/api/proforms");
         const data = await res.json();
         let proformsToPrint = data.payload;
-        
-        
+
+
         ioToEmit(proformsToPrint)
 
         //await printProformas(proformsToPrint)
@@ -3112,15 +3153,15 @@ if(currentProform.esNueva)return toastError("estás queriendo actualizar una pro
         toastError("error al cargar las proformas");
       }
     }
-    fetchToProforms() 
+    fetchToProforms()
 
-  function ioToEmit(data) {
-  socket.emit("updatedProforms", data);
-  }
+    function ioToEmit(data) {
+      socket.emit("updatedProforms", data);
+    }
 
-socket.on("updatedProforms", (data) => {
-printProformas(data)
-})
+    socket.on("updatedProforms", (data) => {
+      printProformas(data)
+    })
   </script>
 </body>
 

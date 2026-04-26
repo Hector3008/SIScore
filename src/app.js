@@ -64,7 +64,7 @@ const hbs = handlebars.create({
   app.use("/api/proforms",proformsRouter);
   
   app.use("/proforms", proformsViewRouter);
-  app.use("/proformsSystem", proformsSystemViewRouter);
+  app.use("/proformSystem", proformsSystemViewRouter);
 
 const PORT = process.env.PORT || 8000;
 
