@@ -2547,6 +2547,7 @@
         generarPDFGuia(currentProform)
 
         cleanAll()
+        toastSuccess("proforma actualizada")
       } catch (err) {
         console.error(err);
         toastError("error al actualizar la proforma");
