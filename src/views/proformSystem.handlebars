@@ -1234,7 +1234,8 @@
           <div class="group">
             <span class="group-label">Descargar</span>
             <div class="checks-col">
-              <label id="dl_proforma-check" class="check-opt"><input type="checkbox" id="dl_proforma_mobile"> Proforma</label>
+              <label id="dl_proforma-check" class="check-opt"><input type="checkbox" id="dl_proforma_mobile">
+                Proforma</label>
               <label class="check-opt"><input type="checkbox" id="dl_guia_mobile"> Guía</label>
             </div>
           </div>
@@ -1260,7 +1261,7 @@
         <div class="group">
           <span class="group-label">Descargar</span>
           <div class="checks-col">
-            <label class="check-opt"><input type="checkbox" id="dl_proforma_desktop" > Proforma</label>
+            <label class="check-opt"><input type="checkbox" id="dl_proforma_desktop"> Proforma</label>
             <label class="check-opt"><input type="checkbox" id="dl_guia_desktop"> Guía</label>
           </div>
         </div>
@@ -1418,8 +1419,8 @@
                 </div>
               </div>
               <div class="ph-right">
-                <div class="doc-num">DP-0000001</div>
-                <div id="proforma_fecha" class="doc-meta">Fecha: 23/02/2026</div>
+                <div><span class="doc-num"> DP-0000001</span> <span id="proforma_version"></span></div>
+                <div class="doc-meta">Fecha: <span id="proforma_fecha"></span></div>
               </div>
             </div>
 
@@ -1494,7 +1495,7 @@
               <span>CLIENTE: <span id="guia_cliente"></span></span>
               <span>VENDEDOR: <span id="guia_vendedor"></span></span>
               <span>Fecha: <span id="guia_fecha"></span></span>
-              <span> <span class="doc-id" id="guia_codigo">DP-0000001</span> v1</span>
+              <span> <span class="doc-id" id="guia_codigo">DP-0000001</span> <span id="guia_version"></span></span>
             </div>
 
             <div class="table-wrap">
@@ -1769,10 +1770,13 @@
       esNueva: true,
       tipo: "borrador",
       versiones: [],
-      version: 1
-
+      version: 1,
+      fecha: new Date(Date.now()).toLocaleDateString()
     }
+
     const proformPreview = {
+      fecha: document.querySelector("#proforma_fecha"),
+      version: document.querySelector("#proforma_version"),
       empresa: {
         nombre: document.querySelector("#proforma_empresa_nombre"),
         ruc: document.querySelector("#proforma_empresa_ruc"),
@@ -1806,7 +1810,7 @@
 
     }
     const guiaPreview = {
-
+      version: document.querySelector("#guia_version"),
       cliente: document.querySelector("#guia_cliente"),
       vendedor: document.querySelector("#guia_vendedor"),
       fecha: document.querySelector("#guia_fecha"),
@@ -1900,7 +1904,7 @@
       traerProforma: document.querySelector("#traer_proforma_btn")
 
     }
-
+    //✅
     function printProductSearch(products) {
       tables.products.innerHTML = ""
       for (let product of products) {
@@ -1928,9 +1932,20 @@
       }
 
     }
-
     printProductSearch(catalog)
 
+    function printVersion() {
+      guiaPreview.version.textContent = `v${currentProform.version}`
+      proformPreview.version.textContent = `v${currentProform.version}`
+    }
+    printVersion()
+
+    function printFecha() {
+      proformPreview.fecha.textContent = currentProform.fecha
+      guiaPreview.fecha.textContent = currentProform.fecha
+    }
+    printFecha()
+    //✅
     function printPagos(pagos) {
       tables.pagos.innerHTML = ""
       proformPreview.pago.innerHTML = ""
@@ -1973,7 +1988,7 @@
       }
     }
     printProforma(currentProform.productos)
-
+    //✅
     function printGuia(products) {
       tables.guia.innerHTML = ""
       for (let [i, product] of products.entries()) {
@@ -1985,7 +2000,7 @@
           tr.innerHTML = `
             <td>${j == 0 ? i + 1 : ""}</td>
             <td>${j == 0 ? product.cantidad : ""}</td>
-            <td>S/ ${j == 0 ? product.monto : ""}</td>
+            <td>${j == 0 ? `S/ ${product.monto}` : ""}</td>
         <td>${j == 0 ? product.nombre : ""}</td>
         <td>${j == 0 ? product.comentario : ""}</td>
               <td>${option.CODIGO_FORMATEADO}</td>
@@ -2041,14 +2056,16 @@
     }
     //✅
     function cleanAll() {
+      currentProform.fecha = new Date(Date.now()).toLocaleDateString()
       currentProform.esNueva = true,
-      currentProform.cliente = ""
+        currentProform.cliente = ""
       currentProform.cliente = {}//✅
       currentProform.pagos = []//✅
       currentProform.productos = []//✅
       tables.guia.innerHTML = ""//✅
       tables.pagos.innerHTML = ""//✅
       tables.proforma.innerHTML = ""//✅
+      currentProform.version = 1
       printProductSearch(catalog)//✅
       fields.tipo.value = "borrador"
       fields.empresa.value = "max"
@@ -2099,6 +2116,8 @@
       guiaPreview.vendedor.textContent = ""
       guiaPreview.fecha.textContent = ""
       printCode()
+      printFecha()
+      printVersion()
     }
     //✅
     function printAll() {
@@ -2117,8 +2136,18 @@
       fields.agencia.value = currentProform.agencia || ""
       fields.atencion.value = currentProform.atencion || ""
       fields.canal_de_venta.value = currentProform.canal_de_venta || ""
-      fields.forma_de_pago.value = forma_de_pago || ""
-      fields.fecha.value = currentProform.fecha || ""
+      fields.forma_de_pago.value = currentProform.forma_de_pago || ""
+
+
+      function formatearAInputDate(fechaStr) {
+        if (!fechaStr) return "";
+        const [dia, mes, anio] = fechaStr.split("/");
+        return `${anio}-${mes.padStart(2, "0")}-${dia.padStart(2, "0")}`;
+      }
+
+      fields.fecha.value = formatearAInputDate(currentProform.fecha) || ""
+
+
       fields.pago.monto.value = ""
       fields.pago.operacion.value = ""
       fields.pago.cuenta.value = ""
@@ -2127,7 +2156,6 @@
       fields.products.cantidad.value = ""
       fields.products.comentario.value = ""
       fields.products.total.textContent = "S/ 0.00"
-
       proformPreview.cliente.nombre.textContent = currentProform.cliente.nombre || ""
       proformPreview.cliente.ruc.textContent = currentProform.cliente.ruc || ""
       proformPreview.cliente.telefono.textContent = currentProform.cliente.telefono || ""
@@ -2149,14 +2177,16 @@
       guiaPreview.cliente.textContent = currentProform.cliente.nombre || ""
       guiaPreview.vendedor.textContent = currentProform.vendedor || ""
       guiaPreview.fecha.textContent = currentProform.fecha || ""
-
       printEmpresa(currentProform.empresa)
       printProforma(currentProform.productos)
+      printFecha()
+      printVersion()
       printTotal()
       printGuia(currentProform.productos)
       printCode()
 
     }
+    //✅    
     function printCode() {
       const doc_num = [
         ...document.querySelectorAll(".doc-num"),
@@ -2195,9 +2225,42 @@
     printCode()
     //✅
     async function cargarProforma() {
+      if (!currentProform.esNueva) return toastError("estás creando una proforma nueva desde una ya creada")
+      if (!currentProform.cliente.nombre) return toastError("debes ingresar un cliente")
+      if (!currentProform.vendedor) return toastError("identificate (campo vendedor)")
+      if (!currentProform.forma_de_pago) return toastError("Cómo se va a cancelar? (ingresa el campo forma de pago)")
+      if (currentProform.productos.length == 0) return toastError("no has cargado productos")
       currentProform.esNueva = false;
       currentProform.status = true;
+      currentProform.empresa = currentProform.empresa ?? "max"
+      currentProform.tipo = currentProform.tipo ?? "borrador"
 
+      currentProform.cliente.ruc = currentProform.cliente.ruc ?? ""
+
+      currentProform.cliente.direccion = currentProform.cliente.direccion ?? ""
+
+      currentProform.cliente.provincia = currentProform.cliente.provincia ?? ""
+
+      currentProform.cliente.ciudad = currentProform.cliente.ciudad ?? ""
+
+      currentProform.cliente.telefono = currentProform.cliente.telefono ?? ""
+
+      currentProform.cliente.email = currentProform.cliente.email ?? ""
+
+      currentProform.entrega = currentProform.entrega ?? ""
+
+      currentProform.destino = currentProform.destino ?? ""
+
+      currentProform.atencion = currentProform.atencion ?? ""
+
+      currentProform.agencia = currentProform.agencia ?? ""
+
+      const fecha = currentProform.fecha ?? new Date(Date.now()).toLocaleDateString()
+
+      currentProform.fecha = fecha
+
+      currentProform.canal_de_venta = currentProform.canal_de_venta ?? "Tienda"
+      currentProform.comprobante = currentProform.comprobante ?? "Proforma"
       const body = {
         payload: { doc: { ...currentProform } }
       };
@@ -2213,9 +2276,13 @@
 
         await res.text();
 
+        generarPDFProforma(currentProform)
+        generarPDFGuia(currentProform)
         cleanAll();      // 👈 ahora sí después
         await printCode(); // 👈 espera el nuevo código
-toastSuccess("proforma cargada")
+        toastSuccess("proforma cargada")
+        //
+        fetchToProforms()
       } catch (err) {
         console.error(err);
       }
@@ -2234,21 +2301,21 @@ toastSuccess("proforma cargada")
       proformPreview.subtotal.textContent = subtotal.toFixed(2)
 
     }
-
+    //✅
     function consultarProforma() {
       document.getElementById('toast-consultar').classList.add('open');
       setTimeout(() => document.getElementById('input-nro-proforma').focus(), 50);
     }
-
+    //✅
     function abrirToastConsultar() {
       document.getElementById('toast-consultar').classList.add('open');
       setTimeout(() => document.getElementById('input-proform').focus(), 50);
     }
-
+    //✅
     function cerrarToastConsultar() {
       document.getElementById('toast-consultar').classList.remove('open');
     }
-
+    //✅
     function toastError(msg) {
       const toast = document.createElement("div");
 
@@ -2272,7 +2339,7 @@ toastSuccess("proforma cargada")
     }
 
     let activeToast;
-
+    //✅
     function toastSuccess(msg) {
       if (activeToast) activeToast.remove();
 
@@ -2315,6 +2382,7 @@ toastSuccess("proforma cargada")
         }, 300);
       }, 2500);
     }
+    //✅
     async function traerProforma(code) {
       try {
         const res = await fetch(`/api/proforms/${code}`);
@@ -2324,15 +2392,15 @@ toastSuccess("proforma cargada")
         const data = await res.json();
         currentProform = data.payload.payload.doc;
         await printAll();
-        descargarProforma()
-        descargarGuia()
+        generarPDFProforma(currentProform)
+        generarPDFGuia(currentProform)
         toastSuccess("proforma traida")
       } catch (err) {
         console.error(err);
         toastError("❌ Proforma no encontrada");
       }
     }
-
+    //✅
     function printEmpresa(value) {
 
       let nombre
@@ -2397,7 +2465,7 @@ toastSuccess("proforma cargada")
       proformPreview.empresa.direccion.textContent = direccion
       proformPreview.empresa.web.textContent = web
     }
-
+    //✅
     function printProformas(proformas) {
       tables.proformas.innerHTML = ""
       for (let proform of proformas) {
@@ -2430,117 +2498,64 @@ toastSuccess("proforma cargada")
       }
     }
     printProformas(proforms)
-    
+
     function cerrarPreviewProducto() {
-        document.getElementById('preview-producto').classList.remove('open');
+      document.getElementById('preview-producto').classList.remove('open');
+    }
+
+    async function actualizarProforma() {
+
+      const res = await fetch(`/api/proforms/${currentProform.code}`);
+      if (!res.ok) {
+        throw new Error("Proforma no encontrada");
       }
-  async function actualizarProforma() {
+      /*
+      este flujo es algo dificil de seguir:
+      trae un objeto {payload: {payload:{doc:{versions: [], ...}, ...},...},...}
+      y busca que el .doc se guarde en el versiones
+      por lo cual se captura en una variable y se formatee, de manera que ya no tenga el array versiones
+      Ese objeto queda como la version anterior
+      y la nueva version queda con el currentProform, donde su .versions es el array anterior con el push de la ultima version
+      */
+      const lastVersion = await res.json();
 
-  const res = await fetch(`/api/proforms/${currentProform.code}`);
-  if (!res.ok) {throw new Error("Proforma no encontrada");
-  }
-  const lastVersion = await res.json();
+      const lastVersionPayload = lastVersion.payload.payload
 
-  const lastVersionPayload = lastVersion.payload.payload
+      const lastVersionDoc = lastVersion.payload.payload.doc
 
-  const lastVersionDoc = lastVersion.payload.payload.doc
+      const versiones_lastVersion = lastVersionDoc.versiones
 
-  const versiones_lastVersion = lastVersionDoc.versiones
+      const { versiones, ...lastVersionSinVersiones } = lastVersionDoc;
 
-  const { versiones, ...lastVersionSinVersiones } = lastVersionDoc;
-
-    lastVersionPayload.doc = lastVersionSinVersiones
+      lastVersionPayload.doc = lastVersionSinVersiones
       versiones_lastVersion.push(lastVersionPayload)
 
-    currentProform.versiones = versiones_lastVersion
-    currentProform.version = currentProform.version+1
- 
-    try {
+      currentProform.versiones = versiones_lastVersion
+      currentProform.version = currentProform.version + 1
 
-      const res = await fetch(`/api/proforms/${currentProform.code}`, {
-        method: "put",
-        body: JSON.stringify(currentProform),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-      const data = await res.json();
-      cleanAll()
-    } catch (err) {
-      console.error(err);
-      toastError("error al actualizar la proforma");
+      try {
+        const res = await fetch(`/api/proforms/${currentProform.code}`, {
+          method: "put",
+          body: JSON.stringify(currentProform),
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+        const data = await res.json();
+
+        generarPDFProforma(currentProform)
+        generarPDFGuia(currentProform)
+
+        cleanAll()
+      } catch (err) {
+        console.error(err);
+        toastError("error al actualizar la proforma");
+      }
     }
-  }
-  
-//❗problema con el elemento oculto
-  function descargarProforma() {
-    printAll();
-    const mobile = document.querySelector("#dl_proforma_mobile").checked;
-    const desktop = document.querySelector("#dl_proforma_desktop").checked;
-
-    if (mobile || desktop) {
-      const elemento = document.getElementById('tab-proforma');
-      requestAnimationFrame(() => {
-        setTimeout(() => {
-          const numeroDoc = document.querySelector('.doc-num').textContent.trim();
-
-          const opciones = {
-            margin: [8, 8, 8, 8],
-            filename: `${numeroDoc}.pdf`,
-            image: { type: 'jpeg', quality: 0.98 },
-            html2canvas: { scale: 2, useCORS: true, scrollY: 0 },
-            jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
-          };
-
-          const btns = elemento.querySelectorAll('.btn-eliminar');
-          btns.forEach(b => b.style.display = 'none');
-
-          html2pdf()
-            .set(opciones)
-            .from(elemento)
-            .save()
-            .then(() => {
-              btns.forEach(b => b.style.display = '');
-            });
-        }, 100);
-      });
-
-      }
-  }
-
-//ibid
-    function descargarGuia() {
-        printAll();
-        const mobile = document.querySelector("#dl_guia_mobile").checked;
-        const desktop = document.querySelector("#dl_guia_desktop").checked;
-
-        if (mobile || desktop) {
-          const elemento = document.getElementById('tab-guia');
-          console.log("elemento: ", elemento)
-          requestAnimationFrame(() => {
-            setTimeout(() => {
-              const numeroDoc = document.querySelector('.doc-num').textContent.trim(); // ← acá
-
-              const opciones = {
-                margin: [8, 8, 8, 8],
-                filename: `${numeroDoc}-guia.pdf`,
-                image: { type: 'jpeg', quality: 0.98 },
-                html2canvas: { scale: 2, useCORS: true, scrollY: 0 },
-                jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
-              };
-
-              html2pdf()
-                .set(opciones)
-                .from(elemento)
-                .save()
-                     }, 100);
-          });
-
-        }
-      }
 
 
     function conexiones() {
+
       //tipo✅
       fields.tipo.addEventListener("change", (e) => {
         currentProform.tipo = e.target.value
@@ -2781,11 +2796,11 @@ toastSuccess("proforma cargada")
           document.getElementById('ppc-marca').textContent = btn_ver.dataset.marca
 
           document.getElementById('ppc-lv').textContent = btn_ver.dataset.lv
-          
+
           document.getElementById('ppc-sjl').textContent = btn_ver.dataset.sjl
-          
-          document.getElementById('ppc-equiv').textContent = btn_ver.dataset.equivalentes||""
-          
+
+          document.getElementById('ppc-equiv').textContent = btn_ver.dataset.equivalentes || ""
+
           document.getElementById('preview-producto').classList.add('open');
         }
       });
@@ -2831,222 +2846,263 @@ toastSuccess("proforma cargada")
 
     conexiones()
 
-//testing !!❗
-  function generarPDFProforma() {
-    const { jsPDF } = window.jspdf;
-    const doc = new jsPDF({ unit: 'mm', format: 'a4' });
+    //✅
+    function generarPDFProforma(proform) {
+      const desktop = document.querySelector("#dl_proforma_desktop").checked
+      const mobile = document.querySelector("#dl_proforma_mobile").checked
 
-    const M = 14;
-    const W = 182;
-    let y = 14;
+      if (!desktop && !mobile) return
 
-    // ── HEADER ──
-    doc.setFontSize(9);
-    doc.setTextColor(80);
-    doc.setFont('helvetica', 'bold');
-    doc.text('Max Importaciones y Servicios Generales S.A.C.', M, y);
-    doc.setFont('helvetica', 'normal');
-    doc.text('RUC: 20503534194', M, y + 5);
-    doc.text('Cal. Garcia Naranjo Nro. 114b - La Victoria - Lima', M, y + 10);
-    doc.text('Tel: 999 999 999', M, y + 15);
-    doc.text('ventas@maximportaciones.com.pe', M, y + 20);
+      const { jsPDF } = window.jspdf;
+      const pdf = new jsPDF({ unit: 'mm', format: 'a4' });
 
-    doc.setFont('helvetica', 'bold');
-    doc.setFontSize(18);
-    doc.setTextColor(15, 76, 129);
-    doc.text('DP-0000001', 196, y + 4, { align: 'right' });
-    doc.setFontSize(9);
-    doc.setTextColor(120);
-    doc.setFont('helvetica', 'normal');
-    doc.text('Fecha: 2026-04-19', 196, y + 10, { align: 'right' });
+      const empresa = desplegables.empresas[proform.empresa] || desplegables.empresas.max;
+      const M = 14;
+      const W = 182;
+      let y = 14;
 
-    y += 28;
-    doc.setDrawColor(220);
-    doc.line(M, y, M + W, y);
-    y += 6;
+      // ── HEADER ──
+      pdf.setFontSize(9);
+      pdf.setTextColor(80);
+      pdf.setFont('helvetica', 'bold');
+      pdf.text(empresa.nombre, M, y);
+      pdf.setFont('helvetica', 'normal');
+      pdf.text(`RUC: ${empresa.ruc}`, M, y + 5);
+      pdf.text(empresa.direccion, M, y + 10);
+      pdf.text(`Tel: ${empresa.telefono}`, M, y + 15);
+      pdf.text(empresa.email, M, y + 20);
+      pdf.setFont('helvetica', 'bold');
+      pdf.setFontSize(18);
+      pdf.setTextColor(15, 76, 129);
+      pdf.text(`${proform.code} v${proform.version}`, 196, y + 4, { align: 'right' });
+      pdf.setFontSize(9);
+      pdf.setTextColor(120);
+      pdf.setFont('helvetica', 'normal');
+      pdf.text(`Fecha: ${proform.fecha}`, 196, y + 10, { align: 'right' });
 
-    // ── DATOS CLIENTE ──
-    doc.setFontSize(8.5);
-    doc.setTextColor(50);
-    const col1 = M;
-    const col2 = M + W / 2 + 4;
+      y += 28;
+      pdf.setDrawColor(220);
+      pdf.line(M, y, M + W, y);
+      y += 6;
 
-    const camposIzq = [
-      ['Cliente:', 'padelco'],
-      ['RUC/DNI:', '20154512151'],
-      ['Dirección:', 'trujillo'],
-      ['Provincia:', 'trujillo'],
-      ['Destino:', 'trujillo'],
-      ['Forma pago:', 'Credito'],
-      ['Agencia:', 'trujillo express'],
-      ['Vendedor:', 'Lázaro'],
-    ];
-    const camposDer = [
-      ['Teléfono:', '95484585'],
-      ['Mail:', 'resedisa@gmail.com'],
-      ['Entrega:', 'Agencia'],
-      ['Ciudad:', 'trujillo'],
-      ['Canal de venta:', 'Cartera'],
-      ['Comprobante:', 'Factura'],
-      ['Atención:', 'reynoso avalos'],
-      ['', ''],
-    ];
+      // ── DATOS CLIENTE ──
+      pdf.setFontSize(8.5);
+      pdf.setTextColor(50);
+      const col1 = M;
+      const col2 = M + W / 2 + 4;
 
-    const startY = y;
-    for (let i = 0; i < camposIzq.length; i++) {
-      const rowY = startY + i * 5.5;
-      doc.setFont('helvetica', 'bold');
-      doc.text(camposIzq[i][0], col1, rowY);
-      doc.setFont('helvetica', 'normal');
-      doc.text(camposIzq[i][1], col1 + 22, rowY);
-      doc.setFont('helvetica', 'bold');
-      doc.text(camposDer[i][0], col2, rowY);
-      doc.setFont('helvetica', 'normal');
-      doc.text(camposDer[i][1], col2 + 26, rowY);
+      const camposIzq = [
+        ['Cliente:', proform.cliente?.nombre || ''],
+        ['RUC/DNI:', proform.cliente?.ruc || ''],
+        ['Dirección:', proform.cliente?.direccion || ''],
+        ['Provincia:', proform.cliente?.provincia || ''],
+        ['Destino:', proform.destino || ''],
+        ['Forma pago:', proform.forma_de_pago || ''],
+        ['Agencia:', proform.agencia || ''],
+        ['Vendedor:', proform.vendedor || ''],
+      ];
+      const camposDer = [
+        ['Teléfono:', proform.cliente?.telefono || ''],
+        ['Mail:', proform.cliente?.email || ''],
+        ['Entrega:', proform.entrega || ''],
+        ['Ciudad:', proform.cliente?.ciudad || ''],
+        ['Canal de venta:', proform.canal_de_venta || ''],
+        ['Comprobante:', proform.comprobante || ''],
+        ['Atención:', proform.atencion || ''],
+        ['', ''],
+      ];
+
+      const startY = y;
+      for (let i = 0; i < camposIzq.length; i++) {
+        const rowY = startY + i * 5.5;
+        pdf.setFont('helvetica', 'bold');
+        pdf.text(camposIzq[i][0], col1, rowY);
+        pdf.setFont('helvetica', 'normal');
+        pdf.text(camposIzq[i][1], col1 + 22, rowY);
+        pdf.setFont('helvetica', 'bold');
+        pdf.text(camposDer[i][0], col2, rowY);
+        pdf.setFont('helvetica', 'normal');
+        pdf.text(camposDer[i][1], col2 + 26, rowY);
+      }
+
+      y = startY + camposIzq.length * 5.5 + 4;
+      pdf.line(M, y, M + W, y);
+      y += 4;
+
+      // ── TABLA PRODUCTOS ──
+      const productosActivos = proform.productos.filter(p => p.status === true);
+
+      pdf.autoTable({
+        startY: y,
+        margin: { left: M, right: 14 },
+        head: [['#', 'Descripción', 'Cantidad', 'Precio unit.', 'Importe']],
+        body: productosActivos.map((p, i) => [
+          i + 1,
+          p.nombre,
+          p.cantidad,
+          `S/ ${Number(p.monto).toFixed(2)}`,
+          `S/ ${Number(p.total).toFixed(2)}`
+        ]),
+        styles: { fontSize: 8.5, cellPadding: 3 },
+        headStyles: { fillColor: [15, 76, 129], textColor: 255, fontStyle: 'bold' },
+        alternateRowStyles: { fillColor: [249, 249, 249] },
+        columnStyles: {
+          0: { cellWidth: 10, halign: 'center' },
+          1: { cellWidth: 90 },
+          2: { cellWidth: 22, halign: 'center' },
+          3: { cellWidth: 28, halign: 'right' },
+          4: { cellWidth: 28, halign: 'right' },
+        }
+      });
+
+      y = pdf.lastAutoTable.finalY + 4;
+
+      // ── TOTALES ──
+      const suma = productosActivos.reduce((acc, p) => acc + Number(p.total), 0);
+      let igv = 0;
+      if (proform.comprobante === 'Factura' || proform.comprobante === 'Boleta') {
+        igv = suma * 0.18;
+      }
+      const subtotal = suma - igv;
+      const totX = M + W - 60;
+      const totW = 60;
+
+      pdf.setFontSize(8.5);
+      pdf.setTextColor(80);
+      pdf.setFont('helvetica', 'normal');
+      pdf.text('Subtotal', totX, y + 5);
+      pdf.text(`S/ ${subtotal.toFixed(2)}`, totX + totW, y + 5, { align: 'right' });
+      pdf.text('IGV (18%)', totX, y + 11);
+      pdf.text(`S/ ${igv.toFixed(2)}`, totX + totW, y + 11, { align: 'right' });
+
+      pdf.setFillColor(232, 93, 20);
+      pdf.roundedRect(totX - 2, y + 14, totW + 2, 8, 2, 2, 'F');
+      pdf.setTextColor(255);
+      pdf.setFont('helvetica', 'bold');
+      pdf.text('Importe total', totX + 1, y + 19.5);
+      pdf.text(`S/ ${suma.toFixed(2)}`, totX + totW - 1, y + 19.5, { align: 'right' });
+
+      y += 30;
+
+      // ── FOOTER ──
+      pdf.setFontSize(8);
+      pdf.setTextColor(120);
+      pdf.setFont('helvetica', 'normal');
+      pdf.line(M, y, M + W, y);
+      y += 5;
+      pdf.setFont('helvetica', 'bold'); pdf.text('Condiciones', M, y);
+      pdf.setFont('helvetica', 'normal'); pdf.text('Precios sujetos a cambio sin previo aviso.', M, y + 4);
+      pdf.setFont('helvetica', 'bold'); pdf.text('Observaciones', M + 65, y);
+      pdf.setFont('helvetica', 'normal'); pdf.text('—', M + 65, y + 4);
+      pdf.setFont('helvetica', 'bold'); pdf.text('Contacto', M + 130, y);
+      pdf.setFont('helvetica', 'normal');
+      pdf.text(empresa.telefono, M + 130, y + 4);
+      pdf.text(empresa.email, M + 130, y + 9);
+
+      pdf.save(`${proform.code}.pdf`);
+    }
+    //✅
+    function generarPDFGuia(proform) {
+
+      const desktop = document.querySelector("#dl_guia_desktop").checked
+      const mobile = document.querySelector("#dl_guia_mobile").checked
+
+      if (!desktop && !mobile) return
+
+      const { jsPDF } = window.jspdf;
+      const pdf = new jsPDF({ unit: 'mm', format: 'a4', orientation: 'landscape' });
+
+      const M = 10;
+      const W = 277;
+      let y = 12;
+
+      // ── HEADER ──
+      pdf.setFillColor(26, 58, 92);
+      pdf.rect(M, y, W, 10, 'F');
+      pdf.setTextColor(255);
+      pdf.setFontSize(8.5);
+      pdf.setFont('helvetica', 'bold');
+      pdf.text(`CLIENTE: ${proform.cliente?.nombre || ''}`, M + 3, y + 6.5);
+      pdf.text(`VENDEDOR: ${proform.vendedor || ''}`, M + 80, y + 6.5);
+      pdf.text(`Fecha: ${proform.fecha || ''}`, M + 160, y + 6.5);
+      pdf.text(`${proform.code} v${proform.version}`, M + W - 3, y + 6.5, { align: 'right' });
+      y += 16;
+
+      // ── TABLA ──
+      const productosActivos = proform.productos.filter(p => p.status === true);
+      const rows = [];
+
+      for (let [i, product] of productosActivos.entries()) {
+        for (let [j, option] of product.options.entries()) {
+          rows.push([
+            j === 0 ? i + 1 : '',
+            j === 0 ? product.cantidad : '',
+            j === 0 ? `S/ ${product.monto}` : '',
+            j === 0 ? product.nombre : '',
+            j === 0 ? product.comentario : '',
+            option.CODIGO_FORMATEADO,
+            option.STOCK_LV,
+            option.STOCK_SJL,
+            `${option.DESCRIPCION} / ${option.FAMILIA} / ${option.SUBFAMILIA}`,
+            option.EQUIVALENTES_STOCK || '',
+            option.UBICACION || 'pending',
+          ]);
+        }
+      }
+
+      pdf.autoTable({
+        startY: y,
+        margin: { left: M, right: M },
+        head: [['#', 'Cant.', 'Precio', 'Pedido', 'Comentario', 'Opciones', 'LV', 'SJL', 'Descripción', 'Equivalentes', 'Ubicación']],
+        body: rows,
+        styles: { fontSize: 7.5, cellPadding: 2.5, overflow: 'linebreak' },
+        headStyles: { fillColor: [15, 76, 129], textColor: 255, fontStyle: 'bold' },
+        alternateRowStyles: { fillColor: [249, 249, 249] },
+        columnStyles: {
+          0: { cellWidth: 10, halign: 'center' },
+          1: { cellWidth: 12, halign: 'center' },
+          2: { cellWidth: 16, halign: 'right' },
+          3: { cellWidth: 30 },
+          4: { cellWidth: 20 },
+          5: { cellWidth: 22 },
+          6: { cellWidth: 10, halign: 'center' },
+          7: { cellWidth: 10, halign: 'center' },
+          8: { cellWidth: 55 },
+          9: { cellWidth: 42 },
+          10: { cellWidth: 20, halign: 'center' },
+        }
+      });
+
+      y = pdf.lastAutoTable.finalY + 6;
+
+      // ── FOOTER ──
+      pdf.setFontSize(7.5);
+      pdf.setTextColor(120);
+      pdf.line(M, y, M + W, y);
+      y += 4;
+      pdf.setFont('helvetica', 'bold'); pdf.text('Condiciones', M, y);
+      pdf.setFont('helvetica', 'normal'); pdf.text('Precios sujetos a cambio sin previo aviso.', M, y + 4);
+      pdf.setFont('helvetica', 'bold'); pdf.text('Observaciones', M + 100, y);
+      pdf.setFont('helvetica', 'normal'); pdf.text('—', M + 100, y + 4);
+      pdf.setFont('helvetica', 'bold'); pdf.text('Contacto', M + 200, y);
+      pdf.setFont('helvetica', 'normal'); pdf.text('999 999 999', M + 200, y + 4);
+
+      pdf.save(`${proform.code}-guia.pdf`);
     }
 
-    y = startY + camposIzq.length * 5.5 + 4;
-    doc.line(M, y, M + W, y);
-    y += 4;
-
-    // ── TABLA PRODUCTOS ──
-    doc.autoTable({
-      startY: y,
-      margin: { left: M, right: 14 },
-      head: [['#', 'Descripción', 'Cantidad', 'Precio unit.', 'Importe']],
-      body: [
-        [1, 'BZM-P1000 LLAVE EXTRACTOR DE POLEA', 5, 'S/ 50.00', 'S/ 250.00'],
-      ],
-      styles: { fontSize: 8.5, cellPadding: 3 },
-      headStyles: { fillColor: [15, 76, 129], textColor: 255, fontStyle: 'bold' },
-      alternateRowStyles: { fillColor: [249, 249, 249] },
-      columnStyles: {
-        0: { cellWidth: 10, halign: 'center' },
-        1: { cellWidth: 90 },
-        2: { cellWidth: 22, halign: 'center' },
-        3: { cellWidth: 28, halign: 'right' },
-        4: { cellWidth: 28, halign: 'right' },
+    async function fetchToProforms() {
+      try {
+        const res = await fetch("/api/proforms");
+        const data = await res.json();
+        let proformsToPrint = data.payload;
+        await printProformas(proformsToPrint)
+      } catch (err) {
+        console.error(err);
+        toastError("error al cargar las proformas");
       }
-    });
-
-    y = doc.lastAutoTable.finalY + 4;
-
-    // ── TOTALES ──
-    const totX = M + W - 60;
-    const totW = 60;
-
-    doc.setFontSize(8.5);
-    doc.setTextColor(80);
-    doc.setFont('helvetica', 'normal');
-    doc.text('Subtotal', totX, y + 5);
-    doc.text('S/ 211.86', totX + totW, y + 5, { align: 'right' });
-    doc.text('IGV (18%)', totX, y + 11);
-    doc.text('S/ 38.14', totX + totW, y + 11, { align: 'right' });
-
-    doc.setFillColor(232, 93, 20);
-    doc.roundedRect(totX - 2, y + 14, totW + 2, 8, 2, 2, 'F');
-    doc.setTextColor(255);
-    doc.setFont('helvetica', 'bold');
-    doc.text('Importe total', totX + 1, y + 19.5);
-    doc.text('S/ 250.00', totX + totW - 1, y + 19.5, { align: 'right' });
-
-    y += 30;
-
-    // ── FOOTER ──
-    doc.setFontSize(8);
-    doc.setTextColor(120);
-    doc.setFont('helvetica', 'normal');
-    doc.line(M, y, M + W, y);
-    y += 5;
-    doc.setFont('helvetica', 'bold'); doc.text('Condiciones', M, y);
-    doc.setFont('helvetica', 'normal'); doc.text('Precios sujetos a cambio sin previo aviso.', M, y + 4);
-    doc.setFont('helvetica', 'bold'); doc.text('Observaciones', M + 65, y);
-    doc.setFont('helvetica', 'normal'); doc.text('—', M + 65, y + 4);
-    doc.setFont('helvetica', 'bold'); doc.text('Contacto', M + 130, y);
-    doc.setFont('helvetica', 'normal');
-    doc.text('999 999 999', M + 130, y + 4);
-    doc.text('ventas@maximportaciones.com.pe', M + 130, y + 9);
-
-    doc.save('DP-0000001.pdf');
-  }
-
-  function generarPDFGuia() {
-    const { jsPDF } = window.jspdf;
-    const doc = new jsPDF({ unit: 'mm', format: 'a4', orientation: 'landscape' });
-
-    const M = 10;
-    const W = 277;
-    let y = 12;
-
-    // ── HEADER ──
-    doc.setFillColor(26, 58, 92);
-    doc.rect(M, y, W, 10, 'F');
-    doc.setTextColor(255);
-    doc.setFontSize(8.5);
-    doc.setFont('helvetica', 'bold');
-    doc.text('CLIENTE: padelco', M + 3, y + 6.5);
-    doc.text('VENDEDOR: Lázaro', M + 80, y + 6.5);
-    doc.text('Fecha: 2026-04-19', M + 160, y + 6.5);
-    doc.text('DP-0000001 v6', M + W - 3, y + 6.5, { align: 'right' });
-    y += 16;
-
-    // ── TABLA ──
-    const rows = [
-      [1, 5, 'S/ 50', 'BZM-P1000 LLAVE EXTRACTOR DE POLEA', '', 'BZM-P1000', 14, 30, 'LLAVE EXTRACTOR DE POLEA / ALTERNADOR / POLEA', '', 'pending'],
-    ];
-
-    doc.autoTable({
-      startY: y,
-      margin: { left: M, right: M },
-      head: [['#', 'Cant.', 'Precio', 'Pedido', 'Comentario', 'Opciones', 'LV', 'SJL', 'Descripción', 'Equivalentes', 'Ubicación']],
-      body: rows,
-      styles: { fontSize: 7.5, cellPadding: 2.5, overflow: 'linebreak' },
-      headStyles: { fillColor: [15, 76, 129], textColor: 255, fontStyle: 'bold' },
-      alternateRowStyles: { fillColor: [249, 249, 249] },
-      columnStyles: {
-        0: { cellWidth: 10, halign: 'center' },
-        1: { cellWidth: 12, halign: 'center' },
-        2: { cellWidth: 16, halign: 'right' },
-        3: { cellWidth: 30 },
-        4: { cellWidth: 20 },
-        5: { cellWidth: 22 },
-        6: { cellWidth: 10, halign: 'center' },
-        7: { cellWidth: 10, halign: 'center' },
-        8: { cellWidth: 55 },
-        9: { cellWidth: 42 },
-        10: { cellWidth: 20, halign: 'center' },
-      }
-    });
-
-    y = doc.lastAutoTable.finalY + 6;
-
-    // ── FOOTER ──
-    doc.setFontSize(7.5);
-    doc.setTextColor(120);
-    doc.line(M, y, M + W, y);
-    y += 4;
-    doc.setFont('helvetica', 'bold'); doc.text('Condiciones', M, y);
-    doc.setFont('helvetica', 'normal'); doc.text('Precios sujetos a cambio sin previo aviso.', M, y + 4);
-    doc.setFont('helvetica', 'bold'); doc.text('Observaciones', M + 100, y);
-    doc.setFont('helvetica', 'normal'); doc.text('—', M + 100, y + 4);
-    doc.setFont('helvetica', 'bold'); doc.text('Contacto', M + 200, y);
-    doc.setFont('helvetica', 'normal'); doc.text('999 999 999', M + 200, y + 4);
-
-    doc.save('DP-0000001-guia.pdf');
-  }
-
-  document.querySelector("#dl_proforma_desktop").addEventListener("change", (e) => {
-    if (!e.target.checked) return;
-    generarPDFProforma(currentProform);
-    e.target.checked = false;
-  });
-
-  document.querySelector("#dl_guia_desktop").addEventListener("change", (e) => {
-    if (!e.target.checked) return;
-    generarPDFGuia(currentProform);
-    e.target.checked = false;
-  });
-</script>
+    }
+    fetchToProforms() 
+  </script>
 </body>
 
 </html>
