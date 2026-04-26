@@ -3,7 +3,7 @@
     "payload": {
       "doc": {
         "cliente": {
-          "nombre": "padelco",
+          "nombre": "sara",
           "ruc": "20154512151",
           "telefono": "95484585",
           "email": "resedisa@gmail.com",
@@ -72,336 +72,91 @@
         "tipo": "borrador",
         "versiones": [
           {
-            "cliente": {
-              "nombre": "resedisa",
-              "ruc": "20154512151",
-              "telefono": "95484585",
-              "email": "resedisa@gmail.com",
-              "direccion": "trujillo",
-              "provincia": "trujillo",
-              "ciudad": "trujillo"
-            },
-            "pagos": [],
-            "productos": [
-              {
-                "status": true,
-                "index": 1,
-                "nombre": "BZM-2867977 LAMBORGHINI ISKRA 11T 41MM CW 10SPL REFORZADO",
-                "monto": "50",
-                "cantidad": "5",
-                "comentario": "",
-                "total": 250,
-                "options": [
-                  {
-                    "status": "true",
-                    "ID": "pending",
-                    "CODIGO_FORMATEADO": "BZM-2867977",
-                    "CODIGO": "2867977",
-                    "STOCK_LV": 0,
-                    "STOCK_SJL": 0,
-                    "STOCK": 0,
-                    "EQUIVALENTES_STOCK": "",
-                    "DESCRIPCION": "LAMBORGHINI ISKRA 11T 41MM CW 10SPL REFORZADO",
-                    "FAMILIA": "ARRANCADOR",
-                    "SUBFAMILIA": "BENDIX",
-                    "PROVEEDOR": "BZM",
-                    "MARCA": "BZM",
-                    "UBICACION": "pending"
-                  }
-                ]
-              }
-            ],
-            "esNueva": false,
-            "tipo": "borrador",
-            "version": 1,
-            "code": "DP-0000001",
-            "vendedor": "Lázaro",
-            "entrega": "Agencia",
-            "destino": "trujillo",
-            "agencia": "trujillo express",
-            "atencion": "reynoso avalos",
-            "canal_de_venta": "Cartera",
-            "forma_de_pago": "Credito",
-            "fecha": "2026-04-19",
-            "comprobante": "Factura",
-            "status": true
-          },
-          {
-            "cliente": {
-              "nombre": "padelco",
-              "ruc": "20154512151",
-              "telefono": "95484585",
-              "email": "resedisa@gmail.com",
-              "direccion": "trujillo",
-              "provincia": "trujillo",
-              "ciudad": "trujillo"
-            },
-            "pagos": [],
-            "productos": [
-              {
-                "status": true,
-                "index": 1,
-                "nombre": "BZM-2867977 LAMBORGHINI ISKRA 11T 41MM CW 10SPL REFORZADO",
-                "monto": "50",
-                "cantidad": "5",
-                "comentario": "",
-                "total": 250,
-                "options": [
-                  {
-                    "status": "true",
-                    "ID": "pending",
-                    "CODIGO_FORMATEADO": "BZM-2867977",
-                    "CODIGO": "2867977",
-                    "STOCK_LV": 0,
-                    "STOCK_SJL": 0,
-                    "STOCK": 0,
-                    "EQUIVALENTES_STOCK": "",
-                    "DESCRIPCION": "LAMBORGHINI ISKRA 11T 41MM CW 10SPL REFORZADO",
-                    "FAMILIA": "ARRANCADOR",
-                    "SUBFAMILIA": "BENDIX",
-                    "PROVEEDOR": "BZM",
-                    "MARCA": "BZM",
-                    "UBICACION": "pending"
-                  }
-                ]
-              }
-            ],
-            "esNueva": false,
-            "tipo": "borrador",
-            "version": 2,
-            "code": "DP-0000001",
-            "vendedor": "Lázaro",
-            "entrega": "Agencia",
-            "destino": "trujillo",
-            "agencia": "trujillo express",
-            "atencion": "reynoso avalos",
-            "canal_de_venta": "Cartera",
-            "forma_de_pago": "Credito",
-            "fecha": "2026-04-19",
-            "comprobante": "Factura",
-            "status": true
-          },
-          {
-            "cliente": {
-              "nombre": "cajamarca",
-              "ruc": "20154512151",
-              "telefono": "95484585",
-              "email": "resedisa@gmail.com",
-              "direccion": "trujillo",
-              "provincia": "trujillo",
-              "ciudad": "trujillo"
-            },
-            "pagos": [],
-            "productos": [
-              {
-                "status": true,
-                "index": 1,
-                "nombre": "BZM-2867977 LAMBORGHINI ISKRA 11T 41MM CW 10SPL REFORZADO",
-                "monto": "50",
-                "cantidad": "5",
-                "comentario": "",
-                "total": 250,
-                "options": [
-                  {
-                    "status": "true",
-                    "ID": "pending",
-                    "CODIGO_FORMATEADO": "BZM-2867977",
-                    "CODIGO": "2867977",
-                    "STOCK_LV": 0,
-                    "STOCK_SJL": 0,
-                    "STOCK": 0,
-                    "EQUIVALENTES_STOCK": "",
-                    "DESCRIPCION": "LAMBORGHINI ISKRA 11T 41MM CW 10SPL REFORZADO",
-                    "FAMILIA": "ARRANCADOR",
-                    "SUBFAMILIA": "BENDIX",
-                    "PROVEEDOR": "BZM",
-                    "MARCA": "BZM",
-                    "UBICACION": "pending"
-                  }
-                ]
-              }
-            ],
-            "esNueva": false,
-            "tipo": "borrador",
-            "version": 3,
-            "code": "DP-0000001",
-            "vendedor": "Lázaro",
-            "entrega": "Agencia",
-            "destino": "trujillo",
-            "agencia": "trujillo express",
-            "atencion": "reynoso avalos",
-            "canal_de_venta": "Cartera",
-            "forma_de_pago": "Credito",
-            "fecha": "2026-04-19",
-            "comprobante": "Factura",
-            "status": true
-          },
-          {
-            "cliente": {
-              "nombre": "cajamarca",
-              "ruc": "20154512151",
-              "telefono": "95484585",
-              "email": "resedisa@gmail.com",
-              "direccion": "trujillo",
-              "provincia": "trujillo",
-              "ciudad": "trujillo"
-            },
-            "pagos": [],
-            "productos": [
-              {
-                "status": false,
-                "index": 1,
-                "nombre": "BZM-2867977 LAMBORGHINI ISKRA 11T 41MM CW 10SPL REFORZADO",
-                "monto": "50",
-                "cantidad": "5",
-                "comentario": "",
-                "total": 250,
-                "options": [
-                  {
-                    "status": "true",
-                    "ID": "pending",
-                    "CODIGO_FORMATEADO": "BZM-2867977",
-                    "CODIGO": "2867977",
-                    "STOCK_LV": 0,
-                    "STOCK_SJL": 0,
-                    "STOCK": 0,
-                    "EQUIVALENTES_STOCK": "",
-                    "DESCRIPCION": "LAMBORGHINI ISKRA 11T 41MM CW 10SPL REFORZADO",
-                    "FAMILIA": "ARRANCADOR",
-                    "SUBFAMILIA": "BENDIX",
-                    "PROVEEDOR": "BZM",
-                    "MARCA": "BZM",
-                    "UBICACION": "pending"
-                  }
-                ]
+            "doc": {
+              "cliente": {
+                "nombre": "padelco",
+                "ruc": "20154512151",
+                "telefono": "95484585",
+                "email": "resedisa@gmail.com",
+                "direccion": "trujillo",
+                "provincia": "trujillo",
+                "ciudad": "trujillo"
               },
-              {
-                "status": true,
-                "index": 2,
-                "nombre": "BZM-P1000 LLAVE EXTRACTOR DE POLEA",
-                "monto": "50",
-                "cantidad": "5",
-                "comentario": "",
-                "total": 250,
-                "options": [
-                  {
-                    "status": "true",
-                    "ID": "pending",
-                    "CODIGO_FORMATEADO": "BZM-P1000",
-                    "CODIGO": "P1000",
-                    "STOCK_LV": 14,
-                    "STOCK_SJL": 30,
-                    "STOCK": 44,
-                    "EQUIVALENTES_STOCK": "",
-                    "DESCRIPCION": "LLAVE EXTRACTOR DE POLEA",
-                    "FAMILIA": "ALTERNADOR",
-                    "SUBFAMILIA": "POLEA",
-                    "PROVEEDOR": "BZM",
-                    "MARCA": "BZM",
-                    "UBICACION": "pending"
-                  }
-                ]
-              }
-            ],
-            "esNueva": false,
-            "tipo": "borrador",
-            "version": 4,
-            "code": "DP-0000001",
-            "vendedor": "Lázaro",
-            "entrega": "Agencia",
-            "destino": "trujillo",
-            "agencia": "trujillo express",
-            "atencion": "reynoso avalos",
-            "canal_de_venta": "Cartera",
-            "forma_de_pago": "Credito",
-            "fecha": "2026-04-19",
-            "comprobante": "Factura",
-            "status": true
-          },
-          {
-            "cliente": {
-              "nombre": "sara",
-              "ruc": "20154512151",
-              "telefono": "95484585",
-              "email": "resedisa@gmail.com",
-              "direccion": "trujillo",
-              "provincia": "trujillo",
-              "ciudad": "trujillo"
-            },
-            "pagos": [],
-            "productos": [
-              {
-                "status": false,
-                "index": 1,
-                "nombre": "BZM-2867977 LAMBORGHINI ISKRA 11T 41MM CW 10SPL REFORZADO",
-                "monto": "50",
-                "cantidad": "5",
-                "comentario": "",
-                "total": 250,
-                "options": [
-                  {
-                    "status": "true",
-                    "ID": "pending",
-                    "CODIGO_FORMATEADO": "BZM-2867977",
-                    "CODIGO": "2867977",
-                    "STOCK_LV": 0,
-                    "STOCK_SJL": 0,
-                    "STOCK": 0,
-                    "EQUIVALENTES_STOCK": "",
-                    "DESCRIPCION": "LAMBORGHINI ISKRA 11T 41MM CW 10SPL REFORZADO",
-                    "FAMILIA": "ARRANCADOR",
-                    "SUBFAMILIA": "BENDIX",
-                    "PROVEEDOR": "BZM",
-                    "MARCA": "BZM",
-                    "UBICACION": "pending"
-                  }
-                ]
-              },
-              {
-                "status": true,
-                "index": 2,
-                "nombre": "BZM-P1000 LLAVE EXTRACTOR DE POLEA",
-                "monto": "50",
-                "cantidad": "5",
-                "comentario": "",
-                "total": 250,
-                "options": [
-                  {
-                    "status": "true",
-                    "ID": "pending",
-                    "CODIGO_FORMATEADO": "BZM-P1000",
-                    "CODIGO": "P1000",
-                    "STOCK_LV": 14,
-                    "STOCK_SJL": 30,
-                    "STOCK": 44,
-                    "EQUIVALENTES_STOCK": "",
-                    "DESCRIPCION": "LLAVE EXTRACTOR DE POLEA",
-                    "FAMILIA": "ALTERNADOR",
-                    "SUBFAMILIA": "POLEA",
-                    "PROVEEDOR": "BZM",
-                    "MARCA": "BZM",
-                    "UBICACION": "pending"
-                  }
-                ]
-              }
-            ],
-            "esNueva": false,
-            "tipo": "borrador",
-            "version": 5,
-            "code": "DP-0000001",
-            "vendedor": "Lázaro",
-            "entrega": "Agencia",
-            "destino": "trujillo",
-            "agencia": "trujillo express",
-            "atencion": "reynoso avalos",
-            "canal_de_venta": "Cartera",
-            "forma_de_pago": "Credito",
-            "fecha": "2026-04-19",
-            "comprobante": "Factura",
-            "status": true
+              "pagos": [],
+              "productos": [
+                {
+                  "status": false,
+                  "index": 1,
+                  "nombre": "BZM-2867977 LAMBORGHINI ISKRA 11T 41MM CW 10SPL REFORZADO",
+                  "monto": "50",
+                  "cantidad": "5",
+                  "comentario": "",
+                  "total": 250,
+                  "options": [
+                    {
+                      "status": "true",
+                      "ID": "pending",
+                      "CODIGO_FORMATEADO": "BZM-2867977",
+                      "CODIGO": "2867977",
+                      "STOCK_LV": 0,
+                      "STOCK_SJL": 0,
+                      "STOCK": 0,
+                      "EQUIVALENTES_STOCK": "",
+                      "DESCRIPCION": "LAMBORGHINI ISKRA 11T 41MM CW 10SPL REFORZADO",
+                      "FAMILIA": "ARRANCADOR",
+                      "SUBFAMILIA": "BENDIX",
+                      "PROVEEDOR": "BZM",
+                      "MARCA": "BZM",
+                      "UBICACION": "pending"
+                    }
+                  ]
+                },
+                {
+                  "status": true,
+                  "index": 2,
+                  "nombre": "BZM-P1000 LLAVE EXTRACTOR DE POLEA",
+                  "monto": "50",
+                  "cantidad": "5",
+                  "comentario": "",
+                  "total": 250,
+                  "options": [
+                    {
+                      "status": "true",
+                      "ID": "pending",
+                      "CODIGO_FORMATEADO": "BZM-P1000",
+                      "CODIGO": "P1000",
+                      "STOCK_LV": 14,
+                      "STOCK_SJL": 30,
+                      "STOCK": 44,
+                      "EQUIVALENTES_STOCK": "",
+                      "DESCRIPCION": "LLAVE EXTRACTOR DE POLEA",
+                      "FAMILIA": "ALTERNADOR",
+                      "SUBFAMILIA": "POLEA",
+                      "PROVEEDOR": "BZM",
+                      "MARCA": "BZM",
+                      "UBICACION": "pending"
+                    }
+                  ]
+                }
+              ],
+              "esNueva": false,
+              "tipo": "borrador",
+              "version": 1,
+              "code": "DP-0000001",
+              "vendedor": "Lázaro",
+              "entrega": "Agencia",
+              "destino": "trujillo",
+              "agencia": "trujillo express",
+              "atencion": "reynoso avalos",
+              "canal_de_venta": "Cartera",
+              "forma_de_pago": "Credito",
+              "fecha": "2026-04-19",
+              "comprobante": "Factura",
+              "status": true
+            }
           }
         ],
-        "version": 6,
+        "version": 2,
         "code": "DP-0000001",
         "vendedor": "Lázaro",
         "entrega": "Agencia",

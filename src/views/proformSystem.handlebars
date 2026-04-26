@@ -2,6 +2,11 @@
 <html lang="es">
 
 <head>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
+
+
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 
   <meta charset="UTF-8">
@@ -1230,7 +1235,7 @@
             <span class="group-label">Descargar</span>
             <div class="checks-col">
               <label id="dl_proforma-check" class="check-opt"><input type="checkbox" id="dl_proforma_mobile"> Proforma</label>
-              <label class="check-opt"><input type="checkbox" id="dlGuia"> Guía</label>
+              <label class="check-opt"><input type="checkbox" id="dl_guia_mobile"> Guía</label>
             </div>
           </div>
         </div>
@@ -1256,7 +1261,7 @@
           <span class="group-label">Descargar</span>
           <div class="checks-col">
             <label class="check-opt"><input type="checkbox" id="dl_proforma_desktop" > Proforma</label>
-            <label class="check-opt"><input type="checkbox"> Guía</label>
+            <label class="check-opt"><input type="checkbox" id="dl_guia_desktop"> Guía</label>
           </div>
         </div>
       </div>
@@ -2320,6 +2325,7 @@ toastSuccess("proforma cargada")
         currentProform = data.payload.payload.doc;
         await printAll();
         descargarProforma()
+        descargarGuia()
         toastSuccess("proforma traida")
       } catch (err) {
         console.error(err);
@@ -2429,23 +2435,23 @@ toastSuccess("proforma cargada")
         document.getElementById('preview-producto').classList.remove('open');
       }
   async function actualizarProforma() {
-    const body = {
-      code: "dp-0000555"
-    };
 
   const res = await fetch(`/api/proforms/${currentProform.code}`);
   if (!res.ok) {throw new Error("Proforma no encontrada");
   }
   const lastVersion = await res.json();
 
+  const lastVersionPayload = lastVersion.payload.payload
+
   const lastVersionDoc = lastVersion.payload.payload.doc
 
   const versiones_lastVersion = lastVersionDoc.versiones
 
-    const { versiones, ...lastVersionSinVersiones } = lastVersionDoc;
+  const { versiones, ...lastVersionSinVersiones } = lastVersionDoc;
 
+    lastVersionPayload.doc = lastVersionSinVersiones
+      versiones_lastVersion.push(lastVersionPayload)
 
-    versiones_lastVersion.push(lastVersionSinVersiones)
     currentProform.versiones = versiones_lastVersion
     currentProform.version = currentProform.version+1
  
@@ -2465,10 +2471,10 @@ toastSuccess("proforma cargada")
       toastError("error al actualizar la proforma");
     }
   }
-//✅
+  
+//❗problema con el elemento oculto
   function descargarProforma() {
     printAll();
-
     const mobile = document.querySelector("#dl_proforma_mobile").checked;
     const desktop = document.querySelector("#dl_proforma_desktop").checked;
 
@@ -2476,7 +2482,7 @@ toastSuccess("proforma cargada")
       const elemento = document.getElementById('tab-proforma');
       requestAnimationFrame(() => {
         setTimeout(() => {
-          const numeroDoc = document.querySelector('.doc-num').textContent.trim(); // ← acá
+          const numeroDoc = document.querySelector('.doc-num').textContent.trim();
 
           const opciones = {
             margin: [8, 8, 8, 8],
@@ -2501,6 +2507,39 @@ toastSuccess("proforma cargada")
 
       }
   }
+
+//ibid
+    function descargarGuia() {
+        printAll();
+        const mobile = document.querySelector("#dl_guia_mobile").checked;
+        const desktop = document.querySelector("#dl_guia_desktop").checked;
+
+        if (mobile || desktop) {
+          const elemento = document.getElementById('tab-guia');
+          console.log("elemento: ", elemento)
+          requestAnimationFrame(() => {
+            setTimeout(() => {
+              const numeroDoc = document.querySelector('.doc-num').textContent.trim(); // ← acá
+
+              const opciones = {
+                margin: [8, 8, 8, 8],
+                filename: `${numeroDoc}-guia.pdf`,
+                image: { type: 'jpeg', quality: 0.98 },
+                html2canvas: { scale: 2, useCORS: true, scrollY: 0 },
+                jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+              };
+
+              html2pdf()
+                .set(opciones)
+                .from(elemento)
+                .save()
+                     }, 100);
+          });
+
+        }
+      }
+
+
     function conexiones() {
       //tipo✅
       fields.tipo.addEventListener("change", (e) => {
@@ -2792,7 +2831,222 @@ toastSuccess("proforma cargada")
 
     conexiones()
 
-  </script>
+//testing !!❗
+  function generarPDFProforma() {
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF({ unit: 'mm', format: 'a4' });
+
+    const M = 14;
+    const W = 182;
+    let y = 14;
+
+    // ── HEADER ──
+    doc.setFontSize(9);
+    doc.setTextColor(80);
+    doc.setFont('helvetica', 'bold');
+    doc.text('Max Importaciones y Servicios Generales S.A.C.', M, y);
+    doc.setFont('helvetica', 'normal');
+    doc.text('RUC: 20503534194', M, y + 5);
+    doc.text('Cal. Garcia Naranjo Nro. 114b - La Victoria - Lima', M, y + 10);
+    doc.text('Tel: 999 999 999', M, y + 15);
+    doc.text('ventas@maximportaciones.com.pe', M, y + 20);
+
+    doc.setFont('helvetica', 'bold');
+    doc.setFontSize(18);
+    doc.setTextColor(15, 76, 129);
+    doc.text('DP-0000001', 196, y + 4, { align: 'right' });
+    doc.setFontSize(9);
+    doc.setTextColor(120);
+    doc.setFont('helvetica', 'normal');
+    doc.text('Fecha: 2026-04-19', 196, y + 10, { align: 'right' });
+
+    y += 28;
+    doc.setDrawColor(220);
+    doc.line(M, y, M + W, y);
+    y += 6;
+
+    // ── DATOS CLIENTE ──
+    doc.setFontSize(8.5);
+    doc.setTextColor(50);
+    const col1 = M;
+    const col2 = M + W / 2 + 4;
+
+    const camposIzq = [
+      ['Cliente:', 'padelco'],
+      ['RUC/DNI:', '20154512151'],
+      ['Dirección:', 'trujillo'],
+      ['Provincia:', 'trujillo'],
+      ['Destino:', 'trujillo'],
+      ['Forma pago:', 'Credito'],
+      ['Agencia:', 'trujillo express'],
+      ['Vendedor:', 'Lázaro'],
+    ];
+    const camposDer = [
+      ['Teléfono:', '95484585'],
+      ['Mail:', 'resedisa@gmail.com'],
+      ['Entrega:', 'Agencia'],
+      ['Ciudad:', 'trujillo'],
+      ['Canal de venta:', 'Cartera'],
+      ['Comprobante:', 'Factura'],
+      ['Atención:', 'reynoso avalos'],
+      ['', ''],
+    ];
+
+    const startY = y;
+    for (let i = 0; i < camposIzq.length; i++) {
+      const rowY = startY + i * 5.5;
+      doc.setFont('helvetica', 'bold');
+      doc.text(camposIzq[i][0], col1, rowY);
+      doc.setFont('helvetica', 'normal');
+      doc.text(camposIzq[i][1], col1 + 22, rowY);
+      doc.setFont('helvetica', 'bold');
+      doc.text(camposDer[i][0], col2, rowY);
+      doc.setFont('helvetica', 'normal');
+      doc.text(camposDer[i][1], col2 + 26, rowY);
+    }
+
+    y = startY + camposIzq.length * 5.5 + 4;
+    doc.line(M, y, M + W, y);
+    y += 4;
+
+    // ── TABLA PRODUCTOS ──
+    doc.autoTable({
+      startY: y,
+      margin: { left: M, right: 14 },
+      head: [['#', 'Descripción', 'Cantidad', 'Precio unit.', 'Importe']],
+      body: [
+        [1, 'BZM-P1000 LLAVE EXTRACTOR DE POLEA', 5, 'S/ 50.00', 'S/ 250.00'],
+      ],
+      styles: { fontSize: 8.5, cellPadding: 3 },
+      headStyles: { fillColor: [15, 76, 129], textColor: 255, fontStyle: 'bold' },
+      alternateRowStyles: { fillColor: [249, 249, 249] },
+      columnStyles: {
+        0: { cellWidth: 10, halign: 'center' },
+        1: { cellWidth: 90 },
+        2: { cellWidth: 22, halign: 'center' },
+        3: { cellWidth: 28, halign: 'right' },
+        4: { cellWidth: 28, halign: 'right' },
+      }
+    });
+
+    y = doc.lastAutoTable.finalY + 4;
+
+    // ── TOTALES ──
+    const totX = M + W - 60;
+    const totW = 60;
+
+    doc.setFontSize(8.5);
+    doc.setTextColor(80);
+    doc.setFont('helvetica', 'normal');
+    doc.text('Subtotal', totX, y + 5);
+    doc.text('S/ 211.86', totX + totW, y + 5, { align: 'right' });
+    doc.text('IGV (18%)', totX, y + 11);
+    doc.text('S/ 38.14', totX + totW, y + 11, { align: 'right' });
+
+    doc.setFillColor(232, 93, 20);
+    doc.roundedRect(totX - 2, y + 14, totW + 2, 8, 2, 2, 'F');
+    doc.setTextColor(255);
+    doc.setFont('helvetica', 'bold');
+    doc.text('Importe total', totX + 1, y + 19.5);
+    doc.text('S/ 250.00', totX + totW - 1, y + 19.5, { align: 'right' });
+
+    y += 30;
+
+    // ── FOOTER ──
+    doc.setFontSize(8);
+    doc.setTextColor(120);
+    doc.setFont('helvetica', 'normal');
+    doc.line(M, y, M + W, y);
+    y += 5;
+    doc.setFont('helvetica', 'bold'); doc.text('Condiciones', M, y);
+    doc.setFont('helvetica', 'normal'); doc.text('Precios sujetos a cambio sin previo aviso.', M, y + 4);
+    doc.setFont('helvetica', 'bold'); doc.text('Observaciones', M + 65, y);
+    doc.setFont('helvetica', 'normal'); doc.text('—', M + 65, y + 4);
+    doc.setFont('helvetica', 'bold'); doc.text('Contacto', M + 130, y);
+    doc.setFont('helvetica', 'normal');
+    doc.text('999 999 999', M + 130, y + 4);
+    doc.text('ventas@maximportaciones.com.pe', M + 130, y + 9);
+
+    doc.save('DP-0000001.pdf');
+  }
+
+  function generarPDFGuia() {
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF({ unit: 'mm', format: 'a4', orientation: 'landscape' });
+
+    const M = 10;
+    const W = 277;
+    let y = 12;
+
+    // ── HEADER ──
+    doc.setFillColor(26, 58, 92);
+    doc.rect(M, y, W, 10, 'F');
+    doc.setTextColor(255);
+    doc.setFontSize(8.5);
+    doc.setFont('helvetica', 'bold');
+    doc.text('CLIENTE: padelco', M + 3, y + 6.5);
+    doc.text('VENDEDOR: Lázaro', M + 80, y + 6.5);
+    doc.text('Fecha: 2026-04-19', M + 160, y + 6.5);
+    doc.text('DP-0000001 v6', M + W - 3, y + 6.5, { align: 'right' });
+    y += 16;
+
+    // ── TABLA ──
+    const rows = [
+      [1, 5, 'S/ 50', 'BZM-P1000 LLAVE EXTRACTOR DE POLEA', '', 'BZM-P1000', 14, 30, 'LLAVE EXTRACTOR DE POLEA / ALTERNADOR / POLEA', '', 'pending'],
+    ];
+
+    doc.autoTable({
+      startY: y,
+      margin: { left: M, right: M },
+      head: [['#', 'Cant.', 'Precio', 'Pedido', 'Comentario', 'Opciones', 'LV', 'SJL', 'Descripción', 'Equivalentes', 'Ubicación']],
+      body: rows,
+      styles: { fontSize: 7.5, cellPadding: 2.5, overflow: 'linebreak' },
+      headStyles: { fillColor: [15, 76, 129], textColor: 255, fontStyle: 'bold' },
+      alternateRowStyles: { fillColor: [249, 249, 249] },
+      columnStyles: {
+        0: { cellWidth: 10, halign: 'center' },
+        1: { cellWidth: 12, halign: 'center' },
+        2: { cellWidth: 16, halign: 'right' },
+        3: { cellWidth: 30 },
+        4: { cellWidth: 20 },
+        5: { cellWidth: 22 },
+        6: { cellWidth: 10, halign: 'center' },
+        7: { cellWidth: 10, halign: 'center' },
+        8: { cellWidth: 55 },
+        9: { cellWidth: 42 },
+        10: { cellWidth: 20, halign: 'center' },
+      }
+    });
+
+    y = doc.lastAutoTable.finalY + 6;
+
+    // ── FOOTER ──
+    doc.setFontSize(7.5);
+    doc.setTextColor(120);
+    doc.line(M, y, M + W, y);
+    y += 4;
+    doc.setFont('helvetica', 'bold'); doc.text('Condiciones', M, y);
+    doc.setFont('helvetica', 'normal'); doc.text('Precios sujetos a cambio sin previo aviso.', M, y + 4);
+    doc.setFont('helvetica', 'bold'); doc.text('Observaciones', M + 100, y);
+    doc.setFont('helvetica', 'normal'); doc.text('—', M + 100, y + 4);
+    doc.setFont('helvetica', 'bold'); doc.text('Contacto', M + 200, y);
+    doc.setFont('helvetica', 'normal'); doc.text('999 999 999', M + 200, y + 4);
+
+    doc.save('DP-0000001-guia.pdf');
+  }
+
+  document.querySelector("#dl_proforma_desktop").addEventListener("change", (e) => {
+    if (!e.target.checked) return;
+    generarPDFProforma(currentProform);
+    e.target.checked = false;
+  });
+
+  document.querySelector("#dl_guia_desktop").addEventListener("change", (e) => {
+    if (!e.target.checked) return;
+    generarPDFGuia(currentProform);
+    e.target.checked = false;
+  });
+</script>
 </body>
 
 </html>
