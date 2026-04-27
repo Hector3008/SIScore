@@ -1214,6 +1214,202 @@
   background: #1565c0;
   color: #fff;
 }
+#es_nueva {color: #fff}
+
+
+.detalle-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.detalle-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 3px 6px;
+  border-radius: 4px;
+  font-size: 10px;
+}
+
+.detalle-row:nth-child(odd) { background: #0f1520; }
+.detalle-row:nth-child(even) { background: transparent; }
+
+.detalle-row span:first-child {
+  color: #8892a4;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: .3px;
+  flex-shrink: 0;
+}
+
+.detalle-row span:last-child {
+  color: #e8eaf0;
+  text-align: right;
+}
+
+
+.drawer-overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  right: 0;
+  height: 100vh;
+  width: 620px;      /* ← solo el ancho del panel */
+  max-width: 100vw;
+  z-index: 998;
+  /* sin fondo oscuro, sin inset:0 */
+}
+
+.drawer-overlay.open { display: block; }
+
+.drawer-panel {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 620px;
+  max-width: 100vw;
+  background: #1a1f2e;
+  border-left: 1px solid #3a4155;
+  display: flex;
+  flex-direction: column;
+  box-shadow: -4px 0 24px rgba(0,0,0,0.5);
+  animation: slideInRight 0.2s ease;
+}
+
+@keyframes slideInRight {
+  from { transform: translateX(100%); opacity: 0; }
+  to   { transform: translateX(0);    opacity: 1; }
+}
+
+.drawer-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 18px;
+  border-bottom: 1px solid #2a3040;
+  font-size: 12px;
+  font-weight: 500;
+  color: #e8eaf0;
+  flex-shrink: 0;
+}
+
+.drawer-body {
+  display: grid;
+  grid-template-columns: 160px 1fr;
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.drawer-list {
+  border-right: 1px solid #2a3040;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  padding: 8px 0;
+}
+
+.drawer-version-item {
+  padding: 10px 14px;
+  cursor: pointer;
+  border-left: 3px solid transparent;
+  transition: background 0.1s;
+}
+
+.drawer-version-item:hover { background: #1e2535; }
+
+.drawer-version-item.active {
+  background: #0f1520;
+  border-left-color: #0f4c81;
+}
+
+.drawer-version-item .v-num {
+  font-size: 11px;
+  font-weight: 600;
+  color: #7eb3f5;
+  font-family: monospace;
+}
+
+.drawer-version-item .v-fecha {
+  font-size: 9px;
+  color: #8892a4;
+  margin-top: 2px;
+}
+
+.drawer-version-item .v-cliente {
+  font-size: 9px;
+  color: #c8cdd8;
+  margin-top: 2px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.drawer-detail {
+  overflow-y: auto;
+  padding: 14px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.drawer-section-label {
+  font-size: 9px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: .5px;
+  color: #8892a4;
+  margin-bottom: 4px;
+  margin-top: 6px;
+}
+
+.drawer-detail-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.drawer-detail-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 3px 6px;
+  border-radius: 4px;
+  font-size: 10px;
+}
+
+.drawer-detail-row:nth-child(odd)  { background: #0f1520; }
+.drawer-detail-row:nth-child(even) { background: transparent; }
+
+.drawer-detail-row span:first-child {
+  color: #8892a4;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: .3px;
+  flex-shrink: 0;
+  min-width: 90px;
+}
+
+.drawer-detail-row span:last-child {
+  color: #e8eaf0;
+  text-align: right;
+}
+
+.drawer-producto-row {
+  background: #0f1520;
+  border-radius: 5px;
+  padding: 6px 10px;
+  font-size: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+}
+
+.drawer-producto-row span:first-child { color: #c8cdd8; flex: 1; }
+.drawer-producto-row span:last-child  { color: #7eb3f5; white-space: nowrap; font-family: monospace; }
+
   </style>
 </head>
 
@@ -1238,7 +1434,9 @@
         <!-- col2-->
         <div class="doc-block">
           <div class="doc-id">DP-0000001</div>
-          <div class="doc-date">23/02/2026 <strong id="es_nueva"></strong></div>
+          <div class="doc-date">23/02/2026 <strong id="es_nueva"></strong><strong id="proforma_details">ver más...</strong>
+          
+          </div>
         </div>
         <select id="tipo" onchange="currentProform.tipo = this.value">
           <option value="borrador">Borrador</option>
@@ -1750,7 +1948,7 @@
 
     </div>
   </div>
-
+<!-- Toast: editarproducto -->
   <div id="toast-editar-producto" class="toast-overlay" onclick="cerrarToastEditarProducto()">
     <div class="toast-box" onclick="event.stopPropagation()">
       <div class="toast-header">
@@ -1774,6 +1972,86 @@
       </div>
     </div>
   </div>
+<!-- Toast: proform details -->
+<div id="toast-detalles-proforma" class="toast-overlay">
+  <div class="toast-box toast-box-wide" onclick="event.stopPropagation()" style="max-height: 80vh; overflow-y: auto;">
+    <div class="toast-header">
+      <span>Detalles — <span id="detalle_code"></span></span>
+      <button class="toast-close" onclick="cerrarDetallesProforma()">✕</button>
+    </div>
+    <div class="toast-body" style="gap:4px">
+
+      <label class="toast-label">Documento</label>
+      <div class="detalle-grid">
+        <div class="detalle-row"><span>Código</span><span id="detalle_code2"></span></div>
+        <div class="detalle-row"><span>Tipo</span><span id="detalle_tipo"></span></div>
+        <div class="detalle-row"><span>Versión</span><span id="detalle_version"></span></div>
+        <div class="detalle-row"><span>Fecha</span><span id="detalle_fecha"></span></div>
+        <div class="detalle-row"><span>Empresa</span><span id="detalle_empresa"></span></div>
+        <div class="detalle-row"><span>Vendedor</span><span id="detalle_vendedor"></span></div>
+        <div class="detalle-row"><span>Estado</span><span id="detalle_status"></span></div>
+        <div class="detalle-row"><span>Es nueva</span><span id="detalle_nueva"></span></div>
+      </div>
+
+      <label class="toast-label" style="margin-top:8px">Cliente</label>
+      <div class="detalle-grid">
+        <div class="detalle-row"><span>Nombre</span><span id="detalle_cliente_nombre"></span></div>
+        <div class="detalle-row"><span>RUC/DNI</span><span id="detalle_cliente_ruc"></span></div>
+        <div class="detalle-row"><span>Teléfono</span><span id="detalle_cliente_tel"></span></div>
+        <div class="detalle-row"><span>Email</span><span id="detalle_cliente_email"></span></div>
+        <div class="detalle-row"><span>Dirección</span><span id="detalle_cliente_dir"></span></div>
+        <div class="detalle-row"><span>Provincia</span><span id="detalle_cliente_prov"></span></div>
+        <div class="detalle-row"><span>Ciudad</span><span id="detalle_cliente_ciudad"></span></div>
+      </div>
+
+      <label class="toast-label" style="margin-top:8px">Logística</label>
+      <div class="detalle-grid">
+        <div class="detalle-row"><span>Entrega</span><span id="detalle_entrega"></span></div>
+        <div class="detalle-row"><span>Destino</span><span id="detalle_destino"></span></div>
+        <div class="detalle-row"><span>Agencia</span><span id="detalle_agencia"></span></div>
+        <div class="detalle-row"><span>Atención</span><span id="detalle_atencion"></span></div>
+        <div class="detalle-row"><span>Canal venta</span><span id="detalle_canal"></span></div>
+        <div class="detalle-row"><span>Forma pago</span><span id="detalle_forma_pago"></span></div>
+        <div class="detalle-row"><span>Comprobante</span><span id="detalle_comprobante"></span></div>
+      </div>
+
+      <label class="toast-label" style="margin-top:8px">Productos</label>
+      <div id="detalle_productos" style="display:flex;flex-direction:column;gap:4px"></div>
+
+      <label class="toast-label" style="margin-top:8px">Versiones guardadas</label>
+      <div class="detalle-row"><span>Total versiones</span><span id="detalle_versiones"></span></div>
+      <button class="btn" style="color:#e6e4ff" onclick="abrirDrawerVersiones()">ver versiones</button>
+
+    </div>
+  </div>
+</div>
+
+<!-- DRAWER: historial de versiones -->
+<div id="drawer-versiones" class="drawer-overlay">
+  <div class="drawer-panel" onclick="event.stopPropagation()">
+
+    <div class="drawer-header">
+      <span>Historial de versiones — <span id="drawer-code"></span></span>
+      <button class="toast-close" onclick="cerrarDrawerVersiones()">✕</button>
+    </div>
+
+    <div class="drawer-body">
+
+      <!-- columna izquierda: lista de versiones -->
+      <div class="drawer-list" id="drawer-list">
+      </div>
+
+      <!-- columna derecha: detalle de version seleccionada -->
+      <div class="drawer-detail" id="drawer-detail">
+        <div style="color:#8892a4; font-size:11px; margin-top:20px; text-align:center">
+          Selecciona una versión
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
 
   <script>//responsive:
     /* Ocultar el bloque desktop en mobile y viceversa */
@@ -2300,11 +2578,14 @@
         for (let doc of doc_num) {
           if (!currentProform.esNueva) {
             document.querySelector("#es_nueva").textContent = ""
+            document.querySelector("#proforma_details").textContent = "ver más..."
             doc.textContent = currentProform.code
           } else {
             doc.textContent = proformNumber;
             currentProform.code = proformNumber
             document.querySelector("#es_nueva").textContent = "[Nueva]"
+            
+            document.querySelector("#proforma_details").textContent = ""
           }
         }
       }
@@ -2645,6 +2926,7 @@
     //✅
     function reiniciarFormulario() {
       cleanAll()
+      toastSuccess("formulario reiniciado")
     }
 
     
@@ -2694,8 +2976,160 @@
         
       }
 
-    function conexiones() {
+      function abrirDetallesProforma() {
+          const p = currentProform;
 
+          document.getElementById('detalle_code').textContent = p.code || '—';
+          document.getElementById('detalle_code2').textContent = p.code || '—';
+          document.getElementById('detalle_tipo').textContent = p.tipo || '—';
+          document.getElementById('detalle_version').textContent = p.version || '—';
+          document.getElementById('detalle_fecha').textContent = p.fecha || '—';
+          document.getElementById('detalle_empresa').textContent = p.empresa || '—';
+          document.getElementById('detalle_vendedor').textContent = p.vendedor || '—';
+          document.getElementById('detalle_status').textContent = p.status ? 'Activo' : 'Inactivo';
+          document.getElementById('detalle_nueva').textContent = p.esNueva ? 'Sí' : 'No';
+
+          document.getElementById('detalle_cliente_nombre').textContent = p.cliente?.nombre || '—';
+          document.getElementById('detalle_cliente_ruc').textContent = p.cliente?.ruc || '—';
+          document.getElementById('detalle_cliente_tel').textContent = p.cliente?.telefono || '—';
+          document.getElementById('detalle_cliente_email').textContent = p.cliente?.email || '—';
+          document.getElementById('detalle_cliente_dir').textContent = p.cliente?.direccion || '—';
+          document.getElementById('detalle_cliente_prov').textContent = p.cliente?.provincia || '—';
+          document.getElementById('detalle_cliente_ciudad').textContent = p.cliente?.ciudad || '—';
+
+          document.getElementById('detalle_entrega').textContent = p.entrega || '—';
+          document.getElementById('detalle_destino').textContent = p.destino || '—';
+          document.getElementById('detalle_agencia').textContent = p.agencia || '—';
+          document.getElementById('detalle_atencion').textContent = p.atencion || '—';
+          document.getElementById('detalle_canal').textContent = p.canal_de_venta || '—';
+          document.getElementById('detalle_forma_pago').textContent = p.forma_de_pago || '—';
+          document.getElementById('detalle_comprobante').textContent = p.comprobante || '—';
+
+          // productos
+          const cont = document.getElementById('detalle_productos');
+          cont.innerHTML = '';
+          p.productos.filter(pr => pr.status).forEach((pr, i) => {
+            const div = document.createElement('div');
+            div.className = 'detalle-row';
+            div.innerHTML = `
+      <span>${i + 1}. ${pr.nombre}</span>
+      <span>${pr.cantidad} × S/ ${pr.monto} = S/ ${pr.total}</span>
+    `;
+            cont.appendChild(div);
+          });
+
+          document.getElementById('detalle_versiones').textContent = p.versiones?.length || 0;
+
+          document.getElementById('toast-detalles-proforma').classList.add('open');
+        }
+
+        function cerrarDetallesProforma() {
+          document.getElementById('toast-detalles-proforma').classList.remove('open');
+        }
+
+
+  function abrirDrawerVersiones() {
+    const versiones = currentProform.versiones || [];
+    document.getElementById('drawer-code').textContent = currentProform.code || '';
+
+    const list = document.getElementById('drawer-list');
+    list.innerHTML = '';
+
+    if (versiones.length === 0) {
+      list.innerHTML = '<div style="padding:14px;font-size:10px;color:#8892a4">Sin versiones anteriores</div>';
+    } else {
+      versiones.forEach((v, i) => {
+        const item = document.createElement('div');
+        item.className = 'drawer-version-item';
+        item.innerHTML = `
+        <div class="v-num">v${v.version ?? i + 1}</div>
+        <div class="v-fecha">${v.doc.fecha || '—'}</div>
+        <div class="v-cliente">${v.doc.cliente?.nombre || '—'}</div>
+      `;
+        item.addEventListener('click', () => {
+          document.querySelectorAll('.drawer-version-item').forEach(el => el.classList.remove('active'));
+          item.classList.add('active');
+          renderDetalleVersion(v);
+        });
+        list.appendChild(item);
+      });
+    }
+
+    document.getElementById('drawer-detail').innerHTML = `
+    <div style="color:#8892a4; font-size:11px; margin-top:20px; text-align:center">
+      Selecciona una versión
+    </div>`;
+
+    document.getElementById('drawer-versiones').classList.add('open');
+  }
+
+  function renderDetalleVersion(v) {
+    const cont = document.getElementById('drawer-detail');
+
+    const productosActivos = (v.doc.productos || []).filter(p => p.status === true);
+    const suma = productosActivos.reduce((acc, p) => acc + Number(p.total || 0), 0);
+
+    cont.innerHTML = `
+    <div class="drawer-section-label">Documento</div>
+    <div class="drawer-detail-grid">
+      <div class="drawer-detail-row"><span>Código</span><span>${v.doc.code || '—'}</span></div>
+      <div class="drawer-detail-row"><span>Versión</span><span>${v.doc.version ?? '—'}</span></div>
+      <div class="drawer-detail-row"><span>Tipo</span><span>${v.doc.tipo || '—'}</span></div>
+      <div class="drawer-detail-row"><span>Fecha</span><span>${v.doc.fecha || '—'}</span></div>
+      <div class="drawer-detail-row"><span>Empresa</span><span>${v.doc.empresa || '—'}</span></div>
+      <div class="drawer-detail-row"><span>Vendedor</span><span>${v.doc.vendedor || '—'}</span></div>
+      <div class="drawer-detail-row"><span>Comprobante</span><span>${v.doc.comprobante || '—'}</span></div>
+      <div class="drawer-detail-row"><span>Estado</span><span>${v.doc.status ? 'Activo' : 'Inactivo'}</span></div>
+    </div>
+
+    <div class="drawer-section-label">Cliente</div>
+    <div class="drawer-detail-grid">
+      <div class="drawer-detail-row"><span>Nombre</span><span>${v.doc.cliente?.nombre || '—'}</span></div>
+      <div class="drawer-detail-row"><span>RUC/DNI</span><span>${v.doc.cliente?.ruc || '—'}</span></div>
+      <div class="drawer-detail-row"><span>Teléfono</span><span>${v.doc.cliente?.telefono || '—'}</span></div>
+      <div class="drawer-detail-row"><span>Email</span><span>${v.doc.cliente?.email || '—'}</span></div>
+      <div class="drawer-detail-row"><span>Dirección</span><span>${v.doc.cliente?.direccion || '—'}</span></div>
+      <div class="drawer-detail-row"><span>Provincia</span><span>${v.doc.cliente?.provincia || '—'}</span></div>
+      <div class="drawer-detail-row"><span>Ciudad</span><span>${v.doc.cliente?.ciudad || '—'}</span></div>
+    </div>
+
+    <div class="drawer-section-label">Logística</div>
+    <div class="drawer-detail-grid">
+      <div class="drawer-detail-row"><span>Entrega</span><span>${v.doc.entrega || '—'}</span></div>
+      <div class="drawer-detail-row"><span>Destino</span><span>${v.doc.destino || '—'}</span></div>
+      <div class="drawer-detail-row"><span>Agencia</span><span>${v.doc.agencia || '—'}</span></div>
+      <div class="drawer-detail-row"><span>Atención</span><span>${v.doc.atencion || '—'}</span></div>
+      <div class="drawer-detail-row"><span>Canal venta</span><span>${v.doc.canal_de_venta || '—'}</span></div>
+      <div class="drawer-detail-row"><span>Forma pago</span><span>${v.doc.forma_de_pago || '—'}</span></div>
+    </div>
+
+    <div class="drawer-section-label">Productos (${productosActivos.length}) — Total: S/ ${suma.toFixed(2)}</div>
+    <div style="display:flex;flex-direction:column;gap:4px">
+      ${productosActivos.map((p, i) => `
+        <div class="drawer-producto-row">
+          <span>${i + 1}. ${p.nombre}</span>
+          <span>${p.cantidad} × S/${p.monto} = S/${p.total}</span>
+        </div>
+      `).join('')}
+    </div>
+
+    <div class="drawer-section-label">Versiones guardadas</div>
+    <div class="drawer-detail-grid">
+      <div class="drawer-detail-row"><span>Total</span><span>${currentProform.versiones?.length || 0}</span></div>
+    </div>
+  `;
+  }
+
+  function cerrarDrawerVersiones() {
+    document.getElementById('drawer-versiones').classList.remove('open');
+  }
+
+    function conexiones() {
+      document.querySelector(".doc-block").addEventListener("click", (e) => {
+        if (e.target.id === "proforma_details") {
+          abrirDetallesProforma();
+        }
+      });
       //tipo✅
       fields.tipo.addEventListener("change", (e) => {
         currentProform.tipo = e.target.value
