@@ -1707,8 +1707,7 @@
     </div>
   </div>
 
-
-  <!-- Toast: preview producto -->
+    <!-- Toast: preview producto -->
   <div id="preview-producto" class="preview-overlay" onclick="cerrarPreviewProducto()">
     <div class="preview-product-card" onclick="event.stopPropagation()">
       <div class="ppc-header">
@@ -1751,6 +1750,31 @@
 
     </div>
   </div>
+
+  <div id="toast-editar-producto" class="toast-overlay" onclick="cerrarToastEditarProducto()">
+    <div class="toast-box" onclick="event.stopPropagation()">
+      <div class="toast-header">
+        <span>Editar producto</span>
+        <button class="toast-close" onclick="cerrarToastEditarProducto()">✕</button>
+      </div>
+      <div class="toast-body">
+        <label class="toast-label">Index: <span id="editar_index"></span></label>
+        <label class="toast-label">Descripción</label>
+        <input type="text" id="editar_nombre" class="toast-input" placeholder="Nombre del producto" />
+        <label class="toast-label">Cantidad</label>
+        <input type="number" id="editar_cantidad" class="toast-input" placeholder="Cantidad" />
+        <label class="toast-label">Precio unitario</label>
+        <input type="number" id="editar_monto" class="toast-input" placeholder="Precio unit." />
+        <label class="toast-label">Comentario</label>
+        <input type="text" id="editar_comentario" class="toast-input" placeholder="Comentario" />
+      </div>
+      <div class="toast-footer">
+        <button class="btn-sm btn-sm-blue" onclick="confirmarEditarProducto()">Guardar</button>
+        <button class="btn-sm" style="background:#444" onclick="cerrarToastEditarProducto()">Cancelar</button>
+      </div>
+    </div>
+  </div>
+
   <script>//responsive:
     /* Ocultar el bloque desktop en mobile y viceversa */
     const desktopActions = document.getElementById('desktopActions');
@@ -1947,6 +1971,16 @@
       traerProforma: document.querySelector("#traer_proforma_btn")
 
     }
+    const toast = {
+      editar: {
+        index: document.querySelector("#editar_index"),
+        nombre: document.querySelector("#editar_nombre"),
+        cantidad: document.querySelector("#editar_cantidad"),
+        monto: document.querySelector("#editar_monto"),
+        comentario: document.querySelector("#editar_comentario")
+      }
+    }
+    
     //✅
     function printProductSearch(products) {
       tables.products.innerHTML = ""
@@ -2011,6 +2045,7 @@
     printPagos(currentProform.pagos)
 
     function printProforma(products) {
+      products = products.filter(p=>p.status===true)
       tables.proforma.innerHTML = ""
       for (let [i, product] of products.entries()) {
         let tr = document.createElement("tr")
@@ -2611,6 +2646,55 @@
     function reiniciarFormulario() {
       cleanAll()
     }
+
+    
+      let productoEditandoIndex = null;
+
+      function abrirToastEditarProducto(index) {
+        const product = currentProform.productos.find(p => p.index == index);
+        if (!product) return;
+
+        productoEditandoIndex = index;
+
+        toast.editar.index.textContent = index
+        toast.editar.nombre.value = product.nombre;
+        toast.editar.cantidad.value = product.cantidad;
+        toast.editar.monto.value = product.monto;
+        toast.editar.comentario.value = product.comentario;
+
+        document.getElementById('toast-editar-producto').classList.add('open');
+        setTimeout(() => document.getElementById('editar_nombre').focus(), 50);
+      }
+
+      function cerrarToastEditarProducto() {
+        document.getElementById('toast-editar-producto').classList.remove('open');
+        productoEditandoIndex = null;
+      }
+      function confirmarEditarProducto() {
+        currentProform.productos)
+                const producto = currentProform.productos.find(p => p.index == toast.editar.index.textContent);
+        if (!producto) return;
+
+        if(!toast.editar.nombre.value)return toastError("campo nombre vacío")
+        if (!toast.editar.monto.value) return toastError("campo monto vacío")
+        if (!toast.editar.cantidad.value) return toastError("campo cantidad vacío")
+
+        const opciones = options(toast.editar.nombre.value)
+        
+        producto.nombre = toast.editar.nombre.value
+        producto.cantidad = toast.editar.cantidad.value
+        producto.monto = toast.editar.monto.value
+        producto.options = opciones
+        producto.total = toast.editar.monto.value * toast.editar.cantidad.value
+
+        console.log("(2) currentProform.productos: ", currentProform.productos)
+
+        printAll()
+        toastSuccess("producto editado")
+        cerrarToastEditarProducto()
+        
+      }
+
     function conexiones() {
 
       //tipo✅
@@ -2880,6 +2964,15 @@
           }
         }
       })
+
+
+
+      tables.proforma.addEventListener("click", (e) => {
+        if (e.target.id.startsWith("editar_proforma_producto_")) {
+          const index = e.target.id.split("_").pop();
+          abrirToastEditarProducto(index);
+        }
+      });
 
       //filter proforms✅
       fields.proforms.proform.addEventListener("input", (e) => {
