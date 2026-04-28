@@ -2573,6 +2573,7 @@
         return "DP-" + String(proforms.length + 1).padStart(7, "0");
       }
       let proformNumber;
+///////here
       async function esNueva() {
         let proformNumber = await getProformNumber();
         for (let doc of doc_num) {
@@ -2584,7 +2585,6 @@
             doc.textContent = proformNumber;
             currentProform.code = proformNumber
             document.querySelector("#es_nueva").textContent = "[Nueva]"
-            
             document.querySelector("#proforma_details").textContent = ""
           }
         }
@@ -2647,6 +2647,7 @@
 
         generarPDFProforma(currentProform)
         generarPDFGuia(currentProform)
+
         cleanAll();      // 👈 ahora sí después
         await printCode(); // 👈 espera el nuevo código
         toastSuccess("proforma cargada")
@@ -2926,6 +2927,7 @@
     //✅
     function reiniciarFormulario() {
       cleanAll()
+      
       toastSuccess("formulario reiniciado")
     }
 
@@ -3679,10 +3681,9 @@
         const data = await res.json();
         let proformsToPrint = data.payload;
 
-
         ioToEmit(proformsToPrint)
 
-        //await printProformas(proformsToPrint)
+  
       } catch (err) {
         console.error(err);
         toastError("error al cargar las proformas");
@@ -3695,7 +3696,9 @@
     }
 
     socket.on("updatedProforms", (data) => {
+
       printProformas(data)
+      printCode()
     })
   </script>
 </body>
