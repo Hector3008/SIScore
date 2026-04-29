@@ -12,4 +12,10 @@ export const proformsSystemViewController = async (req, res) => {
   res.render("proformSystem.handlebars", { products, proforms });
 };
 
+export const produccionViewController = async (req, res)=>{
+  const proformRequest = await ProformsService.getAll(req, res);
+  const proforms = proformRequest.payload;
+  res.render("proformSystem.produccion.handlebars", {  proforms });
+}
+
 

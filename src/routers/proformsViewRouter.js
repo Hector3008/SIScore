@@ -1,6 +1,6 @@
 import { Router } from "express";
 
-import { proformsViewController } from "../controllers/proformsViewController.js";
+import {  proformsViewController} from "../controllers/proformsViewController.js";
 
 const proformsViewRouter = Router();
 

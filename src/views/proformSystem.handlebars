@@ -1410,6 +1410,28 @@
 .drawer-producto-row span:first-child { color: #c8cdd8; flex: 1; }
 .drawer-producto-row span:last-child  { color: #7eb3f5; white-space: nowrap; font-family: monospace; }
 
+.btn-buscar-cliente {
+  height: 30px;
+  width: 100%;
+  padding: 0 8px;
+  border-radius: 5px;
+  border: 1px solid #ddd;
+  background: #f9f9f9;
+  color: #888;
+  font-size: 11px;
+  font-weight: 400;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  transition: border-color 0.15s, background 0.15s;
+}
+
+.btn-buscar-cliente:hover {
+  border-color: #0f4c81;
+  background: #fff;
+  color: #333;
+}
   </style>
 </head>
 
@@ -1523,7 +1545,20 @@
 
         <div class="section">
           <div class="section-header" onclick="toggleSection(this)">Cliente <span>▾</span></div>
+
           <div class="section-body">
+            
+<div class="field-group">
+  <span style="color: #0d306046" id="id_cliente"></span>
+  <button class="btn-buscar-cliente" onclick="abrirToastCargarCliente()">
+    <span>Buscar cliente...</span>
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+        stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="11" cy="11" r="8" />
+        <line x1="21" y1="21" x2="16.65" y2="16.65" />
+      </svg>
+  </button>
+</div>
             <div class="field-group">
               <input id="cliente_nombre" type="text" placeholder="Cliente">
               <input id="cliente_ruc" type="text" placeholder="RUC">
@@ -1568,9 +1603,8 @@
               </select>
             </div>
             <div class="btn-row">
-              <button class="btn-sm btn-sm-green">Cargar cliente</button>
-              <button class="btn-sm btn-sm-blue">Registrar</button>
-              <button class="btn-sm btn-sm-orange">Actualizar</button>
+
+              <button class="btn-sm btn-sm-green">Registrar</button><button class="btn-sm btn-sm-blue">Actualizar</button><button class="btn-sm btn-sm-red">↺ Reiniciar</button>
             </div>
           </div>
         </div>
@@ -1948,7 +1982,7 @@
 
     </div>
   </div>
-<!-- Toast: editarproducto -->
+<!-- Toast: editar producto -->
   <div id="toast-editar-producto" class="toast-overlay" onclick="cerrarToastEditarProducto()">
     <div class="toast-box" onclick="event.stopPropagation()">
       <div class="toast-header">
@@ -2052,6 +2086,35 @@
   </div>
 </div>
 
+<!-- Toast: buscar cliente -->
+<div id="toast-cargar-cliente" class="toast-overlay">
+  <div class="toast-box toast-box-wide" onclick="event.stopPropagation()">
+    <div class="toast-header">
+      <span>Cargar cliente</span>
+      <button class="toast-close" onclick="cerrarToastCargarCliente()">✕</button>
+    </div>
+    <div class="toast-body">
+      <label class="toast-label">Buscar</label>
+      <input type="text" id="input-buscar-cliente" class="toast-input" placeholder="Nombre, RUC, email..." />
+    </div>
+    <div class="toast-table-wrap">
+      <table class="toast-table">
+        <thead>
+          <tr>
+            <th>Nombre</th>
+            <th>RUC/DNI</th>
+            <th>Teléfono</th>
+            <th>Ciudad</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody id="tbody-clientes">
+        </tbody>
+      </table>
+    </div>
+    <div class="toast-footer"></div>
+  </div>
+</div>
 
   <script>//responsive:
     /* Ocultar el bloque desktop en mobile y viceversa */
@@ -3126,6 +3189,73 @@
     document.getElementById('drawer-versiones').classList.remove('open');
   }
 
+
+  function abrirToastCargarCliente() {
+    document.getElementById('toast-cargar-cliente').classList.add('open');
+    setTimeout(() => document.getElementById('input-buscar-cliente').focus(), 50);
+  }
+
+  function cerrarToastCargarCliente() {
+    document.getElementById('toast-cargar-cliente').classList.remove('open');
+  }
+
+  function printClientes() {
+    const tbody = document.getElementById('tbody-clientes');
+    tbody.innerHTML = '';
+
+    const clientes = [{nombre: "nombre", ruc: ""}]
+
+    if (!clientes || clientes.length === 0) {
+      tbody.innerHTML = `
+      <tr><td colspan="5" style="text-align:center; color:#8892a4; padding:14px">
+        Sin resultados
+      </td></tr>`;
+      return;
+    }
+
+    for (let cliente of clientes) {
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+      <td><span style="color:#e8eaf0">${cliente.nombre || '—'}</span></td>
+      <td><span class="doc-tag">${cliente.ruc || '—'}</span></td>
+      <td>${cliente.telefono || '—'}</td>
+      <td>${cliente.ciudad || '—'}</td>
+      <td><button class="btn-cargar-proforma btn-cargar-cliente"
+            data-nombre="${cliente.nombre || ''}"
+            data-ruc="${cliente.ruc || ''}"
+            data-telefono="${cliente.telefono || ''}"
+            data-email="${cliente.email || ''}"
+            data-direccion="${cliente.direccion || ''}"
+            data-provincia="${cliente.provincia || ''}"
+            data-ciudad="${cliente.ciudad || ''}">
+          Cargar
+        </button></td>
+    `;
+      tbody.appendChild(tr);
+    }
+  }
+
+  // filtro en tiempo real
+  document.getElementById('input-buscar-cliente').addEventListener('input', (e) => {
+    const val = e.target.value.toLowerCase().trim();
+    // reemplaza esto con tu fuente de datos
+    const resultado = clientes.filter(c =>
+      (c.nombre || '').toLowerCase().includes(val) ||
+      (c.ruc || '').toLowerCase().includes(val) ||
+      (c.email || '').toLowerCase().includes(val) ||
+      (c.ciudad || '').toLowerCase().includes(val)
+    );
+    printClientes(resultado);
+  });
+
+  // click en cargar
+  document.getElementById('tbody-clientes').addEventListener('click', (e) => {
+    const btn = e.target.closest('.btn-cargar-cliente');
+    if (!btn) return;
+
+    // aquí conectas con tu lógica
+    cerrarToastCargarCliente();
+  });
     function conexiones() {
       document.querySelector(".doc-block").addEventListener("click", (e) => {
         if (e.target.id === "proforma_details") {
