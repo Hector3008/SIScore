@@ -1,2 +1,961 @@
-handlebars here
+<!DOCTYPE html>
+<html lang="es">
 
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Producción — Órdenes activas</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --navy: #0d1b3e;
+      --blue: #1a56db;
+      --blue-h: #1447c0;
+      --green: #16a34a;
+      --bg: #f3f4f6;
+      --card: #ffffff;
+      --border: #e5e7eb;
+      --text: #111827;
+      --muted: #6b7280;
+      --badge-active-bg: #dbeafe;
+      --badge-active-txt: #1d4ed8;
+      --radius: 10px;
+      --shadow: 0 1px 3px rgba(0, 0, 0, .08), 0 1px 2px rgba(0, 0, 0, .06);
+    }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ── TOP NAV ── */
+    .topnav {
+      background: var(--navy);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 20px;
+      height: 56px;
+      flex-shrink: 0;
+    }
+
+    .topnav-left {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .hamburger {
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .hamburger span {
+      display: block;
+      width: 20px;
+      height: 2px;
+      background: #fff;
+      border-radius: 2px;
+    }
+
+    .company-badge {
+      background: var(--blue);
+      color: #fff;
+      font-weight: 600;
+      font-size: 13px;
+      padding: 6px 14px;
+      border-radius: 6px;
+    }
+
+    .topnav-center {
+      color: #fff;
+      text-align: center;
+    }
+
+    .topnav-center .page-title {
+      font-weight: 700;
+      font-size: 15px;
+    }
+
+    .topnav-center .page-sub {
+      font-size: 12px;
+      color: #93c5fd;
+    }
+
+    .topnav-right {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .notif-btn {
+      position: relative;
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: #fff;
+      font-size: 20px;
+    }
+
+    .notif-badge {
+      position: absolute;
+      top: -4px;
+      right: -6px;
+      background: #ef4444;
+      color: #fff;
+      font-size: 10px;
+      font-weight: 700;
+      border-radius: 999px;
+      padding: 1px 5px;
+      line-height: 1.4;
+    }
+
+    .user-pill {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(255, 255, 255, .1);
+      border-radius: 8px;
+      padding: 5px 10px;
+      cursor: pointer;
+    }
+
+    .avatar {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      background: var(--blue);
+      color: #fff;
+      font-weight: 700;
+      font-size: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .user-info {
+      line-height: 1.3;
+    }
+
+    .user-info .uname {
+      color: #fff;
+      font-weight: 600;
+      font-size: 13px;
+    }
+
+    .user-info .urole {
+      color: #93c5fd;
+      font-size: 11px;
+    }
+
+    .chevron {
+      color: #93c5fd;
+      font-size: 12px;
+    }
+
+    /* ── LAYOUT ── */
+    .layout {
+      display: flex;
+      flex: 1;
+      overflow: hidden;
+      height: calc(100vh - 56px);
+    }
+
+    /* ── MAIN (left) ── */
+    .main-panel {
+      flex: 1;
+      overflow-y: auto;
+      padding: 24px;
+    }
+
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+
+    .section-icon {
+      width: 44px;
+      height: 44px;
+      border: 2px solid var(--border);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      background: #fff;
+    }
+
+    .section-header h1 {
+      font-size: 22px;
+      font-weight: 700;
+    }
+
+    .section-header p {
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    /* search + filter bar */
+    .toolbar {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+
+    .search-wrap {
+      flex: 1;
+      position: relative;
+    }
+
+    .search-wrap input {
+      width: 100%;
+      padding: 9px 14px 9px 38px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      font-family: inherit;
+      font-size: 14px;
+      outline: none;
+      background: #fff;
+      transition: border .2s;
+    }
+
+    .search-wrap input:focus {
+      border-color: var(--blue);
+    }
+
+    .search-icon {
+      position: absolute;
+      left: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--muted);
+      font-size: 15px;
+    }
+
+    .btn-filter {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 9px 14px;
+      font-family: inherit;
+      font-size: 14px;
+      cursor: pointer;
+      font-weight: 500;
+    }
+
+    .sort-wrap {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 9px 14px;
+      font-size: 14px;
+    }
+
+    .sort-wrap span {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .sort-wrap select {
+      border: none;
+      outline: none;
+      font-family: inherit;
+      font-size: 14px;
+      font-weight: 500;
+      background: transparent;
+      cursor: pointer;
+    }
+
+    /* grid */
+    .orders-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+      gap: 14px;
+    }
+
+    .order-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 18px;
+      box-shadow: var(--shadow);
+      transition: box-shadow .2s, transform .2s;
+    }
+
+    .order-card:hover {
+      box-shadow: 0 4px 14px rgba(0, 0, 0, .1);
+      transform: translateY(-1px);
+    }
+
+    .badge-active {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      background: var(--badge-active-bg);
+      color: var(--badge-active-txt);
+      font-size: 11px;
+      font-weight: 600;
+      padding: 3px 8px;
+      border-radius: 999px;
+      margin-bottom: 8px;
+    }
+
+    .badge-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--blue);
+    }
+
+    .order-code {
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--blue);
+      margin-bottom: 12px;
+    }
+
+    .order-meta {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 14px;
+    }
+
+    .meta-item label {
+      display: block;
+      font-size: 11px;
+      color: var(--muted);
+      margin-bottom: 2px;
+    }
+
+    .meta-item span {
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    .card-actions {
+      display: flex;
+      gap: 8px;
+    }
+
+    .btn-see {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      border: 1px solid var(--border);
+      border-radius: 7px;
+      padding: 8px;
+      font-family: inherit;
+      font-size: 13px;
+      font-weight: 500;
+      background: #fff;
+      cursor: pointer;
+      transition: background .15s;
+    }
+
+    .btn-see:hover {
+      background: var(--bg);
+    }
+
+    .btn-review {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      background: var(--blue);
+      color: #fff;
+      border: none;
+      border-radius: 7px;
+      padding: 8px;
+      font-family: inherit;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background .15s;
+    }
+
+    .btn-review:hover {
+      background: var(--blue-h);
+    }
+
+    /* pagination */
+    .pagination {
+      margin-top: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .pagination-info {
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    .pagination-btns {
+      display: flex;
+      gap: 6px;
+    }
+
+    .pg-btn {
+      width: 34px;
+      height: 34px;
+      border-radius: 7px;
+      border: 1px solid var(--border);
+      background: #fff;
+      font-family: inherit;
+      font-size: 13px;
+      font-weight: 500;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background .15s;
+    }
+
+    .pg-btn:hover {
+      background: var(--bg);
+    }
+
+    .pg-btn.active {
+      background: var(--blue);
+      color: #fff;
+      border-color: var(--blue);
+    }
+
+    /* ── CHAT (right) ── */
+    .chat-panel {
+      width: 340px;
+      flex-shrink: 0;
+      background: #fff;
+      border-left: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .chat-header {
+      padding: 18px 20px 14px;
+      border-bottom: 1px solid var(--border);
+      flex-shrink: 0;
+    }
+
+    .chat-header-top {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 14px;
+    }
+
+    .chat-header-top .icon {
+      font-size: 18px;
+      color: var(--muted);
+    }
+
+    .chat-header-top h2 {
+      font-size: 16px;
+      font-weight: 700;
+    }
+
+    .selected-order {
+      background: var(--bg);
+      border-radius: 8px;
+      padding: 12px 14px;
+    }
+
+    .selected-label {
+      font-size: 11px;
+      color: var(--muted);
+      margin-bottom: 2px;
+    }
+
+    .selected-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .selected-code {
+      font-size: 22px;
+      font-weight: 800;
+      color: var(--navy);
+    }
+
+    .change-btn {
+      background: none;
+      border: none;
+      color: var(--blue);
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .status-active {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--green);
+      margin-top: 4px;
+    }
+
+    .status-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--green);
+    }
+
+    /* messages */
+    .chat-messages {
+      flex: 1;
+      overflow-y: auto;
+      padding: 16px 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .day-divider {
+      text-align: center;
+      font-size: 11px;
+      color: var(--muted);
+      background: var(--bg);
+      padding: 3px 10px;
+      border-radius: 999px;
+      align-self: center;
+    }
+
+    .msg {
+      display: flex;
+      gap: 10px;
+    }
+
+    .msg-avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      font-weight: 700;
+      font-size: 11px;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .av-am {
+      background: #2563eb;
+    }
+
+    .av-aa {
+      background: #7c3aed;
+    }
+
+    .msg-body {}
+
+    .msg-meta {
+      display: flex;
+      gap: 8px;
+      align-items: baseline;
+      margin-bottom: 3px;
+    }
+
+    .msg-name {
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .msg-time {
+      font-size: 11px;
+      color: var(--muted);
+    }
+
+    .msg-text {
+      font-size: 13px;
+      line-height: 1.5;
+      color: #374151;
+      background: var(--bg);
+      padding: 8px 12px;
+      border-radius: 0 8px 8px 8px;
+      display: inline-block;
+      max-width: 240px;
+    }
+
+    .msg-text.own {
+      background: #dbeafe;
+    }
+
+    /* input */
+    .chat-input-wrap {
+      padding: 12px 16px;
+      border-top: 1px solid var(--border);
+      flex-shrink: 0;
+    }
+
+    .chat-input-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 9px;
+      padding: 6px 10px;
+      margin-bottom: 8px;
+    }
+
+    .chat-input-row input {
+      flex: 1;
+      border: none;
+      background: transparent;
+      font-family: inherit;
+      font-size: 13px;
+      outline: none;
+    }
+
+    .icon-btn {
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: var(--muted);
+      font-size: 16px;
+      display: flex;
+    }
+
+    .btn-send {
+      background: var(--blue);
+      color: #fff;
+      border: none;
+      border-radius: 7px;
+      padding: 7px 14px;
+      font-family: inherit;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .chat-notice {
+      font-size: 11px;
+      color: var(--muted);
+      background: #f9fafb;
+      border: 1px solid var(--border);
+      border-radius: 7px;
+      padding: 8px 10px;
+      display: flex;
+      gap: 6px;
+      align-items: flex-start;
+    }
+
+    .chat-notice .ni {
+      font-size: 14px;
+      flex-shrink: 0;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- TOP NAV -->
+  <nav class="topnav">
+    <div class="topnav-left">
+      <button class="hamburger" aria-label="Menú">
+        <span></span><span></span><span></span>
+      </button>
+      <span class="company-badge">Max Importaciones y Servicios Generales S.A.C.</span>
+    </div>
+    <div class="topnav-center">
+      <div class="page-title">Producción</div>
+      <div class="page-sub">Órdenes activas</div>
+    </div>
+    <div class="topnav-right">
+      <button class="notif-btn" aria-label="Notificaciones">
+        🔔 <span class="notif-badge">3</span>
+      </button>
+      <div class="user-pill">
+        <div class="avatar">AM</div>
+        <div class="user-info">
+          <div class="uname">Almacén</div>
+          <div class="urole">Almacenero</div>
+        </div>
+        <span class="chevron">▾</span>
+      </div>
+    </div>
+  </nav>
+
+  <div class="layout">
+
+    <!-- MAIN PANEL -->
+    <main class="main-panel">
+
+      <div class="section-header">
+        <div class="section-icon">🏭</div>
+        <div>
+          <h1>Producción</h1>
+          <p>Órdenes de salida activas</p>
+        </div>
+      </div>
+
+      <!-- Toolbar -->
+      <div class="toolbar">
+        <div class="search-wrap">
+          <span class="search-icon">🔍</span>
+          <input type="text" placeholder="Buscar por código, vendedor o cliente..." />
+        </div>
+        <button class="btn-filter">⚙ Filtros</button>
+        <div class="sort-wrap">
+          <span>Ordenar por</span>
+          <select>
+            <option>Más recientes</option>
+            <option>Más antiguos</option>
+            <option>Código</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Orders grid — Handlebars loop over proforms -->
+      <div class="orders-grid">
+        {{#each proforms}}
+        <div class="order-card">
+          <div class="badge-active">
+            <span class="badge-dot"></span>
+            ACTIVA
+          </div>
+          <div class="order-code">{{this.payload.doc.code}}</div>
+          <div class="order-meta">
+            <div class="meta-item">
+              <label>Vendedor</label>
+              <span>{{this.payload.doc.vendedor}}</span>
+            </div>
+            <div class="meta-item" style="text-align:right">
+              <label>Fecha</label>
+              <span>{{this.payload.doc.fecha}}</span>
+            </div>
+          </div>
+          <div class="card-actions">
+            <button class="btn-see">👁 Ver más</button>
+            <button class="btn-review">↗ Revisar</button>
+          </div>
+        </div>
+        {{/each}}
+      </div>
+
+    </main>
+
+    <!-- CHAT PANEL -->
+    <aside class="chat-panel">
+      <div class="chat-header">
+        <div class="chat-header-top">
+          <span class="icon">💬</span>
+          <h2>Chat de producción</h2>
+        </div>
+        <div class="selected-order">
+          <div class="selected-label">Orden seleccionada</div>
+          <div class="selected-row">
+            <div class="selected-code">DP-000015</div>
+            <button class="change-btn">Cambiar orden ▾</button>
+          </div>
+          <div class="status-active">
+            <span class="status-dot"></span>
+            Orden activa
+          </div>
+        </div>
+      </div>
+
+      <div class="chat-messages">
+        <div class="day-divider">Hoy</div>
+
+        <div class="msg">
+          <div class="msg-avatar av-am">AM</div>
+          <div class="msg-body">
+            <div class="msg-meta">
+              <span class="msg-name">Almacenero Miguel</span>
+              <span class="msg-time">09:15</span>
+            </div>
+            <div class="msg-text">Revisando ítems de la orden.</div>
+          </div>
+        </div>
+
+        <div class="msg">
+          <div class="msg-avatar av-aa">AA</div>
+          <div class="msg-body">
+            <div class="msg-meta">
+              <span class="msg-name">Almacenero Ana</span>
+              <span class="msg-time">09:18</span>
+            </div>
+            <div class="msg-text">Producto X: stock OK ✅<br>Producto Y: stock bajo ⚠️</div>
+          </div>
+        </div>
+
+        <div class="msg">
+          <div class="msg-avatar av-am">AM</div>
+          <div class="msg-body">
+            <div class="msg-meta">
+              <span class="msg-name">Almacenero Miguel</span>
+              <span class="msg-time">09:20</span>
+            </div>
+            <div class="msg-text">Producto Z: requiere verificación de lote. Voy a validar con calidad.</div>
+          </div>
+        </div>
+
+        <div class="msg">
+          <div class="msg-avatar av-aa">AA</div>
+          <div class="msg-body">
+            <div class="msg-meta">
+              <span class="msg-name">Almacenero Ana</span>
+              <span class="msg-time">09:22</span>
+            </div>
+            <div class="msg-text own">Caja #15 con ligera abolladura. Separada para revisión.</div>
+          </div>
+        </div>
+
+        <div class="msg">
+          <div class="msg-avatar av-am">AM</div>
+          <div class="msg-body">
+            <div class="msg-meta">
+              <span class="msg-name">Almacenero Miguel</span>
+              <span class="msg-time">09:25</span>
+            </div>
+            <div class="msg-text">Cliente solicita factura electrónica. Recordar validar datos.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Input -->
+      <div class="chat-input-wrap">
+        <div class="chat-input-row">
+          <input type="text" placeholder="Escribe un mensaje..." />
+          <button class="icon-btn" aria-label="Adjuntar">📎</button>
+          <button class="icon-btn" aria-label="Emoji">🙂</button>
+          <button class="btn-send">Enviar</button>
+        </div>
+        <div class="chat-notice">
+          <span class="ni">ℹ️</span>
+          <span>Los mensajes son visibles para todo el equipo de almacén. Mantengamos la comunicación clara y
+            útil.</span>
+        </div>
+      </div>
+    </aside>
+
+  </div>
+<script>
+
+  const proformsJSON = {{{ json proforms }}}
+
+  const grid = {
+    orders: document.querySelector(".orders-grid")
+  }
+
+  function printOrders(proforms){
+grid.orders.innerHTML = ""
+
+    proforms = proforms.filter((proform) => {
+      return proform.payload.doc.tipo === "orden_salida"
+    })
+    
+    for (let proform of proforms) {
+      let card = document.createElement("div")
+      card.classList.add("order-card")
+      card.innerHTML = `
+      
+          <div class="badge-active">
+            <span class="badge-dot"></span>
+            ACTIVA
+          </div>
+          <div class="order-code">${proform.payload.doc.code}</div>
+          <div class="order-meta">
+
+                      <div class="meta-item">
+              <label>Cliente</label>
+              <span>${proform.payload.doc.cliente.nombre}</span>
+            </div>
+            <div class="meta-item">
+              <label>Vendedor</label>
+              <span>${proform.payload.doc.vendedor}</span>
+            </div>
+            <div class="meta-item" style="text-align:right">
+              <label>Fecha</label>
+              <span>${proform.payload.doc.fecha}</span>
+            </div>
+          </div>
+          <div class="card-actions">
+            <button class="btn-see">👁 Ver más</button>
+            <button class="btn-review">↗ Revisar</button>
+          </div>
+      
+            `
+            grid.orders.appendChild(card)
+    }
+    }
+  printOrders(proformsJSON)
+
+      async function getProforms() {
+        try {
+          const response = await fetch("/api/proforms");
+          const data = await response.json();
+          
+          return data.payload
+        } catch (err) {
+          console.error(err);
+          return null;
+        }
+      }
+
+  async function enviaraRevision(code) {
+    const res = await fetch(`/api/proforms/${code}`).then(res=> res.json())
+    
+    const order =  res.payload.payload.doc
+   order.tipo = "orden_revision"
+
+    try {
+      const resPut = await fetch(`/api/proforms/${code}`, {
+        method: "PUT",
+        body: JSON.stringify(order),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+    } catch (error) {
+      console.error("Error:", error)
+    }
+      const proforms = await getProforms()
+      
+      printOrders(proforms)
+  }
+  enviaraRevision("DP-0000008")
+</script>
+</body>
+
+</html>

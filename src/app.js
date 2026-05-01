@@ -4,6 +4,7 @@ import handlebars from "express-handlebars";
 import productRouterView from "./routers/productsRouterView.js";
 import productRouter from "./routers/productsRouter.js";
 import proformsViewRouter  from "./routers/proformsViewRouter.js";
+import clienteRouter from "./routers/clientesRouter.js";
 import socket from "./sockets.js";
 import http from "http";
 import proformsRouter from "./routers/proformsRouter.js";
@@ -62,7 +63,7 @@ const hbs = handlebars.create({
   app.use("/products", productRouterView);//sintaxis para conectar routers
   app.use("/api/products", productRouter);
   app.use("/api/proforms",proformsRouter);
-  
+  app.use("/api/clientes/", clienteRouter);
   app.use("/proforms", proformsViewRouter);
   app.use("/proformSystem", proformsSystemViewRouter);
 

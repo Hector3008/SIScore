@@ -2227,7 +2227,7 @@
           }
         ],
         "esNueva": false,
-        "tipo": "orden_salida",
+        "tipo": "orden_revision",
         "versiones": [
           {
             "doc": {
@@ -2666,7 +2666,7 @@
           }
         ],
         "esNueva": false,
-        "tipo": "borrador",
+        "tipo": "orden_revision",
         "versiones": [
           {
             "doc": {
@@ -3158,7 +3158,7 @@
           }
         ],
         "esNueva": false,
-        "tipo": "orden_salida",
+        "tipo": "orden_revision",
         "versiones": [
           {
             "doc": {
@@ -6398,7 +6398,7 @@
           }
         ],
         "esNueva": false,
-        "tipo": "cotizacion",
+        "tipo": "orden_salida",
         "versiones": [
           {
             "doc": {

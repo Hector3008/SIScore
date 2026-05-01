@@ -21,7 +21,12 @@ export class ProformsRepository {
     await this.dao.updateByCode(code, data);}
     
   create = async (data) => {
-    console.log("proformsRepository.create here");
     await this.dao.create(data);
   };
 }
+
+export class ClienteRepository {
+  constructor(dao) {
+    this.dao = dao;
+  }
+  getAll = async () => await this.dao.getAll()}

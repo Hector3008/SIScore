@@ -2171,6 +2171,10 @@
     const catalog = {{{ json products }}}
     const proforms = {{{ json proforms }}}
 
+    const clientes = {{{json clientes}}}
+
+    console.log("clientes: ", clientes)
+
     let currentProform = {
       cliente: {},
       pagos: [],
@@ -2616,6 +2620,8 @@
 
     }
     //✅    
+
+
     function printCode() {
       const doc_num = [
         ...document.querySelectorAll(".doc-num"),
@@ -3033,8 +3039,6 @@
         producto.options = opciones
         producto.total = toast.editar.monto.value * toast.editar.cantidad.value
 
-        console.log("(2) currentProform.productos: ", currentProform.productos)
-
         printAll()
         toastSuccess("producto editado")
         cerrarToastEditarProducto()
@@ -3188,7 +3192,43 @@
   function cerrarDrawerVersiones() {
     document.getElementById('drawer-versiones').classList.remove('open');
   }
+    
+    
+    function printClientes() {
+      const tbody = document.getElementById('tbody-clientes');
+      tbody.innerHTML = '';
 
+      if (!clientes || clientes.length === 0) {
+        tbody.innerHTML = `
+      <tr><td colspan="5" style="text-align:center; color:#8892a4; padding:14px">
+        Sin resultados
+      </td></tr>`;
+        return;
+      }
+
+      for (let cliente of clientes) {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+      <td><span style="color:#e8eaf0">${cliente.payload.doc.nombre || '—'}</span></td>
+      <td><span class="doc-tag">${cliente.payload.doc.ruc || '—'}</span></td>
+      <td>${cliente.payload.doc.telefono || '—'}</td>
+      <td>${cliente.payload.doc.ciudad || '—'}</td>
+      <td><button class="btn-cargar-proforma btn-cargar-cliente"
+            data-nombre="${cliente.payload.doc.nombre || ''}"
+            data-ruc="${cliente.payload.doc.ruc || ''}"
+            data-telefono="${cliente.payload.doc.telefono || ''}"
+            data-email="${cliente.payload.doc.email || ''}"
+            data-direccion="${cliente.payload.doc.direccion || ''}"
+            data-provincia="${cliente.payload.doc.provincia || ''}"
+            data-ciudad="${cliente.payload.doc.ciudad || ''}">
+          Cargar
+        </button></td>
+    `;
+        tbody.appendChild(tr);
+      }
+    }
+
+    printClientes()
 
   function abrirToastCargarCliente() {
     document.getElementById('toast-cargar-cliente').classList.add('open');
@@ -3199,52 +3239,19 @@
     document.getElementById('toast-cargar-cliente').classList.remove('open');
   }
 
-  function printClientes() {
-    const tbody = document.getElementById('tbody-clientes');
-    tbody.innerHTML = '';
-
-    const clientes = [{nombre: "nombre", ruc: ""}]
-
-    if (!clientes || clientes.length === 0) {
-      tbody.innerHTML = `
-      <tr><td colspan="5" style="text-align:center; color:#8892a4; padding:14px">
-        Sin resultados
-      </td></tr>`;
-      return;
-    }
-
-    for (let cliente of clientes) {
-      const tr = document.createElement('tr');
-      tr.innerHTML = `
-      <td><span style="color:#e8eaf0">${cliente.nombre || '—'}</span></td>
-      <td><span class="doc-tag">${cliente.ruc || '—'}</span></td>
-      <td>${cliente.telefono || '—'}</td>
-      <td>${cliente.ciudad || '—'}</td>
-      <td><button class="btn-cargar-proforma btn-cargar-cliente"
-            data-nombre="${cliente.nombre || ''}"
-            data-ruc="${cliente.ruc || ''}"
-            data-telefono="${cliente.telefono || ''}"
-            data-email="${cliente.email || ''}"
-            data-direccion="${cliente.direccion || ''}"
-            data-provincia="${cliente.provincia || ''}"
-            data-ciudad="${cliente.ciudad || ''}">
-          Cargar
-        </button></td>
-    `;
-      tbody.appendChild(tr);
-    }
-  }
 
   // filtro en tiempo real
+  
   document.getElementById('input-buscar-cliente').addEventListener('input', (e) => {
     const val = e.target.value.toLowerCase().trim();
     // reemplaza esto con tu fuente de datos
     const resultado = clientes.filter(c =>
-      (c.nombre || '').toLowerCase().includes(val) ||
-      (c.ruc || '').toLowerCase().includes(val) ||
-      (c.email || '').toLowerCase().includes(val) ||
-      (c.ciudad || '').toLowerCase().includes(val)
+      (c.payload.doc.nombre || '').toLowerCase().includes(val) ||
+      (c.payload.doc.ruc || '').toLowerCase().includes(val) ||
+      (c.payload.doc.email || '').toLowerCase().includes(val) ||
+      (c.payload.doc.ciudad || '').toLowerCase().includes(val)
     );
+    console.log("resultado: ", resultado)
     printClientes(resultado);
   });
 

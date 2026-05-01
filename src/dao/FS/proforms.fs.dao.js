@@ -19,7 +19,7 @@ class ProformsFSDAO {
     proforms = {
       status: "200",
       payload: proforms,
-    }; //formateo el array del json en un objeto más adecuado
+    };
 
     return proforms;
   }
@@ -85,8 +85,8 @@ class ProformsFSDAO {
     return proform;
   }
   async updateByCode(code, updateProform) {
-updateProform = {payload:{doc: updateProform}}
 
+    updateProform = {payload:{doc: updateProform}}
     console.log("code from updateProform: ", updateProform);
     let data = await fs.promises.readFile(this.#path, "utf-8");
     let proforms = JSON.parse(data);

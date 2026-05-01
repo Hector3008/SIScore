@@ -1,0 +1,347 @@
+[
+  {
+    "id": 1,
+    "status": true,
+    "payload": {
+      "doc": {
+        "nombre": "Inversiones San Juan",
+        "ruc": "20556677881",
+        "direccion": "Av. Los Próceres 450",
+        "provincia": "Lima",
+        "ciudad": "Santiago de Surco",
+        "telefono": "987654321",
+        "email": "ventas@isanjuan.pe",
+        "canal_de_venta": "Cartera",
+        "forma_de_pago": "Credito",
+        "entrega": "Agencia",
+        "destino": "Cusco",
+        "atencion": "Sr. Ricardo Méndez",
+        "agencia": "Shalom",
+        "comprobante": "Factura",
+        "vendedor": "Lazaro"
+      }
+    }
+  },
+  {
+    "id": 2,
+    "status": true,
+    "payload": {
+      "doc": {
+        "nombre": "Lucía Fernández",
+        "ruc": "10443322115",
+        "direccion": "Calle Las Magnolias 123",
+        "provincia": "Arequipa",
+        "ciudad": "Arequipa",
+        "telefono": "912345678",
+        "email": "lucia.f@gmail.com",
+        "canal_de_venta": "Online",
+        "forma_de_pago": "Transferencia",
+        "entrega": "Local",
+        "destino": "Cerro Colorado",
+        "atencion": "",
+        "agencia": "",
+        "comprobante": "Boleta",
+        "vendedor": "Lazaro"
+      }
+    }
+  },
+  {
+    "id": 3,
+    "status": true,
+    "payload": {
+      "doc": {
+        "nombre": "Mecánica El Rápido",
+        "ruc": "20112233449",
+        "direccion": "Jr. Huancavelica 890",
+        "provincia": "Junín",
+        "ciudad": "Huancayo",
+        "telefono": "998877665",
+        "email": "contacto@elrapido.com",
+        "canal_de_venta": "Tienda",
+        "forma_de_pago": "Caja",
+        "entrega": "Tienda",
+        "destino": "",
+        "atencion": "Juan Pérez",
+        "agencia": "",
+        "comprobante": "Proforma",
+        "vendedor": "Lazaro"
+      }
+    }
+  },
+  {
+    "id": 4,
+    "status": true,
+    "payload": {
+      "doc": {
+        "nombre": "Distribuidora Gamma",
+        "ruc": "20998877662",
+        "direccion": "Parque Industrial Nave 4",
+        "provincia": "Callao",
+        "ciudad": "Callao",
+        "telefono": "014567890",
+        "email": "logistica@gamma.com.pe",
+        "canal_de_venta": "Cartera",
+        "forma_de_pago": "Credito",
+        "entrega": "Local",
+        "destino": "Almacén Central",
+        "atencion": "Ing. Alberto Rojas",
+        "agencia": "",
+        "comprobante": "Factura",
+        "vendedor": "Lazaro"
+      }
+    }
+  },
+  {
+    "id": 5,
+    "status": true,
+    "payload": {
+      "doc": {
+        "nombre": "Carlos Alberto Ruiz",
+        "ruc": "",
+        "direccion": "Urb. El Sol G-12",
+        "provincia": "La Libertad",
+        "ciudad": "Trujillo",
+        "telefono": "955443322",
+        "email": "carlos_ruiz88@yahoo.com",
+        "canal_de_venta": "Online",
+        "forma_de_pago": "Transferencia",
+        "entrega": "Agencia",
+        "destino": "Trujillo Centro",
+        "atencion": "",
+        "agencia": "Marvisur",
+        "comprobante": "Boleta",
+        "vendedor": "Lazaro"
+      }
+    }
+  },
+  {
+    "id": 6,
+    "status": true,
+    "payload": {
+      "doc": {
+        "nombre": "Transportes Unidos SAC",
+        "ruc": "20334455661",
+        "direccion": "Av. Argentina 2800",
+        "provincia": "Lima",
+        "ciudad": "Lima",
+        "telefono": "944112233",
+        "email": "compras@tunidos.pe",
+        "canal_de_venta": "Cartera",
+        "forma_de_pago": "Credito",
+        "entrega": "Tienda",
+        "destino": "",
+        "atencion": "Sra. Marta Vizcarra",
+        "agencia": "",
+        "comprobante": "Proforma",
+        "vendedor": "Lazaro"
+      }
+    }
+  },
+  {
+    "id": 7,
+    "status": true,
+    "payload": {
+      "doc": {
+        "nombre": "Elena Gamarra",
+        "ruc": "10229988773",
+        "direccion": "Pasaje San Lorenzo 102",
+        "provincia": "Ica",
+        "ciudad": "Chincha",
+        "telefono": "966554411",
+        "email": "elena_ga@outlook.com",
+        "canal_de_venta": "Tienda",
+        "forma_de_pago": "Caja",
+        "entrega": "Local",
+        "destino": "Domicilio",
+        "atencion": "",
+        "agencia": "",
+        "comprobante": "Boleta",
+        "vendedor": "Lazaro"
+      }
+    }
+  },
+  {
+    "id": 8,
+    "status": true,
+    "payload": {
+      "doc": {
+        "nombre": "Corporación Automotriz",
+        "ruc": "20448855227",
+        "direccion": "Carretera Panamericana Sur Km 15",
+        "provincia": "Lima",
+        "ciudad": "Villa El Salvador",
+        "telefono": "977118822",
+        "email": "proyectos@corpauto.com",
+        "canal_de_venta": "Cartera",
+        "forma_de_pago": "Transferencia",
+        "entrega": "Local",
+        "destino": "Taller Principal",
+        "atencion": "Gerente de Flota",
+        "agencia": "",
+        "comprobante": "Factura",
+        "vendedor": "Lazaro"
+      }
+    }
+  },
+  {
+    "id": 9,
+    "status": true,
+    "payload": {
+      "doc": {
+        "nombre": "Andrés Vilca",
+        "ruc": "",
+        "direccion": "Calle Comercio 305",
+        "provincia": "Piura",
+        "ciudad": "Sullana",
+        "telefono": "922883377",
+        "email": "avilca_repuestos@gmail.com",
+        "canal_de_venta": "Online",
+        "forma_de_pago": "Caja",
+        "entrega": "Agencia",
+        "destino": "Piura Ciudad",
+        "atencion": "",
+        "agencia": "Olva Courier",
+        "comprobante": "Boleta",
+        "vendedor": "Lazaro"
+      }
+    }
+  },
+  {
+    "id": 10,
+    "status": true,
+    "payload": {
+      "doc": {
+        "nombre": "Multiservicios SAC",
+        "ruc": "20887744331",
+        "direccion": "Av. Universitaria 1560",
+        "provincia": "Lima",
+        "ciudad": "San Miguel",
+        "telefono": "911229988",
+        "email": "admin@multiservicios.pe",
+        "canal_de_venta": "Tienda",
+        "forma_de_pago": "Credito",
+        "entrega": "Tienda",
+        "destino": "",
+        "atencion": "Pedro Infante",
+        "agencia": "",
+        "comprobante": "Factura",
+        "vendedor": "Lazaro"
+      }
+    }
+  },
+  {
+    "id": 11,
+    "status": true,
+    "payload": {
+      "doc": {
+        "nombre": "Sonia Paredes",
+        "ruc": "10456712349",
+        "direccion": "Av. Balta 789",
+        "provincia": "Lambayeque",
+        "ciudad": "Chiclayo",
+        "telefono": "933665544",
+        "email": "sonia_p@hotmail.com",
+        "canal_de_venta": "Online",
+        "forma_de_pago": "Transferencia",
+        "entrega": "Agencia",
+        "destino": "Chiclayo",
+        "atencion": "",
+        "agencia": "Shalom",
+        "comprobante": "Boleta",
+        "vendedor": "Lazaro"
+      }
+    }
+  },
+  {
+    "id": 12,
+    "status": true,
+    "payload": {
+      "doc": {
+        "nombre": "Repuestos El Chino",
+        "ruc": "20123456789",
+        "direccion": "Jr. Ica 441",
+        "provincia": "Lima",
+        "ciudad": "Cercado",
+        "telefono": "988554433",
+        "email": "elchino_rep@gmail.com",
+        "canal_de_venta": "Tienda",
+        "forma_de_pago": "Caja",
+        "entrega": "Local",
+        "destino": "Tienda 02",
+        "atencion": "Socio Mayoritario",
+        "agencia": "",
+        "comprobante": "Proforma",
+        "vendedor": "Lazaro"
+      }
+    }
+  },
+  {
+    "id": 13,
+    "status": true,
+    "payload": {
+      "doc": {
+        "nombre": "Consorcio Vial Sur",
+        "ruc": "20776655442",
+        "direccion": "Av. La Paz 1200",
+        "provincia": "Puno",
+        "ciudad": "Juliaca",
+        "telefono": "977441122",
+        "email": "logistica@vialsur.com.pe",
+        "canal_de_venta": "Cartera",
+        "forma_de_pago": "Credito",
+        "entrega": "Agencia",
+        "destino": "Obra Juliaca",
+        "atencion": "Ing. Miguel Luna",
+        "agencia": "Marvisur",
+        "comprobante": "Factura",
+        "vendedor": "Lazaro"
+      }
+    }
+  },
+  {
+    "id": 14,
+    "status": true,
+    "payload": {
+      "doc": {
+        "nombre": "Raúl Tello",
+        "ruc": "",
+        "direccion": "Calle Los Álamos 55",
+        "provincia": "Cusco",
+        "ciudad": "Cusco",
+        "telefono": "911887722",
+        "email": "rtello_p@gmail.com",
+        "canal_de_venta": "Online",
+        "forma_de_pago": "Transferencia",
+        "entrega": "Local",
+        "destino": "Cusco Centro",
+        "atencion": "",
+        "agencia": "",
+        "comprobante": "Boleta",
+        "vendedor": "Lazaro"
+      }
+    }
+  },
+  {
+    "id": 15,
+    "status": true,
+    "payload": {
+      "doc": {
+        "nombre": "Agro Industrias Norte",
+        "ruc": "20665544338",
+        "direccion": "KM 550 Panamericana Norte",
+        "provincia": "La Libertad",
+        "ciudad": "Trujillo",
+        "telefono": "999888777",
+        "email": "mantenimiento@agronorte.pe",
+        "canal_de_venta": "Cartera",
+        "forma_de_pago": "Transferencia",
+        "entrega": "Tienda",
+        "destino": "",
+        "atencion": "Luis Castro",
+        "agencia": "",
+        "comprobante": "Factura",
+        "vendedor": "Lazaro"
+      }
+    }
+  }
+]
