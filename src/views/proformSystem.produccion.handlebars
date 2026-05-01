@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Producción — Órdenes activas</title>
+  <title>Producción</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <style>
@@ -870,11 +870,12 @@
     </aside>
 
   </div>
-<script>
-
+  <script src="/socket.io/socket.io.js"></script>
+  
+  <script>
+  const socket = io();
   const proformsJSON = {{{ json proforms }}}
-
-  const grid = {
+    const grid = {
     orders: document.querySelector(".orders-grid")
   }
 
@@ -912,16 +913,15 @@ grid.orders.innerHTML = ""
           </div>
           <div class="card-actions">
             <button class="btn-see">👁 Ver más</button>
-            <button class="btn-review">↗ Revisar</button>
+            <button class="btn-review" data-code="${proform.payload.doc.code}">↗ Revisar</button>
           </div>
-      
             `
             grid.orders.appendChild(card)
     }
     }
   printOrders(proformsJSON)
 
-      async function getProforms() {
+  async function getProforms() {
         try {
           const response = await fetch("/api/proforms");
           const data = await response.json();
@@ -954,7 +954,23 @@ grid.orders.innerHTML = ""
       
       printOrders(proforms)
   }
-  enviaraRevision("DP-0000008")
+
+    socket.on("updatedProforms", (data) => {
+printOrders(data)
+    })
+
+    grid.orders.addEventListener("click",(e)=>
+    {
+      if (e.target.classList.contains("btn-review")) {
+          const btn = e.target.closest(".btn-review")
+
+        if (btn) {
+          const code = btn.dataset.code
+          enviaraRevision(code)
+        }
+      }
+    })
+
 </script>
 </body>
 

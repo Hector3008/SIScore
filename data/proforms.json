@@ -2850,9 +2850,68 @@
           }
         ],
         "esNueva": false,
-        "tipo": "borrador",
-        "versiones": [],
-        "version": 1,
+        "tipo": "orden_revision",
+        "versiones": [
+          {
+            "doc": {
+              "cliente": {
+                "nombre": "cajamarca",
+                "ruc": "",
+                "direccion": "",
+                "provincia": "",
+                "ciudad": "",
+                "telefono": "",
+                "email": ""
+              },
+              "pagos": [],
+              "productos": [
+                {
+                  "status": true,
+                  "index": 1,
+                  "nombre": "BZM-Eje01 HINO 500 1999",
+                  "monto": "40",
+                  "cantidad": "3",
+                  "comentario": "",
+                  "total": 120,
+                  "options": [
+                    {
+                      "status": "true",
+                      "ID": "pending",
+                      "CODIGO_FORMATEADO": "BZM-Eje01",
+                      "CODIGO": "Eje01",
+                      "STOCK_LV": 41,
+                      "STOCK_SJL": 120,
+                      "STOCK": 161,
+                      "EQUIVALENTES_STOCK": "",
+                      "DESCRIPCION": "HINO 500 1999",
+                      "FAMILIA": "ARRANCADOR",
+                      "SUBFAMILIA": "BAQUELITA",
+                      "PROVEEDOR": "BZM",
+                      "MARCA": "BZM",
+                      "UBICACION": "pending"
+                    }
+                  ]
+                }
+              ],
+              "esNueva": false,
+              "tipo": "borrador",
+              "version": 1,
+              "fecha": "26/4/2026",
+              "code": "DP-0000004",
+              "vendedor": "Lázaro",
+              "forma_de_pago": "Credito",
+              "status": true,
+              "empresa": "max",
+              "entrega": "",
+              "destino": "",
+              "atencion": "",
+              "agencia": "",
+              "canal_de_venta": "Tienda",
+              "comprobante": "Proforma"
+            }
+          }
+        ],
+        "version": 2,
         "fecha": "26/4/2026",
         "code": "DP-0000004",
         "vendedor": "Lázaro",
@@ -4778,7 +4837,7 @@
           }
         ],
         "esNueva": false,
-        "tipo": "orden_salida",
+        "tipo": "orden_revision",
         "versiones": [
           {
             "doc": {
@@ -12925,6 +12984,126 @@
         "agencia": "",
         "canal_de_venta": "",
         "comprobante": ""
+      }
+    }
+  },
+  {
+    "payload": {
+      "doc": {
+        "cliente": {
+          "nombre": "resedisa",
+          "ruc": "",
+          "direccion": "",
+          "provincia": "",
+          "ciudad": "",
+          "telefono": "",
+          "email": ""
+        },
+        "pagos": [],
+        "productos": [
+          {
+            "status": true,
+            "index": 1,
+            "nombre": "BZM-Eje01 HINO 500 1999",
+            "monto": "4",
+            "cantidad": "4",
+            "comentario": "",
+            "total": 16,
+            "options": [
+              {
+                "status": "true",
+                "ID": "pending",
+                "CODIGO_FORMATEADO": "BZM-Eje01",
+                "CODIGO": "Eje01",
+                "STOCK_LV": 41,
+                "STOCK_SJL": 120,
+                "STOCK": 161,
+                "EQUIVALENTES_STOCK": "",
+                "DESCRIPCION": "HINO 500 1999",
+                "FAMILIA": "ARRANCADOR",
+                "SUBFAMILIA": "BAQUELITA",
+                "PROVEEDOR": "BZM",
+                "MARCA": "BZM",
+                "UBICACION": "pending"
+              }
+            ]
+          }
+        ],
+        "esNueva": false,
+        "tipo": "orden_salida",
+        "versiones": [
+          {
+            "doc": {
+              "cliente": {
+                "nombre": "resedisa",
+                "ruc": "",
+                "direccion": "",
+                "provincia": "",
+                "ciudad": "",
+                "telefono": "",
+                "email": ""
+              },
+              "pagos": [],
+              "productos": [
+                {
+                  "status": true,
+                  "index": 1,
+                  "nombre": "BZM-Eje01 HINO 500 1999",
+                  "monto": "4",
+                  "cantidad": "4",
+                  "comentario": "",
+                  "total": 16,
+                  "options": [
+                    {
+                      "status": "true",
+                      "ID": "pending",
+                      "CODIGO_FORMATEADO": "BZM-Eje01",
+                      "CODIGO": "Eje01",
+                      "STOCK_LV": 41,
+                      "STOCK_SJL": 120,
+                      "STOCK": 161,
+                      "EQUIVALENTES_STOCK": "",
+                      "DESCRIPCION": "HINO 500 1999",
+                      "FAMILIA": "ARRANCADOR",
+                      "SUBFAMILIA": "BAQUELITA",
+                      "PROVEEDOR": "BZM",
+                      "MARCA": "BZM",
+                      "UBICACION": "pending"
+                    }
+                  ]
+                }
+              ],
+              "esNueva": false,
+              "tipo": "borrador",
+              "version": 1,
+              "fecha": "1/5/2026",
+              "code": "DP-0000018",
+              "vendedor": "Lázaro",
+              "forma_de_pago": "Credito",
+              "status": true,
+              "empresa": "max",
+              "entrega": "",
+              "destino": "",
+              "atencion": "",
+              "agencia": "",
+              "canal_de_venta": "Tienda",
+              "comprobante": "Proforma"
+            }
+          }
+        ],
+        "version": 2,
+        "fecha": "1/5/2026",
+        "code": "DP-0000018",
+        "vendedor": "Lázaro",
+        "forma_de_pago": "Credito",
+        "status": true,
+        "empresa": "max",
+        "entrega": "",
+        "destino": "",
+        "atencion": "",
+        "agencia": "",
+        "canal_de_venta": "Tienda",
+        "comprobante": "Proforma"
       }
     }
   }

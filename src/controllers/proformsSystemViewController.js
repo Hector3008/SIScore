@@ -21,4 +21,9 @@ export const produccionViewController = async (req, res)=>{
   res.render("proformSystem.produccion.handlebars", {  proforms });
 }
 
+export const revisionViewController = async (req, res)=>{
+  const proformRequest = await ProformsService.getAll(req, res);
+  const proforms = proformRequest.payload;
+  res.render("proformSystem.revision.handlebars", {  proforms })
+}
 
