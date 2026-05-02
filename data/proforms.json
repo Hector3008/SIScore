@@ -133,7 +133,7 @@
           }
         ],
         "esNueva": false,
-        "tipo": "cotizacion",
+        "tipo": "orden_revision",
         "versiones": [
           {
             "doc": {
@@ -2139,9 +2139,307 @@
               "empresa": "mx",
               "fecha": "25/4/2026"
             }
+          },
+          {
+            "doc": {
+              "cliente": {
+                "nombre": "padelco",
+                "ruc": "59654845184",
+                "telefono": "956498946",
+                "email": "resedisa@gmail.com",
+                "direccion": "trujillo",
+                "provincia": "trujillo",
+                "ciudad": "trujillo"
+              },
+              "pagos": [],
+              "productos": [
+                {
+                  "status": true,
+                  "index": 1,
+                  "nombre": "nissan",
+                  "monto": "50",
+                  "cantidad": "5",
+                  "comentario": "",
+                  "total": 250,
+                  "options": [
+                    {
+                      "status": "true",
+                      "ID": "pending",
+                      "CODIGO_FORMATEADO": "BZM-7710010",
+                      "CODIGO": "77.1001.0 (77.1002.9)",
+                      "STOCK_LV": 7,
+                      "STOCK_SJL": 0,
+                      "STOCK": 7,
+                      "EQUIVALENTES_STOCK": "28593 = 69; ZM-9601204 = 108; LUCAS-LRAPO23 = sin llegada TOTAL = 177",
+                      "DESCRIPCION": "VOLKSWAGEN FOX, MERCEDES-BENZ / NISSAN FRONTIER (ZNP-28593)",
+                      "FAMILIA": "ALTERNADOR",
+                      "SUBFAMILIA": "POLEA",
+                      "PROVEEDOR": "BZM",
+                      "MARCA": "BZM",
+                      "UBICACION": "pending"
+                    },
+                    {
+                      "status": "true",
+                      "ID": "pending",
+                      "CODIGO_FORMATEADO": "BZM-7710060",
+                      "CODIGO": "77.1006.0",
+                      "STOCK_LV": 56,
+                      "STOCK_SJL": 18,
+                      "STOCK": 74,
+                      "EQUIVALENTES_STOCK": "28682 = 130 TOTAL = 130",
+                      "DESCRIPCION": "RENAULT LOGAN NISSAN ALMERA TIIDA 6PK",
+                      "FAMILIA": "ALTERNADOR",
+                      "SUBFAMILIA": "POLEA",
+                      "PROVEEDOR": "BZM",
+                      "MARCA": "BZM",
+                      "UBICACION": "pending"
+                    },
+                    {
+                      "status": "true",
+                      "ID": "pending",
+                      "CODIGO_FORMATEADO": "UF-R0060",
+                      "CODIGO": "R-0060",
+                      "STOCK_LV": 83,
+                      "STOCK_SJL": 700,
+                      "STOCK": 783,
+                      "EQUIVALENTES_STOCK": "",
+                      "DESCRIPCION": "BOSCH 36T NISSAN E15",
+                      "FAMILIA": "ARRANCADOR",
+                      "SUBFAMILIA": "BAQUELITA",
+                      "PROVEEDOR": "UNIFAP",
+                      "MARCA": "UNIFAP",
+                      "UBICACION": "pending"
+                    },
+                    {
+                      "status": "true",
+                      "ID": "pending",
+                      "CODIGO_FORMATEADO": "18034",
+                      "CODIGO": "18034",
+                      "STOCK_LV": 65,
+                      "STOCK_SJL": 50,
+                      "STOCK": 115,
+                      "EQUIVALENTES_STOCK": "BZM-9907010 = 0 TOTAL = 0",
+                      "DESCRIPCION": "NISSAN-DATSUN E16 - 9T",
+                      "FAMILIA": "ARRANCADOR",
+                      "SUBFAMILIA": "BENDIX",
+                      "PROVEEDOR": "CORKI",
+                      "MARCA": "LENSA",
+                      "UBICACION": "pending"
+                    },
+                    {
+                      "status": "true",
+                      "ID": "pending",
+                      "CODIGO_FORMATEADO": "18048",
+                      "CODIGO": "18048",
+                      "STOCK_LV": 58,
+                      "STOCK_SJL": 50,
+                      "STOCK": 108,
+                      "EQUIVALENTES_STOCK": "BZM-9904750 = 44 TOTAL = 44",
+                      "DESCRIPCION": "AUDI / BMW / FORD / MAZDA / NISSAN / TOYOTA - 9T",
+                      "FAMILIA": "ARRANCADOR",
+                      "SUBFAMILIA": "BENDIX",
+                      "PROVEEDOR": "CORKI",
+                      "MARCA": "LENSA",
+                      "UBICACION": "pending"
+                    }
+                  ]
+                },
+                {
+                  "status": false,
+                  "index": 2,
+                  "nombre": "BZM-Eje01 HINO 500 1999",
+                  "monto": "40",
+                  "cantidad": "3",
+                  "comentario": "",
+                  "total": 120,
+                  "options": [
+                    {
+                      "status": "true",
+                      "ID": "pending",
+                      "CODIGO_FORMATEADO": "BZM-Eje01",
+                      "CODIGO": "Eje01",
+                      "STOCK_LV": 41,
+                      "STOCK_SJL": 120,
+                      "STOCK": 161,
+                      "EQUIVALENTES_STOCK": "",
+                      "DESCRIPCION": "HINO 500 1999",
+                      "FAMILIA": "ARRANCADOR",
+                      "SUBFAMILIA": "BAQUELITA",
+                      "PROVEEDOR": "BZM",
+                      "MARCA": "BZM",
+                      "UBICACION": "pending"
+                    }
+                  ]
+                }
+              ],
+              "esNueva": false,
+              "tipo": "cotizacion",
+              "version": 15,
+              "code": "DP-0000001",
+              "vendedor": "Lázaro",
+              "entrega": "Agencia",
+              "destino": "trujillo",
+              "agencia": "trujillo express",
+              "atencion": "reynoso avalos",
+              "canal_de_venta": "Cartera",
+              "forma_de_pago": "Credito",
+              "comprobante": "Factura",
+              "status": true,
+              "empresa": "mx",
+              "fecha": "25/4/2026"
+            }
+          },
+          {
+            "doc": {
+              "cliente": {
+                "nombre": "padelco",
+                "ruc": "59654845184",
+                "telefono": "956498946",
+                "email": "resedisa@gmail.com",
+                "direccion": "trujillo",
+                "provincia": "trujillo",
+                "ciudad": "trujillo"
+              },
+              "pagos": [],
+              "productos": [
+                {
+                  "status": true,
+                  "index": 1,
+                  "nombre": "nissan",
+                  "monto": "50",
+                  "cantidad": "5",
+                  "comentario": "",
+                  "total": 250,
+                  "options": [
+                    {
+                      "status": "true",
+                      "ID": "pending",
+                      "CODIGO_FORMATEADO": "BZM-7710010",
+                      "CODIGO": "77.1001.0 (77.1002.9)",
+                      "STOCK_LV": 7,
+                      "STOCK_SJL": 0,
+                      "STOCK": 7,
+                      "EQUIVALENTES_STOCK": "28593 = 69; ZM-9601204 = 108; LUCAS-LRAPO23 = sin llegada TOTAL = 177",
+                      "DESCRIPCION": "VOLKSWAGEN FOX, MERCEDES-BENZ / NISSAN FRONTIER (ZNP-28593)",
+                      "FAMILIA": "ALTERNADOR",
+                      "SUBFAMILIA": "POLEA",
+                      "PROVEEDOR": "BZM",
+                      "MARCA": "BZM",
+                      "UBICACION": "pending"
+                    },
+                    {
+                      "status": "true",
+                      "ID": "pending",
+                      "CODIGO_FORMATEADO": "BZM-7710060",
+                      "CODIGO": "77.1006.0",
+                      "STOCK_LV": 56,
+                      "STOCK_SJL": 18,
+                      "STOCK": 74,
+                      "EQUIVALENTES_STOCK": "28682 = 130 TOTAL = 130",
+                      "DESCRIPCION": "RENAULT LOGAN NISSAN ALMERA TIIDA 6PK",
+                      "FAMILIA": "ALTERNADOR",
+                      "SUBFAMILIA": "POLEA",
+                      "PROVEEDOR": "BZM",
+                      "MARCA": "BZM",
+                      "UBICACION": "pending"
+                    },
+                    {
+                      "status": "true",
+                      "ID": "pending",
+                      "CODIGO_FORMATEADO": "UF-R0060",
+                      "CODIGO": "R-0060",
+                      "STOCK_LV": 83,
+                      "STOCK_SJL": 700,
+                      "STOCK": 783,
+                      "EQUIVALENTES_STOCK": "",
+                      "DESCRIPCION": "BOSCH 36T NISSAN E15",
+                      "FAMILIA": "ARRANCADOR",
+                      "SUBFAMILIA": "BAQUELITA",
+                      "PROVEEDOR": "UNIFAP",
+                      "MARCA": "UNIFAP",
+                      "UBICACION": "pending"
+                    },
+                    {
+                      "status": "true",
+                      "ID": "pending",
+                      "CODIGO_FORMATEADO": "18034",
+                      "CODIGO": "18034",
+                      "STOCK_LV": 65,
+                      "STOCK_SJL": 50,
+                      "STOCK": 115,
+                      "EQUIVALENTES_STOCK": "BZM-9907010 = 0 TOTAL = 0",
+                      "DESCRIPCION": "NISSAN-DATSUN E16 - 9T",
+                      "FAMILIA": "ARRANCADOR",
+                      "SUBFAMILIA": "BENDIX",
+                      "PROVEEDOR": "CORKI",
+                      "MARCA": "LENSA",
+                      "UBICACION": "pending"
+                    },
+                    {
+                      "status": "true",
+                      "ID": "pending",
+                      "CODIGO_FORMATEADO": "18048",
+                      "CODIGO": "18048",
+                      "STOCK_LV": 58,
+                      "STOCK_SJL": 50,
+                      "STOCK": 108,
+                      "EQUIVALENTES_STOCK": "BZM-9904750 = 44 TOTAL = 44",
+                      "DESCRIPCION": "AUDI / BMW / FORD / MAZDA / NISSAN / TOYOTA - 9T",
+                      "FAMILIA": "ARRANCADOR",
+                      "SUBFAMILIA": "BENDIX",
+                      "PROVEEDOR": "CORKI",
+                      "MARCA": "LENSA",
+                      "UBICACION": "pending"
+                    }
+                  ]
+                },
+                {
+                  "status": false,
+                  "index": 2,
+                  "nombre": "BZM-Eje01 HINO 500 1999",
+                  "monto": "40",
+                  "cantidad": "3",
+                  "comentario": "",
+                  "total": 120,
+                  "options": [
+                    {
+                      "status": "true",
+                      "ID": "pending",
+                      "CODIGO_FORMATEADO": "BZM-Eje01",
+                      "CODIGO": "Eje01",
+                      "STOCK_LV": 41,
+                      "STOCK_SJL": 120,
+                      "STOCK": 161,
+                      "EQUIVALENTES_STOCK": "",
+                      "DESCRIPCION": "HINO 500 1999",
+                      "FAMILIA": "ARRANCADOR",
+                      "SUBFAMILIA": "BAQUELITA",
+                      "PROVEEDOR": "BZM",
+                      "MARCA": "BZM",
+                      "UBICACION": "pending"
+                    }
+                  ]
+                }
+              ],
+              "esNueva": false,
+              "tipo": "orden_salida",
+              "version": 16,
+              "code": "DP-0000001",
+              "vendedor": "Lázaro",
+              "entrega": "Agencia",
+              "destino": "trujillo",
+              "agencia": "trujillo express",
+              "atencion": "reynoso avalos",
+              "canal_de_venta": "Cartera",
+              "forma_de_pago": "Credito",
+              "comprobante": "Factura",
+              "status": true,
+              "empresa": "mx",
+              "fecha": "25/4/2026"
+            }
           }
         ],
-        "version": 15,
+        "version": 17,
         "code": "DP-0000001",
         "vendedor": "Lázaro",
         "entrega": "Agencia",
@@ -2970,9 +3268,68 @@
           }
         ],
         "esNueva": false,
-        "tipo": "borrador",
-        "versiones": [],
-        "version": 1,
+        "tipo": "orden_salida",
+        "versiones": [
+          {
+            "doc": {
+              "cliente": {
+                "nombre": "padelco",
+                "ruc": "",
+                "direccion": "",
+                "provincia": "",
+                "ciudad": "",
+                "telefono": "",
+                "email": ""
+              },
+              "pagos": [],
+              "productos": [
+                {
+                  "status": true,
+                  "index": 1,
+                  "nombre": "BZM-P1000 LLAVE EXTRACTOR DE POLEA",
+                  "monto": "40",
+                  "cantidad": "4",
+                  "comentario": "",
+                  "total": 160,
+                  "options": [
+                    {
+                      "status": "true",
+                      "ID": "pending",
+                      "CODIGO_FORMATEADO": "BZM-P1000",
+                      "CODIGO": "P1000",
+                      "STOCK_LV": 14,
+                      "STOCK_SJL": 30,
+                      "STOCK": 44,
+                      "EQUIVALENTES_STOCK": "",
+                      "DESCRIPCION": "LLAVE EXTRACTOR DE POLEA",
+                      "FAMILIA": "ALTERNADOR",
+                      "SUBFAMILIA": "POLEA",
+                      "PROVEEDOR": "BZM",
+                      "MARCA": "BZM",
+                      "UBICACION": "pending"
+                    }
+                  ]
+                }
+              ],
+              "esNueva": false,
+              "tipo": "borrador",
+              "version": 1,
+              "fecha": "26/4/2026",
+              "code": "DP-0000005",
+              "vendedor": "Lázaro",
+              "forma_de_pago": "Credito",
+              "status": true,
+              "empresa": "max",
+              "entrega": "",
+              "destino": "",
+              "atencion": "",
+              "agencia": "",
+              "canal_de_venta": "Tienda",
+              "comprobante": "Proforma"
+            }
+          }
+        ],
+        "version": 2,
         "fecha": "26/4/2026",
         "code": "DP-0000005",
         "vendedor": "Lázaro",
@@ -13094,6 +13451,318 @@
         "version": 2,
         "fecha": "1/5/2026",
         "code": "DP-0000018",
+        "vendedor": "Lázaro",
+        "forma_de_pago": "Credito",
+        "status": true,
+        "empresa": "max",
+        "entrega": "",
+        "destino": "",
+        "atencion": "",
+        "agencia": "",
+        "canal_de_venta": "Tienda",
+        "comprobante": "Proforma"
+      }
+    }
+  },
+  {
+    "payload": {
+      "doc": {
+        "cliente": {
+          "nombre": "sara",
+          "ruc": "",
+          "direccion": "",
+          "provincia": "",
+          "ciudad": "",
+          "telefono": "",
+          "email": ""
+        },
+        "pagos": [],
+        "productos": [
+          {
+            "status": true,
+            "index": 1,
+            "nombre": "BZM-Eje01 HINO 500 1999",
+            "monto": "25",
+            "cantidad": "5",
+            "comentario": "",
+            "total": 125,
+            "options": [
+              {
+                "status": "true",
+                "ID": "pending",
+                "CODIGO_FORMATEADO": "BZM-Eje01",
+                "CODIGO": "Eje01",
+                "STOCK_LV": 41,
+                "STOCK_SJL": 120,
+                "STOCK": 161,
+                "EQUIVALENTES_STOCK": "",
+                "DESCRIPCION": "HINO 500 1999",
+                "FAMILIA": "ARRANCADOR",
+                "SUBFAMILIA": "BAQUELITA",
+                "PROVEEDOR": "BZM",
+                "MARCA": "BZM",
+                "UBICACION": "pending"
+              }
+            ]
+          }
+        ],
+        "esNueva": false,
+        "tipo": "orden_revision",
+        "versiones": [
+          {
+            "doc": {
+              "cliente": {
+                "nombre": "padelco",
+                "ruc": "",
+                "direccion": "",
+                "provincia": "",
+                "ciudad": "",
+                "telefono": "",
+                "email": ""
+              },
+              "pagos": [],
+              "productos": [
+                {
+                  "status": true,
+                  "index": 1,
+                  "nombre": "BZM-P1000 LLAVE EXTRACTOR DE POLEA",
+                  "monto": "40",
+                  "cantidad": "4",
+                  "comentario": "",
+                  "total": 160,
+                  "options": [
+                    {
+                      "status": "true",
+                      "ID": "pending",
+                      "CODIGO_FORMATEADO": "BZM-P1000",
+                      "CODIGO": "P1000",
+                      "STOCK_LV": 14,
+                      "STOCK_SJL": 30,
+                      "STOCK": 44,
+                      "EQUIVALENTES_STOCK": "",
+                      "DESCRIPCION": "LLAVE EXTRACTOR DE POLEA",
+                      "FAMILIA": "ALTERNADOR",
+                      "SUBFAMILIA": "POLEA",
+                      "PROVEEDOR": "BZM",
+                      "MARCA": "BZM",
+                      "UBICACION": "pending"
+                    }
+                  ]
+                }
+              ],
+              "esNueva": false,
+              "tipo": "borrador",
+              "version": 1,
+              "fecha": "26/4/2026",
+              "code": "DP-0000005",
+              "vendedor": "Lázaro",
+              "forma_de_pago": "Credito",
+              "status": true,
+              "empresa": "max",
+              "entrega": "",
+              "destino": "",
+              "atencion": "",
+              "agencia": "",
+              "canal_de_venta": "Tienda",
+              "comprobante": "Proforma"
+            }
+          },
+          {
+            "doc": {
+              "cliente": {
+                "nombre": "sara",
+                "ruc": "",
+                "direccion": "",
+                "provincia": "",
+                "ciudad": "",
+                "telefono": "",
+                "email": ""
+              },
+              "pagos": [],
+              "productos": [
+                {
+                  "status": true,
+                  "index": 1,
+                  "nombre": "BZM-Eje01 HINO 500 1999",
+                  "monto": "20",
+                  "cantidad": "9",
+                  "comentario": "",
+                  "total": 180,
+                  "options": [
+                    {
+                      "status": "true",
+                      "ID": "pending",
+                      "CODIGO_FORMATEADO": "BZM-Eje01",
+                      "CODIGO": "Eje01",
+                      "STOCK_LV": 41,
+                      "STOCK_SJL": 120,
+                      "STOCK": 161,
+                      "EQUIVALENTES_STOCK": "",
+                      "DESCRIPCION": "HINO 500 1999",
+                      "FAMILIA": "ARRANCADOR",
+                      "SUBFAMILIA": "BAQUELITA",
+                      "PROVEEDOR": "BZM",
+                      "MARCA": "BZM",
+                      "UBICACION": "pending"
+                    }
+                  ]
+                }
+              ],
+              "esNueva": false,
+              "tipo": "borrador",
+              "version": 1,
+              "fecha": "1/5/2026",
+              "code": "DP-0000019",
+              "vendedor": "Lázaro",
+              "forma_de_pago": "Credito",
+              "status": true,
+              "empresa": "max",
+              "entrega": "",
+              "destino": "",
+              "atencion": "",
+              "agencia": "",
+              "canal_de_venta": "",
+              "comprobante": ""
+            }
+          },
+          {
+            "doc": {
+              "cliente": {
+                "nombre": "sara",
+                "ruc": "",
+                "direccion": "",
+                "provincia": "",
+                "ciudad": "",
+                "telefono": "",
+                "email": ""
+              },
+              "pagos": [],
+              "productos": [
+                {
+                  "status": true,
+                  "index": 1,
+                  "nombre": "BZM-Eje01 HINO 500 1999",
+                  "monto": "25",
+                  "cantidad": "9",
+                  "comentario": "",
+                  "total": 225,
+                  "options": [
+                    {
+                      "status": "true",
+                      "ID": "pending",
+                      "CODIGO_FORMATEADO": "BZM-Eje01",
+                      "CODIGO": "Eje01",
+                      "STOCK_LV": 41,
+                      "STOCK_SJL": 120,
+                      "STOCK": 161,
+                      "EQUIVALENTES_STOCK": "",
+                      "DESCRIPCION": "HINO 500 1999",
+                      "FAMILIA": "ARRANCADOR",
+                      "SUBFAMILIA": "BAQUELITA",
+                      "PROVEEDOR": "BZM",
+                      "MARCA": "BZM",
+                      "UBICACION": "pending"
+                    }
+                  ]
+                }
+              ],
+              "esNueva": false,
+              "tipo": "cotizacion",
+              "version": 2,
+              "fecha": "1/5/2026",
+              "code": "DP-0000019",
+              "vendedor": "Lázaro",
+              "forma_de_pago": "Credito",
+              "status": true,
+              "empresa": "max",
+              "entrega": "",
+              "destino": "",
+              "atencion": "",
+              "agencia": "",
+              "canal_de_venta": "",
+              "comprobante": ""
+            }
+          }
+        ],
+        "version": 3,
+        "fecha": "1/5/2026",
+        "code": "DP-0000019",
+        "vendedor": "Lázaro",
+        "forma_de_pago": "Credito",
+        "status": true,
+        "empresa": "max",
+        "entrega": "",
+        "destino": "",
+        "atencion": "",
+        "agencia": "",
+        "canal_de_venta": "",
+        "comprobante": ""
+      }
+    }
+  },
+  {
+    "payload": {
+      "doc": {
+        "cliente": {
+          "nombre": "test",
+          "ruc": "",
+          "direccion": "",
+          "provincia": "",
+          "ciudad": "",
+          "telefono": "",
+          "email": ""
+        },
+        "pagos": [
+          {
+            "index": 1,
+            "status": true,
+            "monto": "400",
+            "operacion": "12312321313",
+            "cuenta": "BCP Importadora"
+          },
+          {
+            "index": 2,
+            "status": true,
+            "monto": "120",
+            "operacion": "123313213123",
+            "cuenta": "BCP Importadora"
+          }
+        ],
+        "productos": [
+          {
+            "status": true,
+            "index": 1,
+            "nombre": "BZM-P1000 LLAVE EXTRACTOR DE POLEA",
+            "monto": "40",
+            "cantidad": "4",
+            "comentario": "",
+            "total": 160,
+            "options": [
+              {
+                "status": "true",
+                "ID": "pending",
+                "CODIGO_FORMATEADO": "BZM-P1000",
+                "CODIGO": "P1000",
+                "STOCK_LV": 14,
+                "STOCK_SJL": 30,
+                "STOCK": 44,
+                "EQUIVALENTES_STOCK": "",
+                "DESCRIPCION": "LLAVE EXTRACTOR DE POLEA",
+                "FAMILIA": "ALTERNADOR",
+                "SUBFAMILIA": "POLEA",
+                "PROVEEDOR": "BZM",
+                "MARCA": "BZM",
+                "UBICACION": "pending"
+              }
+            ]
+          }
+        ],
+        "esNueva": false,
+        "tipo": "orden_revision",
+        "versiones": [],
+        "version": 1,
+        "fecha": "1/5/2026",
+        "code": "DP-0000020",
         "vendedor": "Lázaro",
         "forma_de_pago": "Credito",
         "status": true,

@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Producción</title>
+  <title>Bandeja</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <style>
@@ -885,6 +885,26 @@
         font-size: 16px;
       }
     }
+ .order-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+ 
+  
+  .card-top {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.badge-tipo {
+  font-size: 12px;
+  font-weight: 500;
+  color: #555;
+}
   </style>
 </head>
 
@@ -902,8 +922,8 @@
       </span>
     </div>
     <div class="topnav-center">
-      <div class="page-title">Producción</div>
-      <div class="page-sub">Órdenes activas</div>
+      <div class="page-title">Bandeja</div>
+      <div class="page-sub">Órdenes en historial</div>
     </div>
     <div class="topnav-right">
       <button class="notif-btn" aria-label="Notificaciones">
@@ -929,10 +949,10 @@
     <main class="main-panel">
 
       <div class="section-header">
-        <div class="section-icon">🏭</div>
+        <div class="section-icon">📬</div>
         <div>
-          <h1>Producción</h1>
-          <p>Órdenes de salida activas</p>
+          <h1>Bandeja</h1>
+          <p>Órdenes en historial</p>
         </div>
       </div>
 
@@ -974,7 +994,9 @@
           </div>
           <div class="card-actions">
             <button class="btn-see">👁 Ver más</button>
-            <button class="btn-review">↗ Revisar</button>
+            <button class="btn-review">↗ Facturar</button>
+            <button class="btn-review">↗ Guia</button>
+            <button class="btn-review">↗ Comprobante</button>
           </div>
         </div>
         {{/each}}
@@ -987,7 +1009,7 @@
       <div class="chat-header">
         <div class="chat-header-top">
           <span class="icon">💬</span>
-          <h2>Chat de producción</h2>
+          <h2>Chat de administracion</h2>
           <button class="chat-close-btn" id="chatCloseBtn" aria-label="Cerrar chat">✕</button>
         </div>
         <div class="selected-order">
@@ -1010,7 +1032,7 @@
           <div class="msg-avatar av-am">AM</div>
           <div class="msg-body">
             <div class="msg-meta">
-              <span class="msg-name">Almacenero Miguel</span>
+              <span class="msg-name">Ingeniero Miguel</span>
               <span class="msg-time">09:15</span>
             </div>
             <div class="msg-text">Revisando ítems de la orden.</div>
@@ -1021,7 +1043,7 @@
           <div class="msg-avatar av-aa">AA</div>
           <div class="msg-body">
             <div class="msg-meta">
-              <span class="msg-name">Almacenero Ana</span>
+              <span class="msg-name">Contador Ana</span>
               <span class="msg-time">09:18</span>
             </div>
             <div class="msg-text">Producto X: stock OK ✅<br>Producto Y: stock bajo ⚠️</div>
@@ -1032,7 +1054,7 @@
           <div class="msg-avatar av-am">AM</div>
           <div class="msg-body">
             <div class="msg-meta">
-              <span class="msg-name">Almacenero Miguel</span>
+              <span class="msg-name">Ingeniero Miguel</span>
               <span class="msg-time">09:20</span>
             </div>
             <div class="msg-text">Producto Z: requiere verificación de lote. Voy a validar con calidad.</div>
@@ -1043,7 +1065,7 @@
           <div class="msg-avatar av-aa">AA</div>
           <div class="msg-body">
             <div class="msg-meta">
-              <span class="msg-name">Almacenero Ana</span>
+              <span class="msg-name">Contador Ana</span>
               <span class="msg-time">09:22</span>
             </div>
             <div class="msg-text own">Caja #15 con ligera abolladura. Separada para revisión.</div>
@@ -1054,7 +1076,7 @@
           <div class="msg-avatar av-am">AM</div>
           <div class="msg-body">
             <div class="msg-meta">
-              <span class="msg-name">Almacenero Miguel</span>
+              <span class="msg-name">Ingeniero Miguel</span>
               <span class="msg-time">09:25</span>
             </div>
             <div class="msg-text">Cliente solicita factura electrónica. Recordar validar datos.</div>
@@ -1124,38 +1146,42 @@
     function printOrders(proforms) {
       grid.orders.innerHTML = '';
 
-      proforms = proforms.filter((proform) => {
-        return proform.payload.doc.tipo === 'orden_salida';
-      });
-
       for (let proform of proforms) {
         let card = document.createElement('div');
         card.classList.add('order-card');
         card.innerHTML = `
-          <div class="badge-active">
-            <span class="badge-dot"></span>
-            ACTIVA
-          </div>
-          <div class="order-code">${proform.payload.doc.code}</div>
-          <div class="order-meta">
-            <div class="meta-item">
-              <label>Cliente</label>
-              <span>${proform.payload.doc.cliente.nombre}</span>
-            </div>
-            <div class="meta-item">
-              <label>Vendedor</label>
-              <span>${proform.payload.doc.vendedor}</span>
-            </div>
-            <div class="meta-item" style="text-align:right">
-              <label>Fecha</label>
-              <span>${proform.payload.doc.fecha}</span>
-            </div>
-          </div>
-          <div class="card-actions">
-            <button class="btn-see">👁 Ver más</button>
-            <button class="btn-review" data-code="${proform.payload.doc.code}">↗ Revisar</button>
-          </div>
-        `;
+<div class="card-top">
+  <div class="badge-active">
+    <span class="badge-dot"></span>
+    ACTIVA
+  </div>
+  <span class="badge-tipo">${proform.payload.doc.tipo}</span>
+</div>
+  
+  <div class="order-header">
+    <div class="order-code">${proform.payload.doc.code}</div>
+    <button style="margin: 0.2rem" class="btn-see">👁 Ver más</button>
+  </div>
+  <div class="order-meta">
+    <div class="meta-item">
+      <label>Cliente</label>
+      <span>${proform.payload.doc.cliente.nombre}</span>
+    </div>
+    <div class="meta-item">
+      <label>Vendedor</label>
+      <span>${proform.payload.doc.vendedor}</span>
+    </div>
+    <div class="meta-item" style="text-align:right">
+      <label>Fecha</label>
+      <span>${proform.payload.doc.fecha}</span>
+    </div>
+  </div>
+  <div class="card-actions">
+    <button class="btn-review" data-code="${proform.payload.doc.code}">↗ Facturar</button>
+    <button class="btn-review" data-code="${proform.payload.doc.code}">▯ Comprobante</button>
+  </div>
+`;
+
         grid.orders.appendChild(card);
       }
     }

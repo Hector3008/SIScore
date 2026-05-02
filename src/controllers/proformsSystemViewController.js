@@ -27,3 +27,10 @@ export const revisionViewController = async (req, res)=>{
   res.render("proformSystem.revision.handlebars", {  proforms })
 }
 
+
+export const bandejaViewController = async (req, res) => {
+  const proformRequest = await ProformsService.getAll(req, res);
+  const proforms = proformRequest.payload;
+  res.render("proformSystem.bandeja.handlebars", { proforms });
+};
+

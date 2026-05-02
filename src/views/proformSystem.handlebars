@@ -1786,7 +1786,7 @@
                   </tr>
                 </thead>
                 <tbody id="tbody-guia">
-                  
+
                 </tbody>
               </table>
             </div>
@@ -2221,7 +2221,7 @@
           ruc: "20503534194",
           telefono: "999 999 999",
           email: "ventas@maximportaciones.com.pe",
-          web: "ventas@maximportaciones.com.pe"
+          web: "https://maximportaciones.com.pe"
         },
         importadora: {
           nombre: "Importadora de Repuestos Max Import S.A.C.",
@@ -2229,7 +2229,7 @@
           ruc: "20550445892",
           telefono: "999 999 999",
           email: "ventas@maximportaciones.com.pe",
-          web: "ventas@maximportaciones.com.pe"
+          web: "https://maximportaciones.com.pe"
         },
         mx: {
           nombre: "M & X Importaciones E.I.R.L.",
@@ -2237,7 +2237,7 @@
           ruc: "20602308279",
           telefono: "999 999 999",
           email: "ventas@maximportaciones.com.pe",
-          web: "ventas@maximportaciones.com.pe"
+          web: "https://maximportaciones.com.pe"
         },
         junior: {
           nombre: "Junior Alexander Castillo Arrue",
@@ -2245,7 +2245,7 @@
           ruc: "",
           telefono: "",
           email: "ventas@maximportaciones.com.pe",
-          web: "ventas@maximportaciones.com.pe"
+          web: "https://maximportaciones.com.pe"
         }
       }
     }
@@ -2295,7 +2295,7 @@
     }
     printProductSearch(catalog)
 
-    function printVersion() {
+    function printVersion() {textContent = `v${currentProform.version}`
       guiaPreview.version.textContent = `v${currentProform.version}`
       proformPreview.version.textContent = `v${currentProform.version}`
     }
@@ -2322,7 +2322,6 @@
         let cursive = document.createElement("cursive")
         cursive.id = `proforma_pago_${pago.index}`
         cursive.innerHTML = `${pago.cuenta} | op: ${pago.operacion} | ${pago.monto} /S —`
-
         proformPreview.pago.appendChild(cursive)
       }
     }
@@ -3190,7 +3189,7 @@
       (c.payload.doc.email || '').toLowerCase().includes(val) ||
       (c.payload.doc.ciudad || '').toLowerCase().includes(val)
     );
-    console.log("resultado: ", resultado)
+
     printClientes(resultado);
   });
 
