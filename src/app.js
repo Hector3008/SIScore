@@ -9,10 +9,13 @@ import socket from "./sockets.js";
 import http from "http";
 import proformsRouter from "./routers/proformsRouter.js";
 import proformsSystemViewRouter from "./routers/proformsSystemViewRouter.js";
+import "dotenv/config";
+import connectDB from "../config/db.js";
+
 
 //se crea el app de express:
 const app = express();
-
+connectDB();
   const server = http.createServer(app)// se crea el servidor HTTP real
   const io = new Server(server, {
     cors: {

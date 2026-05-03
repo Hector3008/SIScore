@@ -1,33 +1,20 @@
-//import cfg from "../config/config.js";
-//console.log("persistencia en: ", cfg.PERSISTENCE);
+// persistenceFactory.js
+let PERSISTENCE = "mongo";
 
-let PERSISTENCE = "FS";
+const FS_DAOS = {
+  product: "../dao/FS/product.fs.dao.js",
+  proforms: "../dao/FS/proforms.fs.dao.js",
+  cliente: "../dao/FS/cliente.fs.dao.js",
+};
 
-export let productDao;
-export let proformsDAO;
-export let clienteDAO;
+const MONGO_DAOS = {
+  product: "../dao/FS/product.fs.dao.js",
+  proforms: "../dao/FS/proforms.fs.dao.js",
+  cliente: "../dao/mongo/cliente.mongo.dao.js",
+};
 
-switch (PERSISTENCE) {
-  case "FS":
-    const { default: ProductFSDAO } =
-      await import("../dao/FS/product.fs.dao.js");
-      productDao = ProductFSDAO;
+const DAOS = PERSISTENCE === "mongo" ? MONGO_DAOS : FS_DAOS;
 
-    const { default: ProformsFSDAO } =
-      await import("../dao/FS/proforms.fs.dao.js");
-      proformsDAO = ProformsFSDAO;
-
-    const { default: ClienteFSDAO } =
-            await import("../dao/FS/cliente.fs.dao.js");
-          clienteDAO = ClienteFSDAO;
-    break;
-
-  case "mongo":
-    const { default: ProductMongoDAO } =
-      await import("../dao/product.dao.mongo.js");
-    productDao = ProductMongoDAO;
-    break;
-
-  default:
-    throw new Error(`Unsupported persistence type: ${PERSISTENCE}`);
-}
+export const { default: productDao } = await import(DAOS.product);
+export const { default: proformsDAO } = await import(DAOS.proforms);
+export const { default: clienteDAO } = await import(DAOS.cliente);
