@@ -3147,18 +3147,18 @@
       for (let cliente of clientes) {
         const tr = document.createElement('tr');
         tr.innerHTML = `
-      <td><span style="color:#e8eaf0">${cliente.payload.doc.nombre || '—'}</span></td>
-      <td><span class="doc-tag">${cliente.payload.doc.ruc || '—'}</span></td>
-      <td>${cliente.payload.doc.telefono || '—'}</td>
-      <td>${cliente.payload.doc.ciudad || '—'}</td>
+      <td><span style="color:#e8eaf0">${cliente.nombre || '—'}</span></td>
+      <td><span class="doc-tag">${cliente.ruc || '—'}</span></td>
+      <td>${cliente.telefono || '—'}</td>
+      <td>${cliente.ciudad || '—'}</td>
       <td><button class="btn-cargar-proforma btn-cargar-cliente"
-            data-nombre="${cliente.payload.doc.nombre || ''}"
-            data-ruc="${cliente.payload.doc.ruc || ''}"
-            data-telefono="${cliente.payload.doc.telefono || ''}"
-            data-email="${cliente.payload.doc.email || ''}"
-            data-direccion="${cliente.payload.doc.direccion || ''}"
-            data-provincia="${cliente.payload.doc.provincia || ''}"
-            data-ciudad="${cliente.payload.doc.ciudad || ''}">
+            data-nombre="${cliente.nombre || ''}"
+            data-ruc="${cliente.ruc || ''}"
+            data-telefono="${cliente.telefono || ''}"
+            data-email="${cliente.email || ''}"
+            data-direccion="${cliente.direccion || ''}"
+            data-provincia="${cliente.provincia || ''}"
+            data-ciudad="${cliente.ciudad || ''}">
           Cargar
         </button></td>
     `;

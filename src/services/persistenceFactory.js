@@ -8,7 +8,7 @@ const FS_DAOS = {
 };
 
 const MONGO_DAOS = {
-  product: "../dao/FS/product.fs.dao.js",
+  product: "../dao/mongo/product.mongo.dao.js",
   proforms: "../dao/FS/proforms.fs.dao.js",
   cliente: "../dao/mongo/cliente.mongo.dao.js",
 };
