@@ -885,6 +885,290 @@
         font-size: 16px;
       }
     }
+
+    /* === OVERLAY / MODAL BASE === */
+    .preview-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 999;
+      background: rgba(0, 0, 0, 0.35);
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+    }
+
+    .preview-overlay.open {
+      display: flex;
+    }
+
+    /* === CARD CONTENEDOR === */
+    .preview-product-card {
+      background: #1a1f2e;
+      border: 1px solid #3a4155;
+      border-radius: 10px;
+      width: 740px;
+      max-width: 95vw;
+      max-height: 90vh;
+      overflow-y: auto;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+      animation: slideDown 0.18s ease;
+    }
+
+    @keyframes slideDown {
+      from {
+        opacity: 0;
+        transform: translateY(-10px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* === HEADER DEL MODAL (topbar oscuro) === */
+    .ppc-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 16px;
+      border-bottom: 1px solid #2a3040;
+    }
+
+    .ppc-codigo {
+      font-family: monospace;
+      font-size: 13px;
+      font-weight: 600;
+      color: #7eb3f5;
+    }
+
+    .ppc-close {
+      background: transparent;
+      border: none;
+      color: #8892a4;
+      font-size: 14px;
+      cursor: pointer;
+      padding: 0;
+      line-height: 1;
+    }
+
+    .ppc-close:hover {
+      color: #fff;
+    }
+
+    /* === CUERPO DEL MODAL === */
+    .ppc-body {
+      padding: 14px 16px;
+      background: #fff;
+      /* el interior de la guía es blanco */
+      border-radius: 0 0 10px 10px;
+    }
+
+    /* === BARRA AZUL SUPERIOR DE LA GUÍA === */
+    .guia-header {
+      background: #1a3a5c;
+      color: #fff;
+      padding: 8px 12px;
+      border-radius: 6px;
+      display: flex;
+      justify-content: space-between;
+      font-size: 11px;
+      margin-bottom: 14px;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    /* === ENCABEZADO: logo + info empresa + número doc === */
+    .preview-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 16px;
+      padding-bottom: 14px;
+      border-bottom: 1px solid #eee;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .ph-left {
+      display: flex;
+      gap: 12px;
+      flex: 1;
+      min-width: 200px;
+    }
+
+    .logo-box {
+      width: 56px;
+      height: 56px;
+      background: #f5f5f5;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 9px;
+      color: #aaa;
+      flex-shrink: 0;
+    }
+
+    .ph-info strong {
+      font-size: 12px;
+      font-weight: 600;
+      color: #222;
+      display: block;
+      margin-bottom: 2px;
+    }
+
+    .ph-info p {
+      font-size: 11px;
+      color: #666;
+      line-height: 1.7;
+    }
+
+    .ph-right {
+      text-align: right;
+    }
+
+    .doc-num {
+      font-size: 22px;
+      font-weight: 600;
+      color: #0f4c81;
+    }
+
+    .doc-meta {
+      font-size: 11px;
+      color: #888;
+      margin-top: 2px;
+    }
+
+    /* === GRID DE DATOS DEL CLIENTE === */
+    .client-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3px 24px;
+      margin-bottom: 16px;
+    }
+
+    @media (max-width: 520px) {
+      .client-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .cl {
+      font-size: 11px;
+      color: #555;
+      display: flex;
+      gap: 4px;
+    }
+
+    .cl span:first-child {
+      font-weight: 600;
+      color: #333;
+      min-width: 72px;
+      flex-shrink: 0;
+    }
+
+    /* === TABLA DE ÍTEMS === */
+    .table-wrap {
+      width: 100%;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .items-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 11px;
+      margin-bottom: 14px;
+      min-width: 480px;
+    }
+
+    .items-table th {
+      background: #0f4c81;
+      color: #fff;
+      padding: 7px 8px;
+      text-align: left;
+      font-weight: 500;
+      white-space: nowrap;
+    }
+
+    .items-table td {
+      padding: 6px 8px;
+      border-bottom: 1px solid #eee;
+      color: #333;
+    }
+
+    .items-table tr:nth-child(even) td {
+      background: #f9f9f9;
+    }
+
+    /* === TOTALES === */
+    .totals {
+      display: flex;
+      justify-content: flex-end;
+      margin-top: 4px;
+    }
+
+    .totals-box {
+      width: 220px;
+    }
+
+    @media (max-width: 520px) {
+      .totals-box {
+        width: 100%;
+      }
+    }
+
+    .total-row {
+      display: flex;
+      justify-content: space-between;
+      font-size: 11px;
+      padding: 3px 0;
+      color: #666;
+    }
+
+    .total-final {
+      display: flex;
+      justify-content: space-between;
+      font-size: 13px;
+      font-weight: 600;
+      padding: 7px 10px;
+      background: #e85d14;
+      color: #fff;
+      border-radius: 6px;
+      margin-top: 5px;
+    }
+
+    /* === FOOTER: condiciones / observaciones / contacto === */
+    .preview-footer {
+      margin-top: 20px;
+      padding-top: 12px;
+      border-top: 1px solid #eee;
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 10px;
+    }
+
+    @media (max-width: 600px) {
+      .preview-footer {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .preview-footer strong {
+      font-size: 10px;
+      color: #555;
+      font-weight: 600;
+      display: block;
+      margin-bottom: 2px;
+    }
+
+    .preview-footer p {
+      font-size: 10px;
+      color: #888;
+    }
   </style>
 </head>
 
@@ -939,45 +1223,19 @@
       <!-- Toolbar -->
       <div class="toolbar">
         <div class="search-wrap">
-          <span class="search-icon">🔍</span>
-          <input type="text" placeholder="Buscar por código, vendedor o cliente..." />
+          <span class="search-icon"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+              stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="11" cy="11" r="8" />
+              <line x1="21" y1="21" x2="16.65" y2="16.65" />
+            </svg></span>
+          <input id="buscar_order" type="text" placeholder="Buscar por código, vendedor o cliente..." />
         </div>
-        <button class="btn-filter">⚙ Filtros</button>
-        <div class="sort-wrap">
-          <span>Ordenar por</span>
-          <select>
-            <option>Más recientes</option>
-            <option>Más antiguos</option>
-            <option>Código</option>
-          </select>
-        </div>
+
       </div>
 
       <!-- Orders grid -->
       <div class="orders-grid">
-        {{#each proforms}}
-        <div class="order-card">
-          <div class="badge-active">
-            <span class="badge-dot"></span>
-            ACTIVA
-          </div>
-          <div class="order-code">{{this.payload.doc.code}}</div>
-          <div class="order-meta">
-            <div class="meta-item">
-              <label>Vendedor</label>
-              <span>{{this.payload.doc.vendedor}}</span>
-            </div>
-            <div class="meta-item" style="text-align:right">
-              <label>Fecha</label>
-              <span>{{this.payload.doc.fecha}}</span>
-            </div>
-          </div>
-          <div class="card-actions">
-            <button class="btn-see">👁 Ver más</button>
-            <button class="btn-review">↗ Revisar</button>
-          </div>
-        </div>
-        {{/each}}
+
       </div>
 
     </main>
@@ -1083,6 +1341,58 @@
   <!-- FAB para abrir el chat (móvil/tablet) -->
   <button class="chat-toggle-btn" id="chatToggleBtn" aria-label="Abrir chat">💬</button>
 
+  <!-- TOAST: ver más... -->
+
+  <div class="preview-overlay" id="previewGuiaOverlay" onclick="if(event.target===this)this.classList.remove('open')">
+    <div class="preview-product-card" style="width:740px;max-width:95vw;" onclick="event.stopPropagation()">
+      <div class="ppc-header">
+        <span class="ppc-codigo" id="pgCode">DP-0000001</span>
+        <button class="ppc-close"
+          onclick="document.getElementById('previewGuiaOverlay').classList.remove('open')">✕</button>
+      </div>
+      <div class="ppc-body" id="testing">
+        <!-- aquí va el contenido de .preview-card que ya tienes -->
+        <div class="guia-header">
+          <span>CLIENTE: <strong id="pgClienteNombre"></strong></span>
+          <span>VENDEDOR: <strong id="pgVendedor"></strong></span>
+          <span>Fecha: <strong id="pgFecha"></strong></span>
+        </div>
+
+        <div>
+          <div class="table-wrap">
+            <table class="items-table">
+              <thead>
+                <tr>
+                  <th>Item</th>
+                  <th>Cant.</th>
+                  <th>Precio uni</th>
+                  <th>Pedido</th>
+                  <th>Comentario</th>
+                  <th>opcion</th>
+                  <th>LV</th>
+                  <th>SJL</th>
+                  <th>Descripción</th>
+                  <th>Equivalente</th>
+                  <th>Ubicación</th>
+                </tr>
+              </thead>
+              <tbody id="tbody-guia">
+                <tr>
+                  <td>texto</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- ... resto del preview-card -->
+      </div>
+    </div>
+
+
+  </div>
+
+
   <script src="/socket.io/socket.io.js"></script>
 
   <script>
@@ -1115,11 +1425,58 @@
 
     /* ── Socket / Órdenes ── */
     const socket = io();
-    const proformsJSON = {{{ json proforms }}};
+    let proformas = {{{ json proforms }}};
 
     const grid = {
       orders: document.querySelector('.orders-grid')
     };
+
+    function printGuia(products) {
+      const table = document.querySelector("#tbody-guia")
+      table.innerHTML = ""
+
+      for (let [i, product] of products.entries()) {
+
+        for (let [j, option] of product.options.entries()) {
+
+          const tr = document.createElement("tr")
+          tr.classList.add(`guia_opcion_${product.index}`)
+          tr.innerHTML = `
+            <td>${j == 0 ? i + 1 : ""}</td>
+            <td>${j == 0 ? product.cantidad : ""}</td>
+            <td>${j == 0 ? `S/ ${product.monto}` : ""}</td>
+        <td>${j == 0 ? product.nombre : ""}</td>
+        <td>${j == 0 ? product.comentario : ""}</td>
+              <td>${option.CODIGO_FORMATEADO}</td>
+              
+        <td>${option.STOCK_LV}</td>  
+        <td>${option.STOCK_SJL}</td> 
+  
+        <td> ${option.DESCRIPCION} / ${option.FAMILIA} / ${option.SUBFAMILIA}</td >
+        <td>${option.EQUIVALENTES_STOCK}</td>
+        <td>${option.UBICACION}</td>
+      `
+          table.appendChild(tr)
+        }
+      }
+    }
+
+    async function abrirVistaGuia(code) {
+
+      const res = await fetch(`/api/proforms/${code}`).then(res => res.json());
+      const order = res.payload.payload.doc;
+      console.log("order: ", order)
+      const overlay = document.getElementById('previewGuiaOverlay');
+      overlay.querySelector('#pgClienteNombre').textContent = order.cliente.nombre
+      overlay.querySelector('#pgVendedor').textContent = order.vendedor;
+      overlay.querySelector('#pgFecha').textContent = order.fecha;
+      overlay.querySelector('#pgCode').textContent = order.code;
+
+      //console.log("request: ", document.getElementById("tbody-guia"))
+      printGuia(order.productos)
+      overlay.classList.add('open');
+    }
+
 
     function printOrders(proforms) {
       grid.orders.innerHTML = '';
@@ -1152,15 +1509,17 @@
             </div>
           </div>
           <div class="card-actions">
-            <button class="btn-see">👁 Ver más</button>
+            <button class="btn-see" data-code="${proform.payload.doc.code}"">👁 Ver más</button>
             <button class="btn-review" data-code="${proform.payload.doc.code}">↗ Revisar</button>
           </div>
         `;
+
+
         grid.orders.appendChild(card);
       }
     }
 
-    printOrders(proformsJSON);
+    printOrders(proformas);
 
     async function getProforms() {
       try {
@@ -1191,11 +1550,19 @@
       const proforms = await getProforms();
       printOrders(proforms);
     }
-
     socket.on('updatedProforms', (data) => {
+      proformas = data
       printOrders(data);
     });
 
+
+    async function verMás(code) {
+      const res = await fetch(`/api/proforms/${code}`).then(res => res.json());
+      const order = res.payload.payload.doc;
+
+    }
+
+    //btn enviar a revision 
     grid.orders.addEventListener('click', (e) => {
       if (e.target.classList.contains('btn-review')) {
         const btn = e.target.closest('.btn-review');
@@ -1205,6 +1572,38 @@
         }
       }
     });
+
+    //btn ver más: 
+    grid.orders.addEventListener('click', (e) => {
+      if (e.target.classList.contains('btn-see')) {
+        const btn = e.target.closest('.btn-see');
+        if (btn) {
+          const code = btn.dataset.code;
+          console.log("code from here: ", code)
+          abrirVistaGuia(code)
+        }
+      }
+    });
+
+  document.querySelector("#buscar_order").addEventListener("input", (e) => {
+    const value = e.target.value;
+    const tokens = value.toLowerCase().split(/\s+/).filter(Boolean);
+    const orders = proformas.filter((proform) => {
+      return proform.payload.doc.tipo == "orden_salida"
+    })
+    const filtered = orders.filter(p => {
+      const doc = p.payload.doc;
+      const text = `
+      ${doc.code}
+      ${doc.cliente.nombre}
+      ${doc.vendedor}
+      ${doc.fecha}
+    `.toLowerCase();
+
+      return tokens.every(word => text.includes(word));
+    });
+    printOrders(filtered);
+  });
   </script>
 </body>
 
