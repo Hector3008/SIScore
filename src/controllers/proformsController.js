@@ -21,7 +21,6 @@ export const proformController = async (req, res) => {
   }
 };
 export const proformDeleteController = async (req, res) => {
-
   try {
     const id = req.params.pid;
     const result = await ProformsService.deleteByID(id);
@@ -39,25 +38,35 @@ export const proformDeleteController = async (req, res) => {
   }
 };
 
-export const proformCreateController = async (req,res)=>
-{
+export const proformCreateController = async (req, res) => {
   const data = req.body;
 
   const result = await ProformsService.create(data);
   res.status(200).json(result);
-}
+};
 
 export const proformUpdateController = async (req, res) => {
-
-try{
-  const code = req.params.pcode;
-  const data = req.body;
-  const result = await ProformsService.update(code, data);
-  if (result === null) {
-    return res.status(404).json({ status: "error", error: "Not found" });
-  }
+  try {
+    const code = req.params.pcode;
+    const data = req.body;
+    const result = await ProformsService.update(code, data);
+    if (result === null) {
+      return res.status(404).json({ status: "error", error: "Not found" });
+    }
     res.status(200).json({ status: "success", payload: result });
   } catch (err) {
     res.status(500).json({ status: "error", error: err.message });
   }
 };
+
+import ProformaMongoDAO from "../dao/mongo/proform.mongo.dao.js";
+const dao = new ProformaMongoDAO();
+
+export const proformMongoController = async (req, res) => {
+  try {
+    const result = await dao.getAll();
+    res.json(result);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+}
