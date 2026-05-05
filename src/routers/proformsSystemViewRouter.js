@@ -7,8 +7,8 @@ import {
 } from "../controllers/proformsSystemViewController.js";
 
 const proformsSystemViewRouter = Router();
-
-proformsSystemViewRouter.get("/", proformsSystemViewController);
+proformsSystemViewRouter.get("/", (req, res)=>res.render("login.handlebars"));
+proformsSystemViewRouter.get("/creacion", proformsSystemViewController);
 proformsSystemViewRouter.get("/produccion", produccionViewController);
 proformsSystemViewRouter.get("/revision", revisionViewController);
 
