@@ -5,7 +5,7 @@ import {
   revisionViewController,
   bandejaViewController,
 } from "../controllers/proformsSystemViewController.js";
-
+//commit
 const proformsSystemViewRouter = Router();
 proformsSystemViewRouter.get("/", (req, res)=>res.render("login.handlebars"));
 proformsSystemViewRouter.get("/creacion", proformsSystemViewController);
