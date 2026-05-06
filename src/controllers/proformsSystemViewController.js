@@ -1,6 +1,10 @@
 import { ClienteService, ProductService, ProformsService } from "../services/services.js";
 
 
+export const loginController = async (req, res) => {
+    res.render("login.handlebars");
+};
+
 export const proformsSystemViewController = async (req, res) => {
   const productRequest = await ProductService.getAll(req, res);
 
