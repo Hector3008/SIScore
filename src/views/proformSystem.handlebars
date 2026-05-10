@@ -2913,6 +2913,7 @@
       currentProform.versiones = versiones_lastVersion
       currentProform.version = currentProform.version + 1
 
+      console.log("hello from here")
       try {
         const res = await fetch(`/api/proforms/${currentProform.code}`, {
           method: "put",
@@ -2920,7 +2921,9 @@
           headers: {
             "Content-Type": "application/json",
           },
-        });
+        })
+        ;
+        console.log("res: ", res)
         const data = await res.json();
 
         generarPDFProforma(currentProform)
