@@ -29,16 +29,13 @@ class ProformaMongoDAO {
     const proforma = await Proforma.create(data);
     return proforma;
   }
-//es necesario testear este método, está fallando:
+//✅
   async updateByCode(code, updateProform) {
-    console.log("code from updateProform mongodao: ", updateProform);
-    console.log("code from mongodao: ", code);
     const found = await Proforma.findOneAndUpdate(
       { "payload.doc.code": code },
-      { $set: { "payload.doc": updateProform.payload.doc } },
+      { $set: { "payload.doc": updateProform } },
       { new: true },
     );
-
     if (!found) return null;
     return found;
   }
