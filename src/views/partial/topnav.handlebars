@@ -1,6 +1,6 @@
 <nav class="topnav">
   <div class="topnav-left">
-    <button class="hamburger" aria-label="Menú">
+    <button class="hamburger" aria-label="Menú" onclick="toggleMenu()">
       <span></span><span></span><span></span>
     </button>
     <span class="company-badge">
@@ -8,18 +8,17 @@
       <span class="short">Max Import.</span>
     </span>
     <div class="topnav-links">
-
-  {{#each permisos}}
-
-  <a href="/proformSystem/{{this}}" class="nav-link">{{this}}</a>
-  {{/each}}
-     
+      {{#each permisos}}
+      <a href="/proformSystem/{{this}}" class="nav-link">{{this}}</a>
+      {{/each}}
     </div>
   </div>
+
   <div class="topnav-center">
     <div class="page-title">{{titulo}}</div>
     <div class="page-sub">{{subtitulo}}</div>
   </div>
+
   <div class="topnav-right">
     <button class="notif-btn" aria-label="Notificaciones">
       🔔 <span class="notif-badge">{{notifs}}</span>
@@ -28,10 +27,32 @@
       <div class="avatar">{{iniciales user.nombre}}</div>
       <div class="user-info">
         <div class="uname">{{user.nombre}}</div>
-        <div class="urole">{{user.rol}}</div>
       </div>
       <span class="chevron">▾</span>
     </div>
+    <button class="btn cerrar-sesion" onclick="logout()">
+      <span class="texto">Cerrar sesión</span>
+      <span class="icono">✕</span>
+    </button>
   </div>
 </nav>
 
+<!-- Menú hamburguesa -->
+<div class="hamburger-overlay" id="hamburgerOverlay" onclick="toggleMenu()"></div>
+<div class="hamburger-menu" id="hamburgerMenu">
+  {{#each permisos}}
+  <a href="/proformSystem/{{this}}" class="menu-link">{{this}}</a>
+  {{/each}}
+</div>
+
+<script>
+  function toggleMenu() {
+    document.getElementById('hamburgerMenu').classList.toggle('open');
+    document.getElementById('hamburgerOverlay').classList.toggle('active');
+  }
+
+  async function logout() {
+    await fetch('/auth/logout', { method: 'POST' });
+    window.location.href = '/auth/login';
+  }
+</script>

@@ -39,7 +39,7 @@
 }
 
 .company-badge {
-  background: var(--blue);
+  background: #1a56db;
   color: #fff;
   font-weight: 600;
   font-size: 13px;
@@ -127,7 +127,7 @@
   width: 30px;
   height: 30px;
   border-radius: 50%;
-  background: var(--blue);
+  background: #1a56db;
   color: #fff;
   font-weight: 700;
   font-size: 12px;
@@ -232,6 +232,112 @@
 
 @media (max-width: 768px) {
   .topnav-links {
+    display: none;
+  }
+}
+.cerrar-sesion {
+  background: rgba(239, 68, 68, 0.15);
+  color: #fca5a5;
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  border-radius: 6px;
+  padding: 6px 14px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s, border-color 0.2s;
+  white-space: nowrap;
+}
+
+.cerrar-sesion:hover {
+  background: rgba(239, 68, 68, 0.3);
+  border-color: rgba(239, 68, 68, 0.6);
+  color: #fff;
+}
+
+/* ── HAMBURGER MENU ── */
+.hamburger-menu {
+  display: none;
+  position: fixed;
+  top: 56px;
+  left: 0;
+  width: 240px;
+  background: #0d1b3e;
+  border-right: 1px solid rgba(255, 255, 255, 0.1);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  flex-direction: column;
+  padding: 12px 0;
+  z-index: 200;
+  box-shadow: 4px 0 20px rgba(0, 0, 0, 0.3);
+}
+
+.hamburger-menu.open {
+  display: flex;
+}
+
+.hamburger-menu .menu-link {
+  color: rgba(255, 255, 255, 0.7);
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 500;
+  padding: 12px 20px;
+  transition: background 0.15s, color 0.15s;
+  border-left: 3px solid transparent;
+}
+
+.hamburger-menu .menu-link:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: #fff;
+  border-left-color: var(--blue);
+}
+
+.hamburger-menu .menu-link.active {
+  background: rgba(26, 86, 219, 0.2);
+  color: #fff;
+  border-left-color: var(--blue);
+}
+
+.hamburger-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  top: 56px;
+  z-index: 199;
+  background: rgba(0, 0, 0, 0.4);
+}
+
+.hamburger-overlay.active {
+  display: block;
+}
+
+/* ── ICONO CERRAR SESION ── */
+.cerrar-sesion .texto {
+  display: inline;
+}
+
+.cerrar-sesion .icono {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .topnav-links {
+    display: none;
+  }
+
+  .cerrar-sesion .texto {
+    display: none;
+  }
+
+  .cerrar-sesion .icono {
+    display: inline;
+  }
+
+  .cerrar-sesion {
+    padding: 6px 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  .topnav-center .page-sub {
     display: none;
   }
 }
