@@ -11,6 +11,9 @@ import proformsRouter from "./routers/proformsRouter.js";
 import proformsSystemViewRouter from "./routers/proformsSystemViewRouter.js";
 import "dotenv/config";
 import connectDB from "../config/db.js";
+import authRouter from "./routers/authRouter.js";
+import cookieParser from "cookie-parser";
+ 
 
 //se crea el app de express:
 const app = express();
@@ -29,7 +32,8 @@ connectDB();
   app.use(express.json())//se le avisa al servidor que va a trabajar con json
   app.use("/", express.static("./src/public"))//que va a trabajar con informacion publica
   app.use(express.urlencoded({ extended: true }));//y que va a trabajar con formulario
-
+  app.use(cookieParser());
+  
   //ingenieria handlebars, motor de frontend
 const hbs = handlebars.create({
   helpers: {
@@ -53,10 +57,17 @@ const hbs = handlebars.create({
     json: function (context) {
       return JSON.stringify(context);
     },
+
+    iniciales: (nombre) => nombre?.slice(0, 2).toUpperCase() ?? "??",
+
+    equ: (a, b) => a === b,
+
+    
   },
+
+  partialsDir: "./src/views/partial",
 });
       app.engine("handlebars", hbs.engine);
-
       app.set("views", "./src/views");
       app.set("view engine", "handlebars");
 
@@ -68,7 +79,7 @@ const hbs = handlebars.create({
   app.use("/api/clientes/", clienteRouter);
   app.use("/proforms", proformsViewRouter);
   app.use("/proformSystem", proformsSystemViewRouter);
-
+  app.use("/auth", authRouter);
 const PORT = process.env.PORT || 8000;
 
 server.listen(PORT, () => {

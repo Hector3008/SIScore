@@ -1,0 +1,37 @@
+<nav class="topnav">
+  <div class="topnav-left">
+    <button class="hamburger" aria-label="Menú">
+      <span></span><span></span><span></span>
+    </button>
+    <span class="company-badge">
+      <span class="full">Max Importaciones y Servicios Generales S.A.C.</span>
+      <span class="short">Max Import.</span>
+    </span>
+    <div class="topnav-links">
+
+  {{#each permisos}}
+
+  <a href="/proformSystem/{{this}}" class="nav-link">{{this}}</a>
+  {{/each}}
+     
+    </div>
+  </div>
+  <div class="topnav-center">
+    <div class="page-title">{{titulo}}</div>
+    <div class="page-sub">{{subtitulo}}</div>
+  </div>
+  <div class="topnav-right">
+    <button class="notif-btn" aria-label="Notificaciones">
+      🔔 <span class="notif-badge">{{notifs}}</span>
+    </button>
+    <div class="user-pill">
+      <div class="avatar">{{iniciales user.nombre}}</div>
+      <div class="user-info">
+        <div class="uname">{{user.nombre}}</div>
+        <div class="urole">{{user.rol}}</div>
+      </div>
+      <span class="chevron">▾</span>
+    </div>
+  </div>
+</nav>
+

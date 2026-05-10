@@ -910,35 +910,7 @@
 
 <body>
 
-  <!-- TOP NAV -->
-  <nav class="topnav">
-    <div class="topnav-left">
-      <button class="hamburger" aria-label="Menú">
-        <span></span><span></span><span></span>
-      </button>
-      <span class="company-badge">
-        <span class="full">Max Importaciones y Servicios Generales S.A.C.</span>
-        <span class="short">Max Import.</span>
-      </span>
-    </div>
-    <div class="topnav-center">
-      <div class="page-title">Bandeja</div>
-      <div class="page-sub">Órdenes en historial</div>
-    </div>
-    <div class="topnav-right">
-      <button class="notif-btn" aria-label="Notificaciones">
-        🔔 <span class="notif-badge">3</span>
-      </button>
-      <div class="user-pill">
-        <div class="avatar">AM</div>
-        <div class="user-info">
-          <div class="uname">Almacén</div>
-          <div class="urole">Almacenero</div>
-        </div>
-        <span class="chevron">▾</span>
-      </div>
-    </div>
-  </nav>
+{{> topnav titulo="Bandeja" subtitulo="Órdenes activas / cerradas"}}
 
   <!-- Overlay oscuro (móvil) -->
   <div class="chat-overlay" id="chatOverlay"></div>

@@ -1436,6 +1436,7 @@
 </head>
 
 <body>
+  {{> topnav titulo="Creacion" subtitulo="Órdenes para producción"}}
   <div class="page">
 
     <!-- ── TOPBAR ── -->
@@ -1523,8 +1524,11 @@
 
         <div class="divider-v"></div>
         <button class="btn btn-reiniciar" onclick="reiniciarFormulario()">↺ Reiniciar</button>
+        <button class="btn" onclick="logout()">Cerrar sesión</button>
       </div>
 
+    
+    
     </div>
 
     <!-- ── SUBHEADER ── -->
@@ -3775,6 +3779,11 @@
       printProformas(data)
       printCode()
     })
+
+    async function logout() {
+        await fetch('/auth/logout', { method: 'POST' });
+        window.location.href = '/auth/login';
+      }
   </script>
 </body>
 

@@ -572,9 +572,9 @@
 
           -->
 
-          <button type="submit" class="btn-login" id="btnLogin" onclick="window.location.href='/proformSystem/creacion'">
-            Ingresar
-          </button>
+<button type="submit" class="btn-login" id="btnLogin">
+  Ingresar
+</button>
         </form>
 
         <div class="form-footer">
@@ -586,7 +586,51 @@
     </div>
 
   </div>
+<script>
+  document.getElementById('loginForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
 
+    const email = document.getElementById('email').value;
+    const password = document.getElementById('password').value;
+    const errorMsg = document.getElementById('errorMsg');
+
+    console.log('📧 Email ingresado:', email);
+    console.log('🔑 Password ingresado:', password);
+
+    errorMsg.classList.remove('show');
+
+    try {
+      console.log('📤 Enviando fetch a /auth/login...');
+
+      const res = await fetch('/auth/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password })
+      });
+
+      console.log('📥 Status de respuesta:', res.status);
+      console.log('📥 OK:', res.ok);
+      console.log('📥 Headers:', [...res.headers.entries()]);
+
+      const data = await res.json();
+      console.log('📦 Body de respuesta:', data);
+
+      if (res.ok) {
+        console.log('✅ Login exitoso, redirigiendo...');
+        window.location.href = '/proformSystem/creacion';
+      } else {
+        console.warn('❌ Login fallido:', data);
+        errorMsg.textContent = 'Credenciales incorrectas. Intenta nuevamente.';
+        errorMsg.classList.add('show');
+      }
+
+    } catch (err) {
+      console.error('💥 Error en el fetch:', err);
+      errorMsg.textContent = 'Error de conexión. Intenta nuevamente.';
+      errorMsg.classList.add('show');
+    }
+  });
+</script>
 </body>
 
 </html>

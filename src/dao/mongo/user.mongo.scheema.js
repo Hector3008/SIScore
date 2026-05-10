@@ -3,7 +3,7 @@ import bcrypt from "bcryptjs";
 import "dotenv/config";
 
 const uri = process.env.MONGO_URI || "mongodb://localhost:27017/tu_db";
-console.log("🔌 Conectando a:", uri);
+//console.log("🔌 Conectando a:", uri);
 
 const userSchema = new mongoose.Schema({
   nombre: { type: String, required: true },
@@ -15,6 +15,11 @@ const userSchema = new mongoose.Schema({
     default: "visualizador",
   },
   activo: { type: Boolean, default: true },
+  permissions: {
+    type: [String],
+    enum: ["all", "creacion", "produccion", "revision", "bandeja"],
+    default: [],
+  },
 });
 
 userSchema.pre("save", async function (next) {

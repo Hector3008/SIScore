@@ -16,25 +16,53 @@ export const proformsSystemViewController = async (req, res) => {
 
   const clientesRequest = await ClienteService.getAll(req,res)
   const clientes = clientesRequest.payload;
-  res.render("proformSystem.handlebars", { products, proforms, clientes });
+  
+  const permisos = req.user.permissions.includes("all")
+    ? ["creacion", "produccion", "revision", "bandeja"]
+    : req.user.permissions.filter((p) => p !== "all");
+  res.render("proformSystem.handlebars", {
+    products,
+    proforms,
+    clientes,
+    user: req.user,
+    permisos
+  });
 };
 
 export const produccionViewController = async (req, res)=>{
   const proformRequest = await ProformsService.getAll(req, res);
   const proforms = proformRequest.payload;
-  res.render("proformSystem.produccion.handlebars", {  proforms });
+
+  const permisos = req.user.permissions.includes("all")
+    ? ["creacion", "produccion", "revision", "bandeja"]
+    : req.user.permissions.filter((p) => p !== "all");
+
+  res.render("proformSystem.produccion.handlebars", {
+    proforms,
+    user: req.user,
+    rutaActiva: "produccion",
+    permisos
+  });
 }
 
 export const revisionViewController = async (req, res)=>{
   const proformRequest = await ProformsService.getAll(req, res);
   const proforms = proformRequest.payload;
-  res.render("proformSystem.revision.handlebars", {  proforms })
+  
+  const permisos = req.user.permissions.includes("all")
+    ? ["creacion", "produccion", "revision", "bandeja"]
+    : req.user.permissions.filter((p) => p !== "all");
+  res.render("proformSystem.revision.handlebars", { proforms, user: req.user, permisos });
 }
 
 
 export const bandejaViewController = async (req, res) => {
   const proformRequest = await ProformsService.getAll(req, res);
   const proforms = proformRequest.payload;
-  res.render("proformSystem.bandeja.handlebars", { proforms });
+  
+  const permisos = req.user.permissions.includes("all")
+    ? ["creacion", "produccion", "revision", "bandeja"]
+    : req.user.permissions.filter((p) => p !== "all");
+  res.render("proformSystem.bandeja.handlebars", { proforms, user: req.user, permisos });
 };
 
