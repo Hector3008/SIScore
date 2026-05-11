@@ -1173,7 +1173,7 @@
 </head>
 
 <body>
-{{> topnav titulo="Produccion" subtitulo="Órdenes activas"}}
+  {{> topnav titulo="Produccion" subtitulo="Órdenes activas"}}
 
   <!-- Overlay oscuro (móvil) -->
   <div class="chat-overlay" id="chatOverlay"></div>
@@ -1379,6 +1379,50 @@
       document.body.style.overflow = 'hidden';
     }
 
+    let activeToast;
+            function toastSuccess(msg) {
+              if (activeToast) activeToast.remove();
+
+              const toast = document.createElement("div");
+              activeToast = toast;
+
+              toast.textContent = msg;
+              toast.style.cssText = `
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    background: #27ae60;
+    color: white;
+    padding: 10px 15px;
+    border-radius: 6px;
+    z-index: 9999;
+    font-size: 14px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    opacity: 0;
+    transform: translateY(10px);
+    transition: all 0.3s ease;
+  `;
+
+              document.body.appendChild(toast);
+
+              // animación entrada
+              setTimeout(() => {
+                toast.style.opacity = "1";
+                toast.style.transform = "translateY(0)";
+              }, 10);
+
+              // salida
+              setTimeout(() => {
+                toast.style.opacity = "0";
+                toast.style.transform = "translateY(10px)";
+
+                setTimeout(() => {
+                  toast.remove();
+                  activeToast = null;
+                }, 300);
+              }, 2500);
+            }
+          
     function closeChat() {
       chatPanel.classList.remove('open');
       chatOverlay.classList.remove('active');
@@ -1430,6 +1474,11 @@
           table.appendChild(tr)
         }
       }
+    }
+
+
+    function ioToEmit(data) {
+      socket.emit("updatedProforms", data);
     }
 
     async function abrirVistaGuia(code) {
@@ -1492,6 +1541,8 @@
 
     printOrders(proformas);
 
+
+
     async function getProforms() {
       try {
         const response = await fetch('/api/proforms');
@@ -1517,14 +1568,18 @@
       } catch (error) {
         console.error('Error:', error);
       }
-
       const proforms = await getProforms();
       printOrders(proforms);
+      ioToEmit(proforms)
+
+      toastSuccess("Proforma enviada")
     }
+
     socket.on('updatedProforms', (data) => {
       proformas = data
       printOrders(data);
-    });
+    })
+      ;
 
 
     async function verMás(code) {
@@ -1556,25 +1611,25 @@
       }
     });
 
-  document.querySelector("#buscar_order").addEventListener("input", (e) => {
-    const value = e.target.value;
-    const tokens = value.toLowerCase().split(/\s+/).filter(Boolean);
-    const orders = proformas.filter((proform) => {
-      return proform.payload.doc.tipo == "orden_salida"
-    })
-    const filtered = orders.filter(p => {
-      const doc = p.payload.doc;
-      const text = `
+    document.querySelector("#buscar_order").addEventListener("input", (e) => {
+      const value = e.target.value;
+      const tokens = value.toLowerCase().split(/\s+/).filter(Boolean);
+      const orders = proformas.filter((proform) => {
+        return proform.payload.doc.tipo == "orden_salida"
+      })
+      const filtered = orders.filter(p => {
+        const doc = p.payload.doc;
+        const text = `
       ${doc.code}
       ${doc.cliente.nombre}
       ${doc.vendedor}
       ${doc.fecha}
     `.toLowerCase();
 
-      return tokens.every(word => text.includes(word));
+        return tokens.every(word => text.includes(word));
+      });
+      printOrders(filtered);
     });
-    printOrders(filtered);
-  });
   </script>
 </body>
 

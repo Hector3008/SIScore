@@ -18,7 +18,7 @@ const productoItemSchema = new Schema(
     SUBFAMILIA: { type: String, default: "" },
     PROVEEDOR: { type: String, default: "" },
     MARCA: { type: String, default: "" },
-    UBICACION: { type: String, default: "pending" },
+    UBICACION: { type: String, default: "pending" }
   },
   { _id: false },
 );
@@ -70,6 +70,7 @@ const docSchema = new Schema(
     status: { type: Boolean, default: true },
     empresa: { type: String, default: "" },
     fecha: { type: String, default: "" },
+    isLocked: {type: Boolean, default: false}
   },
   { _id: false },
 );
