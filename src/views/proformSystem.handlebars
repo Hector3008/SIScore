@@ -1629,7 +1629,7 @@
                 <option>Yape Junior</option>
                 <option>Plin Junior</option>
               </select>
-              <input id="pago_monto" type="number" placeholder="Monto">
+              <input id="pago_monto" min="0" type="number" placeholder="Monto">
               <input id="pago_operacion" type="text" placeholder="N° operación">
 
             </div>
@@ -1651,8 +1651,8 @@
           <div class="section-body">
             <div class="field-group">
               <input type="text" placeholder="Buscar producto…" class="field-full" id="inputProducto">
-              <input type="number" placeholder="Cantidad" id="inputCantidad">
-              <input type="number" placeholder="Importe unit." id="inputPrecio">
+              <input type="number" min="0" placeholder="Cantidad" id="inputCantidad">
+              <input type="number" min="0" placeholder="Importe unit." id="inputPrecio">
               <input id="inputComentario" type="text" placeholder="Comentario" class="field-full">
             </div>
             <div class="total-item">
