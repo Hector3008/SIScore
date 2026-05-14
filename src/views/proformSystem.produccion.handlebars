@@ -1313,55 +1313,131 @@
   <button class="chat-toggle-btn" id="chatToggleBtn" aria-label="Abrir chat">💬</button>
 
   <!-- TOAST: ver más... -->
+<div class="preview-overlay" id="previewGuiaOverlay" onclick="if(event.target===this)this.classList.remove('open')">
+  <div class="preview-product-card" onclick="event.stopPropagation()">
 
-  <div class="preview-overlay" id="previewGuiaOverlay" onclick="if(event.target===this)this.classList.remove('open')">
-    <div class="preview-product-card" style="width:740px;max-width:95vw;" onclick="event.stopPropagation()">
-      <div class="ppc-header">
-        <span class="ppc-codigo" id="pgCode">DP-0000001</span>
-        <button class="ppc-close"
-          onclick="document.getElementById('previewGuiaOverlay').classList.remove('open')">✕</button>
+    <div class="ppc-header">
+      <span class="ppc-codigo" id="pgCode">DP-0000000</span>
+      <button class="ppc-close"
+        onclick="document.getElementById('previewGuiaOverlay').classList.remove('open')">✕</button>
+    </div>
+
+    <!-- SWITCHER -->
+    <div style="display:flex;gap:4px;padding:10px 16px;background:#1a1f2e;border-bottom:1px solid #2a3040">
+      <button id="sw-proforma" onclick="switchView('proforma')"
+        style="padding:6px 18px;border-radius:6px;font-size:13px;font-weight:500;cursor:pointer;border:1px solid #3a4155;background:#0f4c81;color:#fff;transition:all 0.15s">Proforma</button>
+      <button id="sw-guia" onclick="switchView('guia')"
+        style="padding:6px 18px;border-radius:6px;font-size:13px;font-weight:500;cursor:pointer;border:1px solid #3a4155;background:transparent;color:#8892a4;transition:all 0.15s">Guía</button>
+    </div>
+
+    <div class="ppc-body">
+
+      <!-- VISTA PROFORMA -->
+      <div id="view-proforma">
+        <div class="preview-header">
+          <div class="ph-left">
+            <div class="logo-box">LOGO</div>
+            <div class="ph-info">
+              <strong>Max Importaciones y Servicios Generales S.A.C.</strong>
+              <p>RUC: 20503534194<br>
+                Av. García Naranjo Nro. 114b - La Victoria - Lima<br>
+                Tel: 999 999 999<br>
+                ventas@maximportaciones.com.pe<br>
+                https://maximportaciones.com.pe
+              </p>
+            </div>
+          </div>
+          <div class="ph-right">
+            <div class="doc-num" id="pfCode">DP-0000000</div>
+            <div class="doc-meta" id="pfFecha">Fecha: —</div>
+          </div>
+        </div>
+
+        <div class="client-grid">
+          <div class="cl"><span>Cliente:</span> <span id="pfCliente">—</span></div>
+          <div class="cl"><span>Teléfono:</span> <span id="pfTelefono">—</span></div>
+          <div class="cl"><span>RUC/DNI:</span> <span id="pfRuc">—</span></div>
+          <div class="cl"><span>Mail:</span> <span id="pfMail">—</span></div>
+          <div class="cl"><span>Dirección:</span> <span id="pfDireccion">—</span></div>
+          <div class="cl"><span>Entrega:</span> <span id="pfEntrega">—</span></div>
+          <div class="cl"><span>Provincia:</span> <span id="pfProvincia">—</span></div>
+          <div class="cl"><span>Ciudad:</span> <span id="pfCiudad">—</span></div>
+          <div class="cl"><span>Destino:</span> <span id="pfDestino">—</span></div>
+          <div class="cl"><span>Canal venta:</span><span id="pfCanal">—</span></div>
+          <div class="cl"><span>Forma pago:</span> <span id="pfPago">—</span></div>
+          <div class="cl"><span>Comprobante:</span><span id="pfComprobante">—</span></div>
+          <div class="cl"><span>Vendedor:</span> <span id="pfVendedor">—</span></div>
+        </div>
+
+        <div class="table-wrap">
+          <table class="items-table">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Descripción</th>
+                <th>Cantidad</th>
+                <th>Precio unit.</th>
+                <th>Importe</th>
+              </tr>
+            </thead>
+            <tbody id="tbody-proforma"></tbody>
+          </table>
+        </div>
+
+        <div class="totals">
+          <div class="totals-box">
+            <div class="total-row"><span>Subtotal</span> <span id="pfSubtotal">S/ 0.00</span></div>
+            <div class="total-row"><span>IGV (18%)</span> <span id="pfIgv">S/ 0.00</span></div>
+            <div class="total-final"><span>Importe total</span><span id="pfTotal">S/ 0.00</span></div>
+          </div>
+        </div>
+
+        <div class="preview-footer">
+          <div><strong>Condiciones</strong>
+            <p>Precios sujetos a cambio sin previo aviso.</p>
+          </div>
+          <div><strong>Observaciones</strong>
+            <p>—</p>
+          </div>
+          <div><strong>Contacto</strong>
+            <p>999 999 999<br>ventas@maximportaciones.com.pe</p>
+          </div>
+        </div>
       </div>
-      <div class="ppc-body" id="testing">
-        <!-- aquí va el contenido de .preview-card que ya tienes -->
+
+      <!-- VISTA GUÍA -->
+      <div id="view-guia" style="display:none">
         <div class="guia-header">
           <span>CLIENTE: <strong id="pgClienteNombre"></strong></span>
           <span>VENDEDOR: <strong id="pgVendedor"></strong></span>
           <span>Fecha: <strong id="pgFecha"></strong></span>
         </div>
 
-        <div>
-          <div class="table-wrap">
-            <table class="items-table">
-              <thead>
-                <tr>
-                  <th>Item</th>
-                  <th>Cant.</th>
-                  <th>Precio uni</th>
-                  <th>Pedido</th>
-                  <th>Comentario</th>
-                  <th>opcion</th>
-                  <th>LV</th>
-                  <th>SJL</th>
-                  <th>Descripción</th>
-                  <th>Equivalente</th>
-                  <th>Ubicación</th>
-                </tr>
-              </thead>
-              <tbody id="tbody-guia">
-                <tr>
-                  <td>texto</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
+        <div class="table-wrap">
+          <table class="items-table">
+            <thead>
+              <tr>
+                <th>Item</th>
+                <th>Cant.</th>
+                <th>Precio uni</th>
+                <th>Pedido</th>
+                <th>Comentario</th>
+                <th>Opción</th>
+                <th>LV</th>
+                <th>SJL</th>
+                <th>Descripción</th>
+                <th>Equivalente</th>
+                <th>Ubicación</th>
+              </tr>
+            </thead>
+            <tbody id="tbody-guia"></tbody>
+          </table>
         </div>
-
-        <!-- ... resto del preview-card -->
       </div>
+
     </div>
-
-
   </div>
+</div>
 
 
   <script src="/socket.io/socket.io.js"></script>
@@ -1481,21 +1557,72 @@
       socket.emit("updatedProforms", data);
     }
 
-    async function abrirVistaGuia(code) {
+  async function abrirVistaGuia(code) {
+    const res = await fetch(`/api/proforms/${code}`).then(res => res.json());
+    const order = res.payload.payload.doc;
+console.log("order: ", order)
+    // reset al abrir
+    switchView('proforma');
 
-      const res = await fetch(`/api/proforms/${code}`).then(res => res.json());
-      const order = res.payload.payload.doc;
-      console.log("order: ", order)
-      const overlay = document.getElementById('previewGuiaOverlay');
-      overlay.querySelector('#pgClienteNombre').textContent = order.cliente.nombre
-      overlay.querySelector('#pgVendedor').textContent = order.vendedor;
-      overlay.querySelector('#pgFecha').textContent = order.fecha;
-      overlay.querySelector('#pgCode').textContent = order.code;
+    // header compartido
+    document.getElementById('pgCode').textContent = order.code;
+    document.getElementById('pfCode').textContent = order.code;
+    document.getElementById('pgClienteNombre').textContent = order.cliente.nombre;
+    document.getElementById('pgVendedor').textContent = order.vendedor;
+    document.getElementById('pgFecha').textContent = order.fecha;
 
-      //console.log("request: ", document.getElementById("tbody-guia"))
-      printGuia(order.productos)
-      overlay.classList.add('open');
-    }
+    // Proforma
+    // proforma
+    document.getElementById('pfCode').textContent = `${order.code} v${order.version}`;
+    document.getElementById('pfFecha').textContent = `Fecha: ${order.fecha}`;
+    document.getElementById('pfCliente').textContent = order.cliente.nombre || '—';
+    document.getElementById('pfTelefono').textContent = order.cliente.telefono || '—';
+    document.getElementById('pfRuc').textContent = order.cliente.ruc || '—';
+    document.getElementById('pfMail').textContent = order.cliente.email || '—';
+    document.getElementById('pfDireccion').textContent = order.cliente.direccion || '—';
+    document.getElementById('pfEntrega').textContent = order.entrega || '—';
+    document.getElementById('pfProvincia').textContent = order.cliente.provincia || '—';
+    document.getElementById('pfCiudad').textContent = order.cliente.ciudad || '—';
+    document.getElementById('pfDestino').textContent = order.destino || '—';
+    document.getElementById('pfCanal').textContent = order.canal_de_venta || '—';
+    document.getElementById('pfPago').textContent = order.forma_de_pago || '—';
+    document.getElementById('pfComprobante').textContent = order.comprobante || '—';
+    document.getElementById('pfVendedor').textContent = order.vendedor || '—';
+
+    const tbodyPf = document.getElementById('tbody-proforma');
+    tbodyPf.innerHTML = '';
+    let subtotal = 0;
+
+    order.productos.forEach((p, i) => {
+      const monto = parseFloat(p.monto) || 0;
+      const importe = p.cantidad * monto;
+      subtotal += importe;
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+    <td>${i + 1}</td>
+    <td>${p.nombre}</td>
+    <td>${p.cantidad}</td>
+    <td>S/ ${monto.toFixed(2)}</td>
+    <td>S/ ${importe.toFixed(2)}</td>
+  `;
+      tbodyPf.appendChild(tr);
+    });
+
+    const igv = (order.comprobante === 'Factura' || order.comprobante === 'Boleta')
+      ? subtotal * 0.18
+      : 0;
+
+    const total = subtotal + igv;
+
+    document.getElementById('pfSubtotal').textContent = `S/ ${subtotal.toFixed(2)}`;
+    document.getElementById('pfIgv').textContent = `S/ ${igv.toFixed(2)}`;
+    document.getElementById('pfTotal').textContent = `S/ ${total.toFixed(2)}`;
+
+    // tabla guia
+    printGuia(order.productos);
+
+    document.getElementById('previewGuiaOverlay').classList.add('open');
+  }
 
 
     function printOrders(proforms) {
@@ -1630,6 +1757,15 @@
       });
       printOrders(filtered);
     });
+
+    function switchView(name) {
+        document.getElementById('view-proforma').style.display = name === 'proforma' ? 'block' : 'none';
+        document.getElementById('view-guia').style.display = name === 'guia' ? 'block' : 'none';
+        document.getElementById('sw-proforma').style.background = name === 'proforma' ? '#0f4c81' : 'transparent';
+        document.getElementById('sw-proforma').style.color = name === 'proforma' ? '#fff' : '#8892a4';
+        document.getElementById('sw-guia').style.background = name === 'guia' ? '#0f4c81' : 'transparent';
+        document.getElementById('sw-guia').style.color = name === 'guia' ? '#fff' : '#8892a4';
+      }
   </script>
 </body>
 

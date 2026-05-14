@@ -66,3 +66,17 @@ export const bandejaViewController = async (req, res) => {
   res.render("proformSystem.bandeja.handlebars", { proforms, user: req.user, permisos });
 };
 
+export const profileController = async (req,res)=>{
+  
+  const proformRequest = await ProformsService.getAll(req, res);
+  const proforms = proformRequest.payload;
+  
+  const permisos = req.user.permissions.includes("all")
+    ? ["creacion", "produccion", "revision", "bandeja"]
+    : req.user.permissions.filter((p) => p !== "all");
+  res.render("proformSystem.profile.handlebars", {
+    proforms,
+    user: req.user,
+    permisos,
+  });
+}

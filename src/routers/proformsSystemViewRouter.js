@@ -5,6 +5,7 @@ import {
   revisionViewController,
   bandejaViewController,
   loginController,
+  profileController,
 } from "../controllers/proformsSystemViewController.js";
 import {
   verifyToken,
@@ -37,6 +38,12 @@ proformsSystemViewRouter.get(
   verifyToken,
   checkPermission("all", "bandeja"),
   bandejaViewController,
+);
+
+proformsSystemViewRouter.get(
+  "/profile",
+  verifyToken,
+  profileController,
 );
 
 export default proformsSystemViewRouter;
