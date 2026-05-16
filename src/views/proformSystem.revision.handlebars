@@ -817,90 +817,92 @@
       align-items: center;
       gap: 8px;
     }
- /* ── COLUMNA COMANDOS ── */
-.cmd-cell {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  white-space: nowrap;
-}
 
-.cmd-btn {
-  width: 28px;
-  height: 28px;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 14px;
-  flex-shrink: 0;
-  transition: opacity 0.15s, transform 0.1s;
-}
+    /* ── COLUMNA COMANDOS ── */
+    .cmd-cell {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      white-space: nowrap;
+    }
 
-.cmd-btn:hover {
-  opacity: 0.85;
-  transform: scale(1.05);
-}
+    .cmd-btn {
+      width: 28px;
+      height: 28px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      flex-shrink: 0;
+      transition: opacity 0.15s, transform 0.1s;
+    }
 
-.cmd-btn:active {
-  transform: scale(0.95);
-}
+    .cmd-btn:hover {
+      opacity: 0.85;
+      transform: scale(1.05);
+    }
 
-.cmd-btn-delete {
-  background: #dc2626;
-  color: #fff;
-}
+    .cmd-btn:active {
+      transform: scale(0.95);
+    }
 
-.cmd-btn-approve {
-  background: #16a34a;
-  color: #fff;
-}
+    .cmd-btn-delete {
+      background: #dc2626;
+      color: #fff;
+    }
 
-.cmd-input-qty {
-  width: 64px;
-  height: 28px;
-  border: 1px solid #d1d5db;
-  border-radius: 6px;
-  text-align: center;
-  font-size: 13px;
-  font-weight: 600;
-  outline: none;
-  transition: border-color 0.2s;
-  -moz-appearance: textfield;
-}
+    .cmd-btn-approve {
+      background: #16a34a;
+      color: #fff;
+    }
 
-.cmd-input-qty:focus {
-  border-color: #1a56db;
-}
+    .cmd-input-qty {
+      width: 64px;
+      height: 28px;
+      border: 1px solid #d1d5db;
+      border-radius: 6px;
+      text-align: center;
+      font-size: 13px;
+      font-weight: 600;
+      outline: none;
+      transition: border-color 0.2s;
+      -moz-appearance: textfield;
+    }
 
-.cmd-input-qty::-webkit-inner-spin-button,
-.cmd-input-qty::-webkit-outer-spin-button {
-  opacity: 1;
-  height: 28px;
-}
- .cmd-input-text {
-  width: 120px;
-  height: 14px;
-  border: 1px solid #d1d5db;
-  border-radius: 6px;
-  padding: 0 8px;
-  font-size: 13px;
-  outline: none;
-  transition: border-color 0.2s;
-  color: #111827;
-  background: #fff;
-}
+    .cmd-input-qty:focus {
+      border-color: #1a56db;
+    }
 
-.cmd-input-text:focus {
-  border-color: #1a56db;
-  box-shadow: 0 0 0 2px rgba(26, 86, 219, 0.1);
-}
+    .cmd-input-qty::-webkit-inner-spin-button,
+    .cmd-input-qty::-webkit-outer-spin-button {
+      opacity: 1;
+      height: 28px;
+    }
 
-.cmd-input-text::placeholder {
-  color: #9ca3af;
-}
+    .cmd-input-text {
+      width: 120px;
+      height: 14px;
+      border: 1px solid #d1d5db;
+      border-radius: 6px;
+      padding: 0 8px;
+      font-size: 13px;
+      outline: none;
+      transition: border-color 0.2s;
+      color: #111827;
+      background: #fff;
+    }
+
+    .cmd-input-text:focus {
+      border-color: #1a56db;
+      box-shadow: 0 0 0 2px rgba(26, 86, 219, 0.1);
+    }
+
+    .cmd-input-text::placeholder {
+      color: #9ca3af;
+    }
   </style>
 </head>
 
@@ -1302,76 +1304,100 @@
 
       }
     }
-    function printGuia(products) {
-      tables.guia.innerHTML = ""
-      for (let [i, product] of products.entries()) {
-        
-        for (let [j, option] of product.options.entries()) {
+  async function printGuia(products) {
+    console.log("currentProform: ", currentProform)
+    tables.guia.innerHTML = ""
 
-          const tr = document.createElement("tr")
-          tr.classList.add(`guia_opcion_${product.index}`)
-          tr.innerHTML = `
+    for (let [i, product] of products.entries()) {
 
-            <td>${j == 0 ? `<input type="checkbox">`: ""}</td>
-            <td>${j == 0 ? i + 1 : ""}</td>
-            <td>${j == 0 ? product.cantidad : ""}</td>
-            <td>${j == 0 ? `S/ ${product.monto}` : ""}</td>
+      for (let [j, option] of product.options.entries()) {
+
+        const tr = document.createElement("tr")
+        tr.classList.add(`guia_opcion_${product.index}`)
+        tr.innerHTML = `
+        <td>${j == 0 ? `<input type="checkbox">` : ""}</td>
+        <td>${j == 0 ? i + 1 : ""}</td>
+        <td>${j == 0 ? product.cantidad : ""}</td>
+        <td>${j == 0 ? `S/ ${product.monto}` : ""}</td>
         <td>${j == 0 ? product.nombre : ""}</td>
         <td>${j == 0 ? product.comentario : ""}</td>
-        
-  
         <td>
-  <div class="cmd-cell">
-    <button class="cmd-btn cmd-btn-delete">✕</button>
-    <input class="cmd-input-qty" type="number" min="0" value="0"/>
-    <button class="cmd-btn cmd-btn-approve">✓</button>
-  </div>
-</td>
-              <td>${option.CODIGO_FORMATEADO}</td>
-              
-        <td>${option.STOCK_LV}</td>  
-        <td>${option.STOCK_SJL}</td> 
-  
-        <td> ${option.DESCRIPCION} / ${option.FAMILIA} / ${option.SUBFAMILIA}</td >
+          <div class="cmd-cell">
+            <button class="cmd-btn cmd-btn-delete">✕</button>
+            <input class="cmd-input-qty" type="number" min="0" value="0"/>
+            <button class="cmd-btn cmd-btn-approve">✓</button>
+          </div>
+        </td>
+        <td>${option.CODIGO_FORMATEADO}</td>
+        <td>${option.STOCK_LV}</td>
+        <td>${option.STOCK_SJL}</td>
+        <td>${option.DESCRIPCION} / ${option.FAMILIA} / ${option.SUBFAMILIA}</td>
         <td>${option.EQUIVALENTES_STOCK}</td>
         <td>${option.UBICACION}</td>
       `
-          tables.guia.appendChild(tr)
-        }
-        const tr2 = document.createElement("tr")
-        tr2.classList.add(`guia_opcion_${product.index}`)
-        tr2.innerHTML = `
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-        <td></td>
-        <td></td>
-        
-                <td>
-  <div class="cmd-cell">
-    <button class="cmd-btn cmd-btn-delete">✕</button>
-    <input class="cmd-input-qty" type="number" min="0" value="0"/>
-    <button class="cmd-btn cmd-btn-approve">✓</button>
-  </div>
-</td>
 
-<td>
-  <input class="cmd-input-text" type="text" placeholder="Otra opcion..."/> 
-</td>
-              
-        <td>➕</td>  
-        <td></td> 
-  
-        <td></td >
-        <td></td>
-        <td></td>
-      `
-        tables.guia.appendChild(tr2)
+        // 👇 Guardar referencias para el listener
+        const productIndex = product.index
+        const optionIndex = j
+
+        const cantidad = product.cantidad  // 👈 capturar en el closure
+
+        tr.querySelector(".cmd-btn-delete").addEventListener("click", async () => {
+          // 1. Buscar el producto en el array por su index
+          const prodArr = currentProform.productos
+          const prodPos = prodArr.findIndex(p => p.index === productIndex)
+          if (prodPos === -1) return
+
+          // 2. Eliminar la opción del array
+          prodArr[prodPos].options.splice(optionIndex, 1)
+
+          // 3. Si no quedan opciones, eliminar el producto completo
+          if (prodArr[prodPos].options.length === 0) {
+            prodArr.splice(prodPos, 1)
+          }
+
+
+          try {
+            await fetch(`/api/proforms/${currentProform.code}`, {
+              method: 'PUT',
+              body: JSON.stringify(currentProform),
+              headers: { 'Content-Type': 'application/json' },
+            });
+          } catch (error) {
+            console.error('Error:', error);
+          }
+          // 4. Re-renderizar
+          
+          printGuia(currentProform.productos)
+        })
+
+
+        tr.querySelector(".cmd-btn-approve").addEventListener("click", () => {
+          const input = tr.querySelector(".cmd-input-qty")
+          input.value = cantidad
+        })
+        tables.guia.appendChild(tr)
       }
-      
-    }
 
+      // Fila de "otra opción"
+      const tr2 = document.createElement("tr")
+      tr2.classList.add(`guia_opcion_${product.index}`)
+      tr2.innerHTML = `
+      <td></td><td></td><td></td><td></td><td></td><td></td>
+      <td>
+        <div class="cmd-cell">
+          <button class="cmd-btn cmd-btn-delete">✕</button>
+          <input class="cmd-input-qty" type="number" min="0" value="0"/>
+          <button class="cmd-btn cmd-btn-approve">✓</button>
+        </div>
+      </td>
+      <td><input class="cmd-input-text" type="text" placeholder="Otra opcion..."/></td>
+      <td>➕</td>
+      <td></td><td></td><td></td><td></td>
+    `
+      tables.guia.appendChild(tr2)
+    }
+  }
     function printEmpresa(value) {
 
       let nombre
