@@ -33,6 +33,7 @@ const lineaProductoSchema = new Schema(
     comentario: { type: String, default: "" },
     total: { type: Number, default: 0 },
     options: [productoItemSchema],
+    isChecked: { type: Boolean, default: false }
   },
   { _id: false },
 );

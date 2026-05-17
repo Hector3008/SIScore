@@ -1393,7 +1393,7 @@
           if (prodArr[prodPos].options.length === 0) {
             prodArr.splice(prodPos, 1)
           }
-//debuguear, no está funcionando bien:
+
           try {
             await fetch(`/api/proforms/${currentProform.code}`, {
               method: 'PUT',
