@@ -1516,19 +1516,12 @@
               <table class="items-table">
                 <thead>
                   <tr>
-                    <th></th>
-                    <th>Item</th>
-                    <th>Cant.</th>
-                    <th>Precio uni</th>
-                    <th>Pedido</th>
-                    <th>Comentario</th>
-                    <th></th>
-                    <th>Opciones</th>
-                    <th>LV</th>
-                    <th>SJL</th>
-                    <th>Descripción</th>
-                    <th>Equivalente</th>
-                    <th>Ubicación</th>
+                    <th>Fecha</th>
+                    <th>Code</th>
+                    <th>Cantidad</th>
+                    <th>Importe unitario</th>
+                    <th>Importe total</th>
+                    <th>Descripcion</th>
                   </tr>
                 </thead>
                 <tbody id="tbody-relacionales"></tbody>
@@ -1712,7 +1705,35 @@
       }
     }
 
+  function printRelacionales(products, order) {
+    const table = document.querySelector("#tbody-relacionales")
+    table.innerHTML = ""
 
+    document.getElementById('pgClienteNombreRel').textContent = order.cliente.nombre
+    document.getElementById('pgVendedorRel').textContent = order.vendedor
+    document.getElementById('pgFechaRel').textContent = order.fecha
+
+    for (let product of products) {
+      for (let option of product.options) {
+        const cantidad = option.CANTIDAD || 0
+        if (cantidad <= 0) continue
+
+        const monto = parseFloat(product.monto) || 0
+        const importeTotal = cantidad * monto
+
+        const tr = document.createElement("tr")
+        tr.innerHTML = `
+        <td>${order.fecha}</td>
+        <td>${option.CODIGO_FORMATEADO}</td>
+        <td>${cantidad}</td>
+        <td>S/ ${monto.toFixed(2)}</td>
+        <td>S/ ${importeTotal.toFixed(2)}</td>
+        <td>${option.DESCRIPCION} / ${option.FAMILIA} / ${option.SUBFAMILIA}</td>
+      `
+        table.appendChild(tr)
+      }
+    }
+  }
     function ioToEmit(data) {
       socket.emit("updatedProforms", data);
     }
@@ -1794,6 +1815,8 @@
       // tabla guia
       printGuia(order.productos);
       printRevision(order.productos)
+
+      printRelacionales(order.productos, order)
       document.getElementById('previewGuiaOverlay').classList.add('open');
     }
 
