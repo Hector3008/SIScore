@@ -1355,18 +1355,26 @@
       </div>
 
       <!-- SWITCHER -->
-      <div style="display:flex;gap:4px;padding:10px 16px;background:#1a1f2e;border-bottom:1px solid #2a3040">
-        <button id="sw-proforma" onclick="switchView('proforma')"
-          style="padding:6px 18px;border-radius:6px;font-size:13px;font-weight:500;cursor:pointer;border:1px solid #3a4155;background:#0f4c81;color:#fff;transition:all 0.15s">Proforma</button><button
-          id="sw-guia" onclick="switchView('guia')"
-          style="padding:6px 18px;border-radius:6px;font-size:13px;font-weight:500;cursor:pointer;border:1px solid #3a4155;background:transparent;color:#8892a4;transition:all 0.15s">Guía</button>
-          <button
-          id="sw-revision" onclick="switchView('revision')"
-          style="padding:6px 18px;border-radius:6px;font-size:13px;font-weight:500;cursor:pointer;border:1px solid #3a4155;background:transparent;color:#8892a4;transition:all 0.15s">Revisión</button>
-<button
-          id="sw-relacionales" onclick="switchView('relacionales')"
-          style="padding:6px 18px;border-radius:6px;font-size:13px;font-weight:500;cursor:pointer;border:1px solid #3a4155;background:transparent;color:#8892a4;transition:all 0.15s">Relacionales</button>
-      </div>
+<!-- SWITCHER -->
+<div style="display:flex;flex-wrap:wrap;gap:4px;padding:10px 16px;background:#1a1f2e;border-bottom:1px solid #2a3040">
+  <button id="sw-proforma" onclick="switchView('proforma')"
+    style="padding:6px 14px;border-radius:6px;font-size:12px;font-weight:500;cursor:pointer;border:1px solid #3a4155;background:#0f4c81;color:#fff;transition:all 0.15s">Proforma</button>
+  <button id="sw-guia" onclick="switchView('guia')"
+    style="padding:6px 14px;border-radius:6px;font-size:12px;font-weight:500;cursor:pointer;border:1px solid #3a4155;background:transparent;color:#8892a4;transition:all 0.15s">Guía</button>
+  <button id="sw-revision" onclick="switchView('revision')"
+    style="padding:6px 14px;border-radius:6px;font-size:12px;font-weight:500;cursor:pointer;border:1px solid #3a4155;background:transparent;color:#8892a4;transition:all 0.15s">Revisión</button>
+  <button id="sw-relacionales" onclick="switchView('relacionales')"
+    style="padding:6px 14px;border-radius:6px;font-size:12px;font-weight:500;cursor:pointer;border:1px solid #3a4155;background:transparent;color:#8892a4;transition:all 0.15s">Relacionales</button>
+  <button id="sw-imagenes" onclick="switchView('imagenes')"
+    style="padding:6px 14px;border-radius:6px;font-size:12px;font-weight:500;cursor:pointer;border:1px solid #3a4155;background:transparent;color:#8892a4;transition:all 0.15s">Imágenes</button>
+
+  <div style="flex:1 1 100%;height:1px;background:#2a3040;margin:4px 0"></div>
+
+  <button onclick=""
+    style="padding:6px 14px;border-radius:6px;font-size:12px;font-weight:500;cursor:pointer;border:1px solid #3a4155;background:transparent;color:#8892a4;transition:all 0.15s">Descargar</button>
+  <button onclick=""
+    style="padding:6px 14px;border-radius:6px;font-size:12px;font-weight:500;cursor:pointer;border:1px solid #3a4155;background:transparent;color:#8892a4;transition:all 0.15s">Imprimir</button>
+</div>
 
       <div class="ppc-body">
 
@@ -1528,6 +1536,21 @@
               </table>
             </div>
           </div>
+
+                    <!-- VISTA IMAGENES -->
+                    <div id="view-imagenes" style="display:none">
+                      <div class="guia-header">
+                        <span>CLIENTE: <strong id="pgClienteNombreImg"></strong></span>
+                        <span>VENDEDOR: <strong id="pgVendedorImg"></strong></span>
+                        <span>Fecha: <strong id="pgFechaImg"></strong></span>
+                      </div>
+                    
+                      <div class="table-wrap">
+                        <table class="items-table">
+                          
+                        </table>
+                      </div>
+                    </div>
         </div>
       </div>
     </div>
@@ -1930,6 +1953,7 @@
       document.getElementById('view-guia').style.display = name === 'guia' ? 'block' : 'none';
       document.getElementById('view-revision').style.display = name === 'revision' ? 'block' : 'none';
       document.getElementById('view-relacionales').style.display = name === 'relacionales' ? 'block' : 'none';
+      document.getElementById('view-imagenes').style.display = name === 'imagenes' ? 'block' : 'none';
 
       document.getElementById('sw-proforma').style.background = name === 'proforma' ? '#0f4c81' : 'transparent';
       document.getElementById('sw-proforma').style.color = name === 'proforma' ? '#fff' : '#8892a4';
@@ -1940,8 +1964,11 @@
       document.getElementById('sw-revision').style.background = name === 'revision' ? '#0f4c81' : 'transparent';
       document.getElementById('sw-revision').style.color = name === 'revision' ? '#fff' : '#8892a4';
 
-            document.getElementById('sw-relacionales').style.background = name === 'relacionales' ? '#0f4c81' : 'transparent';
+      document.getElementById('sw-relacionales').style.background = name === 'relacionales' ? '#0f4c81' : 'transparent';
       document.getElementById('sw-relacionales').style.color = name === 'relacionales' ? '#fff' : '#8892a4';
+      
+      document.getElementById('sw-imagenes').style.background = name === 'imagenes' ? '#0f4c81' : 'transparent';
+      document.getElementById('sw-imagenes').style.color = name === 'imagenes' ? '#fff' : '#8892a4';
     }
   </script>
 </body>
