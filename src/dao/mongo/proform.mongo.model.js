@@ -18,7 +18,8 @@ const productoItemSchema = new Schema(
     SUBFAMILIA: { type: String, default: "" },
     PROVEEDOR: { type: String, default: "" },
     MARCA: { type: String, default: "" },
-    UBICACION: { type: String, default: "pending" }
+    UBICACION: { type: String, default: "pending" },
+    CANTIDAD: { type: Number, default: 0 },
   },
   { _id: false },
 );

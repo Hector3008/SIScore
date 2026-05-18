@@ -913,6 +913,7 @@
     }
 
   
+
   </style>
 </head>
 
@@ -1325,6 +1326,9 @@
 
       for (let [j, option] of product.options.filter(o => o.status === true || o.status === "true").entries()) {
 
+        // 👇 Índice REAL en el array sin filtrar
+        const optionIndex = product.options.findIndex(o => o === option)
+
         const tr = document.createElement("tr")
         tr.classList.add(`guia_opcion_${product.index}`)
         tr.innerHTML = `
@@ -1337,7 +1341,7 @@
         <td>
           <div class="cmd-cell">
             <button class="cmd-btn cmd-btn-delete">✕</button>
-            <input class="cmd-input-qty" type="number" min="0" value="0"/>
+            <input class="cmd-input-qty" type="number" min="0" value="${option.CANTIDAD || 0}"/>
             <button class="cmd-btn cmd-btn-approve">✓</button>
           </div>
         </td>
@@ -1349,32 +1353,30 @@
         <td>${option.UBICACION}</td>
       `
 
-        const optionIndex = j
-
         if (j === 0) {
           const checkbox = tr.querySelector("input[type='checkbox']")
 
           checkbox.addEventListener("change", async (e) => {
-            // Actualizar el array
             const prodPos = currentProform.productos.findIndex(p => p.index === productIndex)
             if (prodPos !== -1) {
               currentProform.productos[prodPos].isChecked = e.target.checked
 
-              console.log("currentProform from here: ", currentProform)
-        try {
-          await fetch(`/api/proforms/${currentProform.code}`, {
-            method: 'PUT',
-            body: JSON.stringify(currentProform),
-            headers: { 'Content-Type': 'application/json' },
-          });
-        } catch (error) {
-          console.error('Error:', error);
-        }
+              try {
+                await fetch(`/api/proforms/${currentProform.code}`, {
+                  method: 'PUT',
+                  body: JSON.stringify(currentProform),
+                  headers: { 'Content-Type': 'application/json' },
+                });
+              } catch (error) {
+                console.error('Error:', error);
+              }
             }
 
-            // Pintar filas
             const filas = tables.guia.querySelectorAll(`.guia_opcion_${productIndex}`)
             filas.forEach(fila => fila.classList.toggle("fila-aprobada", e.target.checked))
+
+            const ultimaFila = [...filas][filas.length - 1]
+            ultimaFila.style.display = e.target.checked ? "none" : ""
           })
         }
 
@@ -1383,15 +1385,17 @@
           const prodPos = prodArr.findIndex(p => p.index === productIndex)
           if (prodPos === -1) return
 
-          if (prodArr[prodPos].options.length === 1) {
+          if (prodArr[prodPos].options.filter(o => o.status === true || o.status === "true").length === 1) {
             const confirmar = confirm("Si eliminas esta opción desaparece todo el elemento pedido. ¿Deseas continuar?")
             if (!confirmar) return
           }
 
-          prodArr[prodPos].options.splice(optionIndex, 1)
+          // Cambiar status a false en lugar de eliminar
+          prodArr[prodPos].options[optionIndex].status = false
 
-          if (prodArr[prodPos].options.length === 0) {
-            prodArr.splice(prodPos, 1)
+          // Si todas las options están en false, marcar el producto como inactivo
+          if (prodArr[prodPos].options.every(o => o.status === false || o.status === "false")) {
+            prodArr[prodPos].status = false
           }
 
           try {
@@ -1407,9 +1411,41 @@
           printGuia(currentProform.productos)
         })
 
-        tr.querySelector(".cmd-btn-approve").addEventListener("click", () => {
-          const input = tr.querySelector(".cmd-input-qty")
-          input.value = cantidad
+        tr.querySelector(".cmd-btn-approve").addEventListener("click", async () => {
+          const prodPos = currentProform.productos.findIndex(p => p.index === productIndex)
+          if (prodPos !== -1) {
+            const input = tr.querySelector(".cmd-input-qty")
+            input.value = cantidad
+
+            currentProform.productos[prodPos].options[optionIndex].CANTIDAD = Number(cantidad)
+
+            try {
+              await fetch(`/api/proforms/${currentProform.code}`, {
+                method: 'PUT',
+                body: JSON.stringify(currentProform),
+                headers: { 'Content-Type': 'application/json' },
+              });
+            } catch (error) {
+              console.error('Error:', error);
+            }
+          }
+        })
+
+        tr.querySelector(".cmd-input-qty").addEventListener("change", async (e) => {
+          const prodPos = currentProform.productos.findIndex(p => p.index === productIndex)
+          if (prodPos !== -1) {
+            currentProform.productos[prodPos].options[optionIndex].CANTIDAD = Number(e.target.value)
+
+            try {
+              await fetch(`/api/proforms/${currentProform.code}`, {
+                method: 'PUT',
+                body: JSON.stringify(currentProform),
+                headers: { 'Content-Type': 'application/json' },
+              });
+            } catch (error) {
+              console.error('Error:', error);
+            }
+          }
         })
 
         tables.guia.appendChild(tr)
@@ -1479,21 +1515,20 @@
         }
 
         printGuia(currentProform.productos)
-
       })
 
       tables.guia.appendChild(tr2)
 
-      // 👇 Aplicar color verde DESPUÉS de que todas las filas del producto están en el DOM
+      // Aplicar estado inicial según isChecked
       if (product.isChecked) {
         tables.guia.querySelectorAll(`.guia_opcion_${productIndex}`)
           .forEach(fila => fila.classList.add("fila-aprobada"))
+
+        tr2.style.display = "none"
       }
-
-      
     }
-  }     function printEmpresa(value) {
-
+  }
+     function printEmpresa(value) {
       let nombre
       let ruc
       let direccion

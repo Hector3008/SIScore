@@ -1712,7 +1712,6 @@ console.log("order: ", order)
     async function verMás(code) {
       const res = await fetch(`/api/proforms/${code}`).then(res => res.json());
       const order = res.payload.payload.doc;
-
     }
 
     //btn enviar a revision 
