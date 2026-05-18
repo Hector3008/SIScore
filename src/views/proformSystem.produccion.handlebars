@@ -1323,12 +1323,24 @@
     </div>
 
     <!-- SWITCHER -->
-    <div style="display:flex;gap:4px;padding:10px 16px;background:#1a1f2e;border-bottom:1px solid #2a3040">
-      <button id="sw-proforma" onclick="switchView('proforma')"
-        style="padding:6px 18px;border-radius:6px;font-size:13px;font-weight:500;cursor:pointer;border:1px solid #3a4155;background:#0f4c81;color:#fff;transition:all 0.15s">Proforma</button>
-      <button id="sw-guia" onclick="switchView('guia')"
-        style="padding:6px 18px;border-radius:6px;font-size:13px;font-weight:500;cursor:pointer;border:1px solid #3a4155;background:transparent;color:#8892a4;transition:all 0.15s">Guía</button>
-    </div>
+<div
+  style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:4px;padding:10px 16px;background:#1a1f2e;border-bottom:1px solid #2a3040">
+
+  <div style="display:flex;flex-wrap:wrap;gap:4px;">
+    <button id="sw-proforma" onclick="switchView('proforma')"
+      style="padding:6px 14px;border-radius:6px;font-size:12px;font-weight:500;cursor:pointer;border:1px solid #3a4155;background:#0f4c81;color:#fff;transition:all 0.15s">Proforma</button>
+    <button id="sw-guia" onclick="switchView('guia')"
+      style="padding:6px 14px;border-radius:6px;font-size:12px;font-weight:500;cursor:pointer;border:1px solid #3a4155;background:transparent;color:#8892a4;transition:all 0.15s">Guía</button>
+  </div>
+
+  <div style="display:flex;flex-wrap:wrap;gap:4px;">
+    <button onclick=""
+      style="padding:6px 14px;border-radius:6px;font-size:12px;font-weight:500;cursor:pointer;border:1px solid #3a4155;background:transparent;color:#8892a4;transition:all 0.15s">Descargar</button>
+    <button onclick=""
+      style="padding:6px 14px;border-radius:6px;font-size:12px;font-weight:500;cursor:pointer;border:1px solid #3a4155;background:transparent;color:#8892a4;transition:all 0.15s">Imprimir</button>
+  </div>
+
+</div>
 
     <div class="ppc-body">
 
