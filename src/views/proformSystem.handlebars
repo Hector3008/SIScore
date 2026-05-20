@@ -1570,10 +1570,10 @@
               <input id="cliente_direccion" type="text" placeholder="Dirección" class="field-full">
               <input id="cliente_provincia" type="text" placeholder="Provincia">
               <input id="cliente_ciudad" type="text" placeholder="Ciudad">
-              <select id="vendedor">
-                <option value="{{user.nombre}}" disabled>Vendedor</option>
-                <option>{{user.nombre}}</option>
-              </select>
+<select id="vendedor">
+  <option value="" disabled>Vendedor</option>
+  <option value="{{user.nombre}}" disabled selected>{{user.nombre}}</option>
+</select>
               <select id="entrega">
                 <option value="Tienda">Tienda</option>
                 <option>Agencia</option>
@@ -2506,7 +2506,7 @@
       fields.cliente.direccion.value = currentProform.cliente.direccion || ""
       fields.cliente.provincia.value = currentProform.cliente.provincia || ""
       fields.cliente.ciudad.value = currentProform.cliente.ciudad || ""
-      fields.vendedor.value = currentProform.cliente.vendedor || ""
+      fields.vendedor.value = currentProform.vendedor || ""
       fields.entrega.value = currentProform.entrega || ""
       fields.destino.value = currentProform.destino || ""
       fields.agencia.value = currentProform.agencia || ""
