@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Profile</title>
+  <title>Bandeja</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <style>
@@ -39,6 +39,14 @@
       min-height: 100vh;
       display: flex;
       flex-direction: column;
+    }
+
+    .fila-aprobada {
+      background-color: #d4edda !important;
+    }
+
+    .fila-aprobada td {
+      background-color: #d4edda !important;
     }
 
     /* ── TOP NAV ── */
@@ -886,6 +894,285 @@
       }
     }
 
+    /* === OVERLAY / MODAL BASE === */
+    .preview-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 999;
+      background: rgba(0, 0, 0, 0.35);
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+    }
+
+    .preview-overlay.open {
+      display: flex;
+    }
+
+    /* === CARD CONTENEDOR === */
+    .preview-product-card {
+      background: #1a1f2e;
+      border: 1px solid #3a4155;
+      border-radius: 10px;
+      width: 740px;
+      max-width: 95vw;
+      max-height: 90vh;
+      overflow-y: auto;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+      animation: slideDown 0.18s ease;
+    }
+
+    @keyframes slideDown {
+      from {
+        opacity: 0;
+        transform: translateY(-10px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* === HEADER DEL MODAL (topbar oscuro) === */
+    .ppc-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 16px;
+      border-bottom: 1px solid #2a3040;
+    }
+
+    .ppc-codigo {
+      font-family: monospace;
+      font-size: 13px;
+      font-weight: 600;
+      color: #7eb3f5;
+    }
+
+    .ppc-close {
+      background: transparent;
+      border: none;
+      color: #8892a4;
+      font-size: 14px;
+      cursor: pointer;
+      padding: 0;
+      line-height: 1;
+    }
+
+    .ppc-close:hover {
+      color: #fff;
+    }
+
+    /* === CUERPO DEL MODAL === */
+    .ppc-body {
+      padding: 14px 16px;
+      background: #fff;
+      /* el interior de la guía es blanco */
+      border-radius: 0 0 10px 10px;
+    }
+
+    /* === BARRA AZUL SUPERIOR DE LA GUÍA === */
+    .guia-header {
+      background: #1a3a5c;
+      color: #fff;
+      padding: 8px 12px;
+      border-radius: 6px;
+      display: flex;
+      justify-content: space-between;
+      font-size: 11px;
+      margin-bottom: 14px;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    /* === ENCABEZADO: logo + info empresa + número doc === */
+    .preview-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 16px;
+      padding-bottom: 14px;
+      border-bottom: 1px solid #eee;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .ph-left {
+      display: flex;
+      gap: 12px;
+      flex: 1;
+      min-width: 200px;
+    }
+
+    .logo-box {
+      width: 56px;
+      height: 56px;
+      background: #f5f5f5;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 9px;
+      color: #aaa;
+      flex-shrink: 0;
+    }
+
+    .ph-info strong {
+      font-size: 12px;
+      font-weight: 600;
+      color: #222;
+      display: block;
+      margin-bottom: 2px;
+    }
+
+    .ph-info p {
+      font-size: 11px;
+      color: #666;
+      line-height: 1.7;
+    }
+
+    .ph-right {
+      text-align: right;
+    }
+
+    .doc-num {
+      font-size: 22px;
+      font-weight: 600;
+      color: #0f4c81;
+    }
+
+    .doc-meta {
+      font-size: 11px;
+      color: #888;
+      margin-top: 2px;
+    }
+
+    /* === GRID DE DATOS DEL CLIENTE === */
+    .client-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3px 24px;
+      margin-bottom: 16px;
+    }
+
+    @media (max-width: 520px) {
+      .client-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .cl {
+      font-size: 11px;
+      color: #555;
+      display: flex;
+      gap: 4px;
+    }
+
+    .cl span:first-child {
+      font-weight: 600;
+      color: #333;
+      min-width: 72px;
+      flex-shrink: 0;
+    }
+
+    /* === TABLA DE ÍTEMS === */
+    .table-wrap {
+      width: 100%;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .items-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 11px;
+      margin-bottom: 14px;
+      min-width: 480px;
+    }
+
+    .items-table th {
+      background: #0f4c81;
+      color: #fff;
+      padding: 7px 8px;
+      text-align: left;
+      font-weight: 500;
+      white-space: nowrap;
+    }
+
+    .items-table td {
+      padding: 6px 8px;
+      border-bottom: 1px solid #eee;
+      color: #333;
+    }
+
+    .items-table tr:nth-child(even) td {
+      background: #f9f9f9;
+    }
+
+    /* === TOTALES === */
+    .totals {
+      display: flex;
+      justify-content: flex-end;
+      margin-top: 4px;
+    }
+
+    .totals-box {
+      width: 220px;
+    }
+
+    @media (max-width: 520px) {
+      .totals-box {
+        width: 100%;
+      }
+    }
+
+    .total-row {
+      display: flex;
+      justify-content: space-between;
+      font-size: 11px;
+      padding: 3px 0;
+      color: #666;
+    }
+
+    .total-final {
+      display: flex;
+      justify-content: space-between;
+      font-size: 13px;
+      font-weight: 600;
+      padding: 7px 10px;
+      background: #e85d14;
+      color: #fff;
+      border-radius: 6px;
+      margin-top: 5px;
+    }
+
+    /* === FOOTER: condiciones / observaciones / contacto === */
+    .preview-footer {
+      margin-top: 20px;
+      padding-top: 12px;
+      border-top: 1px solid #eee;
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 10px;
+    }
+
+    @media (max-width: 600px) {
+      .preview-footer {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .preview-footer strong {
+      font-size: 10px;
+      color: #555;
+      font-weight: 600;
+      display: block;
+      margin-bottom: 2px;
+    }
+
     .order-header {
       display: flex;
       align-items: center;
@@ -893,6 +1180,10 @@
       margin-bottom: 8px;
     }
 
+    .preview-footer p {
+      font-size: 10px;
+      color: #888;
+    }
 
     .card-top {
       display: flex;
@@ -910,8 +1201,7 @@
 </head>
 
 <body>
-
-  {{> topnav titulo="Profile" subtitulo="Órdenes en historial"}}
+  {{> topnav titulo="Bandeja" subtitulo="Órdenes en historial"}}
 
   <!-- Overlay oscuro (móvil) -->
   <div class="chat-overlay" id="chatOverlay"></div>
@@ -923,9 +1213,9 @@
 
       <div class="section-header">
         <div class="section-icon">👨‍💼</div>
-        <div>
-          <h1>Profile</h1>
-          <p>Órdenes en historial</p>
+      <div>
+        <h1>Profile</h1>
+        <p>Órdenes en historial</p>
         </div>
       </div>
 
@@ -948,31 +1238,7 @@
 
       <!-- Orders grid -->
       <div class="orders-grid">
-        {{#each proforms}}
-        <div class="order-card">
-          <div class="badge-active">
-            <span class="badge-dot"></span>
-            ACTIVA
-          </div>
-          <div class="order-code">{{this.payload.doc.code}}</div>
-          <div class="order-meta">
-            <div class="meta-item">
-              <label>Vendedor</label>
-              <span>{{this.payload.doc.vendedor}}</span>
-            </div>
-            <div class="meta-item" style="text-align:right">
-              <label>Fecha</label>
-              <span>{{this.payload.doc.fecha}}</span>
-            </div>
-          </div>
-          <div class="card-actions">
-            <button class="btn-see">👁 Ver más</button>
-            <button class="btn-review">↗ Facturar</button>
-            <button class="btn-review">↗ Guia</button>
-            <button class="btn-review">↗ Comprobante</button>
-          </div>
-        </div>
-        {{/each}}
+
       </div>
 
     </main>
@@ -1005,7 +1271,7 @@
           <div class="msg-avatar av-am">AM</div>
           <div class="msg-body">
             <div class="msg-meta">
-              <span class="msg-name">Ingeniero Miguel</span>
+              <span class="msg-name">Almacenero Miguel</span>
               <span class="msg-time">09:15</span>
             </div>
             <div class="msg-text">Revisando ítems de la orden.</div>
@@ -1016,7 +1282,7 @@
           <div class="msg-avatar av-aa">AA</div>
           <div class="msg-body">
             <div class="msg-meta">
-              <span class="msg-name">Contador Ana</span>
+              <span class="msg-name">Almacenero Ana</span>
               <span class="msg-time">09:18</span>
             </div>
             <div class="msg-text">Producto X: stock OK ✅<br>Producto Y: stock bajo ⚠️</div>
@@ -1027,7 +1293,7 @@
           <div class="msg-avatar av-am">AM</div>
           <div class="msg-body">
             <div class="msg-meta">
-              <span class="msg-name">Ingeniero Miguel</span>
+              <span class="msg-name">Almacenero Miguel</span>
               <span class="msg-time">09:20</span>
             </div>
             <div class="msg-text">Producto Z: requiere verificación de lote. Voy a validar con calidad.</div>
@@ -1038,7 +1304,7 @@
           <div class="msg-avatar av-aa">AA</div>
           <div class="msg-body">
             <div class="msg-meta">
-              <span class="msg-name">Contador Ana</span>
+              <span class="msg-name">Almacenero Ana</span>
               <span class="msg-time">09:22</span>
             </div>
             <div class="msg-text own">Caja #15 con ligera abolladura. Separada para revisión.</div>
@@ -1049,7 +1315,7 @@
           <div class="msg-avatar av-am">AM</div>
           <div class="msg-body">
             <div class="msg-meta">
-              <span class="msg-name">Ingeniero Miguel</span>
+              <span class="msg-name">Almacenero Miguel</span>
               <span class="msg-time">09:25</span>
             </div>
             <div class="msg-text">Cliente solicita factura electrónica. Recordar validar datos.</div>
@@ -1078,6 +1344,220 @@
   <!-- FAB para abrir el chat (móvil/tablet) -->
   <button class="chat-toggle-btn" id="chatToggleBtn" aria-label="Abrir chat">💬</button>
 
+  <!-- TOAST: ver más... -->
+  <div class="preview-overlay" id="previewGuiaOverlay" onclick="if(event.target===this)this.classList.remove('open')">
+    <div class="preview-product-card" onclick="event.stopPropagation()">
+
+      <div class="ppc-header">
+        <span class="ppc-codigo" id="pgCode">DP-0000000</span>
+        <button class="ppc-close"
+          onclick="document.getElementById('previewGuiaOverlay').classList.remove('open')">✕</button>
+      </div>
+
+      <!-- SWITCHER -->
+      <!-- SWITCHER -->
+      <div
+        style="display:flex;flex-wrap:wrap;gap:4px;padding:10px 16px;background:#1a1f2e;border-bottom:1px solid #2a3040">
+        <button id="sw-proforma" onclick="switchView('proforma')"
+          style="padding:6px 14px;border-radius:6px;font-size:12px;font-weight:500;cursor:pointer;border:1px solid #3a4155;background:#0f4c81;color:#fff;transition:all 0.15s">Proforma</button>
+        <button id="sw-guia" onclick="switchView('guia')"
+          style="padding:6px 14px;border-radius:6px;font-size:12px;font-weight:500;cursor:pointer;border:1px solid #3a4155;background:transparent;color:#8892a4;transition:all 0.15s">Guía</button>
+        <button id="sw-revision" onclick="switchView('revision')"
+          style="padding:6px 14px;border-radius:6px;font-size:12px;font-weight:500;cursor:pointer;border:1px solid #3a4155;background:transparent;color:#8892a4;transition:all 0.15s">Revisión</button>
+        <button id="sw-relacionales" onclick="switchView('relacionales')"
+          style="padding:6px 14px;border-radius:6px;font-size:12px;font-weight:500;cursor:pointer;border:1px solid #3a4155;background:transparent;color:#8892a4;transition:all 0.15s">Relacionales</button>
+        <button id="sw-imagenes" onclick="switchView('imagenes')"
+          style="padding:6px 14px;border-radius:6px;font-size:12px;font-weight:500;cursor:pointer;border:1px solid #3a4155;background:transparent;color:#8892a4;transition:all 0.15s">Imágenes</button>
+
+        <div style="flex:1 1 100%;height:1px;background:#2a3040;margin:4px 0"></div>
+
+        <button onclick=""
+          style="padding:6px 14px;border-radius:6px;font-size:12px;font-weight:500;cursor:pointer;border:1px solid #3a4155;background:transparent;color:#8892a4;transition:all 0.15s">Descargar</button>
+        <button onclick=""
+          style="padding:6px 14px;border-radius:6px;font-size:12px;font-weight:500;cursor:pointer;border:1px solid #3a4155;background:transparent;color:#8892a4;transition:all 0.15s">Imprimir</button>
+      </div>
+
+      <div class="ppc-body">
+
+        <!-- VISTA PROFORMA -->
+        <div id="view-proforma">
+          <div class="preview-header">
+            <div class="ph-left">
+              <div class="logo-box">LOGO</div>
+              <div class="ph-info">
+                <strong>Max Importaciones y Servicios Generales S.A.C.</strong>
+                <p>RUC: 20503534194<br>
+                  Av. García Naranjo Nro. 114b - La Victoria - Lima<br>
+                  Tel: 999 999 999<br>
+                  ventas@maximportaciones.com.pe<br>
+                  https://maximportaciones.com.pe
+                </p>
+              </div>
+            </div>
+            <div class="ph-right">
+              <div class="doc-num" id="pfCode">DP-0000000</div>
+              <div class="doc-meta" id="pfFecha">Fecha: —</div>
+            </div>
+          </div>
+
+          <div class="client-grid">
+            <div class="cl"><span>Cliente:</span> <span id="pfCliente">—</span></div>
+            <div class="cl"><span>Teléfono:</span> <span id="pfTelefono">—</span></div>
+            <div class="cl"><span>RUC/DNI:</span> <span id="pfRuc">—</span></div>
+            <div class="cl"><span>Mail:</span> <span id="pfMail">—</span></div>
+            <div class="cl"><span>Dirección:</span> <span id="pfDireccion">—</span></div>
+            <div class="cl"><span>Entrega:</span> <span id="pfEntrega">—</span></div>
+            <div class="cl"><span>Provincia:</span> <span id="pfProvincia">—</span></div>
+            <div class="cl"><span>Ciudad:</span> <span id="pfCiudad">—</span></div>
+            <div class="cl"><span>Destino:</span> <span id="pfDestino">—</span></div>
+            <div class="cl"><span>Canal venta:</span><span id="pfCanal">—</span></div>
+            <div class="cl"><span>Forma pago:</span> <span id="pfPago">—</span></div>
+            <div class="cl"><span>Comprobante:</span><span id="pfComprobante">—</span></div>
+            <div class="cl"><span>Vendedor:</span> <span id="pfVendedor">—</span></div>
+          </div>
+
+          <div class="table-wrap">
+            <table class="items-table">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Descripción</th>
+                  <th>Cantidad</th>
+                  <th>Precio unit.</th>
+                  <th>Importe</th>
+                </tr>
+              </thead>
+              <tbody id="tbody-proforma"></tbody>
+            </table>
+          </div>
+
+          <div class="totals">
+            <div class="totals-box">
+              <div class="total-row"><span>Subtotal</span> <span id="pfSubtotal">S/ 0.00</span></div>
+              <div class="total-row"><span>IGV (18%)</span> <span id="pfIgv">S/ 0.00</span></div>
+              <div class="total-final"><span>Importe total</span><span id="pfTotal">S/ 0.00</span></div>
+            </div>
+          </div>
+
+          <div class="preview-footer">
+            <div><strong>Condiciones</strong>
+              <p>Precios sujetos a cambio sin previo aviso.</p>
+            </div>
+            <div><strong>Observaciones</strong>
+              <p>—</p>
+            </div>
+            <div><strong>Contacto</strong>
+              <p>999 999 999<br>ventas@maximportaciones.com.pe</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- VISTA GUÍA -->
+        <div id="view-guia" style="display:none">
+          <div class="guia-header">
+            <span>CLIENTE: <strong id="pgClienteNombre"></strong></span>
+            <span>VENDEDOR: <strong id="pgVendedor"></strong></span>
+            <span>Fecha: <strong id="pgFecha"></strong></span>
+          </div>
+
+          <div class="table-wrap">
+            <table class="items-table">
+              <thead>
+                <tr>
+                  <th>Item</th>
+                  <th>Cant.</th>
+                  <th>Precio uni</th>
+                  <th>Pedido</th>
+                  <th>Comentario</th>
+                  <th>Opción</th>
+                  <th>LV</th>
+                  <th>SJL</th>
+                  <th>Descripción</th>
+                  <th>Equivalente</th>
+                  <th>Ubicación</th>
+                </tr>
+              </thead>
+              <tbody id="tbody-guia"></tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- VISTA REVISIÓN -->
+        <div id="view-revision" style="display:none">
+          <div class="guia-header">
+            <span>CLIENTE: <strong id="pgClienteNombreRev"></strong></span>
+            <span>VENDEDOR: <strong id="pgVendedorRev"></strong></span>
+            <span>Fecha: <strong id="pgFechaRev"></strong></span>
+          </div>
+
+          <div class="table-wrap">
+            <table class="items-table">
+              <thead>
+                <tr>
+                  <th></th>
+                  <th>Item</th>
+                  <th>Cant.</th>
+                  <th>Precio uni</th>
+                  <th>Pedido</th>
+                  <th>Comentario</th>
+                  <th></th>
+                  <th>Opciones</th>
+                  <th>LV</th>
+                  <th>SJL</th>
+                  <th>Descripción</th>
+                  <th>Equivalente</th>
+                  <th>Ubicación</th>
+                </tr>
+              </thead>
+              <tbody id="tbody-revision"></tbody>
+            </table>
+          </div>
+        </div>
+        <!-- VISTA RELACIONALES -->
+        <div id="view-relacionales" style="display:none">
+          <div class="guia-header">
+            <span>CLIENTE: <strong id="pgClienteNombreRel"></strong></span>
+            <span>VENDEDOR: <strong id="pgVendedorRel"></strong></span>
+            <span>Fecha: <strong id="pgFechaRel"></strong></span>
+          </div>
+
+          <div class="table-wrap">
+            <table class="items-table">
+              <thead>
+                <tr>
+                  <th>Fecha</th>
+                  <th>Code</th>
+                  <th>Cantidad</th>
+                  <th>Importe unitario</th>
+                  <th>Importe total</th>
+                  <th>Descripcion</th>
+                </tr>
+              </thead>
+              <tbody id="tbody-relacionales"></tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- VISTA IMAGENES -->
+        <div id="view-imagenes" style="display:none">
+          <div class="guia-header">
+            <span>CLIENTE: <strong id="pgClienteNombreImg"></strong></span>
+            <span>VENDEDOR: <strong id="pgVendedorImg"></strong></span>
+            <span>Fecha: <strong id="pgFechaImg"></strong></span>
+          </div>
+
+          <div class="table-wrap">
+            <table class="items-table">
+
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>
+
+
   <script src="/socket.io/socket.io.js"></script>
 
   <script>
@@ -1091,6 +1571,50 @@
       chatPanel.classList.add('open');
       chatOverlay.classList.add('active');
       document.body.style.overflow = 'hidden';
+    }
+
+    let activeToast;
+    function toastSuccess(msg) {
+      if (activeToast) activeToast.remove();
+
+      const toast = document.createElement("div");
+      activeToast = toast;
+
+      toast.textContent = msg;
+      toast.style.cssText = `
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    background: #27ae60;
+    color: white;
+    padding: 10px 15px;
+    border-radius: 6px;
+    z-index: 9999;
+    font-size: 14px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    opacity: 0;
+    transform: translateY(10px);
+    transition: all 0.3s ease;
+  `;
+
+      document.body.appendChild(toast);
+
+      // animación entrada
+      setTimeout(() => {
+        toast.style.opacity = "1";
+        toast.style.transform = "translateY(0)";
+      }, 10);
+
+      // salida
+      setTimeout(() => {
+        toast.style.opacity = "0";
+        toast.style.transform = "translateY(10px)";
+
+        setTimeout(() => {
+          toast.remove();
+          activeToast = null;
+        }, 300);
+      }, 2500);
     }
 
     function closeChat() {
@@ -1110,13 +1634,221 @@
 
     /* ── Socket / Órdenes ── */
     const socket = io();
-    const proformsJSON = {{{ json proforms }}};
+    let proformas = {{{ json proforms }}};
 
     const grid = {
       orders: document.querySelector('.orders-grid')
     };
 
+    function printGuia(products) {
+      const table = document.querySelector("#tbody-guia")
+      table.innerHTML = ""
+
+      for (let [i, product] of products.entries()) {
+
+        for (let [j, option] of product.options.entries()) {
+
+          const tr = document.createElement("tr")
+          tr.classList.add(`guia_opcion_${product.index}`)
+          tr.innerHTML = `
+            <td>${j == 0 ? i + 1 : ""}</td>
+            <td>${j == 0 ? product.cantidad : ""}</td>
+            <td>${j == 0 ? `S/ ${product.monto}` : ""}</td>
+        <td>${j == 0 ? product.nombre : ""}</td>
+        <td>${j == 0 ? product.comentario : ""}</td>
+              <td>${option.CODIGO_FORMATEADO}</td>
+              
+        <td>${option.STOCK_LV}</td>  
+        <td>${option.STOCK_SJL}</td> 
+  
+        <td> ${option.DESCRIPCION} / ${option.FAMILIA} / ${option.SUBFAMILIA}</td >
+        <td>${option.EQUIVALENTES_STOCK}</td>
+        <td>${option.UBICACION}</td>
+      `
+          table.appendChild(tr)
+        }
+      }
+    }
+
+
+    function printRevision(products) {
+      const table = document.querySelector("#tbody-revision")
+      table.innerHTML = ""
+
+      table.innerHTML = ""
+
+      for (let [i, product] of products.entries()) {
+
+        const productIndex = product.index
+        const cantidad = product.cantidad
+
+        for (let [j, option] of product.options.filter(o => o.status === true || o.status === "true").entries()) {
+
+          // 👇 Índice REAL en el array sin filtrar
+          const optionIndex = product.options.findIndex(o => o === option)
+
+          const tr = document.createElement("tr")
+          tr.classList.add(`guia_opcion_${product.index}`)
+          tr.innerHTML = `
+        <td>${j == 0 ? `<input type="checkbox" disabled ${product.isChecked ? "checked" : ""}>` : ""}</td>
+        <td>${j == 0 ? i + 1 : ""}</td>
+        <td>${j == 0 ? product.cantidad : ""}</td>
+        <td>${j == 0 ? `S/ ${product.monto}` : ""}</td>
+        <td>${j == 0 ? product.nombre : ""}</td>
+        <td>${j == 0 ? product.comentario : ""}</td>
+        <td>
+          <div class="cmd-cell">
+            <input class="cmd-input-qty" type="number" min="0" value="${option.CANTIDAD || 0}" disabled />
+          </div>
+        </td>
+        <td>${option.CODIGO_FORMATEADO}</td>
+        <td>${option.STOCK_LV}</td>
+        <td>${option.STOCK_SJL}</td>
+        <td>${option.DESCRIPCION} / ${option.FAMILIA} / ${option.SUBFAMILIA}</td>
+        <td>${option.EQUIVALENTES_STOCK}</td>
+        <td>${option.UBICACION}</td>
+      `
+
+          if (j === 0) {
+            const checkbox = tr.querySelector("input[type='checkbox']")
+            checkbox.addEventListener("change", async (e) => {
+              const prodPos = currentProform.productos.findIndex(p => p.index === productIndex)
+              if (prodPos !== -1) {
+                currentProform.productos[prodPos].isChecked = e.target.checked
+              }
+              const filas = table.querySelectorAll(`.guia_opcion_${productIndex}`)
+              filas.forEach(fila => fila.classList.toggle("fila-aprobada", e.target.checked))
+
+              const ultimaFila = [...filas][filas.length - 1]
+              ultimaFila.style.display = e.target.checked ? "none" : ""
+            })
+          }
+          table.appendChild(tr)
+        }
+
+      }
+    }
+
+    function printRelacionales(products, order) {
+      const table = document.querySelector("#tbody-relacionales")
+      table.innerHTML = ""
+
+      document.getElementById('pgClienteNombreRel').textContent = order.cliente.nombre
+      document.getElementById('pgVendedorRel').textContent = order.vendedor
+      document.getElementById('pgFechaRel').textContent = order.fecha
+
+      for (let product of products) {
+        for (let option of product.options) {
+          const cantidad = option.CANTIDAD || 0
+          if (cantidad <= 0) continue
+
+          const monto = parseFloat(product.monto) || 0
+          const importeTotal = cantidad * monto
+
+          const tr = document.createElement("tr")
+          tr.innerHTML = `
+        <td>${order.fecha}</td>
+        <td>${option.CODIGO_FORMATEADO}</td>
+        <td>${cantidad}</td>
+        <td>S/ ${monto.toFixed(2)}</td>
+        <td>S/ ${importeTotal.toFixed(2)}</td>
+        <td>${option.DESCRIPCION} / ${option.FAMILIA} / ${option.SUBFAMILIA}</td>
+      `
+          table.appendChild(tr)
+        }
+      }
+    }
+    function ioToEmit(data) {
+      socket.emit("updatedProforms", data);
+    }
+
+    async function abrirVistaGuia(code) {
+      const res = await fetch(`/api/proforms/${code}`).then(res => res.json());
+      const order = res.payload.payload.doc;
+      document.getElementById("sw-revision").style.display =
+        order.tipo != "cerrada" ? "none" : ""
+      document.getElementById("sw-relacionales").style.display =
+        order.tipo != "cerrada" ? "none" : ""
+      console.log("order: ", order)
+      // reset al abrir
+      switchView('proforma');
+
+      // header compartido
+      document.getElementById('pgCode').textContent = `${order.code} ver más...`;
+      //header guia:
+      document.getElementById('pfCode').textContent = order.code;
+      document.getElementById('pgClienteNombre').textContent = order.cliente.nombre;
+      document.getElementById('pgVendedor').textContent = order.vendedor;
+      document.getElementById('pgFecha').textContent = order.fecha;
+      //header revision:
+      document.getElementById('pgClienteNombreRev').textContent = order.cliente.nombre;
+      document.getElementById('pgVendedorRev').textContent = order.vendedor;
+      document.getElementById('pgFechaRev').textContent = order.fecha;
+
+      //header relacionales:
+      document.getElementById('pgClienteNombreRel').textContent = order.cliente.nombre;
+      document.getElementById('pgVendedorRel').textContent = order.vendedor;
+      document.getElementById('pgFechaRel').textContent = order.fecha;
+
+      // proforma
+      document.getElementById('pfCode').textContent = `${order.code} v${order.version}`;
+      document.getElementById('pfFecha').textContent = `Fecha: ${order.fecha}`;
+      document.getElementById('pfCliente').textContent = order.cliente.nombre || '—';
+      document.getElementById('pfTelefono').textContent = order.cliente.telefono || '—';
+      document.getElementById('pfRuc').textContent = order.cliente.ruc || '—';
+      document.getElementById('pfMail').textContent = order.cliente.email || '—';
+      document.getElementById('pfDireccion').textContent = order.cliente.direccion || '—';
+      document.getElementById('pfEntrega').textContent = order.entrega || '—';
+      document.getElementById('pfProvincia').textContent = order.cliente.provincia || '—';
+      document.getElementById('pfCiudad').textContent = order.cliente.ciudad || '—';
+      document.getElementById('pfDestino').textContent = order.destino || '—';
+      document.getElementById('pfCanal').textContent = order.canal_de_venta || '—';
+      document.getElementById('pfPago').textContent = order.forma_de_pago || '—';
+      document.getElementById('pfComprobante').textContent = order.comprobante || '—';
+      document.getElementById('pfVendedor').textContent = order.vendedor || '—';
+
+      const tbodyPf = document.getElementById('tbody-proforma');
+      tbodyPf.innerHTML = '';
+      let subtotal = 0;
+
+      order.productos.forEach((p, i) => {
+        const monto = parseFloat(p.monto) || 0;
+        const importe = p.cantidad * monto;
+        subtotal += importe;
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+    <td>${i + 1}</td>
+    <td>${p.nombre}</td>
+    <td>${p.cantidad}</td>
+    <td>S/ ${monto.toFixed(2)}</td>
+    <td>S/ ${importe.toFixed(2)}</td>
+  `;
+        tbodyPf.appendChild(tr);
+      });
+
+      const igv = (order.comprobante === 'Factura' || order.comprobante === 'Boleta')
+        ? subtotal * 0.18
+        : 0;
+
+      const total = subtotal + igv;
+
+      document.getElementById('pfSubtotal').textContent = `S/ ${subtotal.toFixed(2)}`;
+      document.getElementById('pfIgv').textContent = `S/ ${igv.toFixed(2)}`;
+      document.getElementById('pfTotal').textContent = `S/ ${total.toFixed(2)}`;
+
+      // tabla guia
+      printGuia(order.productos);
+      printRevision(order.productos)
+
+      printRelacionales(order.productos, order)
+      document.getElementById('previewGuiaOverlay').classList.add('open');
+    }
+  const user = {{{ json user }}}
+
     function printOrders(proforms) {
+           proforms = proforms.filter((proform) => {
+        return proform.payload.doc.vendedor == user.nombre
+      })
       grid.orders.innerHTML = '';
 
       for (let proform of proforms) {
@@ -1130,36 +1862,36 @@
   </div>
   <span class="badge-tipo">${proform.payload.doc.tipo}</span>
 </div>
-  
+
+
   <div class="order-header">
     <div class="order-code">${proform.payload.doc.code}</div>
-    <button style="margin: 0.2rem" class="btn-see">👁 Ver más</button>
+    <button style="margin: 0.2rem" class="btn-see" data-code="${proform.payload.doc.code}">👁 Ver más</button>
   </div>
-  <div class="order-meta">
-    <div class="meta-item">
-      <label>Cliente</label>
-      <span>${proform.payload.doc.cliente.nombre}</span>
-    </div>
-    <div class="meta-item">
-      <label>Vendedor</label>
-      <span>${proform.payload.doc.vendedor}</span>
-    </div>
-    <div class="meta-item" style="text-align:right">
-      <label>Fecha</label>
-      <span>${proform.payload.doc.fecha}</span>
-    </div>
-  </div>
-  <div class="card-actions">
-    <button class="btn-review" data-code="${proform.payload.doc.code}">↗ Facturar</button>
-    <button class="btn-review" data-code="${proform.payload.doc.code}">▯ Comprobante</button>
-  </div>
-`;
+
+
+          <div class="order-meta">
+            <div class="meta-item">
+              <label>Cliente</label>
+              <span>${proform.payload.doc.cliente.nombre}</span>
+            </div>
+            <div class="meta-item">
+              <label>Vendedor</label>
+              <span>${proform.payload.doc.vendedor}</span>
+            </div>
+            <div class="meta-item" style="text-align:right">
+              <label>Fecha</label>
+              <span>${proform.payload.doc.fecha}</span>
+            </div>
+          </div>
+        `;
+
 
         grid.orders.appendChild(card);
       }
     }
 
-    printOrders(proformsJSON);
+    printOrders(proformas);
 
     async function getProforms() {
       try {
@@ -1172,38 +1904,71 @@
       }
     }
 
-    async function enviaraRevision(code) {
+    socket.on('updatedProforms', (data) => {
+      proformas = data
+      printOrders(data);
+    })
+      ;
+
+
+    async function verMás(code) {
       const res = await fetch(`/api/proforms/${code}`).then(res => res.json());
       const order = res.payload.payload.doc;
-      order.tipo = 'orden_revision';
-
-      try {
-        await fetch(`/api/proforms/${code}`, {
-          method: 'PUT',
-          body: JSON.stringify(order),
-          headers: { 'Content-Type': 'application/json' },
-        });
-      } catch (error) {
-        console.error('Error:', error);
-      }
-
-      const proforms = await getProforms();
-      printOrders(proforms);
     }
 
-    socket.on('updatedProforms', (data) => {
-      printOrders(data);
-    });
-
+    //btn ver más: 
     grid.orders.addEventListener('click', (e) => {
-      if (e.target.classList.contains('btn-review')) {
-        const btn = e.target.closest('.btn-review');
+      if (e.target.classList.contains('btn-see')) {
+        const btn = e.target.closest('.btn-see');
         if (btn) {
           const code = btn.dataset.code;
-          enviaraRevision(code);
+          abrirVistaGuia(code)
         }
       }
     });
+
+    document.querySelector("#buscar_order").addEventListener("input", (e) => {
+      const value = e.target.value;
+      const tokens = value.toLowerCase().split(/\s+/).filter(Boolean);
+      const orders = proformas.filter((proform) => {
+        return proform.payload.doc.tipo == "orden_salida"
+      })
+      const filtered = orders.filter(p => {
+        const doc = p.payload.doc;
+        const text = `
+      ${doc.code}
+      ${doc.cliente.nombre}
+      ${doc.vendedor}
+      ${doc.fecha}
+    `.toLowerCase();
+
+        return tokens.every(word => text.includes(word));
+      });
+      printOrders(filtered);
+    });
+
+    function switchView(name) {
+      document.getElementById('view-proforma').style.display = name === 'proforma' ? 'block' : 'none';
+      document.getElementById('view-guia').style.display = name === 'guia' ? 'block' : 'none';
+      document.getElementById('view-revision').style.display = name === 'revision' ? 'block' : 'none';
+      document.getElementById('view-relacionales').style.display = name === 'relacionales' ? 'block' : 'none';
+      document.getElementById('view-imagenes').style.display = name === 'imagenes' ? 'block' : 'none';
+
+      document.getElementById('sw-proforma').style.background = name === 'proforma' ? '#0f4c81' : 'transparent';
+      document.getElementById('sw-proforma').style.color = name === 'proforma' ? '#fff' : '#8892a4';
+
+      document.getElementById('sw-guia').style.background = name === 'guia' ? '#0f4c81' : 'transparent';
+      document.getElementById('sw-guia').style.color = name === 'guia' ? '#fff' : '#8892a4';
+
+      document.getElementById('sw-revision').style.background = name === 'revision' ? '#0f4c81' : 'transparent';
+      document.getElementById('sw-revision').style.color = name === 'revision' ? '#fff' : '#8892a4';
+
+      document.getElementById('sw-relacionales').style.background = name === 'relacionales' ? '#0f4c81' : 'transparent';
+      document.getElementById('sw-relacionales').style.color = name === 'relacionales' ? '#fff' : '#8892a4';
+
+      document.getElementById('sw-imagenes').style.background = name === 'imagenes' ? '#0f4c81' : 'transparent';
+      document.getElementById('sw-imagenes').style.color = name === 'imagenes' ? '#fff' : '#8892a4';
+    }
   </script>
 </body>
 

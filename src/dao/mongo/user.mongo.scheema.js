@@ -20,6 +20,11 @@ const userSchema = new mongoose.Schema({
     enum: ["all", "creacion", "produccion", "revision", "bandeja"],
     default: [],
   },
+  paginaPrincipal: {
+    type: String,
+    enum: ["creacion", "produccion", "revision", "bandeja","profile"],
+    default: "profile",
+  },
 });
 
 userSchema.pre("save", async function (next) {

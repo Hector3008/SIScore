@@ -4,7 +4,6 @@ import {
   produccionViewController,
   revisionViewController,
   bandejaViewController,
-  loginController,
   profileController,
 } from "../controllers/proformsSystemViewController.js";
 import {
@@ -14,7 +13,7 @@ import {
 } from "../middlewares/auth.js";
 //commit
 const proformsSystemViewRouter = Router();
-proformsSystemViewRouter.get("/", loginController);
+
 proformsSystemViewRouter.get(
   "/creacion",
   verifyToken,checkPermission("all","creacion"),

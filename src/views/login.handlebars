@@ -597,8 +597,6 @@
     const password = document.getElementById('password').value;
     const errorMsg = document.getElementById('errorMsg');
 
-    console.log('📧 Email ingresado:', email);
-    console.log('🔑 Password ingresado:', password);
 
     errorMsg.classList.remove('show');
 
@@ -611,16 +609,12 @@
         body: JSON.stringify({ email, password })
       });
 
-      console.log('📥 Status de respuesta:', res.status);
-      console.log('📥 OK:', res.ok);
-      console.log('📥 Headers:', [...res.headers.entries()]);
-
       const data = await res.json();
       console.log('📦 Body de respuesta:', data);
 
       if (res.ok) {
         console.log('✅ Login exitoso, redirigiendo...');
-        window.location.href = '/proformSystem/creacion';
+        window.location.href = `/proformSystem/${data.paginaPrincipal}`;
       } else {
         console.warn('❌ Login fallido:', data);
         errorMsg.textContent = 'Credenciales incorrectas. Intenta nuevamente.';
