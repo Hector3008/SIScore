@@ -1465,6 +1465,15 @@
       background: #fff;
       color: #333;
     }
+.solo-movil {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .solo-movil {
+    display: block;
+  }
+}
   </style>
 </head>
 
@@ -1696,9 +1705,9 @@
 <div style="display:flex;gap:6px;margin-bottom:6px">
   <button id="cargar_producto" class="btn-sm btn-sm-green" style="flex:1;padding:7px;text-align:center">+ Cargar
     producto</button>
-  <button id="cargar_foto" class="btn-sm"
-    style="flex:1;padding:7px;text-align:center;background:#1a56db;color:#fff;border:none;border-radius:6px;cursor:pointer">🖼
-    Galería</button>
+<button id="cargar_foto" class="btn-sm solo-movil"
+  style="flex:1;padding:7px;text-align:center;background:#1a56db;color:#fff;border:none;border-radius:6px;cursor:pointer">🖼
+  Galería</button>
   <button id="cargar_camara" class="btn-sm"
     style="flex:1;padding:7px;text-align:center;background:#16a34a;color:#fff;border:none;border-radius:6px;cursor:pointer">📷
     Cámara</button>
@@ -2146,45 +2155,55 @@
 
     function reiniciarFormulario() { }
 
-
- document.getElementById('cargar_foto').addEventListener('click', () => {
-    document.getElementById('inputFoto').click()
-  })
-
-  document.getElementById('cargar_camara').addEventListener('click', () => {
-    document.getElementById('inputFotoCamera').click()
-  })
-
-  document.getElementById('cargar_foto').addEventListener('click', () => {
-    document.getElementById('inputFoto').click()
-  })
-
   document.getElementById('inputFoto').addEventListener('change', (e) => {
     const file = e.target.files[0]
     if (file) console.log("Foto seleccionada:", file.name)
     // aquí manejas el archivo
   })
 
-  document.getElementById('cargar_camara').addEventListener('click', () => {
+  document.getElementById('cargar_foto').addEventListener('click', (e) => {
+    e.stopPropagation()  // 👈
+
+    const anterior = document.getElementById('inputFotoGaleria')
+    if (anterior) anterior.remove()
+
+    const input = document.createElement('input')
+    input.type = 'file'
+    input.accept = 'image/*'
+    input.id = 'inputFotoGaleria'
+    input.style.display = 'none'
+    document.body.appendChild(input)
+
+    input.addEventListener('change', (e) => {
+      const file = e.target.files[0]
+      if (file) console.log("Foto galería:", file.name)
+    })
+
+    input.click()
+  })
+
+  document.getElementById('cargar_camara').addEventListener('click', (e) => {
+    e.stopPropagation()  // 👈
+
     const anterior = document.getElementById('inputFotoCamera')
     if (anterior) anterior.remove()
 
     const input = document.createElement('input')
     input.type = 'file'
     input.accept = 'image/*'
-    // 👇 Sin capture — el móvil muestra el selector nativo con cámara + galería
+    input.capture = 'environment'
     input.id = 'inputFotoCamera'
     input.style.display = 'none'
     document.body.appendChild(input)
 
     input.addEventListener('change', (e) => {
       const file = e.target.files[0]
-      if (file) console.log("Foto:", file.name)
+      if (file) console.log("Foto cámara:", file.name)
     })
 
     input.click()
   })
-  </script>
+   </script>
 
   <script src="/socket.io/socket.io.js"></script>
 
