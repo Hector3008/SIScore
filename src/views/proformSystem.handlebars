@@ -1693,13 +1693,16 @@
       <span>Total ítem:</span>
       <span id="totalItem">S/ 0.00</span>
     </div>
-    <div style="display:flex;gap:6px;margin-bottom:6px">
-      <button id="cargar_producto" class="btn-sm btn-sm-green" style="flex:1;padding:7px;text-align:center">+ Cargar
-        producto</button>
-      <button id="cargar_foto" class="btn-sm"
-        style="flex:1;padding:7px;text-align:center;background:#1a56db;color:#fff;border:none;border-radius:6px;cursor:pointer">📷
-        Cargar foto</button>
-    </div>
+<div style="display:flex;gap:6px;margin-bottom:6px">
+  <button id="cargar_producto" class="btn-sm btn-sm-green" style="flex:1;padding:7px;text-align:center">+ Cargar
+    producto</button>
+  <button id="cargar_foto" class="btn-sm"
+    style="flex:1;padding:7px;text-align:center;background:#1a56db;color:#fff;border:none;border-radius:6px;cursor:pointer">🖼
+    Galería</button>
+  <button id="cargar_camara" class="btn-sm"
+    style="flex:1;padding:7px;text-align:center;background:#16a34a;color:#fff;border:none;border-radius:6px;cursor:pointer">📷
+    Cámara</button>
+</div>
     <input type="file" id="inputFoto" accept="image/*" style="display:none">
     <table class="stock-table">
       <tbody id="tbody_productos"></tbody>
@@ -2143,12 +2146,23 @@
     document.getElementById('cargar_foto').addEventListener('click', () => {
         document.getElementById('inputFoto').click()
       })
+  document.getElementById('cargar_foto').addEventListener('click', () => {
+    document.getElementById('inputFoto').click()
+  })
 
-      document.getElementById('inputFoto').addEventListener('change', (e) => {
-        const file = e.target.files[0]
-        if (file) console.log("Foto seleccionada:", file.name)
-        // aquí manejas el archivo
-      })
+  document.getElementById('cargar_camara').addEventListener('click', () => {
+    document.getElementById('inputFotoCamera').click()
+  })
+
+  // Un solo handler para ambos inputs
+  function manejarFoto(e) {
+    const file = e.target.files[0]
+    if (file) console.log("Foto seleccionada:", file.name)
+    // aquí manejas el archivo
+  }
+
+  document.getElementById('inputFoto').addEventListener('change', manejarFoto)
+  document.getElementById('inputFotoCamera').addEventListener('change', manejarFoto)
   </script>
 
   <script src="/socket.io/socket.io.js"></script>
