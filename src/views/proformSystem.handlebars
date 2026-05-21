@@ -2172,15 +2172,14 @@
     const input = document.createElement('input')
     input.type = 'file'
     input.accept = 'image/*'
-    input.capture = 'environment'
+    // 👇 Sin capture — el móvil muestra el selector nativo con cámara + galería
     input.id = 'inputFotoCamera'
     input.style.display = 'none'
     document.body.appendChild(input)
 
     input.addEventListener('change', (e) => {
       const file = e.target.files[0]
-      if (file) console.log("Foto de cámara:", file.name)
-      // aquí manejas el archivo
+      if (file) console.log("Foto:", file.name)
     })
 
     input.click()
