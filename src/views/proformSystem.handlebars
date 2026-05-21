@@ -1703,6 +1703,8 @@
     style="flex:1;padding:7px;text-align:center;background:#16a34a;color:#fff;border:none;border-radius:6px;cursor:pointer">📷
     Cámara</button>
 </div>
+
+<input type="file" id="inputFoto" accept="image/*" style="display:none">
     <input type="file" id="inputFoto" accept="image/*" style="display:none">
     <table class="stock-table">
       <tbody id="tbody_productos"></tbody>
@@ -2143,10 +2145,9 @@
 
 
     function reiniciarFormulario() { }
-    document.getElementById('cargar_foto').addEventListener('click', () => {
-        document.getElementById('inputFoto').click()
-      })
-  document.getElementById('cargar_foto').addEventListener('click', () => {
+
+
+ document.getElementById('cargar_foto').addEventListener('click', () => {
     document.getElementById('inputFoto').click()
   })
 
@@ -2154,15 +2155,36 @@
     document.getElementById('inputFotoCamera').click()
   })
 
-  // Un solo handler para ambos inputs
-  function manejarFoto(e) {
+  document.getElementById('cargar_foto').addEventListener('click', () => {
+    document.getElementById('inputFoto').click()
+  })
+
+  document.getElementById('inputFoto').addEventListener('change', (e) => {
     const file = e.target.files[0]
     if (file) console.log("Foto seleccionada:", file.name)
     // aquí manejas el archivo
-  }
+  })
 
-  document.getElementById('inputFoto').addEventListener('change', manejarFoto)
-  document.getElementById('inputFotoCamera').addEventListener('change', manejarFoto)
+  document.getElementById('cargar_camara').addEventListener('click', () => {
+    const anterior = document.getElementById('inputFotoCamera')
+    if (anterior) anterior.remove()
+
+    const input = document.createElement('input')
+    input.type = 'file'
+    input.accept = 'image/*'
+    input.capture = 'environment'
+    input.id = 'inputFotoCamera'
+    input.style.display = 'none'
+    document.body.appendChild(input)
+
+    input.addEventListener('change', (e) => {
+      const file = e.target.files[0]
+      if (file) console.log("Foto de cámara:", file.name)
+      // aquí manejas el archivo
+    })
+
+    input.click()
+  })
   </script>
 
   <script src="/socket.io/socket.io.js"></script>
