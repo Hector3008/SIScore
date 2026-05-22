@@ -6,7 +6,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
 
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 
   <meta charset="UTF-8">
@@ -2259,37 +2259,73 @@
       document.getElementById('inputExcel').click()
     })
 
-    document.getElementById('inputExcel').addEventListener('change', async (e) => {
-      const file = e.target.files[0]
-      if (!file) return
+  document.getElementById('descargar_plantilla').addEventListener('click', (e) => {
+    e.preventDefault()
+    const plantilla = [
+      { PRODUCTO: "BZM-P1000 LLAVE EXTRACTOR", CANTIDAD: 5, MONTO_UNITARIO: 50, COMENTARIO: "" },
+      { PRODUCTO: "", CANTIDAD: "", MONTO_UNITARIO: "", COMENTARIO: "" },
+      { PRODUCTO: "", CANTIDAD: "", MONTO_UNITARIO: "", COMENTARIO: "" },
+    ]
 
-      const reader = new FileReader()
-      reader.onload = (evt) => {
-        const data = new Uint8Array(evt.target.result)
-        const workbook = XLSX.read(data, { type: 'array' })
-        const sheet = workbook.Sheets[workbook.SheetNames[0]]
-        const rows = XLSX.utils.sheet_to_json(sheet)
+    const ws = XLSX.utils.json_to_sheet(plantilla)
+    const wb = XLSX.utils.book_new()
+    XLSX.utils.book_append_sheet(wb, ws, "Productos")
+    XLSX.writeFile(wb, "plantilla_productos.xlsx")
+  })
+  document.getElementById('inputExcel').addEventListener('change', async (e) => {
+    const file = e.target.files[0]
+    if (!file) return
 
-        console.log("Filas importadas:", rows)
-        // aquí procesas los productos
-        // cada row debería tener: nombre, cantidad, monto, etc.
+    const reader = new FileReader()
+    reader.onload = (evt) => {
+      const data = new Uint8Array(evt.target.result)
+      const workbook = XLSX.read(data, { type: 'array' })
+      const sheet = workbook.Sheets[workbook.SheetNames[0]]
+      const rows = XLSX.utils.sheet_to_json(sheet)
+
+      let cargados = 0
+      let errores = []
+
+      for (let [i, row] of rows.entries()) {
+        const fila = i + 2
+        const producto = String(row.PRODUCTO || "").trim()
+        const cantidad = row.CANTIDAD
+        const monto = row.MONTO_UNITARIO
+        const comentario = String(row.COMENTARIO || "").trim()
+
+        if (!producto) { errores.push(`Fila ${fila}: PRODUCTO vacío`); continue }
+        if (cantidad === undefined || cantidad === "") { errores.push(`Fila ${fila}: CANTIDAD vacía`); continue }
+        if (monto === undefined || monto === "") { errores.push(`Fila ${fila}: MONTO_UNITARIO vacío`); continue }
+        if (isNaN(Number(cantidad)) || Number(cantidad) <= 0) { errores.push(`Fila ${fila}: CANTIDAD debe ser un número mayor a 0`); continue }
+        if (isNaN(Number(monto)) || Number(monto) <= 0) { errores.push(`Fila ${fila}: MONTO_UNITARIO debe ser un número mayor a 0`); continue }
+
+        currentProform.productos.push({
+          status: true,
+          index: currentProform.productos.length + 1,
+          nombre: producto,
+          monto: String(monto),
+          cantidad: String(cantidad),
+          comentario: comentario,
+          total: Number(cantidad) * Number(monto),
+          options: options(producto)
+        })
+        cargados++
       }
-      reader.readAsArrayBuffer(file)
-    })
 
-    document.getElementById('descargar_plantilla').addEventListener('click', (e) => {
-        e.preventDefault()
+      printProforma(currentProform.productos)
+      printGuia(currentProform.productos)
+      printTotal()
 
-        const plantilla = [
-          { nombre: "", cantidad: "", monto: "", comentario: "" }
-        ]
+      if (errores.length > 0) toastError(`${errores.length} fila(s) con error: ${errores.join(' | ')}`)
+      if (cargados > 0) toastSuccess(`${cargados} producto(s) importado(s)`)
+    }
+    reader.readAsArrayBuffer(file)
 
-        const ws = XLSX.utils.json_to_sheet(plantilla)
-        const wb = XLSX.utils.book_new()
-        XLSX.utils.book_append_sheet(wb, ws, "Productos")
-        XLSX.writeFile(wb, "plantilla_productos.xlsx")
-      })
-   </script>
+    // 👇 Resetear el input para que vuelva a disparar change con el mismo archivo
+    e.target.value = ""
+  }) 
+  
+  </script>
 
   <script src="/socket.io/socket.io.js"></script>
 
