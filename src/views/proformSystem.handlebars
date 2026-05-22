@@ -380,15 +380,41 @@
     }
 
     .field-group {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 5px;
-    }
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 5px;
+}
 
-    .field-full {
-      grid-column: 1 / -1;
-    }
+.field-full {
+  grid-column: 1 / -1;
+}
 
+.field-group > div.field-full {
+  display: block;
+  grid-column: 1 / -1;
+  position: relative;
+}
+
+.field-group > div.field-full input {
+  width: 100%;
+  padding-right: 30px;
+}
+
+.field-group > div.field-full {
+  grid-column: 1 / -1;
+  position: relative;
+}
+
+.field-group > div.field-full input {
+  width: 100%;
+  padding-right: 30px;
+}
+
+.field-group > div.field-full {
+  display: block;
+  grid-column: 1 / -1;
+  position: relative;
+}
     .sidebar input[type="text"],
     .sidebar input[type="number"],
     .sidebar input[type="date"],
@@ -1620,69 +1646,70 @@
 
         <div class="section">
           <div class="section-header" onclick="toggleSection(this)">Cliente <span>▾</span></div>
+<div class="section-body">
+  <div class="field-group">
+    <span style="color: #0d306046; display:none" id="id_cliente"></span>
 
-          <div class="section-body">
+    <!-- cliente con lupa -->
+    <div class="field-full" style="position:relative">
+      <input id="cliente_nombre" type="text" placeholder="Cliente" style="padding-right:30px; width:100%">
+      <svg onclick="abrirToastCargarCliente()"
+        style="position:absolute;right:8px;top:50%;transform:translateY(-50%);opacity:0.4;cursor:pointer" width="13"
+        height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+        stroke-linejoin="round">
+        <circle cx="11" cy="11" r="8" />
+        <line x1="21" y1="21" x2="16.65" y2="16.65" />
+      </svg>
+    </div>
 
-            <div class="field-group">
-              <span style="color: #0d306046" id="id_cliente"></span>
-              <button class="btn-buscar-cliente" onclick="abrirToastCargarCliente()">
-                <span>Buscar cliente...</span>
-                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                  stroke-linecap="round" stroke-linejoin="round">
-                  <circle cx="11" cy="11" r="8" />
-                  <line x1="21" y1="21" x2="16.65" y2="16.65" />
-                </svg>
-              </button>
-            </div>
-            <div class="field-group">
-              <input id="cliente_nombre" type="text" placeholder="Cliente">
-              <input id="cliente_ruc" type="text" placeholder="RUC">
-              <input id="cliente_telefono" type="text" placeholder="Teléfono">
-              <input id="cliente_email" type="text" placeholder="E-mail">
-              <input id="cliente_direccion" type="text" placeholder="Dirección" class="field-full">
-              <input id="cliente_provincia" type="text" placeholder="Provincia">
-              <input id="cliente_ciudad" type="text" placeholder="Ciudad">
-              <select id="vendedor">
-                <option value="" disabled>Vendedor</option>
-                <option value="{{user.nombre}}" disabled selected>{{user.nombre}}</option>
-              </select>
-              <select id="entrega">
-                <option value="">Entrega</option>
-                <option value="tienda">Tienda</option>
-                <option value="agencia">Agencia</option>
-                <option value="local">Local</option>
-              </select>
-              <input id="destino" type="text" placeholder="Destino">
-              <input id="agencia" type="text" placeholder="Agencia">
-              <input id="atencion" type="text" placeholder="Atención" class="field-full">
-              <select id="canal_de_venta" class="field-full">
-                <option value="">Canal de venta</option>
-                <option>Tienda</option>
-                <option>Online</option>
-                <option>Cartera</option>
-              </select>
-              <select id="forma_de_pago">
-                <option value="">Forma de pago</option>
-                <option>Credito</option>
-                <option>Caja</option>
-                <option>Transferencia</option>
-                <option>Transferencia y caja</option>
-                <option>Tarjeta de Credito</option>
-              </select>
-              <input id="fecha" type="date">
-              <select id="comprobante">
-                <option value="">Comprobante</option>
-                <option>Factura</option>
-                <option>Boleta</option>
-                <option>Proforma</option>
-              </select>
-            </div>
-            <div class="btn-row">
+    <input id="cliente_ruc" type="text" placeholder="RUC">
+    <input id="cliente_telefono" type="text" placeholder="Teléfono">
+    <input id="cliente_email" type="text" placeholder="E-mail">
+    <input id="cliente_direccion" type="text" placeholder="Dirección" class="field-full">
+    <input id="cliente_provincia" type="text" placeholder="Provincia">
+    <input id="cliente_ciudad" type="text" placeholder="Ciudad">
+    <select id="vendedor">
+      <option value="" disabled>Vendedor</option>
+      <option value="{{user.nombre}}" disabled selected>{{user.nombre}}</option>
+    </select>
+    <select id="entrega">
+      <option value="">Entrega</option>
+      <option value="tienda">Tienda</option>
+      <option value="agencia">Agencia</option>
+      <option value="local">Local</option>
+    </select>
+    <input id="destino" type="text" placeholder="Destino">
+    <input id="agencia" type="text" placeholder="Agencia">
+    <input id="atencion" type="text" placeholder="Atención" class="field-full">
+    <select id="canal_de_venta" class="field-full">
+      <option value="">Canal de venta</option>
+      <option>Tienda</option>
+      <option>Online</option>
+      <option>Cartera</option>
+    </select>
+    <select id="forma_de_pago">
+      <option value="">Forma de pago</option>
+      <option>Credito</option>
+      <option>Caja</option>
+      <option>Transferencia</option>
+      <option>Transferencia y caja</option>
+      <option>Tarjeta de Credito</option>
+    </select>
+    <input id="fecha" type="date">
+    <select id="comprobante">
+      <option value="">Comprobante</option>
+      <option>Factura</option>
+      <option>Boleta</option>
+      <option>Proforma</option>
+    </select>
+  </div>
 
-              <button class="btn-sm btn-sm-green">Registrar</button><button
-                class="btn-sm btn-sm-blue">Actualizar</button><button class="btn-sm btn-sm-red">↺ Reiniciar</button>
-            </div>
-          </div>
+  <div class="btn-row">
+    <button class="btn-sm btn-sm-green">Registrar</button>
+    <button class="btn-sm btn-sm-blue">Actualizar</button>
+    <button class="btn-sm btn-sm-red">↺ Reiniciar</button>
+  </div>
+</div>
         </div>
 
         <div class="section">
