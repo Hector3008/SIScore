@@ -29,10 +29,10 @@ connectDB();
   console.log("io created:", !!io);
 
 //middlewares:
-  app.use(express.json())//se le avisa al servidor que va a trabajar con json
-  app.use("/", express.static("./src/public"))//que va a trabajar con informacion publica
-  app.use(express.urlencoded({ extended: true }));//y que va a trabajar con formulario
-  app.use(cookieParser());
+app.use(express.json({ limit: "10mb" }));
+app.use(express.urlencoded({ limit: "10mb", extended: true }));
+app.use("/", express.static("./src/public"));
+app.use(cookieParser());
   
   //ingenieria handlebars, motor de frontend
 const hbs = handlebars.create({

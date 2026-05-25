@@ -1728,6 +1728,66 @@
       }
     }
 
+  function printImagenes(products, order) {
+    document.getElementById('pgClienteNombreImg').textContent = order.cliente.nombre
+    document.getElementById('pgVendedorImg').textContent = order.vendedor
+    document.getElementById('pgFechaImg').textContent = order.fecha
+
+    const container = document.getElementById('view-imagenes')
+
+    // Limpiar contenido anterior (excepto el guia-header)
+    const existente = container.querySelector('.imagenes-grid')
+    if (existente) existente.remove()
+
+    const grid = document.createElement('div')
+    grid.className = 'imagenes-grid'
+    grid.style.cssText = 'display:flex;flex-direction:column;gap:16px;padding:12px 0'
+
+    for (let product of products) {
+      if (!product.fotos || product.fotos.length === 0) continue
+
+      const bloque = document.createElement('div')
+      bloque.style.cssText = 'border:1px solid #eee;border-radius:8px;overflow:hidden'
+
+      // Header del producto
+      const header = document.createElement('div')
+      header.style.cssText = 'background:#f7f7f7;padding:8px 12px;font-size:11px;font-weight:600;color:#333;border-bottom:1px solid #eee'
+      header.textContent = `${product.nombre} — ${product.cantidad} uds × S/ ${product.monto}`
+      bloque.appendChild(header)
+
+      // Fotos del producto
+      const fotosWrap = document.createElement('div')
+      fotosWrap.style.cssText = 'display:flex;flex-wrap:wrap;gap:8px;padding:10px'
+
+      for (let foto of product.fotos) {
+        const img = document.createElement('img')
+        img.src = foto
+        img.style.cssText = 'width:120px;height:120px;object-fit:cover;border-radius:6px;border:1px solid #ddd;cursor:pointer'
+        img.onclick = () => {
+          // Ver imagen en grande
+          const overlay = document.createElement('div')
+          overlay.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.85);z-index:9999;display:flex;align-items:center;justify-content:center;cursor:pointer'
+          overlay.onclick = () => overlay.remove()
+          const imgGrande = document.createElement('img')
+          imgGrande.src = foto
+          imgGrande.style.cssText = 'max-width:90vw;max-height:90vh;border-radius:8px;object-fit:contain'
+          overlay.appendChild(imgGrande)
+          document.body.appendChild(overlay)
+        }
+        fotosWrap.appendChild(img)
+      }
+
+      bloque.appendChild(fotosWrap)
+      grid.appendChild(bloque)
+    }
+
+    if (grid.children.length === 0) {
+      grid.innerHTML = '<p style="text-align:center;color:#aaa;font-size:12px;padding:20px">Sin imágenes en esta orden</p>'
+    }
+
+    container.appendChild(grid)
+  }
+
   function printRelacionales(products, order) {
     const table = document.querySelector("#tbody-relacionales")
     table.innerHTML = ""
@@ -1839,6 +1899,7 @@
       printGuia(order.productos);
       printRevision(order.productos)
 
+      printImagenes(order.productos, order)
       printRelacionales(order.productos, order)
       document.getElementById('previewGuiaOverlay').classList.add('open');
     }
