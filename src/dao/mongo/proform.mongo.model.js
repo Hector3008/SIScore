@@ -73,7 +73,8 @@ const docSchema = new Schema(
     status: { type: Boolean, default: true },
     empresa: { type: String, default: "" },
     fecha: { type: String, default: "" },
-    isLocked: {type: Boolean, default: false}
+    isLocked: {type: Boolean, default: false},
+    revision: { type: [String], default: [] },
   },
   { _id: false },
 );

@@ -1921,7 +1921,20 @@
     currentPictures.push(base64)
     toastSuccess(`Foto agregada (${currentPictures.length} en total)`)
     e.target.value = ""
+
+    currentProform.revision = currentPictures
+    console.log("currentProform: ", currentProform)
+    try {
+      await fetch(`/api/proforms/${currentProform.code}`, {
+        method: 'PUT',
+        body: JSON.stringify(currentProform),
+        headers: { 'Content-Type': 'application/json' },
+      });
+    } catch (error) {
+      console.error('Error:', error);
+    }
   })
+
 
   input.click()
 })
@@ -1947,6 +1960,17 @@ document.getElementById('cargar_camara').addEventListener('click', (e) => {
     currentPictures.push(base64)
     toastSuccess(`Foto agregada (${currentPictures.length} en total)`)
     e.target.value = ""
+     currentProform.revision = currentPictures
+    console.log("currentProform: ", currentProform)
+    try {
+      await fetch(`/api/proforms/${currentProform.code}`, {
+        method: 'PUT',
+        body: JSON.stringify(currentProform),
+        headers: { 'Content-Type': 'application/json' },
+      });
+    } catch (error) {
+      console.error('Error:', error);
+    }
   })
 
   input.click()
