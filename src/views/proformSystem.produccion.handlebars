@@ -1235,7 +1235,7 @@
       <div class="chat-messages">
         <div class="day-divider">Hoy</div>
 
-        <div class="msg">
+        <div style="display: none;" class="msg">
           <div class="msg-avatar av-am">AM</div>
           <div class="msg-body">
             <div class="msg-meta">
@@ -1246,7 +1246,7 @@
           </div>
         </div>
 
-        <div class="msg">
+        <div style="display: none;" class="msg">
           <div class="msg-avatar av-aa">AA</div>
           <div class="msg-body">
             <div class="msg-meta">
@@ -1257,7 +1257,7 @@
           </div>
         </div>
 
-        <div class="msg">
+        <div style="display: none;" class="msg">
           <div class="msg-avatar av-am">AM</div>
           <div class="msg-body">
             <div class="msg-meta">
@@ -1268,7 +1268,7 @@
           </div>
         </div>
 
-        <div class="msg">
+        <div style="display: none;" class="msg">
           <div class="msg-avatar av-aa">AA</div>
           <div class="msg-body">
             <div class="msg-meta">
@@ -1279,7 +1279,7 @@
           </div>
         </div>
 
-        <div class="msg">
+        <div style="display: none;" class="msg">
           <div class="msg-avatar av-am">AM</div>
           <div class="msg-body">
             <div class="msg-meta">
@@ -1326,19 +1326,21 @@
 <div
   style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:4px;padding:10px 16px;background:#1a1f2e;border-bottom:1px solid #2a3040">
 
-  <div style="display:flex;flex-wrap:wrap;gap:4px;">
-    <button id="sw-proforma" onclick="switchView('proforma')"
-      style="padding:6px 14px;border-radius:6px;font-size:12px;font-weight:500;cursor:pointer;border:1px solid #3a4155;background:#0f4c81;color:#fff;transition:all 0.15s">Proforma</button>
-    <button id="sw-guia" onclick="switchView('guia')"
-      style="padding:6px 14px;border-radius:6px;font-size:12px;font-weight:500;cursor:pointer;border:1px solid #3a4155;background:transparent;color:#8892a4;transition:all 0.15s">Guía</button>
-  </div>
+<div style="display:flex;flex-wrap:wrap;gap:4px;padding:10px 16px;background:#1a1f2e;border-bottom:1px solid #2a3040">
+  <button id="sw-proforma" onclick="switchView('proforma')"
+    style="padding:6px 14px;border-radius:6px;font-size:12px;font-weight:500;cursor:pointer;border:1px solid #3a4155;background:#0f4c81;color:#fff;transition:all 0.15s">Proforma</button>
+  <button id="sw-guia" onclick="switchView('guia')"
+    style="padding:6px 14px;border-radius:6px;font-size:12px;font-weight:500;cursor:pointer;border:1px solid #3a4155;background:transparent;color:#8892a4;transition:all 0.15s">Guía</button>
+  <button id="sw-imagenes" onclick="switchView('imagenes')"
+    style="padding:6px 14px;border-radius:6px;font-size:12px;font-weight:500;cursor:pointer;border:1px solid #3a4155;background:transparent;color:#8892a4;transition:all 0.15s">Imágenes</button>
 
-  <div style="display:flex;flex-wrap:wrap;gap:4px;">
-    <button onclick=""
-      style="padding:6px 14px;border-radius:6px;font-size:12px;font-weight:500;cursor:pointer;border:1px solid #3a4155;background:transparent;color:#8892a4;transition:all 0.15s">Descargar</button>
-    <button onclick=""
-      style="padding:6px 14px;border-radius:6px;font-size:12px;font-weight:500;cursor:pointer;border:1px solid #3a4155;background:transparent;color:#8892a4;transition:all 0.15s">Imprimir</button>
-  </div>
+  <div style="flex:1 1 100%;height:1px;background:#2a3040;margin:4px 0"></div>
+
+  <button onclick=""
+    style="padding:6px 14px;border-radius:6px;font-size:12px;font-weight:500;cursor:pointer;border:1px solid #3a4155;background:transparent;color:#8892a4">Descargar</button>
+  <button onclick=""
+    style="padding:6px 14px;border-radius:6px;font-size:12px;font-weight:500;cursor:pointer;border:1px solid #3a4155;background:transparent;color:#8892a4">Imprimir</button>
+</div>
 
 </div>
 
@@ -1447,6 +1449,15 @@
         </div>
       </div>
 
+<!-- VISTA IMAGENES -->
+<div id="view-imagenes" style="display:none">
+  <div class="guia-header">
+    <span>CLIENTE: <strong id="pgClienteNombreImg"></strong></span>
+    <span>VENDEDOR: <strong id="pgVendedorImg"></strong></span>
+    <span>Fecha: <strong id="pgFechaImg"></strong></span>
+  </div>
+  <div class="table-wrap"></div>
+</div>
     </div>
   </div>
 </div>
@@ -1569,6 +1580,99 @@
       socket.emit("updatedProforms", data);
     }
 
+  // ── FUNCIONES NUEVAS ─────────────────────────────────────────
+
+  function crearImgThumb(foto) {
+    const img = document.createElement('img')
+    img.src = foto
+    img.style.cssText = 'width:120px;height:120px;object-fit:cover;border-radius:6px;border:1px solid #ddd;cursor:pointer'
+    img.onclick = () => {
+      const overlay = document.createElement('div')
+      overlay.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.85);z-index:9999;display:flex;align-items:center;justify-content:center;cursor:pointer'
+      overlay.onclick = () => overlay.remove()
+      const imgGrande = document.createElement('img')
+      imgGrande.src = foto
+      imgGrande.style.cssText = 'max-width:90vw;max-height:90vh;border-radius:8px;object-fit:contain'
+      overlay.appendChild(imgGrande)
+      document.body.appendChild(overlay)
+    }
+    return img
+  }
+
+  function printImagenes(products, order) {
+    document.getElementById('pgClienteNombreImg').textContent = order.cliente.nombre
+    document.getElementById('pgVendedorImg').textContent = order.vendedor
+    document.getElementById('pgFechaImg').textContent = order.fecha
+
+    const container = document.getElementById('view-imagenes')
+    const existente = container.querySelector('.imagenes-grid')
+    if (existente) existente.remove()
+
+    const imgGrid = document.createElement('div')
+    imgGrid.className = 'imagenes-grid'
+    imgGrid.style.cssText = 'display:flex;flex-direction:column;gap:16px;padding:12px 0'
+
+    for (let product of products) {
+      if (!product.fotos || product.fotos.length === 0) continue
+      const bloque = document.createElement('div')
+      bloque.style.cssText = 'border:1px solid #eee;border-radius:8px;overflow:hidden'
+      const header = document.createElement('div')
+      header.style.cssText = 'background:#f7f7f7;padding:8px 12px;font-size:11px;font-weight:600;color:#333;border-bottom:1px solid #eee'
+      header.textContent = `${product.nombre} — ${product.cantidad} uds × S/ ${product.monto}`
+      bloque.appendChild(header)
+      const fotosWrap = document.createElement('div')
+      fotosWrap.style.cssText = 'display:flex;flex-wrap:wrap;gap:8px;padding:10px'
+      for (let foto of product.fotos) fotosWrap.appendChild(crearImgThumb(foto))
+      bloque.appendChild(fotosWrap)
+      imgGrid.appendChild(bloque)
+    }
+
+    if (order.revision && order.revision.length > 0) {
+      const bloque = document.createElement('div')
+      bloque.style.cssText = 'border:1px solid #eee;border-radius:8px;overflow:hidden'
+      const header = document.createElement('div')
+      header.style.cssText = 'background:#e8f4fd;padding:8px 12px;font-size:11px;font-weight:600;color:#1a56db;border-bottom:1px solid #eee'
+      header.textContent = `📋 Fotos de revisión (${order.revision.length})`
+      bloque.appendChild(header)
+      const fotosWrap = document.createElement('div')
+      fotosWrap.style.cssText = 'display:flex;flex-wrap:wrap;gap:8px;padding:10px'
+      for (let foto of order.revision) fotosWrap.appendChild(crearImgThumb(foto))
+      bloque.appendChild(fotosWrap)
+      imgGrid.appendChild(bloque)
+    }
+
+    if (imgGrid.children.length === 0) {
+      imgGrid.innerHTML = '<p style="text-align:center;color:#aaa;font-size:12px;padding:20px">Sin imágenes en esta orden</p>'
+    }
+    container.appendChild(imgGrid)
+  }
+
+  function printRevision(products) {
+    const table = document.querySelector("#tbody-revision")
+    table.innerHTML = ""
+    for (let [i, product] of products.entries()) {
+      for (let [j, option] of product.options.filter(o => o.status === true || o.status === "true").entries()) {
+        const tr = document.createElement("tr")
+        tr.innerHTML = `
+        <td>${j == 0 ? `<input type="checkbox" disabled ${product.isChecked ? "checked" : ""}>` : ""}</td>
+        <td>${j == 0 ? i + 1 : ""}</td>
+        <td>${j == 0 ? product.cantidad : ""}</td>
+        <td>${j == 0 ? `S/ ${product.monto}` : ""}</td>
+        <td>${j == 0 ? product.nombre : ""}</td>
+        <td>${j == 0 ? product.comentario : ""}</td>
+        <td><input class="cmd-input-qty" type="number" min="0" value="${option.CANTIDAD || 0}" disabled style="width:60px;height:28px;border:1px solid #d1d5db;border-radius:6px;text-align:center;font-size:13px"/></td>
+        <td>${option.CODIGO_FORMATEADO}</td>
+        <td>${option.STOCK_LV}</td>
+        <td>${option.STOCK_SJL}</td>
+        <td>${option.DESCRIPCION} / ${option.FAMILIA} / ${option.SUBFAMILIA}</td>
+        <td>${option.EQUIVALENTES_STOCK}</td>
+        <td>${option.UBICACION}</td>
+      `
+        table.appendChild(tr)
+      }
+    }
+  }
+
   async function abrirVistaGuia(code) {
     const res = await fetch(`/api/proforms/${code}`).then(res => res.json());
     const order = res.payload.payload.doc;
@@ -1583,7 +1687,6 @@ console.log("order: ", order)
     document.getElementById('pgVendedor').textContent = order.vendedor;
     document.getElementById('pgFecha').textContent = order.fecha;
 
-    // Proforma
     // proforma
     document.getElementById('pfCode').textContent = `${order.code} v${order.version}`;
     document.getElementById('pfFecha').textContent = `Fecha: ${order.fecha}`;
@@ -1632,6 +1735,7 @@ console.log("order: ", order)
 
     // tabla guia
     printGuia(order.productos);
+    printImagenes(order.productos, order);
 
     document.getElementById('previewGuiaOverlay').classList.add('open');
   }
@@ -1692,7 +1796,7 @@ console.log("order: ", order)
         return null;
       }
     }
-
+/*
     async function enviaraRevision(code) {
       const res = await fetch(`/api/proforms/${code}`).then(res => res.json());
       const order = res.payload.payload.doc;
@@ -1712,8 +1816,41 @@ console.log("order: ", order)
       ioToEmit(proforms)
 
       toastSuccess("Proforma enviada")
-    }
+    }*/
 
+  async function enviaraRevision(code) {
+    const res = await fetch(`/api/proforms/${code}`).then(res => res.json());
+    // res ya ES el json — no llamar res.json() de nuevo
+
+    const lastVersionPayload = res.payload.payload
+    const lastVersionDoc = res.payload.payload.doc
+    const versiones_lastVersion = lastVersionDoc.versiones
+
+    const { versiones, ...lastVersionSinVersiones } = lastVersionDoc
+    lastVersionPayload.doc = lastVersionSinVersiones
+    versiones_lastVersion.push(lastVersionPayload)
+
+    const currentProform = lastVersionDoc
+    currentProform.versiones = versiones_lastVersion
+    currentProform.version = currentProform.version + 1
+    currentProform.tipo = 'orden_revision'
+
+    try {
+      await fetch(`/api/proforms/${currentProform.code}`, {
+        method: 'PUT',
+        body: JSON.stringify(currentProform),
+        headers: { 'Content-Type': 'application/json' },
+      })
+
+      const proforms = await getProforms()
+      printOrders(proforms)
+      ioToEmit(proforms)
+      toastSuccess('Proforma enviada a revisión')
+    } catch (err) {
+      console.error(err)
+      toastError('Error al enviar la proforma')
+    }
+  }
     socket.on('updatedProforms', (data) => {
       proformas = data
       printOrders(data);
@@ -1770,14 +1907,46 @@ console.log("order: ", order)
     });
 
     function switchView(name) {
-        document.getElementById('view-proforma').style.display = name === 'proforma' ? 'block' : 'none';
-        document.getElementById('view-guia').style.display = name === 'guia' ? 'block' : 'none';
-        document.getElementById('sw-proforma').style.background = name === 'proforma' ? '#0f4c81' : 'transparent';
-        document.getElementById('sw-proforma').style.color = name === 'proforma' ? '#fff' : '#8892a4';
-        document.getElementById('sw-guia').style.background = name === 'guia' ? '#0f4c81' : 'transparent';
-        document.getElementById('sw-guia').style.color = name === 'guia' ? '#fff' : '#8892a4';
+        ['proforma', 'guia', 'imagenes'].forEach(v => {
+          document.getElementById(`view-${v}`).style.display = v === name ? 'block' : 'none'
+          document.getElementById(`sw-${v}`).style.background = v === name ? '#0f4c81' : 'transparent'
+          document.getElementById(`sw-${v}`).style.color = v === name ? '#fff' : '#8892a4'
+        })
       }
-  </script>
+
+          function toastError(msg) {
+              const toast = document.createElement("div");
+
+              toast.textContent = msg;
+              toast.style.position = "fixed";
+              toast.style.top = "20px";
+              toast.style.left = "20px";
+              toast.style.background = "#e74c3c";
+              toast.style.color = "#fff";
+              toast.style.padding = "10px 15px";
+              toast.style.borderRadius = "6px";
+              toast.style.boxShadow = "0 2px 8px rgba(0,0,0,0.2)";
+              toast.style.zIndex = "9999";
+              toast.style.fontSize = "14px";
+
+              document.body.appendChild(toast);
+
+              setTimeout(() => {
+                toast.remove();
+              }, 3000);
+            }
+
+
+
+      const buttons = document.getElementsByClassName("btn-send");
+
+        Array.from(buttons).forEach((btn) => {
+          btn.addEventListener("click", (e) => {
+            e.preventDefault();
+            toastError("chat deshabilitado hasta nuevo aviso");
+          });
+        });
+        </script>
 </body>
 
 </html>

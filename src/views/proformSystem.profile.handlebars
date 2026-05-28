@@ -1223,7 +1223,7 @@
       <div class="toolbar">
         <div class="search-wrap">
           <span class="search-icon">🔍</span>
-          <input type="text" placeholder="Buscar por código, vendedor o cliente..." />
+          <input id="buscar_order" type="text" placeholder="Buscar por código, vendedor o cliente..." />
         </div>
         <button class="btn-filter">⚙ Filtros</button>
         <div class="sort-wrap">
@@ -1248,7 +1248,7 @@
       <div class="chat-header">
         <div class="chat-header-top">
           <span class="icon">💬</span>
-          <h2>Mensaje recibidos</h2>
+          <h2>Mensajes recibidos</h2>
           <button class="chat-close-btn" id="chatCloseBtn" aria-label="Cerrar chat">✕</button>
         </div>
         <div class="selected-order">
@@ -1267,7 +1267,7 @@
       <div class="chat-messages">
         <div class="day-divider">Hoy</div>
 
-        <div class="msg">
+        <div style="display: none;" class="msg">
           <div class="msg-avatar av-am">AM</div>
           <div class="msg-body">
             <div class="msg-meta">
@@ -1278,7 +1278,7 @@
           </div>
         </div>
 
-        <div class="msg">
+        <div style="display: none;" class="msg">
           <div class="msg-avatar av-aa">AA</div>
           <div class="msg-body">
             <div class="msg-meta">
@@ -1289,7 +1289,7 @@
           </div>
         </div>
 
-        <div class="msg">
+        <div style="display: none;" class="msg">
           <div class="msg-avatar av-am">AM</div>
           <div class="msg-body">
             <div class="msg-meta">
@@ -1300,7 +1300,7 @@
           </div>
         </div>
 
-        <div class="msg">
+        <div style="display: none;" class="msg">
           <div class="msg-avatar av-aa">AA</div>
           <div class="msg-body">
             <div class="msg-meta">
@@ -1311,7 +1311,7 @@
           </div>
         </div>
 
-        <div class="msg">
+        <div style="display: none;" class="msg">
           <div class="msg-avatar av-am">AM</div>
           <div class="msg-body">
             <div class="msg-meta">
@@ -1762,6 +1762,77 @@
       socket.emit("updatedProforms", data);
     }
 
+
+  function crearImgThumb(foto) {
+    const img = document.createElement('img')
+    img.src = foto
+    img.style.cssText = 'width:120px;height:120px;object-fit:cover;border-radius:6px;border:1px solid #ddd;cursor:pointer'
+    img.onclick = () => {
+      const overlay = document.createElement('div')
+      overlay.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.85);z-index:9999;display:flex;align-items:center;justify-content:center;cursor:pointer'
+      overlay.onclick = () => overlay.remove()
+      const imgGrande = document.createElement('img')
+      imgGrande.src = foto
+      imgGrande.style.cssText = 'max-width:90vw;max-height:90vh;border-radius:8px;object-fit:contain'
+      overlay.appendChild(imgGrande)
+      document.body.appendChild(overlay)
+    }
+    return img
+  }
+
+  function printImagenes(products, order) {
+    document.getElementById('pgClienteNombreImg').textContent = order.cliente.nombre
+    document.getElementById('pgVendedorImg').textContent = order.vendedor
+    document.getElementById('pgFechaImg').textContent = order.fecha
+
+    const container = document.getElementById('view-imagenes')
+    const existente = container.querySelector('.imagenes-grid')
+    if (existente) existente.remove()
+
+    const grid = document.createElement('div')
+    grid.className = 'imagenes-grid'
+    grid.style.cssText = 'display:flex;flex-direction:column;gap:16px;padding:12px 0'
+
+    for (let product of products) {
+      if (!product.fotos || product.fotos.length === 0) continue
+      const bloque = document.createElement('div')
+      bloque.style.cssText = 'border:1px solid #eee;border-radius:8px;overflow:hidden'
+      const header = document.createElement('div')
+      header.style.cssText = 'background:#f7f7f7;padding:8px 12px;font-size:11px;font-weight:600;color:#333;border-bottom:1px solid #eee'
+      header.textContent = `${product.nombre} — ${product.cantidad} uds × S/ ${product.monto}`
+      bloque.appendChild(header)
+      const fotosWrap = document.createElement('div')
+      fotosWrap.style.cssText = 'display:flex;flex-wrap:wrap;gap:8px;padding:10px'
+      for (let foto of product.fotos) {
+        fotosWrap.appendChild(crearImgThumb(foto))
+      }
+      bloque.appendChild(fotosWrap)
+      grid.appendChild(bloque)
+    }
+
+    if (order.revision && order.revision.length > 0) {
+      const bloque = document.createElement('div')
+      bloque.style.cssText = 'border:1px solid #eee;border-radius:8px;overflow:hidden'
+      const header = document.createElement('div')
+      header.style.cssText = 'background:#e8f4fd;padding:8px 12px;font-size:11px;font-weight:600;color:#1a56db;border-bottom:1px solid #eee'
+      header.textContent = `📋 Fotos de revisión (${order.revision.length})`
+      bloque.appendChild(header)
+      const fotosWrap = document.createElement('div')
+      fotosWrap.style.cssText = 'display:flex;flex-wrap:wrap;gap:8px;padding:10px'
+      for (let foto of order.revision) {
+        fotosWrap.appendChild(crearImgThumb(foto))
+      }
+      bloque.appendChild(fotosWrap)
+      grid.appendChild(bloque)
+    }
+
+    if (grid.children.length === 0) {
+      grid.innerHTML = '<p style="text-align:center;color:#aaa;font-size:12px;padding:20px">Sin imágenes en esta orden</p>'
+    }
+
+    container.appendChild(grid)
+  }
+
     async function abrirVistaGuia(code) {
       const res = await fetch(`/api/proforms/${code}`).then(res => res.json());
       const order = res.payload.payload.doc;
@@ -1840,6 +1911,7 @@
       printGuia(order.productos);
       printRevision(order.productos)
 
+      printImagenes(order.productos, order);
       printRelacionales(order.productos, order)
       document.getElementById('previewGuiaOverlay').classList.add('open');
     }
@@ -1930,9 +2002,7 @@
     document.querySelector("#buscar_order").addEventListener("input", (e) => {
       const value = e.target.value;
       const tokens = value.toLowerCase().split(/\s+/).filter(Boolean);
-      const orders = proformas.filter((proform) => {
-        return proform.payload.doc.tipo == "orden_salida"
-      })
+      const orders = proformas
       const filtered = orders.filter(p => {
         const doc = p.payload.doc;
         const text = `
@@ -1969,6 +2039,40 @@
       document.getElementById('sw-imagenes').style.background = name === 'imagenes' ? '#0f4c81' : 'transparent';
       document.getElementById('sw-imagenes').style.color = name === 'imagenes' ? '#fff' : '#8892a4';
     }
+
+    function toastError(msg) {
+      const toast = document.createElement("div");
+
+      toast.textContent = msg;
+      toast.style.position = "fixed";
+      toast.style.top = "20px";
+      toast.style.left = "20px";
+      toast.style.background = "#e74c3c";
+      toast.style.color = "#fff";
+      toast.style.padding = "10px 15px";
+      toast.style.borderRadius = "6px";
+      toast.style.boxShadow = "0 2px 8px rgba(0,0,0,0.2)";
+      toast.style.zIndex = "9999";
+      toast.style.fontSize = "14px";
+
+      document.body.appendChild(toast);
+
+      setTimeout(() => {
+        toast.remove();
+      }, 3000);
+    }
+  
+
+    
+      const buttons = document.getElementsByClassName("btn-send");
+
+      Array.from(buttons).forEach((btn) => {
+        btn.addEventListener("click", (e) => {
+          e.preventDefault();
+          toastError("chat deshabilitado hasta nuevo aviso");
+        });
+      });
+
   </script>
 </body>
 

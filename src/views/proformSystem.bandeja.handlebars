@@ -1223,7 +1223,7 @@
       <div class="toolbar">
         <div class="search-wrap">
           <span class="search-icon">🔍</span>
-          <input type="text" placeholder="Buscar por código, vendedor o cliente..." />
+          <input id="buscar_order" type="text" placeholder="Buscar por código, vendedor o cliente..." />
         </div>
         <button class="btn-filter">⚙ Filtros</button>
         <div class="sort-wrap">
@@ -1267,7 +1267,7 @@
       <div class="chat-messages">
         <div class="day-divider">Hoy</div>
 
-        <div class="msg">
+        <div style="display: none;" class="msg">
           <div class="msg-avatar av-am">AM</div>
           <div class="msg-body">
             <div class="msg-meta">
@@ -1278,50 +1278,6 @@
           </div>
         </div>
 
-        <div class="msg">
-          <div class="msg-avatar av-aa">AA</div>
-          <div class="msg-body">
-            <div class="msg-meta">
-              <span class="msg-name">Almacenero Ana</span>
-              <span class="msg-time">09:18</span>
-            </div>
-            <div class="msg-text">Producto X: stock OK ✅<br>Producto Y: stock bajo ⚠️</div>
-          </div>
-        </div>
-
-        <div class="msg">
-          <div class="msg-avatar av-am">AM</div>
-          <div class="msg-body">
-            <div class="msg-meta">
-              <span class="msg-name">Almacenero Miguel</span>
-              <span class="msg-time">09:20</span>
-            </div>
-            <div class="msg-text">Producto Z: requiere verificación de lote. Voy a validar con calidad.</div>
-          </div>
-        </div>
-
-        <div class="msg">
-          <div class="msg-avatar av-aa">AA</div>
-          <div class="msg-body">
-            <div class="msg-meta">
-              <span class="msg-name">Almacenero Ana</span>
-              <span class="msg-time">09:22</span>
-            </div>
-            <div class="msg-text own">Caja #15 con ligera abolladura. Separada para revisión.</div>
-          </div>
-        </div>
-
-        <div class="msg">
-          <div class="msg-avatar av-am">AM</div>
-          <div class="msg-body">
-            <div class="msg-meta">
-              <span class="msg-name">Almacenero Miguel</span>
-              <span class="msg-time">09:25</span>
-            </div>
-            <div class="msg-text">Cliente solicita factura electrónica. Recordar validar datos.</div>
-          </div>
-        </div>
-      </div>
 
       <!-- Input -->
       <div class="chat-input-wrap">
@@ -1363,8 +1319,7 @@
     style="padding:6px 14px;border-radius:6px;font-size:12px;font-weight:500;cursor:pointer;border:1px solid #3a4155;background:transparent;color:#8892a4;transition:all 0.15s">Guía</button>
   <button id="sw-revision" onclick="switchView('revision')"
     style="padding:6px 14px;border-radius:6px;font-size:12px;font-weight:500;cursor:pointer;border:1px solid #3a4155;background:transparent;color:#8892a4;transition:all 0.15s">Revisión</button>
-  <button id="sw-relacionales" onclick="switchView('relacionales')"
-    style="padding:6px 14px;border-radius:6px;font-size:12px;font-weight:500;cursor:pointer;border:1px solid #3a4155;background:transparent;color:#8892a4;transition:all 0.15s">Relacionales</button>
+
   <button id="sw-imagenes" onclick="switchView('imagenes')"
     style="padding:6px 14px;border-radius:6px;font-size:12px;font-weight:500;cursor:pointer;border:1px solid #3a4155;background:transparent;color:#8892a4;transition:all 0.15s">Imágenes</button>
 
@@ -1512,30 +1467,7 @@
               </table>
             </div>
           </div>
-          <!-- VISTA RELACIONALES -->
-          <div id="view-relacionales" style="display:none">
-            <div class="guia-header">
-              <span>CLIENTE: <strong id="pgClienteNombreRel"></strong></span>
-              <span>VENDEDOR: <strong id="pgVendedorRel"></strong></span>
-              <span>Fecha: <strong id="pgFechaRel"></strong></span>
-            </div>
-          
-            <div class="table-wrap">
-              <table class="items-table">
-                <thead>
-                  <tr>
-                    <th>Fecha</th>
-                    <th>Code</th>
-                    <th>Cantidad</th>
-                    <th>Importe unitario</th>
-                    <th>Importe total</th>
-                    <th>Descripcion</th>
-                  </tr>
-                </thead>
-                <tbody id="tbody-relacionales"></tbody>
-              </table>
-            </div>
-          </div>
+
 
                     <!-- VISTA IMAGENES -->
                     <div id="view-imagenes" style="display:none">
@@ -1810,48 +1742,14 @@
     }
     return img
   }
-  function printRelacionales(products, order) {
-    const table = document.querySelector("#tbody-relacionales")
-    table.innerHTML = ""
 
-    document.getElementById('pgClienteNombreRel').textContent = order.cliente.nombre
-    document.getElementById('pgVendedorRel').textContent = order.vendedor
-    document.getElementById('pgFechaRel').textContent = order.fecha
-
-    for (let product of products) {
-      for (let option of product.options) {
-        const cantidad = option.CANTIDAD || 0
-        if (cantidad <= 0) continue
-
-        const monto = parseFloat(product.monto) || 0
-        const importeTotal = cantidad * monto
-
-        const tr = document.createElement("tr")
-        tr.innerHTML = `
-        <td>${order.fecha}</td>
-        <td>${option.CODIGO_FORMATEADO}</td>
-        <td>${cantidad}</td>
-        <td>S/ ${monto.toFixed(2)}</td>
-        <td>S/ ${importeTotal.toFixed(2)}</td>
-        <td>${option.DESCRIPCION} / ${option.FAMILIA} / ${option.SUBFAMILIA}</td>
-      `
-        table.appendChild(tr)
-      }
-    }
-  }
-    function ioToEmit(data) {
-      socket.emit("updatedProforms", data);
-    }
 
     async function abrirVistaGuia(code) {
       const res = await fetch(`/api/proforms/${code}`).then(res => res.json());
       const order = res.payload.payload.doc;
       document.getElementById("sw-revision").style.display =
         order.tipo != "cerrada" ? "none" : ""
-              document.getElementById("sw-relacionales").style.display =
-        order.tipo != "cerrada" ? "none" : ""
-      console.log("order: ", order)
-      // reset al abrir
+              
       switchView('proforma');
 
       // header compartido
@@ -1866,10 +1764,6 @@
       document.getElementById('pgVendedorRev').textContent = order.vendedor;
       document.getElementById('pgFechaRev').textContent = order.fecha;
 
-      //header relacionales:
-      document.getElementById('pgClienteNombreRel').textContent = order.cliente.nombre;
-      document.getElementById('pgVendedorRel').textContent = order.vendedor;
-      document.getElementById('pgFechaRel').textContent = order.fecha;
 
       // proforma
       document.getElementById('pfCode').textContent = `${order.code} v${order.version}`;
@@ -1922,7 +1816,6 @@
       printRevision(order.productos)
 
       printImagenes(order.productos, order)
-      printRelacionales(order.productos, order)
       document.getElementById('previewGuiaOverlay').classList.add('open');
     }
 
@@ -2014,9 +1907,7 @@
     document.querySelector("#buscar_order").addEventListener("input", (e) => {
       const value = e.target.value;
       const tokens = value.toLowerCase().split(/\s+/).filter(Boolean);
-      const orders = proformas.filter((proform) => {
-        return proform.payload.doc.tipo == "orden_salida"
-      })
+      const orders = proformas
       const filtered = orders.filter(p => {
         const doc = p.payload.doc;
         const text = `
@@ -2035,7 +1926,6 @@
       document.getElementById('view-proforma').style.display = name === 'proforma' ? 'block' : 'none';
       document.getElementById('view-guia').style.display = name === 'guia' ? 'block' : 'none';
       document.getElementById('view-revision').style.display = name === 'revision' ? 'block' : 'none';
-      document.getElementById('view-relacionales').style.display = name === 'relacionales' ? 'block' : 'none';
       document.getElementById('view-imagenes').style.display = name === 'imagenes' ? 'block' : 'none';
 
       document.getElementById('sw-proforma').style.background = name === 'proforma' ? '#0f4c81' : 'transparent';
@@ -2047,12 +1937,44 @@
       document.getElementById('sw-revision').style.background = name === 'revision' ? '#0f4c81' : 'transparent';
       document.getElementById('sw-revision').style.color = name === 'revision' ? '#fff' : '#8892a4';
 
-      document.getElementById('sw-relacionales').style.background = name === 'relacionales' ? '#0f4c81' : 'transparent';
-      document.getElementById('sw-relacionales').style.color = name === 'relacionales' ? '#fff' : '#8892a4';
       
       document.getElementById('sw-imagenes').style.background = name === 'imagenes' ? '#0f4c81' : 'transparent';
       document.getElementById('sw-imagenes').style.color = name === 'imagenes' ? '#fff' : '#8892a4';
     }
+  function toastError(msg) {
+    const toast = document.createElement("div");
+
+    toast.textContent = msg;
+    toast.style.position = "fixed";
+    toast.style.top = "20px";
+    toast.style.left = "20px";
+    toast.style.background = "#e74c3c";
+    toast.style.color = "#fff";
+    toast.style.padding = "10px 15px";
+    toast.style.borderRadius = "6px";
+    toast.style.boxShadow = "0 2px 8px rgba(0,0,0,0.2)";
+    toast.style.zIndex = "9999";
+    toast.style.fontSize = "14px";
+
+    document.body.appendChild(toast);
+
+    setTimeout(() => {
+      toast.remove();
+    }, 3000);
+  }
+
+
+
+  const buttons = document.getElementsByClassName("btn-send");
+
+  Array.from(buttons).forEach((btn) => {
+    btn.addEventListener("click", (e) => {
+      e.preventDefault();
+      toastError("chat deshabilitado hasta nuevo aviso");
+    });
+  });
+
+    
   </script>
 </body>
 
