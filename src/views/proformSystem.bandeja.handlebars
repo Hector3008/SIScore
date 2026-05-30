@@ -1319,7 +1319,8 @@
     style="padding:6px 14px;border-radius:6px;font-size:12px;font-weight:500;cursor:pointer;border:1px solid #3a4155;background:transparent;color:#8892a4;transition:all 0.15s">Guía</button>
   <button id="sw-revision" onclick="switchView('revision')"
     style="padding:6px 14px;border-radius:6px;font-size:12px;font-weight:500;cursor:pointer;border:1px solid #3a4155;background:transparent;color:#8892a4;transition:all 0.15s">Revisión</button>
-
+<button id="sw-relacionales" onclick="switchView('relacionales')"
+  style="padding:6px 14px;border-radius:6px;font-size:12px;font-weight:500;cursor:pointer;border:1px solid #3a4155;background:transparent;color:#8892a4;transition:all 0.15s">Relacionales</button>
   <button id="sw-imagenes" onclick="switchView('imagenes')"
     style="padding:6px 14px;border-radius:6px;font-size:12px;font-weight:500;cursor:pointer;border:1px solid #3a4155;background:transparent;color:#8892a4;transition:all 0.15s">Imágenes</button>
 
@@ -1469,6 +1470,30 @@
           </div>
 
 
+        <!-- VISTA RELACIONALES -->
+        <div id="view-relacionales" style="display:none">
+          <div class="guia-header">
+            <span>CLIENTE: <strong id="pgClienteNombreRel"></strong></span>
+            <span>VENDEDOR: <strong id="pgVendedorRel"></strong></span>
+            <span>Fecha: <strong id="pgFechaRel"></strong></span>
+          </div>
+        
+          <div class="table-wrap">
+            <table class="items-table">
+              <thead>
+                <tr>
+                  <th>Fecha</th>
+                  <th>Code</th>
+                  <th>Cantidad</th>
+                  <th>Importe unitario</th>
+                  <th>Importe total</th>
+                  <th>Descripcion</th>
+                </tr>
+              </thead>
+              <tbody id="tbody-relacionales"></tbody>
+            </table>
+          </div>
+        </div>
                     <!-- VISTA IMAGENES -->
                     <div id="view-imagenes" style="display:none">
                       <div class="guia-header">
@@ -1577,6 +1602,7 @@
 
       for (let [i, product] of products.entries()) {
 
+        if (product.status == false) return
         for (let [j, option] of product.options.entries()) {
 
           const tr = document.createElement("tr")
@@ -1743,13 +1769,46 @@
     return img
   }
 
+      function printRelacionales(products, order) {
+
+        const table = document.querySelector("#tbody-relacionales")
+        table.innerHTML = ""
+
+        document.getElementById('pgClienteNombreRel').textContent = order.cliente.nombre
+        document.getElementById('pgVendedorRel').textContent = order.vendedor
+        document.getElementById('pgFechaRel').textContent = order.fecha
+
+        for (let product of products) {
+          for (let option of product.options) {
+            const cantidad = option.CANTIDAD || 0
+            if (cantidad <= 0) continue
+
+            const monto = parseFloat(product.monto) || 0
+            const importeTotal = cantidad * monto
+
+            const tr = document.createElement("tr")
+            tr.innerHTML = `
+        <td>${order.fecha}</td>
+        <td>${option.CODIGO_FORMATEADO}</td>
+        <td>${cantidad}</td>
+        <td>S/ ${monto.toFixed(2)}</td>
+        <td>S/ ${importeTotal.toFixed(2)}</td>
+        <td>${option.DESCRIPCION} / ${option.FAMILIA} / ${option.SUBFAMILIA}</td>
+      `
+            table.appendChild(tr)
+          }
+        }
+      }
+    
 
     async function abrirVistaGuia(code) {
       const res = await fetch(`/api/proforms/${code}`).then(res => res.json());
       const order = res.payload.payload.doc;
       document.getElementById("sw-revision").style.display =
         order.tipo != "cerrada" ? "none" : ""
-              
+              document.getElementById("sw-relacionales").style.display =
+        order.tipo != "cerrada" ? "none" : ""
+
       switchView('proforma');
 
       // header compartido
@@ -1782,11 +1841,20 @@
       document.getElementById('pfComprobante').textContent = order.comprobante || '—';
       document.getElementById('pfVendedor').textContent = order.vendedor || '—';
 
+
+      //header relacionales:
+      document.getElementById('pgClienteNombreRel').textContent = order.cliente.nombre;
+      document.getElementById('pgVendedorRel').textContent = order.vendedor;
+      document.getElementById('pgFechaRel').textContent = order.fecha;
+
+
       const tbodyPf = document.getElementById('tbody-proforma');
       tbodyPf.innerHTML = '';
       let subtotal = 0;
 
       order.productos.forEach((p, i) => {
+        
+        if (p.status == false) return
         const monto = parseFloat(p.monto) || 0;
         const importe = p.cantidad * monto;
         subtotal += importe;
@@ -1815,7 +1883,8 @@
       printGuia(order.productos);
       printRevision(order.productos)
 
-      printImagenes(order.productos, order)
+      printImagenes(order.productos, order);
+      printRelacionales(order.productos, order)
       document.getElementById('previewGuiaOverlay').classList.add('open');
     }
 
@@ -1926,6 +1995,8 @@
       document.getElementById('view-proforma').style.display = name === 'proforma' ? 'block' : 'none';
       document.getElementById('view-guia').style.display = name === 'guia' ? 'block' : 'none';
       document.getElementById('view-revision').style.display = name === 'revision' ? 'block' : 'none';
+      document.getElementById('view-relacionales').style.display = name === 'relacionales' ? 'block' : 'none';
+
       document.getElementById('view-imagenes').style.display = name === 'imagenes' ? 'block' : 'none';
 
       document.getElementById('sw-proforma').style.background = name === 'proforma' ? '#0f4c81' : 'transparent';
@@ -1937,7 +2008,9 @@
       document.getElementById('sw-revision').style.background = name === 'revision' ? '#0f4c81' : 'transparent';
       document.getElementById('sw-revision').style.color = name === 'revision' ? '#fff' : '#8892a4';
 
-      
+      document.getElementById('sw-relacionales').style.background = name === 'relacionales' ? '#0f4c81' : 'transparent';
+      document.getElementById('sw-relacionales').style.color = name === 'relacionales' ? '#fff' : '#8892a4';
+
       document.getElementById('sw-imagenes').style.background = name === 'imagenes' ? '#0f4c81' : 'transparent';
       document.getElementById('sw-imagenes').style.color = name === 'imagenes' ? '#fff' : '#8892a4';
     }

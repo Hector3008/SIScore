@@ -1323,6 +1323,8 @@
       products = products.filter(p => p.status === true)
       tables.proforma.innerHTML = ""
       for (let [i, product] of products.entries()) {
+        
+        if (product.status == false) return
         let tr = document.createElement("tr")
         tr.id = `proforma_product_${product.index}_tr`
         tr.innerHTML = `
@@ -1346,7 +1348,7 @@
     tables.guia.innerHTML = ""
 
     for (let [i, product] of products.entries()) {
-
+        if (product.status == false) return
       const productIndex = product.index
       const cantidad = product.cantidad
 

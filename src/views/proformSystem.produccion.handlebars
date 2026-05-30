@@ -1548,9 +1548,9 @@
     function printGuia(products) {
       const table = document.querySelector("#tbody-guia")
       table.innerHTML = ""
-
+console.log("hello from here  (2)")
       for (let [i, product] of products.entries()) {
-
+if (product.status == false) return
         for (let [j, option] of product.options.entries()) {
 
           const tr = document.createElement("tr")
@@ -1709,6 +1709,8 @@ console.log("order: ", order)
     let subtotal = 0;
 
     order.productos.forEach((p, i) => {
+      
+      if (p.status == false) return
       const monto = parseFloat(p.monto) || 0;
       const importe = p.cantidad * monto;
       subtotal += importe;
@@ -1732,7 +1734,7 @@ console.log("order: ", order)
     document.getElementById('pfSubtotal').textContent = `S/ ${subtotal.toFixed(2)}`;
     document.getElementById('pfIgv').textContent = `S/ ${igv.toFixed(2)}`;
     document.getElementById('pfTotal').textContent = `S/ ${total.toFixed(2)}`;
-
+console.log("hello from here (1)")
     // tabla guia
     printGuia(order.productos);
     printImagenes(order.productos, order);
