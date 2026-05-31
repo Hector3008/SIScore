@@ -4084,6 +4084,12 @@ console.log("res: ", res)
       printProformas(data)
       printCode()
     })
+    socket.on('updatedStock', (productos) => {
+        catalog.length = 0                    // vacía el array sin romper referencias
+        catalog.push(...productos)            // rellena con los nuevos
+        printProductSearch(catalog)           // refresca la tabla de búsqueda
+        console.log(`[catalog] actualizado — ${catalog.length} productos`)
+      })
 
     async function logout() {
       await fetch('/auth/logout', { method: 'POST' });

@@ -13,6 +13,7 @@ import "dotenv/config";
 import connectDB from "../config/db.js";
 import authRouter from "./routers/authRouter.js";
 import cookieParser from "cookie-parser";
+import { initSyncStock } from "./jobs/syncStock.js";
  
 
 //se crea el app de express:
@@ -81,6 +82,8 @@ const hbs = handlebars.create({
   app.use("/proformSystem", proformsSystemViewRouter);
   app.use("/auth", authRouter);
 const PORT = process.env.PORT || 8000;
+
+initSyncStock(io);
 
 server.listen(PORT, () => {
   console.log(`server up on port ${PORT}`);
