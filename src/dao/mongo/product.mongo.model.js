@@ -14,7 +14,7 @@ const productoSchema = new mongoose.Schema(
     SUBFAMILIA: { type: String, default: "" },
     PROVEEDOR: { type: String, default: "" },
     MARCA: { type: String, default: "" },
-    UBICACION: { type: String, default: "pending" },
+    UBICACION: { type: String, default: "" },
   },
   { timestamps: true },
 );
