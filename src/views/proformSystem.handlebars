@@ -2568,6 +2568,26 @@ let  currentPictures = []
       }
     }
 
+    function stockBadge(lv, sjl) {
+  const lvNum = lv === "" ? null : Number(lv)
+  const sjlNum = sjl === "" ? null : Number(sjl)
+
+  // sin dato
+  if (lvNum === null && sjlNum === null) {
+    return `<span class="badge" style="background:#f0f0f0;color:#aaa">${lv || "—"} / ${sjl || "—"}</span>`
+  }
+  // ambos en 0 → rojo
+  if (lvNum === 0 && sjlNum === 0) {
+    return `<span class="badge" style="background:#fde8e8;color:#c62828">${lv} / ${sjl}</span>`
+  }
+  // solo SJL en 0 → naranja
+  if (sjlNum === 0) {
+    return `<span class="badge" style="background:#fff3e0;color:#e65100">${lv} / ${sjl}</span>`
+  }
+  // hay stock → verde
+  return `<span class="badge badge-ok">${lv} / ${sjl}</span>`
+}
+
     //✅
     function printProductSearch(products) {
       tables.products.innerHTML = ""
@@ -2579,9 +2599,7 @@ let  currentPictures = []
                       <strong>${product.CODIGO_FORMATEADO}</strong><br>
                       <span style="font-weight:400; color:#888">${product.DESCRIPCION}</span>
                     </td>
-<td title="LV: ${product.STOCK_LV} / SJL: ${product.STOCK_SJL}">
-                      <span class="badge badge-ok">${product.STOCK_LV} / ${product.STOCK_SJL}</span>
-                    </td>
+${stockBadge(product.STOCK_LV, product.STOCK_SJL)}
                     <td title="${product.EQUIVALENTES_STOCK}">${product.EQUIVALENTES_STOCK}
                     
   <button
