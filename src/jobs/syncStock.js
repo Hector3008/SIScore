@@ -70,7 +70,10 @@ async function syncStock(io) {
 }
 
 export function initSyncStock(io) {
-  cron.schedule("* * * * *", () => syncStock(io));
+
+  
+cron.schedule("0 6,18 * * *", syncStock);
+//  cron.schedule("* * * * *", () => syncStock(io));
   syncStock(io); // corre inmediatamente al arrancar
   console.log("[syncStock] cron registrado");
 }
