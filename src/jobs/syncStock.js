@@ -19,7 +19,7 @@ async function getSheetData() {
 
   const [headers, ...rows] = res.data.values;
 
-  console.log("HEADERS:", JSON.stringify(headers));
+  
 
   return rows.map((row) => {
     // rellena la fila hasta el largo de headers
@@ -51,9 +51,9 @@ async function syncStock(io) {
         status: "true",
         CODIGO_FORMATEADO: r.DICTIONARY,
         CODIGO: r.CODE,
-        STOCK_LV: Number(r.LV) || 0,
-        STOCK_SJL: Number(r.SJL) || 0,
-        STOCK: Number(r.TOTAL) || 0,
+        STOCK_LV: Number(r.LV) || "",
+        STOCK_SJL: Number(r.SJL) ||"",
+        STOCK: Number(r.TOTAL) || "",
         EQUIVALENTES_STOCK: r["EQUIVALENTE + STOCK"],
         DESCRIPCION: r["NOMBRE COMERCIAL"],
         FAMILIA: r.FAMILIA,
