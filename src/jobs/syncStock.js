@@ -42,8 +42,6 @@ async function syncStock(io) {
   try {
     const rows = await getSheetData();
 
-    console.log("rows[0]", rows[0]);
-    console.log("rows[1]", rows[1]);
 
     const documents = rows
       .filter((r) => r.DICTIONARY)
@@ -71,10 +69,11 @@ async function syncStock(io) {
     );
 
     if (io) {
-      io.emit("stockActualizado", { count: documents.length });
-      console.log(
-        `[syncStock] ✓ socket emitido — ${documents.length} productos`,
-      );
+
+
+  io.emit("updatedStock", documents);
+
+  console.log(`[syncStock] ✓ socket emitido — ${documents.length} productos`);
     }
   } catch (err) {
     console.error("[syncStock] ✗ error:", err.message);
