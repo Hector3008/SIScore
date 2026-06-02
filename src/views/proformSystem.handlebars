@@ -2660,7 +2660,7 @@ ${stockBadge(product.STOCK_LV, product.STOCK_SJL)}
         let tr = document.createElement("tr")
         tr.id = `proforma_product_${product.index}_tr`
         tr.innerHTML = `
-<td>${j == 0 ? String(i + 1).padStart(3, '0') : ""}</td>
+<td>${String(i + 1).padStart(3, '0')}</td>
       <td>${product.nombre}</td>
       <td>${product.cantidad}</td>
       <td>S/ ${product.monto}</td>
