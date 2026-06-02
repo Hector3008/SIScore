@@ -1381,7 +1381,7 @@
         <div id="view-proforma">
           <div class="preview-header">
             <div class="ph-left">
-              <div class="logo-box">LOGO</div>
+              <div class="logo-box">MAX</div>
               <div class="ph-info">
                 <strong>Max Importaciones y Servicios Generales S.A.C.</strong>
                 <p>RUC: 20503534194<br>
@@ -1614,40 +1614,36 @@
       orders: document.querySelector('.orders-grid')
     };
 
-    function printGuia(products) {
-      const table = document.querySelector("#tbody-guia")
-      table.innerHTML = ""
+  function printGuia(products) {
+        products = products.filter(prod => {
+      return prod.status == true
+    })
+    const table = document.querySelector("#tbody-guia")
+    table.innerHTML = ""
 
-      for (let [i, product] of products.entries()) {
-        
-        if (product.status == false) return
-        
-        for (let [i, product] of products.entries()) {
-          if (product.status == false) return
-        for (let [j, option] of product.options.entries()) {
+    for (let [i, product] of products.entries()) {
+      if (product.status == false) continue  // 👈 continue, no return
 
-          const tr = document.createElement("tr")
-          tr.classList.add(`guia_opcion_${product.index}`)
-          tr.innerHTML = `
-            <td>${j == 0 ? i + 1 : ""}</td>
-            <td>${j == 0 ? product.cantidad : ""}</td>
-            <td>${j == 0 ? `S/ ${product.monto}` : ""}</td>
+      for (let [j, option] of product.options.entries()) {
+        const tr = document.createElement("tr")
+        tr.classList.add(`guia_opcion_${product.index}`)
+        tr.innerHTML = `
+<td>${j == 0 ? String(i + 1).padStart(3, "0") : ""}</td>
+        <td>${j == 0 ? product.cantidad : ""}</td>
+        <td>${j == 0 ? `S/ ${product.monto}` : ""}</td>
         <td>${j == 0 ? product.nombre : ""}</td>
         <td>${j == 0 ? product.comentario : ""}</td>
-              <td>${option.CODIGO_FORMATEADO}</td>
-              
-        <td>${option.STOCK_LV}</td>  
-        <td>${option.STOCK_SJL}</td> 
-  
-        <td> ${option.DESCRIPCION} / ${option.FAMILIA} / ${option.SUBFAMILIA}</td >
+        <td>${option.CODIGO_FORMATEADO}</td>
+        <td>${option.STOCK_LV}</td>
+        <td>${option.STOCK_SJL}</td>
+        <td>${option.DESCRIPCION} / ${option.FAMILIA} / ${option.SUBFAMILIA}</td>
         <td>${option.EQUIVALENTES_STOCK}</td>
         <td>${option.UBICACION}</td>
       `
-          table.appendChild(tr)
-        }
+        table.appendChild(tr)
       }
     }
-
+  }
 
     function printRevision(products) {
       const table = document.querySelector("#tbody-revision")
@@ -1828,13 +1824,13 @@
       tbodyPf.innerHTML = '';
       let subtotal = 0;
 
-      order.productos.forEach((p, i) => {
+            order.productos.filter(prod => { return prod.status == true }).forEach((p, i) => {
         const monto = parseFloat(p.monto) || 0;
         const importe = p.cantidad * monto;
         subtotal += importe;
         const tr = document.createElement('tr');
         tr.innerHTML = `
-    <td>${i + 1}</td>
+    <td>${String(i + 1).padStart(3, '0')}</td>
     <td>${p.nombre}</td>
     <td>${p.cantidad}</td>
     <td>S/ ${monto.toFixed(2)}</td>
@@ -1861,7 +1857,6 @@
       document.getElementById('previewGuiaOverlay').classList.add('open');
     }
   const user = {{{ json user }}}
-
     function printOrders(proforms) {
            proforms = proforms.filter((proform) => {
         return proform.payload.doc.vendedor == user.nombre

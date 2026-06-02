@@ -6,7 +6,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 
   <meta charset="UTF-8">
@@ -380,41 +380,42 @@
     }
 
     .field-group {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 5px;
-}
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5px;
+    }
 
-.field-full {
-  grid-column: 1 / -1;
-}
+    .field-full {
+      grid-column: 1 / -1;
+    }
 
-.field-group > div.field-full {
-  display: block;
-  grid-column: 1 / -1;
-  position: relative;
-}
+    .field-group>div.field-full {
+      display: block;
+      grid-column: 1 / -1;
+      position: relative;
+    }
 
-.field-group > div.field-full input {
-  width: 100%;
-  padding-right: 30px;
-}
+    .field-group>div.field-full input {
+      width: 100%;
+      padding-right: 30px;
+    }
 
-.field-group > div.field-full {
-  grid-column: 1 / -1;
-  position: relative;
-}
+    .field-group>div.field-full {
+      grid-column: 1 / -1;
+      position: relative;
+    }
 
-.field-group > div.field-full input {
-  width: 100%;
-  padding-right: 30px;
-}
+    .field-group>div.field-full input {
+      width: 100%;
+      padding-right: 30px;
+    }
 
-.field-group > div.field-full {
-  display: block;
-  grid-column: 1 / -1;
-  position: relative;
-}
+    .field-group>div.field-full {
+      display: block;
+      grid-column: 1 / -1;
+      position: relative;
+    }
+
     .sidebar input[type="text"],
     .sidebar input[type="number"],
     .sidebar input[type="date"],
@@ -444,60 +445,60 @@
       flex-wrap: wrap;
     }
 
-.btn-sm {
-  font-size: 11px;
-  padding: 6px 12px;
-  border-radius: 5px;
-  cursor: pointer;
-  border: 1px solid #3a4155;
-  color: #d0d5e0;
-  font-weight: 500;
-  background: transparent;
-}
+    .btn-sm {
+      font-size: 11px;
+      padding: 6px 12px;
+      border-radius: 5px;
+      cursor: pointer;
+      border: 1px solid #3a4155;
+      color: #d0d5e0;
+      font-weight: 500;
+      background: transparent;
+    }
 
-.btn-sm-green {
-  border-color: #2e7d32;
-  color: #528c5c;
-  background: transparent;
-}
+    .btn-sm-green {
+      border-color: #2e7d32;
+      color: #528c5c;
+      background: transparent;
+    }
 
-.btn-sm-green:hover {
-  background: #2e7d32;
-  color: #fff;
-}
+    .btn-sm-green:hover {
+      background: #2e7d32;
+      color: #fff;
+    }
 
-.btn-sm-blue {
-  border-color: #1565c0;
-  color: #5b81af;
-  background: transparent;
-}
+    .btn-sm-blue {
+      border-color: #1565c0;
+      color: #5b81af;
+      background: transparent;
+    }
 
-.btn-sm-blue:hover {
-  background: #1565c0;
-  color: #fff;
-}
+    .btn-sm-blue:hover {
+      background: #1565c0;
+      color: #fff;
+    }
 
-.btn-sm-orange {
-  border-color: #e85d14;
-  color: #a8440e;
-  background: transparent;
-}
+    .btn-sm-orange {
+      border-color: #e85d14;
+      color: #a8440e;
+      background: transparent;
+    }
 
-.btn-sm-orange:hover {
-  background: #e85d14;
-  color: #fff;
-}
+    .btn-sm-orange:hover {
+      background: #e85d14;
+      color: #fff;
+    }
 
-.btn-sm-red {
-  border-color: #c62828;
-  color: #e07070;
-  background: transparent;
-}
+    .btn-sm-red {
+      border-color: #c62828;
+      color: #e07070;
+      background: transparent;
+    }
 
-.btn-sm-red:hover {
-  background: #c62828;
-  color: #fff;
-}
+    .btn-sm-red:hover {
+      background: #c62828;
+      color: #fff;
+    }
 
     .total-item {
       display: flex;
@@ -1520,15 +1521,16 @@
       background: #fff;
       color: #333;
     }
-.solo-movil {
-  display: none;
-}
 
-@media (max-width: 768px) {
-  .solo-movil {
-    display: block;
-  }
-}
+    .solo-movil {
+      display: none;
+    }
+
+    @media (max-width: 768px) {
+      .solo-movil {
+        display: block;
+      }
+    }
   </style>
 </head>
 
@@ -1646,70 +1648,70 @@
 
         <div class="section">
           <div class="section-header" onclick="toggleSection(this)">Cliente <span>▾</span></div>
-<div class="section-body">
-  <div class="field-group">
-    <span style="color: #0d306046; display:none" id="id_cliente"></span>
+          <div class="section-body">
+            <div class="field-group">
+              <span style="color: #0d306046; display:none" id="id_cliente"></span>
 
-    <!-- cliente con lupa -->
-    <div class="field-full" style="position:relative">
-      <input id="cliente_nombre" type="text" placeholder="Cliente" style="padding-right:30px; width:100%">
-      <svg onclick="abrirToastCargarCliente()"
-        style="position:absolute;right:8px;top:50%;transform:translateY(-50%);opacity:0.4;cursor:pointer" width="13"
-        height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-        stroke-linejoin="round">
-        <circle cx="11" cy="11" r="8" />
-        <line x1="21" y1="21" x2="16.65" y2="16.65" />
-      </svg>
-    </div>
+              <!-- cliente con lupa -->
+              <div class="field-full" style="position:relative">
+                <input id="cliente_nombre" type="text" placeholder="Cliente" style="padding-right:30px; width:100%">
+                <svg onclick="abrirToastCargarCliente()"
+                  style="position:absolute;right:8px;top:50%;transform:translateY(-50%);opacity:0.4;cursor:pointer"
+                  width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                  stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="11" cy="11" r="8" />
+                  <line x1="21" y1="21" x2="16.65" y2="16.65" />
+                </svg>
+              </div>
 
-    <input id="cliente_ruc" type="text" placeholder="RUC">
-    <input id="cliente_telefono" type="text" placeholder="Teléfono">
-    <input id="cliente_email" type="text" placeholder="E-mail">
-    <input id="cliente_direccion" type="text" placeholder="Dirección" class="field-full">
-    <input id="cliente_provincia" type="text" placeholder="Provincia">
-    <input id="cliente_ciudad" type="text" placeholder="Ciudad">
-    <select id="vendedor">
-      <option value="" disabled>Vendedor</option>
-      <option value="{{user.nombre}}" disabled selected>{{user.nombre}}</option>
-    </select>
-    <select id="entrega">
-      <option value="">Entrega</option>
-      <option value="tienda">Tienda</option>
-      <option value="agencia">Agencia</option>
-      <option value="local">Local</option>
-    </select>
-    <input id="destino" type="text" placeholder="Destino">
-    <input id="agencia" type="text" placeholder="Agencia">
-    <input id="atencion" type="text" placeholder="Atención" class="field-full">
-    <select id="canal_de_venta" class="field-full">
-      <option value="">Canal de venta</option>
-      <option>Tienda</option>
-      <option>Online</option>
-      <option>Cartera</option>
-    </select>
-    <select id="forma_de_pago">
-      <option value="">Forma de pago</option>
-      <option>Credito</option>
-      <option>Caja</option>
-      <option>Transferencia</option>
-      <option>Transferencia y caja</option>
-      <option>Tarjeta de Credito</option>
-    </select>
-    <input id="fecha" type="date">
-    <select id="comprobante">
-      <option value="">Comprobante</option>
-      <option>Factura</option>
-      <option>Boleta</option>
-      <option>Proforma</option>
-    </select>
-  </div>
+              <input id="cliente_ruc" type="text" placeholder="RUC">
+              <input id="cliente_telefono" type="text" placeholder="Teléfono">
+              <input id="cliente_email" type="text" placeholder="E-mail">
+              <input id="cliente_direccion" type="text" placeholder="Dirección" class="field-full">
+              <input id="cliente_provincia" type="text" placeholder="Provincia">
+              <input id="cliente_ciudad" type="text" placeholder="Ciudad">
+              <select id="vendedor">
+                <option value="" disabled>Vendedor</option>
+                <option value="{{user.nombre}}" disabled selected>{{user.nombre}}</option>
+              </select>
+              <select id="entrega">
+                <option value="">Entrega</option>
+                <option value="Tienda">Tienda</option>
+                <option value="Agencia">Agencia</option>
+                <option value="Local">Local</option>
+              </select>
+              <input id="destino" type="text" placeholder="Destino">
+              <input id="agencia" type="text" placeholder="Agencia">
+              <input id="atencion" type="text" placeholder="Atención" class="field-full">
+              <select id="canal_de_venta" class="field-full">
+                <option value="">Canal de venta</option>
+                <option>Tienda</option>
+                <option>Online</option>
+                <option>Cartera</option>
+              </select>
+              <select id="forma_de_pago">
+                <option value="">Forma de pago</option>
+                <option>Credito</option>
+                <option>Caja</option>
+                <option>Transferencia</option>
+                <option>Transferencia y caja</option>
+                <option>Tarjeta de Credito</option>
+              </select>
+              <input id="fecha" type="date">
+              <select id="comprobante">
+                <option value="">Comprobante</option>
+                <option>Factura</option>
+                <option>Boleta</option>
+                <option>Proforma</option>
+              </select>
+            </div>
 
-  <div class="btn-row">
-    <button class="btn-sm btn-sm-green">Registrar</button>
-    <button class="btn-sm btn-sm-blue">Actualizar</button>
-    <button class="btn-sm btn-sm-red">↺ Reiniciar</button>
-  </div>
-</div>
+            <div class="btn-row">
+              <button class="btn-sm btn-sm-green">Registrar</button>
+              <button class="btn-sm btn-sm-blue">Actualizar</button>
+              <button class="btn-sm btn-sm-red">↺ Reiniciar</button>
+            </div>
+          </div>
         </div>
 
         <div class="section">
@@ -1746,56 +1748,58 @@
           </div>
         </div>
 
-<div class="section">
-  <div class="section-header" onclick="toggleSection(this)">Producto <span>▾</span></div>
-  <div class="section-body">
-    <div class="field-group">
-      <input type="text" placeholder="Buscar producto…" class="field-full" id="inputProducto">
-      <input type="number" min="0" placeholder="Cantidad" id="inputCantidad">
-      <input type="number" min="0" placeholder="Importe unit." id="inputPrecio">
-      <input id="inputComentario" type="text" placeholder="Comentario" class="field-full">
-    </div>
-    <div class="total-item">
-      <span>Total ítem:</span>
-      <span id="totalItem">S/ 0.00</span>
-    </div>
-<div style="display:flex;gap:6px;margin-bottom:6px">
-  <button id="cargar_producto" class="btn-sm btn-sm-green" style="flex:1;padding:7px;text-align:center">+ Cargar
-    producto</button>
-<button id="cargar_foto" class="btn-sm btn-sm-blue solo-movil" style="padding:7px 10px;text-align:center">
-  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-    stroke-linecap="round" stroke-linejoin="round">
-    <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
-    <circle cx="8.5" cy="8.5" r="1.5" />
-    <polyline points="21 15 16 10 5 21" />
-  </svg>
-</button>
-<button id="cargar_camara" class="btn-sm btn-sm-blue" style="padding:7px 10px;text-align:center">
-  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-    stroke-linecap="round" stroke-linejoin="round">
-    <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z" />
-    <circle cx="12" cy="13" r="4" />
-  </svg>
-</button>
-</div>
-<div style="display:flex;align-items:center;gap:6px;margin-bottom:6px">
-  <button id="importar_data" class="btn-sm btn-sm-blue" style="flex:1;padding:7px;text-align:center">📊 Importar
-    Excel</button>
-  <a id="descargar_plantilla" href="#"
-    style="font-size:10px;color:#1565c0;text-decoration:none;white-space:nowrap;padding:6px 8px;border:1px solid #ddd;border-radius:5px;background:#f9f9f9;cursor:pointer">
-    ⬇ Plantilla
-  </a>
-</div>
+        <div class="section">
+          <div class="section-header" onclick="toggleSection(this)">Producto <span>▾</span></div>
+          <div class="section-body">
+            <div class="field-group">
+              <input type="text" placeholder="Buscar producto…" class="field-full" id="inputProducto">
+              <input type="number" min="0" placeholder="Cantidad" id="inputCantidad">
+              <input type="number" min="0" placeholder="Importe unit." id="inputPrecio">
+              <input id="inputComentario" type="text" placeholder="Comentario" class="field-full">
+            </div>
+            <div class="total-item">
+              <span>Total ítem:</span>
+              <span id="totalItem">S/ 0.00</span>
+            </div>
+            <div style="display:flex;gap:6px;margin-bottom:6px">
+              <button id="cargar_producto" class="btn-sm btn-sm-green" style="flex:1;padding:7px;text-align:center">+
+                Cargar
+                producto</button>
+              <button id="cargar_foto" class="btn-sm btn-sm-blue solo-movil" style="padding:7px 10px;text-align:center">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                  stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
+                  <circle cx="8.5" cy="8.5" r="1.5" />
+                  <polyline points="21 15 16 10 5 21" />
+                </svg>
+              </button>
+              <button id="cargar_camara" class="btn-sm btn-sm-blue" style="padding:7px 10px;text-align:center">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                  stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z" />
+                  <circle cx="12" cy="13" r="4" />
+                </svg>
+              </button>
+            </div>
+            <div style="display:flex;align-items:center;gap:6px;margin-bottom:6px">
+              <button id="importar_data" class="btn-sm btn-sm-blue" style="flex:1;padding:7px;text-align:center">📊
+                Importar
+                Excel</button>
+              <a id="descargar_plantilla" href="#"
+                style="font-size:10px;color:#1565c0;text-decoration:none;white-space:nowrap;padding:6px 8px;border:1px solid #ddd;border-radius:5px;background:#f9f9f9;cursor:pointer">
+                ⬇ Plantilla
+              </a>
+            </div>
 
-<input type="file" id="inputExcel" accept=".xlsx,.xls,.csv" style="display:none">
+            <input type="file" id="inputExcel" accept=".xlsx,.xls,.csv" style="display:none">
 
-<input type="file" id="inputFoto" accept="image/*" style="display:none">
-    <input type="file" id="inputFoto" accept="image/*" style="display:none">
-    <table class="stock-table">
-      <tbody id="tbody_productos"></tbody>
-    </table>
-  </div>
-</div>
+            <input type="file" id="inputFoto" accept="image/*" style="display:none">
+            <input type="file" id="inputFoto" accept="image/*" style="display:none">
+            <table class="stock-table">
+              <tbody id="tbody_productos"></tbody>
+            </table>
+          </div>
+        </div>
 
       </div><!-- /sidebar -->
 
@@ -1808,7 +1812,7 @@
 
             <div class="preview-header">
               <div class="ph-left">
-                <div class="logo-box">LOGO</div>
+                <div class="logo-box">MAX</div>
                 <div class="ph-info">
                   <strong id="proforma_empresa_nombre">Max Importaciones y Servicios Generales SAC</strong>
                   <p>RUC: <span id="proforma_empresa_ruc">20503534194</span> </p>
@@ -2231,174 +2235,174 @@
 
     function reiniciarFormulario() { }
 
-  document.getElementById('inputFoto').addEventListener('change', (e) => {
-    
-    const file = e.target.files[0]
-    if (file) console.log("Foto seleccionada:", file.name)
-    currentPictures.push(file) 
-    console.log("currentPictures: ", currentPictures)
-     })
+    document.getElementById('inputFoto').addEventListener('change', (e) => {
+
+      const file = e.target.files[0]
+      if (file) console.log("Foto seleccionada:", file.name)
+      currentPictures.push(file)
+      console.log("currentPictures: ", currentPictures)
+    })
 
 
-  function comprimirImagen(file, maxWidth = 800, calidad = 0.6) {
-    return new Promise((resolve) => {
-      const reader = new FileReader()
-      reader.onload = (e) => {
-        const img = new Image()
-        img.onload = () => {
-          const canvas = document.createElement('canvas')
+    function comprimirImagen(file, maxWidth = 800, calidad = 0.6) {
+      return new Promise((resolve) => {
+        const reader = new FileReader()
+        reader.onload = (e) => {
+          const img = new Image()
+          img.onload = () => {
+            const canvas = document.createElement('canvas')
 
-          // Calcular nuevo tamaño manteniendo proporción
-          let width = img.width
-          let height = img.height
-          if (width > maxWidth) {
-            height = (height * maxWidth) / width
-            width = maxWidth
+            // Calcular nuevo tamaño manteniendo proporción
+            let width = img.width
+            let height = img.height
+            if (width > maxWidth) {
+              height = (height * maxWidth) / width
+              width = maxWidth
+            }
+
+            canvas.width = width
+            canvas.height = height
+
+            const ctx = canvas.getContext('2d')
+            ctx.drawImage(img, 0, 0, width, height)
+
+            // Convertir a base64 comprimido
+            const base64 = canvas.toDataURL('image/jpeg', calidad)
+            resolve(base64)
           }
-
-          canvas.width = width
-          canvas.height = height
-
-          const ctx = canvas.getContext('2d')
-          ctx.drawImage(img, 0, 0, width, height)
-
-          // Convertir a base64 comprimido
-          const base64 = canvas.toDataURL('image/jpeg', calidad)
-          resolve(base64)
+          img.src = e.target.result
         }
-        img.src = e.target.result
-      }
-      reader.readAsDataURL(file)
+        reader.readAsDataURL(file)
+      })
+    }
+
+    document.getElementById('cargar_foto').addEventListener('click', (e) => {
+      e.stopPropagation()  // 👈
+
+      const anterior = document.getElementById('inputFotoGaleria')
+      if (anterior) anterior.remove()
+
+      const input = document.createElement('input')
+      input.type = 'file'
+      input.accept = 'image/*'
+      input.id = 'inputFotoGaleria'
+      input.style.display = 'none'
+      document.body.appendChild(input)
+
+      input.addEventListener('change', async (e) => {
+        const file = e.target.files[0]
+        if (!file) return
+
+        const base64 = await comprimirImagen(file, 800, 0.6)
+        currentPictures.push(base64)
+        console.log("currentPictures: ", currentPictures)
+        toastSuccess(`Foto agregada (${currentPictures.length} en total)`)
+
+        e.target.value = ""
+      })
+      input.click()
     })
-  }
 
-  document.getElementById('cargar_foto').addEventListener('click', (e) => {
-    e.stopPropagation()  // 👈
+    document.getElementById('cargar_camara').addEventListener('click', (e) => {
+      e.stopPropagation()  // 👈
 
-    const anterior = document.getElementById('inputFotoGaleria')
-    if (anterior) anterior.remove()
+      const anterior = document.getElementById('inputFotoCamera')
+      if (anterior) anterior.remove()
 
-    const input = document.createElement('input')
-    input.type = 'file'
-    input.accept = 'image/*'
-    input.id = 'inputFotoGaleria'
-    input.style.display = 'none'
-    document.body.appendChild(input)
+      const input = document.createElement('input')
+      input.type = 'file'
+      input.accept = 'image/*'
+      input.capture = 'environment'
+      input.id = 'inputFotoCamera'
+      input.style.display = 'none'
+      document.body.appendChild(input)
 
-    input.addEventListener('change', async (e) => {
-      const file = e.target.files[0]
-      if (!file) return
+      input.addEventListener('change', async (e) => {
+        const file = e.target.files[0]
+        if (!file) return
 
-      const base64 = await comprimirImagen(file, 800, 0.6)
-      currentPictures.push(base64)
-      console.log("currentPictures: ", currentPictures)
-      toastSuccess(`Foto agregada (${currentPictures.length} en total)`)
+        const base64 = await comprimirImagen(file, 800, 0.6)
+        currentPictures.push(base64)
+        console.log("currentPictures: ", currentPictures)
+        toastSuccess(`Foto agregada (${currentPictures.length} en total)`)
 
-      e.target.value = ""
+        e.target.value = ""
+      })
+      input.click()
     })
-    input.click()
-  })
 
-  document.getElementById('cargar_camara').addEventListener('click', (e) => {
-    e.stopPropagation()  // 👈
 
-    const anterior = document.getElementById('inputFotoCamera')
-    if (anterior) anterior.remove()
-
-    const input = document.createElement('input')
-    input.type = 'file'
-    input.accept = 'image/*'
-    input.capture = 'environment'
-    input.id = 'inputFotoCamera'
-    input.style.display = 'none'
-    document.body.appendChild(input)
-    
-    input.addEventListener('change', async (e) => {
-      const file = e.target.files[0]
-      if (!file) return
-
-      const base64 = await comprimirImagen(file, 800, 0.6)
-      currentPictures.push(base64)
-      console.log("currentPictures: ", currentPictures)
-      toastSuccess(`Foto agregada (${currentPictures.length} en total)`)
-
-      e.target.value = ""
-    })
-    input.click()
-  })
-   
-   
-   document.getElementById('importar_data').addEventListener('click', (e) => {
+    document.getElementById('importar_data').addEventListener('click', (e) => {
       e.stopPropagation()
       document.getElementById('inputExcel').click()
     })
 
-  document.getElementById('descargar_plantilla').addEventListener('click', (e) => {
-    e.preventDefault()
-    const plantilla = [
-      { PRODUCTO: "BZM-P1000 LLAVE EXTRACTOR", CANTIDAD: 5, MONTO_UNITARIO: 50, COMENTARIO: "" },
-      { PRODUCTO: "", CANTIDAD: "", MONTO_UNITARIO: "", COMENTARIO: "" },
-      { PRODUCTO: "", CANTIDAD: "", MONTO_UNITARIO: "", COMENTARIO: "" },
-    ]
+    document.getElementById('descargar_plantilla').addEventListener('click', (e) => {
+      e.preventDefault()
+      const plantilla = [
+        { PRODUCTO: "BZM-P1000 LLAVE EXTRACTOR", CANTIDAD: 5, MONTO_UNITARIO: 50, COMENTARIO: "" },
+        { PRODUCTO: "", CANTIDAD: "", MONTO_UNITARIO: "", COMENTARIO: "" },
+        { PRODUCTO: "", CANTIDAD: "", MONTO_UNITARIO: "", COMENTARIO: "" },
+      ]
 
-    const ws = XLSX.utils.json_to_sheet(plantilla)
-    const wb = XLSX.utils.book_new()
-    XLSX.utils.book_append_sheet(wb, ws, "Productos")
-    XLSX.writeFile(wb, "plantilla_productos.xlsx")
-  })
-  document.getElementById('inputExcel').addEventListener('change', async (e) => {
-    const file = e.target.files[0]
-    if (!file) return
+      const ws = XLSX.utils.json_to_sheet(plantilla)
+      const wb = XLSX.utils.book_new()
+      XLSX.utils.book_append_sheet(wb, ws, "Productos")
+      XLSX.writeFile(wb, "plantilla_productos.xlsx")
+    })
+    document.getElementById('inputExcel').addEventListener('change', async (e) => {
+      const file = e.target.files[0]
+      if (!file) return
 
-    const reader = new FileReader()
-    reader.onload = (evt) => {
-      const data = new Uint8Array(evt.target.result)
-      const workbook = XLSX.read(data, { type: 'array' })
-      const sheet = workbook.Sheets[workbook.SheetNames[0]]
-      const rows = XLSX.utils.sheet_to_json(sheet)
+      const reader = new FileReader()
+      reader.onload = (evt) => {
+        const data = new Uint8Array(evt.target.result)
+        const workbook = XLSX.read(data, { type: 'array' })
+        const sheet = workbook.Sheets[workbook.SheetNames[0]]
+        const rows = XLSX.utils.sheet_to_json(sheet)
 
-      let cargados = 0
-      let errores = []
+        let cargados = 0
+        let errores = []
 
-      for (let [i, row] of rows.entries()) {
-        const fila = i + 2
-        const producto = String(row.PRODUCTO || "").trim()
-        const cantidad = row.CANTIDAD
-        const monto = row.MONTO_UNITARIO
-        const comentario = String(row.COMENTARIO || "").trim()
+        for (let [i, row] of rows.entries()) {
+          const fila = i + 2
+          const producto = String(row.PRODUCTO || "").trim()
+          const cantidad = row.CANTIDAD
+          const monto = row.MONTO_UNITARIO
+          const comentario = String(row.COMENTARIO || "").trim()
 
-        if (!producto) { errores.push(`Fila ${fila}: PRODUCTO vacío`); continue }
-        if (cantidad === undefined || cantidad === "") { errores.push(`Fila ${fila}: CANTIDAD vacía`); continue }
-        if (monto === undefined || monto === "") { errores.push(`Fila ${fila}: MONTO_UNITARIO vacío`); continue }
-        if (isNaN(Number(cantidad)) || Number(cantidad) <= 0) { errores.push(`Fila ${fila}: CANTIDAD debe ser un número mayor a 0`); continue }
-        if (isNaN(Number(monto)) || Number(monto) <= 0) { errores.push(`Fila ${fila}: MONTO_UNITARIO debe ser un número mayor a 0`); continue }
+          if (!producto) { errores.push(`Fila ${fila}: PRODUCTO vacío`); continue }
+          if (cantidad === undefined || cantidad === "") { errores.push(`Fila ${fila}: CANTIDAD vacía`); continue }
+          if (monto === undefined || monto === "") { errores.push(`Fila ${fila}: MONTO_UNITARIO vacío`); continue }
+          if (isNaN(Number(cantidad)) || Number(cantidad) <= 0) { errores.push(`Fila ${fila}: CANTIDAD debe ser un número mayor a 0`); continue }
+          if (isNaN(Number(monto)) || Number(monto) <= 0) { errores.push(`Fila ${fila}: MONTO_UNITARIO debe ser un número mayor a 0`); continue }
 
-        currentProform.productos.push({
-          status: true,
-          index: currentProform.productos.length + 1,
-          nombre: producto,
-          monto: String(monto),
-          cantidad: String(cantidad),
-          comentario: comentario,
-          total: Number(cantidad) * Number(monto),
-          options: options(producto)
-        })
-        cargados++
+          currentProform.productos.push({
+            status: true,
+            index: currentProform.productos.length + 1,
+            nombre: producto,
+            monto: String(monto),
+            cantidad: String(cantidad),
+            comentario: comentario,
+            total: Number(cantidad) * Number(monto),
+            options: options(producto)
+          })
+          cargados++
+        }
+
+        printProforma(currentProform.productos)
+        printGuia(currentProform.productos)
+        printTotal()
+
+        if (errores.length > 0) toastError(`${errores.length} fila(s) con error: ${errores.join(' | ')}`)
+        if (cargados > 0) toastSuccess(`${cargados} producto(s) importado(s)`)
       }
+      reader.readAsArrayBuffer(file)
 
-      printProforma(currentProform.productos)
-      printGuia(currentProform.productos)
-      printTotal()
+      // 👇 Resetear el input para que vuelva a disparar change con el mismo archivo
+      e.target.value = ""
+    })
 
-      if (errores.length > 0) toastError(`${errores.length} fila(s) con error: ${errores.join(' | ')}`)
-      if (cargados > 0) toastSuccess(`${cargados} producto(s) importado(s)`)
-    }
-    reader.readAsArrayBuffer(file)
-
-    // 👇 Resetear el input para que vuelva a disparar change con el mismo archivo
-    e.target.value = ""
-  }) 
-  
   </script>
 
   <script src="/socket.io/socket.io.js"></script>
@@ -2412,7 +2416,7 @@
     const clientes = {{{ json clientes }}}
     console.log("user: ", user)
 
-let  currentPictures = []
+    let currentPictures = []
 
     let currentProform = {
       cliente: {},
@@ -2569,24 +2573,24 @@ let  currentPictures = []
     }
 
     function stockBadge(lv, sjl) {
-  const lvNum = lv === "" ? null : Number(lv)
-  const sjlNum = sjl === "" ? null : Number(sjl)
+      const lvNum = lv === "" ? null : Number(lv)
+      const sjlNum = sjl === "" ? null : Number(sjl)
 
-  // sin dato
-  if (lvNum === null && sjlNum === null) {
-    return `<span class="badge" style="background:#f0f0f0;color:#aaa">${lv || "—"} / ${sjl || "—"}</span>`
-  }
-  // ambos en 0 → rojo
-  if (lvNum === 0 && sjlNum === 0) {
-    return `<span class="badge" style="background:#fde8e8;color:#c62828">${lv} / ${sjl}</span>`
-  }
-  // solo SJL en 0 → naranja
-  if (sjlNum === 0) {
-    return `<span class="badge" style="background:#fff3e0;color:#e65100">${lv} / ${sjl}</span>`
-  }
-  // hay stock → verde
-  return `<span class="badge badge-ok">${lv} / ${sjl}</span>`
-}
+      // sin dato
+      if (lvNum === null && sjlNum === null) {
+        return `<span class="badge" style="background:#f0f0f0;color:#aaa">${lv || "—"} / ${sjl || "—"}</span>`
+      }
+      // ambos en 0 → rojo
+      if (lvNum === 0 && sjlNum === 0) {
+        return `<span class="badge" style="background:#fde8e8;color:#c62828">${lv} / ${sjl}</span>`
+      }
+      // solo SJL en 0 → naranja
+      if (sjlNum === 0) {
+        return `<span class="badge" style="background:#fff3e0;color:#e65100">${lv} / ${sjl}</span>`
+      }
+      // hay stock → verde
+      return `<span class="badge badge-ok">${lv} / ${sjl}</span>`
+    }
 
     //✅
     function printProductSearch(products) {
@@ -2656,7 +2660,7 @@ ${stockBadge(product.STOCK_LV, product.STOCK_SJL)}
         let tr = document.createElement("tr")
         tr.id = `proforma_product_${product.index}_tr`
         tr.innerHTML = `
-      <td>${i + 1}</td>
+<td>${j == 0 ? String(i + 1).padStart(3, '0') : ""}</td>
       <td>${product.nombre}</td>
       <td>${product.cantidad}</td>
       <td>S/ ${product.monto}</td>
@@ -2674,15 +2678,19 @@ ${stockBadge(product.STOCK_LV, product.STOCK_SJL)}
     printProforma(currentProform.productos)
     //✅
     function printGuia(products) {
+      products = products.filter(prod=>{
+        return prod.status == true
+      })
       tables.guia.innerHTML = ""
       for (let [i, product] of products.entries()) {
 
+        if (product.status == false) continue  // 👈 continue, no return
         for (let [j, option] of product.options.entries()) {
 
           const tr = document.createElement("tr")
           tr.classList.add(`guia_opcion_${product.index}`)
           tr.innerHTML = `
-            <td>${j == 0 ? i + 1 : ""}</td>
+<td>${j == 0 ? String(i + 1).padStart(3, "0") : ""}</td>
             <td>${j == 0 ? product.cantidad : ""}</td>
             <td>${j == 0 ? `S/ ${product.monto}` : ""}</td>
         <td>${j == 0 ? product.nombre : ""}</td>
@@ -2972,7 +2980,7 @@ ${stockBadge(product.STOCK_LV, product.STOCK_SJL)}
             "Content-Type": "application/json",
           },
         });
-console.log("res: ", res)
+        console.log("res: ", res)
         await res.text();
 
         generarPDFProforma(currentProform)
@@ -3472,22 +3480,39 @@ console.log("res: ", res)
       }
 
       for (let cliente of clientes) {
+
         const tr = document.createElement('tr');
         tr.innerHTML = `
       <td><span style="color:#e8eaf0">${cliente.nombre || '—'}</span></td>
       <td><span class="doc-tag">${cliente.ruc || '—'}</span></td>
       <td>${cliente.telefono || '—'}</td>
       <td>${cliente.ciudad || '—'}</td>
-      <td><button class="btn-cargar-proforma btn-cargar-cliente"
-            data-nombre="${cliente.nombre || ''}"
-            data-ruc="${cliente.ruc || ''}"
-            data-telefono="${cliente.telefono || ''}"
-            data-email="${cliente.email || ''}"
-            data-direccion="${cliente.direccion || ''}"
-            data-provincia="${cliente.provincia || ''}"
-            data-ciudad="${cliente.ciudad || ''}">
-          Cargar
-        </button></td>
+  <td><button class="btn-cargar-proforma btn-cargar-cliente"
+        data-id="${cliente._id || ''}"
+        data-nombre="${cliente.nombre || ''}"
+        data-ruc="${cliente.ruc || ''}"
+        data-telefono="${cliente.telefono || ''}"
+        data-email="${cliente.email || ''}"
+        data-direccion="${cliente.direccion || ''}"
+        data-provincia="${cliente.provincia || ''}"
+        data-ciudad="${cliente.ciudad || ''}"
+        
+        data-canal_de_venta="${cliente.canal_de_venta || ''}"
+        data-forma_de_pago="${cliente.
+            forma_de_pago || ''}"
+                    data-entrega="${cliente.entrega || ''}"
+
+              data-destino="${cliente.destino || ''}"
+
+                 data-atencion="${cliente.atencion || ''}"
+
+      data-agencia="${cliente.agencia || ''}"
+
+      data-comprobante="${cliente.comprobante || ''}"
+
+        >
+      Cargar
+    </button></td>
     `;
         tbody.appendChild(tr);
       }
@@ -3524,6 +3549,23 @@ console.log("res: ", res)
     document.getElementById('tbody-clientes').addEventListener('click', (e) => {
       const btn = e.target.closest('.btn-cargar-cliente');
       if (!btn) return;
+      currentProform.cliente.nombre = btn.dataset.nombre
+      currentProform.cliente.ruc = btn.dataset.ruc
+      currentProform.cliente.telefono = btn.dataset.telefono
+      currentProform.cliente.email = btn.dataset.email
+      currentProform.cliente.direccion = btn.dataset.direccion
+      currentProform.cliente.provincia = btn.dataset.provincia
+      currentProform.cliente.ciudad = btn.dataset.ciudad
+
+      currentProform.entrega = btn.dataset.entrega
+      currentProform.destino = btn.dataset.destino
+      currentProform.agencia = btn.dataset.agencia
+      currentProform.atencion = btn.dataset.atencion
+      currentProform.forma_de_pago = btn.dataset.forma_de_pago
+      currentProform.canal_de_venta = btn.dataset.canal_de_venta
+      
+currentProform.comprobante = btn.dataset.comprobante
+      printAll()
 
       // aquí conectas con tu lógica
       cerrarToastCargarCliente();
@@ -4103,11 +4145,11 @@ console.log("res: ", res)
       printCode()
     })
     socket.on('updatedStock', (productos) => {
-        catalog.length = 0                    // vacía el array sin romper referencias
-        catalog.push(...productos)            // rellena con los nuevos
-        printProductSearch(catalog)           // refresca la tabla de búsqueda
-        console.log(`[catalog] actualizado — ${catalog.length} productos`)
-      })
+      catalog.length = 0                    // vacía el array sin romper referencias
+      catalog.push(...productos)            // rellena con los nuevos
+      printProductSearch(catalog)           // refresca la tabla de búsqueda
+      console.log(`[catalog] actualizado — ${catalog.length} productos`)
+    })
 
     async function logout() {
       await fetch('/auth/logout', { method: 'POST' });

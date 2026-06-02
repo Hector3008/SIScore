@@ -995,7 +995,7 @@
 
             <div class="preview-header">
               <div class="ph-left">
-                <div class="logo-box">LOGO</div>
+                <div class="logo-box">MAX</div>
                 <div class="ph-info">
                   <strong id="proforma_empresa_nombre">Max Importaciones y Servicios Generales SAC</strong>
                   <p>RUC: <span id="proforma_empresa_ruc">20503534194</span></p>
@@ -1328,7 +1328,7 @@
         let tr = document.createElement("tr")
         tr.id = `proforma_product_${product.index}_tr`
         tr.innerHTML = `
-      <td>${i + 1}</td>
+    <td>${String(i + 1).padStart(3, '0')}</td>
       <td>${product.nombre}</td>
       <td>${product.cantidad}</td>
       <td>S/ ${product.monto}</td>
@@ -1344,11 +1344,14 @@
       }
     }
   async function printGuia(products) {
+        products = products.filter(prod => {
+      return prod.status == true
+    })
     console.log("currentProform: ", currentProform)
     tables.guia.innerHTML = ""
 
     for (let [i, product] of products.entries()) {
-        if (product.status == false) return
+        if (product.status == false) continue
       const productIndex = product.index
       const cantidad = product.cantidad
 
@@ -1361,7 +1364,7 @@
         tr.classList.add(`guia_opcion_${product.index}`)
         tr.innerHTML = `
         <td>${j == 0 ? `<input type="checkbox" ${product.isChecked ? "checked" : ""}>` : ""}</td>
-        <td>${j == 0 ? i + 1 : ""}</td>
+<td>${j == 0 ? String(i + 1).padStart(3, "0") : ""}</td>
         <td>${j == 0 ? product.cantidad : ""}</td>
         <td>${j == 0 ? `S/ ${product.monto}` : ""}</td>
         <td>${j == 0 ? product.nombre : ""}</td>

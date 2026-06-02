@@ -1597,18 +1597,21 @@
     };
 
     function printGuia(products) {
+          products = products.filter(prod => {
+        return prod.status == true
+      })
       const table = document.querySelector("#tbody-guia")
       table.innerHTML = ""
 
       for (let [i, product] of products.entries()) {
 
-        if (product.status == false) return
+        if (product.status == false) continue
         for (let [j, option] of product.options.entries()) {
 
           const tr = document.createElement("tr")
           tr.classList.add(`guia_opcion_${product.index}`)
           tr.innerHTML = `
-            <td>${j == 0 ? i + 1 : ""}</td>
+<td>${j == 0 ? String(i + 1).padStart(3, "0") : ""}</td>
             <td>${j == 0 ? product.cantidad : ""}</td>
             <td>${j == 0 ? `S/ ${product.monto}` : ""}</td>
         <td>${j == 0 ? product.nombre : ""}</td>
@@ -1852,7 +1855,7 @@
       tbodyPf.innerHTML = '';
       let subtotal = 0;
 
-      order.productos.forEach((p, i) => {
+      order.productos.filter(prod => { return prod.status == true }).forEach((p, i) => {
         
         if (p.status == false) return
         const monto = parseFloat(p.monto) || 0;
@@ -1860,7 +1863,7 @@
         subtotal += importe;
         const tr = document.createElement('tr');
         tr.innerHTML = `
-    <td>${i + 1}</td>
+    <td>${String(i + 1).padStart(3, '0')}</td>
     <td>${p.nombre}</td>
     <td>${p.cantidad}</td>
     <td>S/ ${monto.toFixed(2)}</td>

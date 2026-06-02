@@ -2,6 +2,7 @@ import mongoose from "mongoose";
 
 const clienteSchema = new mongoose.Schema(
   {
+    id: { type: String, default: undefined },
     status: { type: Boolean, default: true },
     nombre: { type: String, required: true },
     ruc: { type: String, default: "" },
