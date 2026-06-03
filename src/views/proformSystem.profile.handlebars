@@ -1471,8 +1471,7 @@
                   <th>LV</th>
                   <th>SJL</th>
                   <th>Descripción</th>
-                  <th>Equivalente</th>
-                  <th>Ubicación</th>
+                  <th>Equivalente</th><th>Ubicación</th><th>Precios</th>
                 </tr>
               </thead>
               <tbody id="tbody-guia"></tbody>
@@ -1505,6 +1504,7 @@
                   <th>Descripción</th>
                   <th>Equivalente</th>
                   <th>Ubicación</th>
+                  <th>Precios</th>
                 </tr>
               </thead>
               <tbody id="tbody-revision"></tbody>
@@ -1638,7 +1638,8 @@
         <td>${option.STOCK_SJL}</td>
         <td>${option.DESCRIPCION} / ${option.FAMILIA} / ${option.SUBFAMILIA}</td>
         <td>${option.EQUIVALENTES_STOCK}</td>
-        <td>${option.UBICACION}</td>
+        
+        <td>${option.PRECIO_SUGERIDO || ""}</td>
       `
         table.appendChild(tr)
       }
@@ -1681,6 +1682,8 @@
         <td>${option.DESCRIPCION} / ${option.FAMILIA} / ${option.SUBFAMILIA}</td>
         <td>${option.EQUIVALENTES_STOCK}</td>
         <td>${option.UBICACION}</td>
+        
+        <td>${option.PRECIO_SUGERIDO || ""}</td>
       `
 
           if (j === 0) {

@@ -1103,8 +1103,8 @@
                     <th>LV</th>
                     <th>SJL</th>
                     <th>Descripción</th>
-                    <th>Equivalente</th>
-                    <th>Ubicación</th>
+                    <th>Equivalente</th><th>Ubicación</th>
+                    <th>Precios</th>
                   </tr>
                 </thead>
                 <tbody id="tbody-guia"></tbody>
@@ -1382,6 +1382,7 @@
         <td>${option.DESCRIPCION} / ${option.FAMILIA} / ${option.SUBFAMILIA}</td>
         <td>${option.EQUIVALENTES_STOCK}</td>
         <td>${option.UBICACION}</td>
+        <td>${option.PRECIO_SUGERIDO || ""}</td>
       `
 
         if (j === 0) {

@@ -20,6 +20,7 @@ const productoItemSchema = new Schema(
     MARCA: { type: String, default: "" },
     UBICACION: { type: String, default: "pending" },
     CANTIDAD: { type: Number, default: 0 },
+    PRECIO_SUGERIDO: { type: String, default: "" },
   },
   { _id: false },
 );
