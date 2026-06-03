@@ -42,7 +42,7 @@ async function syncStock(io) {
   try {
     const rows = await getSheetData();
 
-
+console.log("rows[0]",rows[0])
     const documents = rows
       .filter((r) => r.DICTIONARY)
       .map((r) => ({
