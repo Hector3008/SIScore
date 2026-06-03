@@ -15,6 +15,7 @@ const productoSchema = new mongoose.Schema(
     PROVEEDOR: { type: String, default: "" },
     MARCA: { type: String, default: "" },
     UBICACION: { type: String, default: "" },
+    PRECIO_SUGERIDO: { type: String, default: "" },
   },
   { timestamps: true },
 );

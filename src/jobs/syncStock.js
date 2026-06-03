@@ -50,7 +50,7 @@ async function syncStock(io) {
         CODIGO_FORMATEADO: r.DICTIONARY,
         CODIGO: r.CODE,
         STOCK_LV: r.LV || "",
-        STOCK_SJL: r.SJL ||"",
+        STOCK_SJL: r.SJL || "",
         STOCK: r.TOTAL || "",
         EQUIVALENTES_STOCK: r["EQUIVALENTE + STOCK"],
         DESCRIPCION: r["NOMBRE COMERCIAL"],
@@ -59,6 +59,7 @@ async function syncStock(io) {
         PROVEEDOR: r.PROVEEDOR,
         MARCA: r.MARCA,
         UBICACION: r.UBICACION,
+        PRECIO_SUGERIDO: r["PRECIO SUGERIDO"],
       }));
 
     const deleted = await Producto.deleteMany({});
