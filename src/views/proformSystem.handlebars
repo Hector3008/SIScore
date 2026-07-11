@@ -4155,7 +4155,11 @@ currentProform.comprobante = btn.dataset.comprobante
     socket.on('updatedStock', (productos) => {
       catalog.length = 0                    // vacía el array sin romper referencias
       catalog.push(...productos)            // rellena con los nuevos
-      printProductSearch(catalog)           // refresca la tabla de búsqueda
+      // 🔑 tomamos el valor actual del input de búsqueda
+      const search = fields.products.product.value.toLowerCase().trim()
+
+      // si hay algo escrito, filtramos; si no, mostramos el catálogo completo
+      printProductSearch(search ? options(search) : catalog)
       console.log(`[catalog] actualizado — ${catalog.length} productos`)
     })
 
