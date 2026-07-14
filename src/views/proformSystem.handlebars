@@ -1884,7 +1884,7 @@
               </div>
               <div><strong>Contacto</strong>
                 <p>999 999 999</p>
-                <p>ventas@maximportaciones.com.pe</p>
+                <p>ventas@maximportaciones.com.pe <strong>napoSISCORE [beta]</strong></p>
               </div>
             </div>
 
@@ -1928,6 +1928,7 @@
 
             <div class="preview-footer">
               <div><strong>Condiciones</strong>
+              <strong>napoSISCORE [beta]</strong>
                 <p>Precios sujetos a cambio sin previo aviso.</p>
               </div>
               <div><strong>Observaciones</strong>
@@ -1935,6 +1936,7 @@
               </div>
               <div><strong>Contacto</strong>
                 <p>999 999 999</p>
+
               </div>
             </div>
 
@@ -4027,7 +4029,7 @@ currentProform.comprobante = btn.dataset.comprobante
       pdf.setFont('helvetica', 'normal');
       pdf.line(M, y, M + W, y);
       y += 5;
-      pdf.setFont('helvetica', 'bold'); pdf.text('Condiciones', M, y);
+      pdf.setFont('helvetica', 'bold'); pdf.text('Condiciones napoSISCORE [Beta]', M, y);
       pdf.setFont('helvetica', 'normal'); pdf.text('Precios sujetos a cambio sin previo aviso.', M, y + 4);
       pdf.setFont('helvetica', 'bold'); pdf.text('Observaciones', M + 65, y);
       pdf.setFont('helvetica', 'normal'); pdf.text('—', M + 65, y + 4);
@@ -4039,94 +4041,109 @@ currentProform.comprobante = btn.dataset.comprobante
       pdf.save(`${proform.code}.pdf`);
     }
     //✅
-    function generarPDFGuia(proform) {
+  function generarPDFGuia(proform) {
 
-      const desktop = document.querySelector("#dl_guia_desktop").checked
-      const mobile = document.querySelector("#dl_guia_mobile").checked
+    const desktop = document.querySelector("#dl_guia_desktop").checked
+    const mobile = document.querySelector("#dl_guia_mobile").checked
 
-      if (!desktop && !mobile) return
+    if (!desktop && !mobile) return
 
-      const { jsPDF } = window.jspdf;
-      const pdf = new jsPDF({ unit: 'mm', format: 'a4', orientation: 'landscape' });
+    const { jsPDF } = window.jspdf;
+    const pdf = new jsPDF({ unit: 'mm', format: 'a4', orientation: 'landscape' });
 
-      const M = 10;
-      const W = 277;
-      let y = 12;
+    const M = 10;
+    const W = 277;
+    let y = 12;
 
-      // ── HEADER ──
-      pdf.setFillColor(26, 58, 92);
-      pdf.rect(M, y, W, 10, 'F');
-      pdf.setTextColor(255);
-      pdf.setFontSize(8.5);
-      pdf.setFont('helvetica', 'bold');
-      pdf.text(`CLIENTE: ${proform.cliente?.nombre || ''}`, M + 3, y + 6.5);
-      pdf.text(`VENDEDOR: ${proform.vendedor || ''}`, M + 80, y + 6.5);
-      pdf.text(`Fecha: ${proform.fecha || ''}`, M + 160, y + 6.5);
-      pdf.text(`${proform.code} v${proform.version}`, M + W - 3, y + 6.5, { align: 'right' });
-      y += 16;
+    // ── HEADER ──
+    pdf.setFillColor(26, 58, 92);
+    pdf.rect(M, y, W, 10, 'F');
+    pdf.setTextColor(255);
+    pdf.setFontSize(8.5);
+    pdf.setFont('helvetica', 'bold');
+    pdf.text(`CLIENTE: ${proform.cliente?.nombre || ''}`, M + 3, y + 6.5);
+    pdf.text(`VENDEDOR: ${proform.vendedor || ''}`, M + 80, y + 6.5);
+    pdf.text(`Fecha: ${proform.fecha || ''}`, M + 160, y + 6.5);
+    pdf.text(`${proform.code} v${proform.version}`, M + W - 3, y + 6.5, { align: 'right' });
+    y += 16;
 
-      // ── TABLA ──
-      const productosActivos = proform.productos.filter(p => p.status === true);
-      const rows = [];
+    // ── TABLA ──
+    const productosActivos = proform.productos.filter(p => p.status === true);
+    const rows = [];
 
-      for (let [i, product] of productosActivos.entries()) {
-        for (let [j, option] of product.options.entries()) {
-          rows.push([
-            j === 0 ? i + 1 : '',
-            j === 0 ? product.cantidad : '',
-            j === 0 ? `S/ ${product.monto}` : '',
-            j === 0 ? product.nombre : '',
-            j === 0 ? product.comentario : '',
-            option.CODIGO_FORMATEADO,
-            option.STOCK_LV,
-            option.STOCK_SJL,
-            `${option.DESCRIPCION} / ${option.FAMILIA} / ${option.SUBFAMILIA}`,
-            option.EQUIVALENTES_STOCK || '',
-            option.UBICACION || 'pending',
-          ]);
-        }
+    for (let [i, product] of productosActivos.entries()) {
+      for (let [j, option] of product.options.entries()) {
+        rows.push([
+          j === 0 ? i + 1 : '',
+          j === 0 ? product.cantidad : '',
+          j === 0 ? `S/ ${product.monto}` : '',
+          j === 0 ? product.nombre : '',
+          j === 0 ? product.comentario : '',
+          option.CODIGO_FORMATEADO,
+          option.STOCK_LV,
+          option.STOCK_SJL,
+          `${option.DESCRIPCION} / ${option.FAMILIA} / ${option.SUBFAMILIA}`,
+          option.EQUIVALENTES_STOCK || '',
+          option.UBICACION || 'pending',
+          option.PRECIO_SUGERIDO != null ? `S/ ${option.PRECIO_SUGERIDO}` : '', // 👈 nueva columna
+        ]);
       }
-
-      pdf.autoTable({
-        startY: y,
-        margin: { left: M, right: M },
-        head: [['#', 'Cant.', 'Precio', 'Pedido', 'Comentario', 'Opciones', 'LV', 'SJL', 'Descripción', 'Equivalentes', 'Ubicación']],
-        body: rows,
-        styles: { fontSize: 7.5, cellPadding: 2.5, overflow: 'linebreak' },
-        headStyles: { fillColor: [15, 76, 129], textColor: 255, fontStyle: 'bold' },
-        alternateRowStyles: { fillColor: [249, 249, 249] },
-        columnStyles: {
-          0: { cellWidth: 10, halign: 'center' },
-          1: { cellWidth: 12, halign: 'center' },
-          2: { cellWidth: 16, halign: 'right' },
-          3: { cellWidth: 30 },
-          4: { cellWidth: 20 },
-          5: { cellWidth: 22 },
-          6: { cellWidth: 10, halign: 'center' },
-          7: { cellWidth: 10, halign: 'center' },
-          8: { cellWidth: 55 },
-          9: { cellWidth: 42 },
-          10: { cellWidth: 20, halign: 'center' },
-        }
-      });
-
-      y = pdf.lastAutoTable.finalY + 6;
-
-      // ── FOOTER ──
-      pdf.setFontSize(7.5);
-      pdf.setTextColor(120);
-      pdf.line(M, y, M + W, y);
-      y += 4;
-      pdf.setFont('helvetica', 'bold'); pdf.text('Condiciones', M, y);
-      pdf.setFont('helvetica', 'normal'); pdf.text('Precios sujetos a cambio sin previo aviso.', M, y + 4);
-      pdf.setFont('helvetica', 'bold'); pdf.text('Observaciones', M + 100, y);
-      pdf.setFont('helvetica', 'normal'); pdf.text('—', M + 100, y + 4);
-      pdf.setFont('helvetica', 'bold'); pdf.text('Contacto', M + 200, y);
-      pdf.setFont('helvetica', 'normal'); pdf.text('999 999 999', M + 200, y + 4);
-
-      pdf.save(`${proform.code}-guia.pdf`);
     }
 
+    pdf.autoTable({
+      startY: y,
+      margin: { left: M, right: M },
+      head: [['#', 'Cant.', 'Precio', 'Pedido', 'Comentario', 'Opciones', 'LV', 'SJL', 'Descripción', 'Equivalentes', 'Ubicación', 'Precios']],
+      body: rows,
+      styles: { fontSize: 7.5, cellPadding: 2.5, overflow: 'linebreak' },
+      headStyles: { fillColor: [15, 76, 129], textColor: 255, fontStyle: 'bold' },
+      alternateRowStyles: { fillColor: [249, 249, 249] },
+      columnStyles: {
+        0: { cellWidth: 10, halign: 'center' },
+        1: { cellWidth: 12, halign: 'center' },
+        2: { cellWidth: 16, halign: 'right' },
+        3: { cellWidth: 28 },
+        4: { cellWidth: 18 },
+        5: { cellWidth: 22 },
+        6: { cellWidth: 10, halign: 'center' },
+        7: { cellWidth: 10, halign: 'center' },
+        8: { cellWidth: 50 },
+        9: { cellWidth: 38 },
+        10: { cellWidth: 18, halign: 'center' },
+        11: { cellWidth: 20, halign: 'right' }, // 👈 nueva columna
+      }
+    });
+
+    y = pdf.lastAutoTable.finalY + 6;
+
+    // ── FOOTER ──
+    pdf.setFontSize(7.5);
+    pdf.setTextColor(120);
+    pdf.line(M, y, M + W, y);
+    y += 4;
+
+    pdf.setFont('helvetica', 'bold');
+    pdf.setFontSize(7.5);
+    pdf.setTextColor(120);
+    pdf.text('Condiciones', M, y);
+
+    pdf.setFont('helvetica', 'italic');
+    pdf.setFontSize(6);
+    pdf.setTextColor(160);
+    pdf.text('  napoSISCORE [beta]', M + pdf.getTextWidth('Condiciones') + 4, y);
+
+    pdf.setFont('helvetica', 'normal');
+    pdf.setFontSize(7.5);
+    pdf.setTextColor(120);
+    pdf.text('Precios sujetos a cambio sin previo aviso.', M, y + 4);
+
+    pdf.setFont('helvetica', 'bold'); pdf.text('Observaciones', M + 100, y);
+    pdf.setFont('helvetica', 'normal'); pdf.text('—', M + 100, y + 4);
+    pdf.setFont('helvetica', 'bold'); pdf.text('Contacto', M + 200, y);
+    pdf.setFont('helvetica', 'normal'); pdf.text('999 999 999', M + 200, y + 4);
+
+    pdf.save(`${proform.code}-guia.pdf`);
+  }
     async function fetchToProforms() {
       try {
         const res = await fetch("/api/proforms");
