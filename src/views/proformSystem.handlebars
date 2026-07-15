@@ -3893,13 +3893,13 @@ currentProform.comprobante = btn.dataset.comprobante
 
     conexiones()
       // ── Precarga del logo para los PDFs (se ejecuta una sola vez) ──
-      let LOGO_BASE64 = null;
-
-      (async function preloadLogo() {
+      let LOGO_BASE64_NARANJA = null;
+  let LOGO_BASE64_BLANCO = null;
+      (async function preloadLogoNaranja() {
         try {
           const response = await fetch('/logo-naranja-max-importaciones.png');
           const blob = await response.blob();
-          LOGO_BASE64 = await new Promise((resolve, reject) => {
+          LOGO_BASE64_NARANJA = await new Promise((resolve, reject) => {
             const reader = new FileReader();
             reader.onload = () => resolve(reader.result);
             reader.onerror = reject;
@@ -3911,6 +3911,22 @@ currentProform.comprobante = btn.dataset.comprobante
         }
       })();
     
+          (async function preloadLogoBlanco() {
+              try {
+                const response = await fetch('/logo-blanco-max-importaciones.png');
+                const blob = await response.blob();
+                LOGO_BASE64_BLANCO = await new Promise((resolve, reject) => {
+                  const reader = new FileReader();
+                  reader.onload = () => resolve(reader.result);
+                  reader.onerror = reject;
+                  reader.readAsDataURL(blob);
+                });
+                console.log('Logo precargado para PDFs');
+              } catch (err) {
+                console.error('No se pudo precargar el logo para el PDF:', err);
+              }
+            })();
+          
     //✅
   function generarPDFProforma(proform) {
     const desktop = document.querySelector("#dl_proforma_desktop").checked
@@ -3931,8 +3947,8 @@ currentProform.comprobante = btn.dataset.comprobante
     const logoH = logoW * (212 / 500); // proporción real del PNG (500x212)
     let textX = M; // por defecto, si no hay logo cargado aún
 
-    if (LOGO_BASE64) {
-      pdf.addImage(LOGO_BASE64, 'PNG', M, y - 4, logoW, logoH);
+    if (LOGO_BASE64_NARANJA) {
+      pdf.addImage(LOGO_BASE64_NARANJA, 'PNG', M, y - 4, logoW, logoH);
       textX = M + logoW + 6;
     }
 
@@ -4097,10 +4113,10 @@ currentProform.comprobante = btn.dataset.comprobante
 
     let textStartX = M + 3;
 
-    if (LOGO_BASE64) {
+    if (LOGO_BASE64_BLANCO) {
       const logoH = 8; // altura fija dentro de la barra de 10mm
       const logoW = logoH * (500 / 212); // proporción real del PNG
-      pdf.addImage(LOGO_BASE64, 'PNG', M + 2, y + 1, logoW, logoH);
+      pdf.addImage(LOGO_BASE64_BLANCO, 'PNG', M + 2, y + 1, logoW, logoH);
       textStartX = M + 2 + logoW + 4;
     }
 
