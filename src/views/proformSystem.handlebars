@@ -685,20 +685,28 @@
       min-width: 200px;
     }
 
-    .logo-box {
-      width: 56px;
-      height: 56px;
-      background: #f5f5f5;
-      border: 1px solid #ddd;
-      border-radius: 6px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 9px;
-      color: #aaa;
-      flex-shrink: 0;
-    }
+.logo-box {
+  width: 56px;
+  height: 56px;
+  border: 1px solid #ddd; /* esto también quedará visible */
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 9px;
+  color: #aaa;
+  flex-shrink: 0;
+  overflow: hidden;       /* opcional, por seguridad */
+}
 
+
+.logo-box img {
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+}
     .ph-info strong {
       font-size: 12px;
       font-weight: 600;
@@ -1812,7 +1820,7 @@
 
             <div class="preview-header">
               <div class="ph-left">
-                <div class="logo-box">MAX</div>
+                <div class="logo-box"><img src="/logo-naranja-max-importaciones.png" alt=""></div>
                 <div class="ph-info">
                   <strong id="proforma_empresa_nombre">Max Importaciones y Servicios Generales SAC</strong>
                   <p>RUC: <span id="proforma_empresa_ruc">20503534194</span> </p>
@@ -3884,163 +3892,191 @@ currentProform.comprobante = btn.dataset.comprobante
     }
 
     conexiones()
+      // ── Precarga del logo para los PDFs (se ejecuta una sola vez) ──
+      let LOGO_BASE64 = null;
 
-    //✅
-    function generarPDFProforma(proform) {
-      const desktop = document.querySelector("#dl_proforma_desktop").checked
-      const mobile = document.querySelector("#dl_proforma_mobile").checked
-
-      if (!desktop && !mobile) return
-
-      const { jsPDF } = window.jspdf;
-      const pdf = new jsPDF({ unit: 'mm', format: 'a4' });
-
-      const empresa = desplegables.empresas[proform.empresa] || desplegables.empresas.max;
-      const M = 14;
-      const W = 182;
-      let y = 14;
-
-      // ── HEADER ──
-      pdf.setFontSize(9);
-      pdf.setTextColor(80);
-      pdf.setFont('helvetica', 'bold');
-      pdf.text(empresa.nombre, M, y);
-      pdf.setFont('helvetica', 'normal');
-      pdf.text(`RUC: ${empresa.ruc}`, M, y + 5);
-      pdf.text(empresa.direccion, M, y + 10);
-      pdf.text(`Tel: ${empresa.telefono}`, M, y + 15);
-      pdf.text(empresa.email, M, y + 20);
-      pdf.setFont('helvetica', 'bold');
-      pdf.setFontSize(18);
-      pdf.setTextColor(15, 76, 129);
-      pdf.text(`${proform.code} v${proform.version}`, 196, y + 4, { align: 'right' });
-      pdf.setFontSize(9);
-      pdf.setTextColor(120);
-      pdf.setFont('helvetica', 'normal');
-      pdf.text(`Fecha: ${proform.fecha}`, 196, y + 10, { align: 'right' });
-
-      y += 28;
-      pdf.setDrawColor(220);
-      pdf.line(M, y, M + W, y);
-      y += 6;
-
-      // ── DATOS CLIENTE ──
-      pdf.setFontSize(8.5);
-      pdf.setTextColor(50);
-      const col1 = M;
-      const col2 = M + W / 2 + 4;
-
-      const camposIzq = [
-        ['Cliente:', proform.cliente?.nombre || ''],
-        ['RUC/DNI:', proform.cliente?.ruc || ''],
-        ['Dirección:', proform.cliente?.direccion || ''],
-        ['Provincia:', proform.cliente?.provincia || ''],
-        ['Destino:', proform.destino || ''],
-        ['Forma pago:', proform.forma_de_pago || ''],
-        ['Agencia:', proform.agencia || ''],
-        ['Vendedor:', proform.vendedor || ''],
-      ];
-      const camposDer = [
-        ['Teléfono:', proform.cliente?.telefono || ''],
-        ['Mail:', proform.cliente?.email || ''],
-        ['Entrega:', proform.entrega || ''],
-        ['Ciudad:', proform.cliente?.ciudad || ''],
-        ['Canal de venta:', proform.canal_de_venta || ''],
-        ['Comprobante:', proform.comprobante || ''],
-        ['Atención:', proform.atencion || ''],
-        ['', ''],
-      ];
-
-      const startY = y;
-      for (let i = 0; i < camposIzq.length; i++) {
-        const rowY = startY + i * 5.5;
-        pdf.setFont('helvetica', 'bold');
-        pdf.text(camposIzq[i][0], col1, rowY);
-        pdf.setFont('helvetica', 'normal');
-        pdf.text(camposIzq[i][1], col1 + 22, rowY);
-        pdf.setFont('helvetica', 'bold');
-        pdf.text(camposDer[i][0], col2, rowY);
-        pdf.setFont('helvetica', 'normal');
-        pdf.text(camposDer[i][1], col2 + 26, rowY);
-      }
-
-      y = startY + camposIzq.length * 5.5 + 4;
-      pdf.line(M, y, M + W, y);
-      y += 4;
-
-      // ── TABLA PRODUCTOS ──
-      const productosActivos = proform.productos.filter(p => p.status === true);
-
-      pdf.autoTable({
-        startY: y,
-        margin: { left: M, right: 14 },
-        head: [['#', 'Descripción', 'Cantidad', 'Precio unit.', 'Importe']],
-        body: productosActivos.map((p, i) => [
-          i + 1,
-          p.nombre,
-          p.cantidad,
-          `S/ ${Number(p.monto).toFixed(2)}`,
-          `S/ ${Number(p.total).toFixed(2)}`
-        ]),
-        styles: { fontSize: 8.5, cellPadding: 3 },
-        headStyles: { fillColor: [15, 76, 129], textColor: 255, fontStyle: 'bold' },
-        alternateRowStyles: { fillColor: [249, 249, 249] },
-        columnStyles: {
-          0: { cellWidth: 10, halign: 'center' },
-          1: { cellWidth: 90 },
-          2: { cellWidth: 22, halign: 'center' },
-          3: { cellWidth: 28, halign: 'right' },
-          4: { cellWidth: 28, halign: 'right' },
+      (async function preloadLogo() {
+        try {
+          const response = await fetch('/logo-naranja-max-importaciones.png');
+          const blob = await response.blob();
+          LOGO_BASE64 = await new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.onload = () => resolve(reader.result);
+            reader.onerror = reject;
+            reader.readAsDataURL(blob);
+          });
+          console.log('Logo precargado para PDFs');
+        } catch (err) {
+          console.error('No se pudo precargar el logo para el PDF:', err);
         }
-      });
-
-      y = pdf.lastAutoTable.finalY + 4;
-
-      // ── TOTALES ──
-      const suma = productosActivos.reduce((acc, p) => acc + Number(p.total), 0);
-      let igv = 0;
-      if (proform.comprobante === 'Factura' || proform.comprobante === 'Boleta') {
-        igv = suma * 0.18;
-      }
-      const subtotal = suma - igv;
-      const totX = M + W - 60;
-      const totW = 60;
-
-      pdf.setFontSize(8.5);
-      pdf.setTextColor(80);
-      pdf.setFont('helvetica', 'normal');
-      pdf.text('Subtotal', totX, y + 5);
-      pdf.text(`S/ ${subtotal.toFixed(2)}`, totX + totW, y + 5, { align: 'right' });
-      pdf.text('IGV (18%)', totX, y + 11);
-      pdf.text(`S/ ${igv.toFixed(2)}`, totX + totW, y + 11, { align: 'right' });
-
-      pdf.setFillColor(232, 93, 20);
-      pdf.roundedRect(totX - 2, y + 14, totW + 2, 8, 2, 2, 'F');
-      pdf.setTextColor(255);
-      pdf.setFont('helvetica', 'bold');
-      pdf.text('Importe total', totX + 1, y + 19.5);
-      pdf.text(`S/ ${suma.toFixed(2)}`, totX + totW - 1, y + 19.5, { align: 'right' });
-
-      y += 30;
-
-      // ── FOOTER ──
-      pdf.setFontSize(8);
-      pdf.setTextColor(120);
-      pdf.setFont('helvetica', 'normal');
-      pdf.line(M, y, M + W, y);
-      y += 5;
-      pdf.setFont('helvetica', 'bold'); pdf.text('Condiciones napoSISCORE [Beta]', M, y);
-      pdf.setFont('helvetica', 'normal'); pdf.text('Precios sujetos a cambio sin previo aviso.', M, y + 4);
-      pdf.setFont('helvetica', 'bold'); pdf.text('Observaciones', M + 65, y);
-      pdf.setFont('helvetica', 'normal'); pdf.text('—', M + 65, y + 4);
-      pdf.setFont('helvetica', 'bold'); pdf.text('Contacto', M + 130, y);
-      pdf.setFont('helvetica', 'normal');
-      pdf.text(empresa.telefono, M + 130, y + 4);
-      pdf.text(empresa.email, M + 130, y + 9);
-
-      pdf.save(`${proform.code}.pdf`);
-    }
+      })();
+    
     //✅
+  function generarPDFProforma(proform) {
+    const desktop = document.querySelector("#dl_proforma_desktop").checked
+    const mobile = document.querySelector("#dl_proforma_mobile").checked
+
+    if (!desktop && !mobile) return
+
+    const { jsPDF } = window.jspdf;
+    const pdf = new jsPDF({ unit: 'mm', format: 'a4' });
+
+    const empresa = desplegables.empresas[proform.empresa] || desplegables.empresas.max;
+    const M = 14;
+    const W = 182;
+    let y = 14;
+
+    // ── LOGO ──
+    const logoW = 26;
+    const logoH = logoW * (212 / 500); // proporción real del PNG (500x212)
+    let textX = M; // por defecto, si no hay logo cargado aún
+
+    if (LOGO_BASE64) {
+      pdf.addImage(LOGO_BASE64, 'PNG', M, y - 4, logoW, logoH);
+      textX = M + logoW + 6;
+    }
+
+    // ── HEADER ──
+    pdf.setFontSize(9);
+    pdf.setTextColor(80);
+    pdf.setFont('helvetica', 'bold');
+    pdf.text(empresa.nombre, textX, y);
+    pdf.setFont('helvetica', 'normal');
+    pdf.text(`RUC: ${empresa.ruc}`, textX, y + 5);
+    pdf.text(empresa.direccion, textX, y + 10);
+    pdf.text(`Tel: ${empresa.telefono}`, textX, y + 15);
+    pdf.text(empresa.email, textX, y + 20);
+    pdf.setFont('helvetica', 'bold');
+    pdf.setFontSize(18);
+    pdf.setTextColor(15, 76, 129);
+    pdf.text(`${proform.code} v${proform.version}`, 196, y + 4, { align: 'right' });
+    pdf.setFontSize(9);
+    pdf.setTextColor(120);
+    pdf.setFont('helvetica', 'normal');
+    pdf.text(`Fecha: ${proform.fecha}`, 196, y + 10, { align: 'right' });
+
+    y += 28;
+    pdf.setDrawColor(220);
+    pdf.line(M, y, M + W, y);
+    y += 6;
+
+    // ── DATOS CLIENTE ──
+    pdf.setFontSize(8.5);
+    pdf.setTextColor(50);
+    const col1 = M;
+    const col2 = M + W / 2 + 4;
+
+    const camposIzq = [
+      ['Cliente:', proform.cliente?.nombre || ''],
+      ['RUC/DNI:', proform.cliente?.ruc || ''],
+      ['Dirección:', proform.cliente?.direccion || ''],
+      ['Provincia:', proform.cliente?.provincia || ''],
+      ['Destino:', proform.destino || ''],
+      ['Forma pago:', proform.forma_de_pago || ''],
+      ['Agencia:', proform.agencia || ''],
+      ['Vendedor:', proform.vendedor || ''],
+    ];
+    const camposDer = [
+      ['Teléfono:', proform.cliente?.telefono || ''],
+      ['Mail:', proform.cliente?.email || ''],
+      ['Entrega:', proform.entrega || ''],
+      ['Ciudad:', proform.cliente?.ciudad || ''],
+      ['Canal de venta:', proform.canal_de_venta || ''],
+      ['Comprobante:', proform.comprobante || ''],
+      ['Atención:', proform.atencion || ''],
+      ['', ''],
+    ];
+
+    const startY = y;
+    for (let i = 0; i < camposIzq.length; i++) {
+      const rowY = startY + i * 5.5;
+      pdf.setFont('helvetica', 'bold');
+      pdf.text(camposIzq[i][0], col1, rowY);
+      pdf.setFont('helvetica', 'normal');
+      pdf.text(camposIzq[i][1], col1 + 22, rowY);
+      pdf.setFont('helvetica', 'bold');
+      pdf.text(camposDer[i][0], col2, rowY);
+      pdf.setFont('helvetica', 'normal');
+      pdf.text(camposDer[i][1], col2 + 26, rowY);
+    }
+
+    y = startY + camposIzq.length * 5.5 + 4;
+    pdf.line(M, y, M + W, y);
+    y += 4;
+
+    // ── TABLA PRODUCTOS ──
+    const productosActivos = proform.productos.filter(p => p.status === true);
+
+    pdf.autoTable({
+      startY: y,
+      margin: { left: M, right: 14 },
+      head: [['#', 'Descripción', 'Cantidad', 'Precio unit.', 'Importe']],
+      body: productosActivos.map((p, i) => [
+        i + 1,
+        p.nombre,
+        p.cantidad,
+        `S/ ${Number(p.monto).toFixed(2)}`,
+        `S/ ${Number(p.total).toFixed(2)}`
+      ]),
+      styles: { fontSize: 8.5, cellPadding: 3 },
+      headStyles: { fillColor: [15, 76, 129], textColor: 255, fontStyle: 'bold' },
+      alternateRowStyles: { fillColor: [249, 249, 249] },
+      columnStyles: {
+        0: { cellWidth: 10, halign: 'center' },
+        1: { cellWidth: 90 },
+        2: { cellWidth: 22, halign: 'center' },
+        3: { cellWidth: 28, halign: 'right' },
+        4: { cellWidth: 28, halign: 'right' },
+      }
+    });
+
+    y = pdf.lastAutoTable.finalY + 4;
+
+    // ── TOTALES ──
+    const suma = productosActivos.reduce((acc, p) => acc + Number(p.total), 0);
+    let igv = 0;
+    if (proform.comprobante === 'Factura' || proform.comprobante === 'Boleta') {
+      igv = suma * 0.18;
+    }
+    const subtotal = suma - igv;
+    const totX = M + W - 60;
+    const totW = 60;
+
+    pdf.setFontSize(8.5);
+    pdf.setTextColor(80);
+    pdf.setFont('helvetica', 'normal');
+    pdf.text('Subtotal', totX, y + 5);
+    pdf.text(`S/ ${subtotal.toFixed(2)}`, totX + totW, y + 5, { align: 'right' });
+    pdf.text('IGV (18%)', totX, y + 11);
+    pdf.text(`S/ ${igv.toFixed(2)}`, totX + totW, y + 11, { align: 'right' });
+
+    pdf.setFillColor(232, 93, 20);
+    pdf.roundedRect(totX - 2, y + 14, totW + 2, 8, 2, 2, 'F');
+    pdf.setTextColor(255);
+    pdf.setFont('helvetica', 'bold');
+    pdf.text('Importe total', totX + 1, y + 19.5);
+    pdf.text(`S/ ${suma.toFixed(2)}`, totX + totW - 1, y + 19.5, { align: 'right' });
+
+    y += 30;
+
+    // ── FOOTER ──
+    pdf.setFontSize(8);
+    pdf.setTextColor(120);
+    pdf.setFont('helvetica', 'normal');
+    pdf.line(M, y, M + W, y);
+    y += 5;
+    pdf.setFont('helvetica', 'bold'); pdf.text('Condiciones napoSISCORE [Beta]', M, y);
+    pdf.setFont('helvetica', 'normal'); pdf.text('Precios sujetos a cambio sin previo aviso.', M, y + 4);
+    pdf.setFont('helvetica', 'bold'); pdf.text('Observaciones', M + 65, y);
+    pdf.setFont('helvetica', 'normal'); pdf.text('—', M + 65, y + 4);
+    pdf.setFont('helvetica', 'bold'); pdf.text('Contacto', M + 130, y);
+    pdf.setFont('helvetica', 'normal');
+    pdf.text(empresa.telefono, M + 130, y + 4);
+    pdf.text(empresa.email, M + 130, y + 9);
+
+    pdf.save(`${proform.code}.pdf`);
+  }
+  //✅
   function generarPDFGuia(proform) {
 
     const desktop = document.querySelector("#dl_guia_desktop").checked
@@ -4058,12 +4094,22 @@ currentProform.comprobante = btn.dataset.comprobante
     // ── HEADER ──
     pdf.setFillColor(26, 58, 92);
     pdf.rect(M, y, W, 10, 'F');
+
+    let textStartX = M + 3;
+
+    if (LOGO_BASE64) {
+      const logoH = 8; // altura fija dentro de la barra de 10mm
+      const logoW = logoH * (500 / 212); // proporción real del PNG
+      pdf.addImage(LOGO_BASE64, 'PNG', M + 2, y + 1, logoW, logoH);
+      textStartX = M + 2 + logoW + 4;
+    }
+
     pdf.setTextColor(255);
     pdf.setFontSize(8.5);
     pdf.setFont('helvetica', 'bold');
-    pdf.text(`CLIENTE: ${proform.cliente?.nombre || ''}`, M + 3, y + 6.5);
-    pdf.text(`VENDEDOR: ${proform.vendedor || ''}`, M + 80, y + 6.5);
-    pdf.text(`Fecha: ${proform.fecha || ''}`, M + 160, y + 6.5);
+    pdf.text(`CLIENTE: ${proform.cliente?.nombre || ''}`, textStartX, y + 6.5);
+    pdf.text(`VENDEDOR: ${proform.vendedor || ''}`, M + 110, y + 6.5);
+    pdf.text(`Fecha: ${proform.fecha || ''}`, M + 190, y + 6.5);
     pdf.text(`${proform.code} v${proform.version}`, M + W - 3, y + 6.5, { align: 'right' });
     y += 16;
 
@@ -4085,7 +4131,7 @@ currentProform.comprobante = btn.dataset.comprobante
           `${option.DESCRIPCION} / ${option.FAMILIA} / ${option.SUBFAMILIA}`,
           option.EQUIVALENTES_STOCK || '',
           option.UBICACION || 'pending',
-          option.PRECIO_SUGERIDO != null ? `S/ ${option.PRECIO_SUGERIDO}` : '', // 👈 nueva columna
+          option.PRECIO_SUGERIDO != null ? `S/ ${option.PRECIO_SUGERIDO}` : '',
         ]);
       }
     }
@@ -4110,7 +4156,7 @@ currentProform.comprobante = btn.dataset.comprobante
         8: { cellWidth: 50 },
         9: { cellWidth: 38 },
         10: { cellWidth: 18, halign: 'center' },
-        11: { cellWidth: 20, halign: 'right' }, // 👈 nueva columna
+        11: { cellWidth: 20, halign: 'right' },
       }
     });
 
@@ -4144,7 +4190,8 @@ currentProform.comprobante = btn.dataset.comprobante
 
     pdf.save(`${proform.code}-guia.pdf`);
   }
-    async function fetchToProforms() {
+  
+      async function fetchToProforms() {
       try {
         const res = await fetch("/api/proforms");
         const data = await res.json();
