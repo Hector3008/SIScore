@@ -685,28 +685,31 @@
       min-width: 200px;
     }
 
-.logo-box {
-  width: 56px;
-  height: 56px;
-  border: 1px solid #ddd; /* esto también quedará visible */
-  border-radius: 6px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 9px;
-  color: #aaa;
-  flex-shrink: 0;
-  overflow: hidden;       /* opcional, por seguridad */
-}
+    .logo-box {
+      width: 56px;
+      height: 56px;
+      border: 1px solid #ddd;
+      /* esto también quedará visible */
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 9px;
+      color: #aaa;
+      flex-shrink: 0;
+      overflow: hidden;
+      /* opcional, por seguridad */
+    }
 
 
-.logo-box img {
-  max-width: 100%;
-  max-height: 100%;
-  width: auto;
-  height: auto;
-  object-fit: contain;
-}
+    .logo-box img {
+      max-width: 100%;
+      max-height: 100%;
+      width: auto;
+      height: auto;
+      object-fit: contain;
+    }
+
     .ph-info strong {
       font-size: 12px;
       font-weight: 600;
@@ -1539,6 +1542,100 @@
         display: block;
       }
     }
+
+    /* ══════════════════════════════════════
+   PAGINACIÓN — tabla de productos
+══════════════════════════════════════ */
+    .pagination-productos {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 6px;
+      padding: 8px 2px 2px;
+      margin-top: 4px;
+      border-top: 1px solid #eee;
+    }
+
+    .pag-info {
+      font-size: 10px;
+      color: #888;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .pag-controls {
+      display: flex;
+      align-items: center;
+      gap: 3px;
+      flex: 1;
+      justify-content: flex-end;
+    }
+
+    .pag-btn {
+      width: 22px;
+      height: 22px;
+      border-radius: 5px;
+      border: 1px solid #ddd;
+      background: #f9f9f9;
+      color: #666;
+      font-size: 11px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0;
+      flex-shrink: 0;
+      transition: border-color .15s, background .15s, color .15s;
+    }
+
+    .pag-btn:hover:not(:disabled) {
+      border-color: #0f4c81;
+      background: #fff;
+      color: #0f4c81;
+    }
+
+    .pag-btn:disabled {
+      opacity: .4;
+      cursor: not-allowed;
+    }
+
+    .pag-pages {
+      display: flex;
+      align-items: center;
+      gap: 2px;
+    }
+
+    .pag-page {
+      min-width: 22px;
+      height: 22px;
+      padding: 0 4px;
+      border-radius: 5px;
+      border: 1px solid transparent;
+      background: transparent;
+      color: #888;
+      font-size: 10px;
+      font-weight: 500;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .pag-page:hover {
+      background: #f0f0f0;
+      color: #333;
+    }
+
+    .pag-page.active {
+      background: #0f4c81;
+      color: #fff;
+    }
+
+    .pag-ellipsis {
+      font-size: 10px;
+      color: #bbb;
+      padding: 0 2px;
+    }
   </style>
 </head>
 
@@ -1803,9 +1900,20 @@
 
             <input type="file" id="inputFoto" accept="image/*" style="display:none">
             <input type="file" id="inputFoto" accept="image/*" style="display:none">
+                        <div class="pagination-productos" id="paginacionProductos">
+                          <span class="pag-info" id="pagInfo">1–10 de 0</span>
+                          <div class="pag-controls">
+                            <button class="pag-btn" id="pagPrev" title="Anterior">‹</button>
+                            <div class="pag-pages" id="pagPages"></div>
+                            <button class="pag-btn" id="pagNext" title="Siguiente">›</button>
+                          </div>
+                        </div>
             <table class="stock-table">
               <tbody id="tbody_productos"></tbody>
             </table>
+
+
+
           </div>
         </div>
 
@@ -1936,7 +2044,7 @@
 
             <div class="preview-footer">
               <div><strong>Condiciones</strong>
-              <strong>napoSISCORE [beta]</strong>
+                <strong>napoSISCORE [beta]</strong>
                 <p>Precios sujetos a cambio sin previo aviso.</p>
               </div>
               <div><strong>Observaciones</strong>
@@ -2062,10 +2170,10 @@
           <span class="ppc-label">Equivalentes</span>
           <span class="ppc-value" id="ppc-equiv" style="font-size:10px; color:#8892a4"></span>
         </div>
-                <div class="ppc-row">
-                  <span class="ppc-label">Precios</span>
-                  <span class="ppc-value" id="ppc-precios" style="font-size:10px; color:#8892a4"></span>
-                </div>
+        <div class="ppc-row">
+          <span class="ppc-label">Precios</span>
+          <span class="ppc-value" id="ppc-precios" style="font-size:10px; color:#8892a4"></span>
+        </div>
       </div>
 
     </div>
@@ -2586,53 +2694,148 @@
         comentario: document.querySelector("#editar_comentario")
       }
     }
-  function stockBadge(lv, sjl, precio) {
-    const lvNum = lv === "" ? null : Number(lv)
-    const sjlNum = sjl === "" ? null : Number(sjl)
+    function stockBadge(lv, sjl, precio) {
+      const lvNum = lv === "" ? null : Number(lv)
+      const sjlNum = sjl === "" ? null : Number(sjl)
 
-    let badge;
+      let badge;
 
-    if (lvNum === null && sjlNum === null) {
-      badge = `<span class="badge" style="background:#f0f0f0;color:#aaa">${lv || "—"} / ${sjl || "—"}</span>`
-    } else if (lvNum === 0 && sjlNum === 0) {
-      badge = `<span class="badge" style="background:#fde8e8;color:#c62828">${lv} / ${sjl}</span>`
-    } else if (sjlNum === 0) {
-      badge = `<span class="badge" style="background:#fff3e0;color:#e65100">${lv} / ${sjl}</span>`
-    } else {
-      badge = `<span class="badge badge-ok">${lv} / ${sjl}</span>`
+      if (lvNum === null && sjlNum === null) {
+        badge = `<span class="badge" style="background:#f0f0f0;color:#aaa">${lv || "—"} / ${sjl || "—"}</span>`
+      } else if (lvNum === 0 && sjlNum === 0) {
+        badge = `<span class="badge" style="background:#fde8e8;color:#c62828">${lv} / ${sjl}</span>`
+      } else if (sjlNum === 0) {
+        badge = `<span class="badge" style="background:#fff3e0;color:#e65100">${lv} / ${sjl}</span>`
+      } else {
+        badge = `<span class="badge badge-ok">${lv} / ${sjl}</span>`
+      }
+      const precioHtml = precio
+        ? `<span style="font-size:0.5rem;color:#555;display:block;margin-top:2px;white-space:nowrap">S/ ${precio}</span>`
+        : ""
+
+
+      return `<td>${badge}${precioHtml}</td>`
     }
-    const precioHtml = precio
-      ? `<span style="font-size:0.5rem;color:#555;display:block;margin-top:2px;white-space:nowrap">S/ ${precio}</span>`
-      : ""
 
+    // ══════════════════════════════════════
+    // PAGINACIÓN — búsqueda de productos
+    // ══════════════════════════════════════
+    let searchPage = 1
+    const PRODUCTS_PER_PAGE = 10
+    let currentSearchResults = catalog // lista actualmente mostrada (filtrada o catálogo completo)
 
-    return `<td>${badge}${precioHtml}</td>`
-  }
     //✅
     function printProductSearch(products) {
+      currentSearchResults = products
+      if (searchPage < 1) searchPage = 1
+
+      const totalPaginas = Math.max(1, Math.ceil(products.length / PRODUCTS_PER_PAGE))
+      if (searchPage > totalPaginas) searchPage = totalPaginas
+
+      const start = (searchPage - 1) * PRODUCTS_PER_PAGE
+      const pageItems = products.slice(start, start + PRODUCTS_PER_PAGE)
+
       tables.products.innerHTML = ""
-      for (let product of products) {
+      for (let product of pageItems) {
         let tr = document.createElement("tr")
         tr.innerHTML = `
-                    <td
-                      title="${product.CODIGO_FORMATEADO} — ${product.CODIGO} — ${product.DESCRIPCION} — ${product.FAMILIA} — ${product.SUBFAMILIA} — ${product.MARCA}">
-                      <strong>${product.CODIGO_FORMATEADO}</strong><br>
-                      <span style="font-weight:400; color:#888">${product.DESCRIPCION}</span>
-                    </td>${stockBadge(product.STOCK_LV, product.STOCK_SJL, product.PRECIO_SUGERIDO)}
-                    <td title="${product.EQUIVALENTES_STOCK}">${product.EQUIVALENTES_STOCK}
-                    
-  <button
-   class="btn-agregar-row" data-codigo="${product.CODIGO_FORMATEADO}" data-descripcion="${product.DESCRIPCION}">+</button>
-  <button class="btn-ver-row"  data-codigo-formateado="${product.CODIGO_FORMATEADO}" data-descripcion="${product.DESCRIPCION}" data-codigo="${product.CODIGO}" data-familia="${product.FAMILIA}" data-subfamilia="${product.SUBFAMILIA}" data-marca="${product.MARCA}" data-sjl="${product.STOCK_LV}" data-lv="${product.STOCK_LV}" data-equivalentes="${product.EQUIVALENTES_STOCK}" data-precios="${product.PRECIO_SUGERIDO}">👁</button>
-  
-                    </td>
-                    
-            
-                    `
+                  <td
+                    title="${product.CODIGO_FORMATEADO} — ${product.CODIGO} — ${product.DESCRIPCION} — ${product.FAMILIA} — ${product.SUBFAMILIA} — ${product.MARCA}">
+                    <strong>${product.CODIGO_FORMATEADO}</strong><br>
+                    <span style="font-weight:400; color:#888">${product.DESCRIPCION}</span>
+                  </td>${stockBadge(product.STOCK_LV, product.STOCK_SJL, product.PRECIO_SUGERIDO)}
+                  <td title="${product.EQUIVALENTES_STOCK}">${product.EQUIVALENTES_STOCK}
+                  
+<button
+ class="btn-agregar-row" data-codigo="${product.CODIGO_FORMATEADO}" data-descripcion="${product.DESCRIPCION}">+</button>
+<button class="btn-ver-row"  data-codigo-formateado="${product.CODIGO_FORMATEADO}" data-descripcion="${product.DESCRIPCION}" data-codigo="${product.CODIGO}" data-familia="${product.FAMILIA}" data-subfamilia="${product.SUBFAMILIA}" data-marca="${product.MARCA}" data-sjl="${product.STOCK_LV}" data-lv="${product.STOCK_LV}" data-equivalentes="${product.EQUIVALENTES_STOCK}" data-precios="${product.PRECIO_SUGERIDO}">👁</button>
+
+                  </td>
+                  
+          
+                  `
         tables.products.appendChild(tr)
       }
 
+      renderPaginacionProductos()
     }
+
+    function renderPaginacionProductos() {
+      const totalItems = currentSearchResults.length
+      const totalPaginas = Math.max(1, Math.ceil(totalItems / PRODUCTS_PER_PAGE))
+      if (searchPage > totalPaginas) searchPage = totalPaginas
+      if (searchPage < 1) searchPage = 1
+
+      const pagInfo = document.getElementById('pagInfo')
+      const pagPrev = document.getElementById('pagPrev')
+      const pagNext = document.getElementById('pagNext')
+      const pagPages = document.getElementById('pagPages')
+      if (!pagInfo || !pagPrev || !pagNext || !pagPages) return
+
+      const inicio = totalItems === 0 ? 0 : (searchPage - 1) * PRODUCTS_PER_PAGE + 1
+      const fin = Math.min(searchPage * PRODUCTS_PER_PAGE, totalItems)
+      pagInfo.textContent = `${inicio}–${fin} de ${totalItems}`
+
+      pagPrev.disabled = searchPage === 1
+      pagNext.disabled = searchPage === totalPaginas
+
+      pagPages.innerHTML = ''
+
+      getPaginasVisibles(searchPage, totalPaginas).forEach(p => {
+        if (p === '...') {
+          const span = document.createElement('span')
+          span.className = 'pag-ellipsis'
+          span.textContent = '…'
+          pagPages.appendChild(span)
+        } else {
+          const btn = document.createElement('button')
+          btn.className = 'pag-page' + (p === searchPage ? ' active' : '')
+          btn.textContent = p
+          btn.type = 'button'
+          btn.addEventListener('click', (e) => {
+            e.preventDefault()
+            searchPage = p
+            printProductSearch(currentSearchResults)
+          })
+          pagPages.appendChild(btn)
+        }
+      })
+    }
+
+    function getPaginasVisibles(actual, total) {
+      const delta = 1
+      const rango = []
+      for (let i = Math.max(1, actual - delta); i <= Math.min(total, actual + delta); i++) {
+        rango.push(i)
+      }
+      if (rango[0] > 1) {
+        if (rango[0] > 2) rango.unshift('...')
+        rango.unshift(1)
+      }
+      if (rango[rango.length - 1] < total) {
+        if (rango[rango.length - 1] < total - 1) rango.push('...')
+        rango.push(total)
+      }
+      return rango
+    }
+
+    document.getElementById('pagPrev').addEventListener('click', (e) => {
+      e.preventDefault()
+      if (searchPage > 1) {
+        searchPage--
+        printProductSearch(currentSearchResults)
+      }
+    })
+
+    document.getElementById('pagNext').addEventListener('click', (e) => {
+      e.preventDefault()
+      const totalPaginas = Math.max(1, Math.ceil(currentSearchResults.length / PRODUCTS_PER_PAGE))
+      if (searchPage < totalPaginas) {
+        searchPage++
+        printProductSearch(currentSearchResults)
+      }
+    })
+
     printProductSearch(catalog)
 
     function printVersion() {
@@ -2693,7 +2896,7 @@
     printProforma(currentProform.productos)
     //✅
     function printGuia(products) {
-      products = products.filter(prod=>{
+      products = products.filter(prod => {
         return prod.status == true
       })
       tables.guia.innerHTML = ""
@@ -2785,6 +2988,7 @@
 
       currentProform.tipo = "borrador"
       currentProform.atencion = ""
+      searchPage = 1
       printProductSearch(catalog)//✅
       fields.tipo.value = "borrador"
       fields.empresa.value = "max"
@@ -3581,8 +3785,8 @@
       currentProform.atencion = btn.dataset.atencion
       currentProform.forma_de_pago = btn.dataset.forma_de_pago
       currentProform.canal_de_venta = btn.dataset.canal_de_venta
-      
-currentProform.comprobante = btn.dataset.comprobante
+
+      currentProform.comprobante = btn.dataset.comprobante
       printAll()
 
       // aquí conectas con tu lógica
@@ -3737,6 +3941,7 @@ currentProform.comprobante = btn.dataset.comprobante
       //product search ✅
       fields.products.product.addEventListener("input", (e) => {
         const search = e.target.value.toLowerCase().trim();
+        searchPage = 1
         printProductSearch(options(search))
       })
       //cargar producto ✅
@@ -3760,6 +3965,7 @@ currentProform.comprobante = btn.dataset.comprobante
           fields.products.comentario.value = ""
           fields.products.monto.value = ""
           fields.products.total.textContent = 'S/ 0.00'
+          searchPage = 1
           printProductSearch(catalog)
         }
 
@@ -3799,6 +4005,7 @@ currentProform.comprobante = btn.dataset.comprobante
             fields.products.comentario.value = ""
             fields.products.monto.value = ""
             fields.products.total.textContent = 'S/ 0.00'
+            searchPage = 1
             printProductSearch(catalog)
           }
 
@@ -3820,7 +4027,7 @@ currentProform.comprobante = btn.dataset.comprobante
         if (btn_ver) {
 
           document.getElementById('ppc-codigo').textContent = btn_ver.dataset.codigoFormateado;
-          document.getElementById('ppc-precios').textContent ="S/ "+ btn_ver.dataset.precios;
+          document.getElementById('ppc-precios').textContent = "S/ " + btn_ver.dataset.precios;
 
           document.getElementById('ppc-codigo-raw').textContent = btn_ver.dataset.codigo
 
@@ -3892,322 +4099,322 @@ currentProform.comprobante = btn.dataset.comprobante
     }
 
     conexiones()
-      // ── Precarga del logo para los PDFs (se ejecuta una sola vez) ──
-      let LOGO_BASE64_NARANJA = null;
-  let LOGO_BASE64_BLANCO = null;
-      (async function preloadLogoNaranja() {
-        try {
-          const response = await fetch('/logo-naranja-max-importaciones.png');
-          const blob = await response.blob();
-          LOGO_BASE64_NARANJA = await new Promise((resolve, reject) => {
-            const reader = new FileReader();
-            reader.onload = () => resolve(reader.result);
-            reader.onerror = reject;
-            reader.readAsDataURL(blob);
-          });
-          console.log('Logo precargado para PDFs');
-        } catch (err) {
-          console.error('No se pudo precargar el logo para el PDF:', err);
-        }
-      })();
-    
-          (async function preloadLogoBlanco() {
-              try {
-                const response = await fetch('/logo-blanco-max-importaciones.png');
-                const blob = await response.blob();
-                LOGO_BASE64_BLANCO = await new Promise((resolve, reject) => {
-                  const reader = new FileReader();
-                  reader.onload = () => resolve(reader.result);
-                  reader.onerror = reject;
-                  reader.readAsDataURL(blob);
-                });
-                console.log('Logo precargado para PDFs');
-              } catch (err) {
-                console.error('No se pudo precargar el logo para el PDF:', err);
-              }
-            })();
-          
+    // ── Precarga del logo para los PDFs (se ejecuta una sola vez) ──
+    let LOGO_BASE64_NARANJA = null;
+    let LOGO_BASE64_BLANCO = null;
+    (async function preloadLogoNaranja() {
+      try {
+        const response = await fetch('/logo-naranja-max-importaciones.png');
+        const blob = await response.blob();
+        LOGO_BASE64_NARANJA = await new Promise((resolve, reject) => {
+          const reader = new FileReader();
+          reader.onload = () => resolve(reader.result);
+          reader.onerror = reject;
+          reader.readAsDataURL(blob);
+        });
+        console.log('Logo precargado para PDFs');
+      } catch (err) {
+        console.error('No se pudo precargar el logo para el PDF:', err);
+      }
+    })();
+
+    (async function preloadLogoBlanco() {
+      try {
+        const response = await fetch('/logo-blanco-max-importaciones.png');
+        const blob = await response.blob();
+        LOGO_BASE64_BLANCO = await new Promise((resolve, reject) => {
+          const reader = new FileReader();
+          reader.onload = () => resolve(reader.result);
+          reader.onerror = reject;
+          reader.readAsDataURL(blob);
+        });
+        console.log('Logo precargado para PDFs');
+      } catch (err) {
+        console.error('No se pudo precargar el logo para el PDF:', err);
+      }
+    })();
+
     //✅
-  function generarPDFProforma(proform) {
-    const desktop = document.querySelector("#dl_proforma_desktop").checked
-    const mobile = document.querySelector("#dl_proforma_mobile").checked
+    function generarPDFProforma(proform) {
+      const desktop = document.querySelector("#dl_proforma_desktop").checked
+      const mobile = document.querySelector("#dl_proforma_mobile").checked
 
-    if (!desktop && !mobile) return
+      if (!desktop && !mobile) return
 
-    const { jsPDF } = window.jspdf;
-    const pdf = new jsPDF({ unit: 'mm', format: 'a4' });
+      const { jsPDF } = window.jspdf;
+      const pdf = new jsPDF({ unit: 'mm', format: 'a4' });
 
-    const empresa = desplegables.empresas[proform.empresa] || desplegables.empresas.max;
-    const M = 14;
-    const W = 182;
-    let y = 14;
+      const empresa = desplegables.empresas[proform.empresa] || desplegables.empresas.max;
+      const M = 14;
+      const W = 182;
+      let y = 14;
 
-    // ── LOGO ──
-    const logoW = 26;
-    const logoH = logoW * (212 / 500); // proporción real del PNG (500x212)
-    let textX = M; // por defecto, si no hay logo cargado aún
+      // ── LOGO ──
+      const logoW = 26;
+      const logoH = logoW * (212 / 500); // proporción real del PNG (500x212)
+      let textX = M; // por defecto, si no hay logo cargado aún
 
-    if (LOGO_BASE64_NARANJA) {
-      pdf.addImage(LOGO_BASE64_NARANJA, 'PNG', M, y - 4, logoW, logoH);
-      textX = M + logoW + 6;
-    }
+      if (LOGO_BASE64_NARANJA) {
+        pdf.addImage(LOGO_BASE64_NARANJA, 'PNG', M, y - 4, logoW, logoH);
+        textX = M + logoW + 6;
+      }
 
-    // ── HEADER ──
-    pdf.setFontSize(9);
-    pdf.setTextColor(80);
-    pdf.setFont('helvetica', 'bold');
-    pdf.text(empresa.nombre, textX, y);
-    pdf.setFont('helvetica', 'normal');
-    pdf.text(`RUC: ${empresa.ruc}`, textX, y + 5);
-    pdf.text(empresa.direccion, textX, y + 10);
-    pdf.text(`Tel: ${empresa.telefono}`, textX, y + 15);
-    pdf.text(empresa.email, textX, y + 20);
-    pdf.setFont('helvetica', 'bold');
-    pdf.setFontSize(18);
-    pdf.setTextColor(15, 76, 129);
-    pdf.text(`${proform.code} v${proform.version}`, 196, y + 4, { align: 'right' });
-    pdf.setFontSize(9);
-    pdf.setTextColor(120);
-    pdf.setFont('helvetica', 'normal');
-    pdf.text(`Fecha: ${proform.fecha}`, 196, y + 10, { align: 'right' });
-
-    y += 28;
-    pdf.setDrawColor(220);
-    pdf.line(M, y, M + W, y);
-    y += 6;
-
-    // ── DATOS CLIENTE ──
-    pdf.setFontSize(8.5);
-    pdf.setTextColor(50);
-    const col1 = M;
-    const col2 = M + W / 2 + 4;
-
-    const camposIzq = [
-      ['Cliente:', proform.cliente?.nombre || ''],
-      ['RUC/DNI:', proform.cliente?.ruc || ''],
-      ['Dirección:', proform.cliente?.direccion || ''],
-      ['Provincia:', proform.cliente?.provincia || ''],
-      ['Destino:', proform.destino || ''],
-      ['Forma pago:', proform.forma_de_pago || ''],
-      ['Agencia:', proform.agencia || ''],
-      ['Vendedor:', proform.vendedor || ''],
-    ];
-    const camposDer = [
-      ['Teléfono:', proform.cliente?.telefono || ''],
-      ['Mail:', proform.cliente?.email || ''],
-      ['Entrega:', proform.entrega || ''],
-      ['Ciudad:', proform.cliente?.ciudad || ''],
-      ['Canal de venta:', proform.canal_de_venta || ''],
-      ['Comprobante:', proform.comprobante || ''],
-      ['Atención:', proform.atencion || ''],
-      ['', ''],
-    ];
-
-    const startY = y;
-    for (let i = 0; i < camposIzq.length; i++) {
-      const rowY = startY + i * 5.5;
+      // ── HEADER ──
+      pdf.setFontSize(9);
+      pdf.setTextColor(80);
       pdf.setFont('helvetica', 'bold');
-      pdf.text(camposIzq[i][0], col1, rowY);
+      pdf.text(empresa.nombre, textX, y);
       pdf.setFont('helvetica', 'normal');
-      pdf.text(camposIzq[i][1], col1 + 22, rowY);
+      pdf.text(`RUC: ${empresa.ruc}`, textX, y + 5);
+      pdf.text(empresa.direccion, textX, y + 10);
+      pdf.text(`Tel: ${empresa.telefono}`, textX, y + 15);
+      pdf.text(empresa.email, textX, y + 20);
       pdf.setFont('helvetica', 'bold');
-      pdf.text(camposDer[i][0], col2, rowY);
+      pdf.setFontSize(18);
+      pdf.setTextColor(15, 76, 129);
+      pdf.text(`${proform.code} v${proform.version}`, 196, y + 4, { align: 'right' });
+      pdf.setFontSize(9);
+      pdf.setTextColor(120);
       pdf.setFont('helvetica', 'normal');
-      pdf.text(camposDer[i][1], col2 + 26, rowY);
-    }
+      pdf.text(`Fecha: ${proform.fecha}`, 196, y + 10, { align: 'right' });
 
-    y = startY + camposIzq.length * 5.5 + 4;
-    pdf.line(M, y, M + W, y);
-    y += 4;
+      y += 28;
+      pdf.setDrawColor(220);
+      pdf.line(M, y, M + W, y);
+      y += 6;
 
-    // ── TABLA PRODUCTOS ──
-    const productosActivos = proform.productos.filter(p => p.status === true);
+      // ── DATOS CLIENTE ──
+      pdf.setFontSize(8.5);
+      pdf.setTextColor(50);
+      const col1 = M;
+      const col2 = M + W / 2 + 4;
 
-    pdf.autoTable({
-      startY: y,
-      margin: { left: M, right: 14 },
-      head: [['#', 'Descripción', 'Cantidad', 'Precio unit.', 'Importe']],
-      body: productosActivos.map((p, i) => [
-        i + 1,
-        p.nombre,
-        p.cantidad,
-        `S/ ${Number(p.monto).toFixed(2)}`,
-        `S/ ${Number(p.total).toFixed(2)}`
-      ]),
-      styles: { fontSize: 8.5, cellPadding: 3 },
-      headStyles: { fillColor: [15, 76, 129], textColor: 255, fontStyle: 'bold' },
-      alternateRowStyles: { fillColor: [249, 249, 249] },
-      columnStyles: {
-        0: { cellWidth: 10, halign: 'center' },
-        1: { cellWidth: 90 },
-        2: { cellWidth: 22, halign: 'center' },
-        3: { cellWidth: 28, halign: 'right' },
-        4: { cellWidth: 28, halign: 'right' },
+      const camposIzq = [
+        ['Cliente:', proform.cliente?.nombre || ''],
+        ['RUC/DNI:', proform.cliente?.ruc || ''],
+        ['Dirección:', proform.cliente?.direccion || ''],
+        ['Provincia:', proform.cliente?.provincia || ''],
+        ['Destino:', proform.destino || ''],
+        ['Forma pago:', proform.forma_de_pago || ''],
+        ['Agencia:', proform.agencia || ''],
+        ['Vendedor:', proform.vendedor || ''],
+      ];
+      const camposDer = [
+        ['Teléfono:', proform.cliente?.telefono || ''],
+        ['Mail:', proform.cliente?.email || ''],
+        ['Entrega:', proform.entrega || ''],
+        ['Ciudad:', proform.cliente?.ciudad || ''],
+        ['Canal de venta:', proform.canal_de_venta || ''],
+        ['Comprobante:', proform.comprobante || ''],
+        ['Atención:', proform.atencion || ''],
+        ['', ''],
+      ];
+
+      const startY = y;
+      for (let i = 0; i < camposIzq.length; i++) {
+        const rowY = startY + i * 5.5;
+        pdf.setFont('helvetica', 'bold');
+        pdf.text(camposIzq[i][0], col1, rowY);
+        pdf.setFont('helvetica', 'normal');
+        pdf.text(camposIzq[i][1], col1 + 22, rowY);
+        pdf.setFont('helvetica', 'bold');
+        pdf.text(camposDer[i][0], col2, rowY);
+        pdf.setFont('helvetica', 'normal');
+        pdf.text(camposDer[i][1], col2 + 26, rowY);
       }
-    });
 
-    y = pdf.lastAutoTable.finalY + 4;
+      y = startY + camposIzq.length * 5.5 + 4;
+      pdf.line(M, y, M + W, y);
+      y += 4;
 
-    // ── TOTALES ──
-    const suma = productosActivos.reduce((acc, p) => acc + Number(p.total), 0);
-    let igv = 0;
-    if (proform.comprobante === 'Factura' || proform.comprobante === 'Boleta') {
-      igv = suma * 0.18;
-    }
-    const subtotal = suma - igv;
-    const totX = M + W - 60;
-    const totW = 60;
+      // ── TABLA PRODUCTOS ──
+      const productosActivos = proform.productos.filter(p => p.status === true);
 
-    pdf.setFontSize(8.5);
-    pdf.setTextColor(80);
-    pdf.setFont('helvetica', 'normal');
-    pdf.text('Subtotal', totX, y + 5);
-    pdf.text(`S/ ${subtotal.toFixed(2)}`, totX + totW, y + 5, { align: 'right' });
-    pdf.text('IGV (18%)', totX, y + 11);
-    pdf.text(`S/ ${igv.toFixed(2)}`, totX + totW, y + 11, { align: 'right' });
+      pdf.autoTable({
+        startY: y,
+        margin: { left: M, right: 14 },
+        head: [['#', 'Descripción', 'Cantidad', 'Precio unit.', 'Importe']],
+        body: productosActivos.map((p, i) => [
+          i + 1,
+          p.nombre,
+          p.cantidad,
+          `S/ ${Number(p.monto).toFixed(2)}`,
+          `S/ ${Number(p.total).toFixed(2)}`
+        ]),
+        styles: { fontSize: 8.5, cellPadding: 3 },
+        headStyles: { fillColor: [15, 76, 129], textColor: 255, fontStyle: 'bold' },
+        alternateRowStyles: { fillColor: [249, 249, 249] },
+        columnStyles: {
+          0: { cellWidth: 10, halign: 'center' },
+          1: { cellWidth: 90 },
+          2: { cellWidth: 22, halign: 'center' },
+          3: { cellWidth: 28, halign: 'right' },
+          4: { cellWidth: 28, halign: 'right' },
+        }
+      });
 
-    pdf.setFillColor(232, 93, 20);
-    pdf.roundedRect(totX - 2, y + 14, totW + 2, 8, 2, 2, 'F');
-    pdf.setTextColor(255);
-    pdf.setFont('helvetica', 'bold');
-    pdf.text('Importe total', totX + 1, y + 19.5);
-    pdf.text(`S/ ${suma.toFixed(2)}`, totX + totW - 1, y + 19.5, { align: 'right' });
+      y = pdf.lastAutoTable.finalY + 4;
 
-    y += 30;
-
-    // ── FOOTER ──
-    pdf.setFontSize(8);
-    pdf.setTextColor(120);
-    pdf.setFont('helvetica', 'normal');
-    pdf.line(M, y, M + W, y);
-    y += 5;
-    pdf.setFont('helvetica', 'bold'); pdf.text('Condiciones napoSISCORE [Beta]', M, y);
-    pdf.setFont('helvetica', 'normal'); pdf.text('Precios sujetos a cambio sin previo aviso.', M, y + 4);
-    pdf.setFont('helvetica', 'bold'); pdf.text('Observaciones', M + 65, y);
-    pdf.setFont('helvetica', 'normal'); pdf.text('—', M + 65, y + 4);
-    pdf.setFont('helvetica', 'bold'); pdf.text('Contacto', M + 130, y);
-    pdf.setFont('helvetica', 'normal');
-    pdf.text(empresa.telefono, M + 130, y + 4);
-    pdf.text(empresa.email, M + 130, y + 9);
-
-    pdf.save(`${proform.code}.pdf`);
-  }
-  //✅
-  function generarPDFGuia(proform) {
-
-    const desktop = document.querySelector("#dl_guia_desktop").checked
-    const mobile = document.querySelector("#dl_guia_mobile").checked
-
-    if (!desktop && !mobile) return
-
-    const { jsPDF } = window.jspdf;
-    const pdf = new jsPDF({ unit: 'mm', format: 'a4', orientation: 'landscape' });
-
-    const M = 10;
-    const W = 277;
-    let y = 12;
-
-    // ── HEADER ──
-    pdf.setFillColor(26, 58, 92);
-    pdf.rect(M, y, W, 10, 'F');
-
-    let textStartX = M + 3;
-
-    if (LOGO_BASE64_BLANCO) {
-      const logoH = 8; // altura fija dentro de la barra de 10mm
-      const logoW = logoH * (500 / 212); // proporción real del PNG
-      pdf.addImage(LOGO_BASE64_BLANCO, 'PNG', M + 2, y + 1, logoW, logoH);
-      textStartX = M + 2 + logoW + 4;
-    }
-
-    pdf.setTextColor(255);
-    pdf.setFontSize(8.5);
-    pdf.setFont('helvetica', 'bold');
-    pdf.text(`CLIENTE: ${proform.cliente?.nombre || ''}`, textStartX, y + 6.5);
-    pdf.text(`VENDEDOR: ${proform.vendedor || ''}`, M + 110, y + 6.5);
-    pdf.text(`Fecha: ${proform.fecha || ''}`, M + 190, y + 6.5);
-    pdf.text(`${proform.code} v${proform.version}`, M + W - 3, y + 6.5, { align: 'right' });
-    y += 16;
-
-    // ── TABLA ──
-    const productosActivos = proform.productos.filter(p => p.status === true);
-    const rows = [];
-
-    for (let [i, product] of productosActivos.entries()) {
-      for (let [j, option] of product.options.entries()) {
-        rows.push([
-          j === 0 ? i + 1 : '',
-          j === 0 ? product.cantidad : '',
-          j === 0 ? `S/ ${product.monto}` : '',
-          j === 0 ? product.nombre : '',
-          j === 0 ? product.comentario : '',
-          option.CODIGO_FORMATEADO,
-          option.STOCK_LV,
-          option.STOCK_SJL,
-          `${option.DESCRIPCION} / ${option.FAMILIA} / ${option.SUBFAMILIA}`,
-          option.EQUIVALENTES_STOCK || '',
-          option.UBICACION || 'pending',
-          option.PRECIO_SUGERIDO != null ? `S/ ${option.PRECIO_SUGERIDO}` : '',
-        ]);
+      // ── TOTALES ──
+      const suma = productosActivos.reduce((acc, p) => acc + Number(p.total), 0);
+      let igv = 0;
+      if (proform.comprobante === 'Factura' || proform.comprobante === 'Boleta') {
+        igv = suma * 0.18;
       }
+      const subtotal = suma - igv;
+      const totX = M + W - 60;
+      const totW = 60;
+
+      pdf.setFontSize(8.5);
+      pdf.setTextColor(80);
+      pdf.setFont('helvetica', 'normal');
+      pdf.text('Subtotal', totX, y + 5);
+      pdf.text(`S/ ${subtotal.toFixed(2)}`, totX + totW, y + 5, { align: 'right' });
+      pdf.text('IGV (18%)', totX, y + 11);
+      pdf.text(`S/ ${igv.toFixed(2)}`, totX + totW, y + 11, { align: 'right' });
+
+      pdf.setFillColor(232, 93, 20);
+      pdf.roundedRect(totX - 2, y + 14, totW + 2, 8, 2, 2, 'F');
+      pdf.setTextColor(255);
+      pdf.setFont('helvetica', 'bold');
+      pdf.text('Importe total', totX + 1, y + 19.5);
+      pdf.text(`S/ ${suma.toFixed(2)}`, totX + totW - 1, y + 19.5, { align: 'right' });
+
+      y += 30;
+
+      // ── FOOTER ──
+      pdf.setFontSize(8);
+      pdf.setTextColor(120);
+      pdf.setFont('helvetica', 'normal');
+      pdf.line(M, y, M + W, y);
+      y += 5;
+      pdf.setFont('helvetica', 'bold'); pdf.text('Condiciones napoSISCORE [Beta]', M, y);
+      pdf.setFont('helvetica', 'normal'); pdf.text('Precios sujetos a cambio sin previo aviso.', M, y + 4);
+      pdf.setFont('helvetica', 'bold'); pdf.text('Observaciones', M + 65, y);
+      pdf.setFont('helvetica', 'normal'); pdf.text('—', M + 65, y + 4);
+      pdf.setFont('helvetica', 'bold'); pdf.text('Contacto', M + 130, y);
+      pdf.setFont('helvetica', 'normal');
+      pdf.text(empresa.telefono, M + 130, y + 4);
+      pdf.text(empresa.email, M + 130, y + 9);
+
+      pdf.save(`${proform.code}.pdf`);
+    }
+    //✅
+    function generarPDFGuia(proform) {
+
+      const desktop = document.querySelector("#dl_guia_desktop").checked
+      const mobile = document.querySelector("#dl_guia_mobile").checked
+
+      if (!desktop && !mobile) return
+
+      const { jsPDF } = window.jspdf;
+      const pdf = new jsPDF({ unit: 'mm', format: 'a4', orientation: 'landscape' });
+
+      const M = 10;
+      const W = 277;
+      let y = 12;
+
+      // ── HEADER ──
+      pdf.setFillColor(26, 58, 92);
+      pdf.rect(M, y, W, 10, 'F');
+
+      let textStartX = M + 3;
+
+      if (LOGO_BASE64_BLANCO) {
+        const logoH = 8; // altura fija dentro de la barra de 10mm
+        const logoW = logoH * (500 / 212); // proporción real del PNG
+        pdf.addImage(LOGO_BASE64_BLANCO, 'PNG', M + 2, y + 1, logoW, logoH);
+        textStartX = M + 2 + logoW + 4;
+      }
+
+      pdf.setTextColor(255);
+      pdf.setFontSize(8.5);
+      pdf.setFont('helvetica', 'bold');
+      pdf.text(`CLIENTE: ${proform.cliente?.nombre || ''}`, textStartX, y + 6.5);
+      pdf.text(`VENDEDOR: ${proform.vendedor || ''}`, M + 110, y + 6.5);
+      pdf.text(`Fecha: ${proform.fecha || ''}`, M + 190, y + 6.5);
+      pdf.text(`${proform.code} v${proform.version}`, M + W - 3, y + 6.5, { align: 'right' });
+      y += 16;
+
+      // ── TABLA ──
+      const productosActivos = proform.productos.filter(p => p.status === true);
+      const rows = [];
+
+      for (let [i, product] of productosActivos.entries()) {
+        for (let [j, option] of product.options.entries()) {
+          rows.push([
+            j === 0 ? i + 1 : '',
+            j === 0 ? product.cantidad : '',
+            j === 0 ? `S/ ${product.monto}` : '',
+            j === 0 ? product.nombre : '',
+            j === 0 ? product.comentario : '',
+            option.CODIGO_FORMATEADO,
+            option.STOCK_LV,
+            option.STOCK_SJL,
+            `${option.DESCRIPCION} / ${option.FAMILIA} / ${option.SUBFAMILIA}`,
+            option.EQUIVALENTES_STOCK || '',
+            option.UBICACION || 'pending',
+            option.PRECIO_SUGERIDO != null ? `S/ ${option.PRECIO_SUGERIDO}` : '',
+          ]);
+        }
+      }
+
+      pdf.autoTable({
+        startY: y,
+        margin: { left: M, right: M },
+        head: [['#', 'Cant.', 'Precio', 'Pedido', 'Comentario', 'Opciones', 'LV', 'SJL', 'Descripción', 'Equivalentes', 'Ubicación', 'Precios']],
+        body: rows,
+        styles: { fontSize: 7.5, cellPadding: 2.5, overflow: 'linebreak' },
+        headStyles: { fillColor: [15, 76, 129], textColor: 255, fontStyle: 'bold' },
+        alternateRowStyles: { fillColor: [249, 249, 249] },
+        columnStyles: {
+          0: { cellWidth: 10, halign: 'center' },
+          1: { cellWidth: 12, halign: 'center' },
+          2: { cellWidth: 16, halign: 'right' },
+          3: { cellWidth: 28 },
+          4: { cellWidth: 18 },
+          5: { cellWidth: 22 },
+          6: { cellWidth: 10, halign: 'center' },
+          7: { cellWidth: 10, halign: 'center' },
+          8: { cellWidth: 50 },
+          9: { cellWidth: 38 },
+          10: { cellWidth: 18, halign: 'center' },
+          11: { cellWidth: 20, halign: 'right' },
+        }
+      });
+
+      y = pdf.lastAutoTable.finalY + 6;
+
+      // ── FOOTER ──
+      pdf.setFontSize(7.5);
+      pdf.setTextColor(120);
+      pdf.line(M, y, M + W, y);
+      y += 4;
+
+      pdf.setFont('helvetica', 'bold');
+      pdf.setFontSize(7.5);
+      pdf.setTextColor(120);
+      pdf.text('Condiciones', M, y);
+
+      pdf.setFont('helvetica', 'italic');
+      pdf.setFontSize(6);
+      pdf.setTextColor(160);
+      pdf.text('  napoSISCORE [beta]', M + pdf.getTextWidth('Condiciones') + 4, y);
+
+      pdf.setFont('helvetica', 'normal');
+      pdf.setFontSize(7.5);
+      pdf.setTextColor(120);
+      pdf.text('Precios sujetos a cambio sin previo aviso.', M, y + 4);
+
+      pdf.setFont('helvetica', 'bold'); pdf.text('Observaciones', M + 100, y);
+      pdf.setFont('helvetica', 'normal'); pdf.text('—', M + 100, y + 4);
+      pdf.setFont('helvetica', 'bold'); pdf.text('Contacto', M + 200, y);
+      pdf.setFont('helvetica', 'normal'); pdf.text('999 999 999', M + 200, y + 4);
+
+      pdf.save(`${proform.code}-guia.pdf`);
     }
 
-    pdf.autoTable({
-      startY: y,
-      margin: { left: M, right: M },
-      head: [['#', 'Cant.', 'Precio', 'Pedido', 'Comentario', 'Opciones', 'LV', 'SJL', 'Descripción', 'Equivalentes', 'Ubicación', 'Precios']],
-      body: rows,
-      styles: { fontSize: 7.5, cellPadding: 2.5, overflow: 'linebreak' },
-      headStyles: { fillColor: [15, 76, 129], textColor: 255, fontStyle: 'bold' },
-      alternateRowStyles: { fillColor: [249, 249, 249] },
-      columnStyles: {
-        0: { cellWidth: 10, halign: 'center' },
-        1: { cellWidth: 12, halign: 'center' },
-        2: { cellWidth: 16, halign: 'right' },
-        3: { cellWidth: 28 },
-        4: { cellWidth: 18 },
-        5: { cellWidth: 22 },
-        6: { cellWidth: 10, halign: 'center' },
-        7: { cellWidth: 10, halign: 'center' },
-        8: { cellWidth: 50 },
-        9: { cellWidth: 38 },
-        10: { cellWidth: 18, halign: 'center' },
-        11: { cellWidth: 20, halign: 'right' },
-      }
-    });
-
-    y = pdf.lastAutoTable.finalY + 6;
-
-    // ── FOOTER ──
-    pdf.setFontSize(7.5);
-    pdf.setTextColor(120);
-    pdf.line(M, y, M + W, y);
-    y += 4;
-
-    pdf.setFont('helvetica', 'bold');
-    pdf.setFontSize(7.5);
-    pdf.setTextColor(120);
-    pdf.text('Condiciones', M, y);
-
-    pdf.setFont('helvetica', 'italic');
-    pdf.setFontSize(6);
-    pdf.setTextColor(160);
-    pdf.text('  napoSISCORE [beta]', M + pdf.getTextWidth('Condiciones') + 4, y);
-
-    pdf.setFont('helvetica', 'normal');
-    pdf.setFontSize(7.5);
-    pdf.setTextColor(120);
-    pdf.text('Precios sujetos a cambio sin previo aviso.', M, y + 4);
-
-    pdf.setFont('helvetica', 'bold'); pdf.text('Observaciones', M + 100, y);
-    pdf.setFont('helvetica', 'normal'); pdf.text('—', M + 100, y + 4);
-    pdf.setFont('helvetica', 'bold'); pdf.text('Contacto', M + 200, y);
-    pdf.setFont('helvetica', 'normal'); pdf.text('999 999 999', M + 200, y + 4);
-
-    pdf.save(`${proform.code}-guia.pdf`);
-  }
-  
-      async function fetchToProforms() {
+    async function fetchToProforms() {
       try {
         const res = await fetch("/api/proforms");
         const data = await res.json();
@@ -4239,6 +4446,7 @@ currentProform.comprobante = btn.dataset.comprobante
       const search = fields.products.product.value.toLowerCase().trim()
 
       // si hay algo escrito, filtramos; si no, mostramos el catálogo completo
+      searchPage = 1
       printProductSearch(search ? options(search) : catalog)
       console.log(`[catalog] actualizado — ${catalog.length} productos`)
     })
