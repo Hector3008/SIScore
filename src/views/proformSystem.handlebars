@@ -2025,7 +2025,7 @@
                     <th>Item</th>
                     <th>Cant.</th>
                     <th>Precio uni</th>
-                    <th>Pedid</th>
+                    <th>Pedido</th>
                     <th>Comentario</th>
                     <th>Opciones</th>
                     <th>LV</th>
@@ -2749,9 +2749,7 @@
 <button
  class="btn-agregar-row" data-codigo="${product.CODIGO_FORMATEADO}" data-descripcion="${product.DESCRIPCION}">+</button>
 <button class="btn-ver-row"  data-codigo-formateado="${product.CODIGO_FORMATEADO}" data-descripcion="${product.DESCRIPCION}" data-codigo="${product.CODIGO}" data-familia="${product.FAMILIA}" data-subfamilia="${product.SUBFAMILIA}" data-marca="${product.MARCA}" data-sjl="${product.STOCK_LV}" data-lv="${product.STOCK_LV}" data-equivalentes="${product.EQUIVALENTES_STOCK}" data-precios="${product.PRECIO_SUGERIDO}">👁</button>
-
                   </td>
-                  
           
                   `
         tables.products.appendChild(tr)
@@ -2931,6 +2929,8 @@
     printGuia(currentProform.productos)
 
     function options(value) {
+
+      console.log("value: ", value)
       const tokens = value.toLowerCase().split(/\s+/).filter(Boolean);
       const filter = catalog.filter(p => {
         {
@@ -3984,10 +3984,11 @@
         if (btn_cargar) {
           const codigo = btn_cargar.dataset.codigo
           const descripcion = btn_cargar.dataset.descripcion
+          let texto 
 
           if (!fields.products.monto.value || !fields.products.cantidad.value) { return toastError("faltan valores en la carga del producto") }
-          const texto = codigo + " " + descripcion
 
+          texto = descripcion == "no encontrado" ? codigo : codigo + " " + descripcion;
           currentProform.productos.push({
             status: true,
             index: currentProform.productos.length + 1,
